@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.service_connection import ServiceConnection
+from cirro_api_client.models.service_connection import ServiceConnection
 
 class TestServiceConnection(unittest.TestCase):
     """ServiceConnection unit test stubs"""

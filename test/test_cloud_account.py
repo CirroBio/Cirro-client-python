@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.cloud_account import CloudAccount
+from cirro_api_client.models.cloud_account import CloudAccount
 
 class TestCloudAccount(unittest.TestCase):
     """CloudAccount unit test stubs"""

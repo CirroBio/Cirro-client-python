@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.dataset_detail import DatasetDetail
+from cirro_api_client.models.dataset_detail import DatasetDetail
 
 class TestDatasetDetail(unittest.TestCase):
     """DatasetDetail unit test stubs"""
@@ -49,7 +49,7 @@ class TestDatasetDetail(unittest.TestCase):
                 status = 'COMPLETED',
                 status_message = '',
                 tags = [
-                    cirro.api.models.tag.Tag(
+                    cirro_api_client.models.tag.Tag(
                         key = '', 
                         value = '', 
                         editable = True, )
@@ -74,7 +74,7 @@ class TestDatasetDetail(unittest.TestCase):
                 status = 'COMPLETED',
                 status_message = '',
                 tags = [
-                    cirro.api.models.tag.Tag(
+                    cirro_api_client.models.tag.Tag(
                         key = '', 
                         value = '', 
                         editable = True, )

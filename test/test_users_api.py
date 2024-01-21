@@ -15,7 +15,7 @@
 
 import unittest
 
-from cirro.api.api.users_api import UsersApi
+from cirro_api_client.api.users_api import UsersApi
 
 
 class TestUsersApi(unittest.TestCase):

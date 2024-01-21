@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.file_requirements import FileRequirements
+from cirro_api_client.models.file_requirements import FileRequirements
 
 class TestFileRequirements(unittest.TestCase):
     """FileRequirements unit test stubs"""
@@ -42,11 +42,11 @@ class TestFileRequirements(unittest.TestCase):
                     ],
                 error_msg = '',
                 allowed_data_types = [
-                    cirro.api.models.allowed_data_type.AllowedDataType(
+                    cirro_api_client.models.allowed_data_type.AllowedDataType(
                         description = '', 
                         error_msg = '', 
                         allowed_patterns = [
-                            cirro.api.models.file_name_pattern.FileNamePattern(
+                            cirro_api_client.models.file_name_pattern.FileNamePattern(
                                 example_name = '', 
                                 description = '', )
                             ], )
@@ -59,11 +59,11 @@ class TestFileRequirements(unittest.TestCase):
                     ],
                 error_msg = '',
                 allowed_data_types = [
-                    cirro.api.models.allowed_data_type.AllowedDataType(
+                    cirro_api_client.models.allowed_data_type.AllowedDataType(
                         description = '', 
                         error_msg = '', 
                         allowed_patterns = [
-                            cirro.api.models.file_name_pattern.FileNamePattern(
+                            cirro_api_client.models.file_name_pattern.FileNamePattern(
                                 example_name = '', 
                                 description = '', )
                             ], )

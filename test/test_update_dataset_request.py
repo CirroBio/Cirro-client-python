@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.update_dataset_request import UpdateDatasetRequest
+from cirro_api_client.models.update_dataset_request import UpdateDatasetRequest
 
 class TestUpdateDatasetRequest(unittest.TestCase):
     """UpdateDatasetRequest unit test stubs"""
@@ -41,7 +41,7 @@ class TestUpdateDatasetRequest(unittest.TestCase):
                 description = '0',
                 process_id = '0',
                 tags = [
-                    cirro.api.models.tag.Tag(
+                    cirro_api_client.models.tag.Tag(
                         key = '', 
                         value = '', 
                         editable = True, )
@@ -53,7 +53,7 @@ class TestUpdateDatasetRequest(unittest.TestCase):
                 description = '0',
                 process_id = '0',
                 tags = [
-                    cirro.api.models.tag.Tag(
+                    cirro_api_client.models.tag.Tag(
                         key = '', 
                         value = '', 
                         editable = True, )

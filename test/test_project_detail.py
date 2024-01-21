@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.project_detail import ProjectDetail
+from cirro_api_client.models.project_detail import ProjectDetail
 
 class TestProjectDetail(unittest.TestCase):
     """ProjectDetail unit test stubs"""
@@ -42,14 +42,14 @@ class TestProjectDetail(unittest.TestCase):
                 description = '',
                 billing_account_id = '',
                 contacts = [
-                    cirro.api.models.contact.Contact(
+                    cirro_api_client.models.contact.Contact(
                         name = '', 
                         organization = '', 
                         email = '', 
                         phone = '', )
                     ],
                 status = 'COMPLETED',
-                settings = cirro.api.models.project_settings.ProjectSettings(
+                settings = cirro_api_client.models.project_settings.ProjectSettings(
                     budget_amount = 0, 
                     budget_period = null, 
                     dragen_ami = 'ami----------------------', 
@@ -71,7 +71,7 @@ class TestProjectDetail(unittest.TestCase):
                     kms_arn = 'arn:aws::::::::::::::::::::::', ),
                 status_message = '',
                 tags = [
-                    cirro.api.models.tag.Tag(
+                    cirro_api_client.models.tag.Tag(
                         key = '', 
                         value = '', 
                         editable = True, )
@@ -87,14 +87,14 @@ class TestProjectDetail(unittest.TestCase):
                 description = '',
                 billing_account_id = '',
                 contacts = [
-                    cirro.api.models.contact.Contact(
+                    cirro_api_client.models.contact.Contact(
                         name = '', 
                         organization = '', 
                         email = '', 
                         phone = '', )
                     ],
                 status = 'COMPLETED',
-                settings = cirro.api.models.project_settings.ProjectSettings(
+                settings = cirro_api_client.models.project_settings.ProjectSettings(
                     budget_amount = 0, 
                     budget_period = null, 
                     dragen_ami = 'ami----------------------', 
@@ -116,7 +116,7 @@ class TestProjectDetail(unittest.TestCase):
                     kms_arn = 'arn:aws::::::::::::::::::::::', ),
                 status_message = '',
                 tags = [
-                    cirro.api.models.tag.Tag(
+                    cirro_api_client.models.tag.Tag(
                         key = '', 
                         value = '', 
                         editable = True, )

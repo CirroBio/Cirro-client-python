@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.validate_file_requirements_request import ValidateFileRequirementsRequest
+from cirro_api_client.models.validate_file_requirements_request import ValidateFileRequirementsRequest
 
 class TestValidateFileRequirementsRequest(unittest.TestCase):
     """ValidateFileRequirementsRequest unit test stubs"""
@@ -37,17 +37,17 @@ class TestValidateFileRequirementsRequest(unittest.TestCase):
         model = ValidateFileRequirementsRequest()
         if include_optional:
             return ValidateFileRequirementsRequest(
-                sample_sheet = '',
-                file_names = [
-                    ''
-                    ]
-            )
-        else:
-            return ValidateFileRequirementsRequest(
-                sample_sheet = '',
                 file_names = [
                     ''
                     ],
+                sample_sheet = ''
+            )
+        else:
+            return ValidateFileRequirementsRequest(
+                file_names = [
+                    ''
+                    ],
+                sample_sheet = '',
         )
         """
 

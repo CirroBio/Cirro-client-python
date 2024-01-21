@@ -1,6 +1,6 @@
 # Executor
 
-Process executor
+How the workflow is executed
 
 ## Properties
 

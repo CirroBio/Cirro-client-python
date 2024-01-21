@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.executor import Executor
+from cirro_api_client.models.executor import Executor
 
 class TestExecutor(unittest.TestCase):
     """Executor unit test stubs"""

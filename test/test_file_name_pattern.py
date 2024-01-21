@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.file_name_pattern import FileNamePattern
+from cirro_api_client.models.file_name_pattern import FileNamePattern
 
 class TestFileNamePattern(unittest.TestCase):
     """FileNamePattern unit test stubs"""

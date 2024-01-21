@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.get_execution_logs_response import GetExecutionLogsResponse
+from cirro_api_client.models.get_execution_logs_response import GetExecutionLogsResponse
 
 class TestGetExecutionLogsResponse(unittest.TestCase):
     """GetExecutionLogsResponse unit test stubs"""
@@ -38,7 +38,7 @@ class TestGetExecutionLogsResponse(unittest.TestCase):
         if include_optional:
             return GetExecutionLogsResponse(
                 events = [
-                    cirro.api.models.log_entry.LogEntry(
+                    cirro_api_client.models.log_entry.LogEntry(
                         timestamp = 56, 
                         message = '', )
                     ]
@@ -46,7 +46,7 @@ class TestGetExecutionLogsResponse(unittest.TestCase):
         else:
             return GetExecutionLogsResponse(
                 events = [
-                    cirro.api.models.log_entry.LogEntry(
+                    cirro_api_client.models.log_entry.LogEntry(
                         timestamp = 56, 
                         message = '', )
                     ],

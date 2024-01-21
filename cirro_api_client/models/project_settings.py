@@ -33,7 +33,7 @@ class ProjectSettings(BaseModel):
     ProjectSettings
     """ # noqa: E501
     budget_amount: Optional[Annotated[int, Field(strict=True, ge=0)]] = Field(default=None, description="Total allowed cost for the budget period", alias="budgetAmount")
-    budget_period: Any = Field(alias="budgetPeriod")
+    budget_period: Optional[Any] = Field(default=None, alias="budgetPeriod")
     dragen_ami: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="AMI ID for the DRAGEN compute environment (if enabled)", alias="dragenAmi")
     enable_compute: Optional[StrictBool] = Field(default=True, description="Enables the default compute environment", alias="enableCompute")
     enable_dragen: Optional[StrictBool] = Field(default=False, description="Enables the DRAGEN compute environment", alias="enableDragen")

@@ -22,6 +22,7 @@ import json
 from typing import Any, ClassVar, Dict, List
 from pydantic import BaseModel, StrictStr
 from pydantic import Field
+from typing_extensions import Annotated
 from cirro_api_client.models.billing_method import BillingMethod
 from cirro_api_client.models.contact import Contact
 from cirro_api_client.models.customer_type import CustomerType
@@ -34,8 +35,8 @@ class BillingAccountRequest(BaseModel):
     """
     BillingAccountRequest
     """ # noqa: E501
-    name: StrictStr
-    contacts: List[Contact]
+    name: Annotated[str, Field(min_length=1, strict=True)]
+    contacts: Annotated[List[Contact], Field(min_length=1)]
     customer_type: CustomerType = Field(alias="customerType")
     billing_method: BillingMethod = Field(alias="billingMethod")
     primary_budget_number: StrictStr = Field(alias="primaryBudgetNumber")

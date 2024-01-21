@@ -15,7 +15,7 @@
 
 import unittest
 
-from cirro.api.api.references_api import ReferencesApi
+from cirro_api_client.api.references_api import ReferencesApi
 
 
 class TestReferencesApi(unittest.TestCase):
@@ -25,6 +25,20 @@ class TestReferencesApi(unittest.TestCase):
         self.api = ReferencesApi()
 
     def tearDown(self) -> None:
+        pass
+
+    def test_create_project_reference(self) -> None:
+        """Test case for create_project_reference
+
+        Create project reference
+        """
+        pass
+
+    def test_delete_project_reference(self) -> None:
+        """Test case for delete_project_reference
+
+        Delete project reference
+        """
         pass
 
     def test_get_reference_types(self) -> None:
@@ -45,6 +59,13 @@ class TestReferencesApi(unittest.TestCase):
         """Test case for get_references_for_project
 
         Get project references
+        """
+        pass
+
+    def test_refresh_project_references(self) -> None:
+        """Test case for refresh_project_references
+
+        Refresh project references
         """
         pass
 

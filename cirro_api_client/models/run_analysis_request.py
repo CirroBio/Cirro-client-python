@@ -38,7 +38,7 @@ class RunAnalysisRequest(BaseModel):
     source_dataset_ids: List[StrictStr] = Field(alias="sourceDatasetIds")
     resume_dataset_id: StrictStr = Field(alias="resumeDatasetId")
     params: Dict[str, Any]
-    notification_emails: List[StrictStr] = Field(alias="notificationEmails")
+    notification_emails: Annotated[List[StrictStr], Field(max_length=5)] = Field(alias="notificationEmails")
     __properties: ClassVar[List[str]] = ["name", "description", "processId", "sourceDatasetIds", "resumeDatasetId", "params", "notificationEmails"]
 
     model_config = {

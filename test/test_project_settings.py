@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.project_settings import ProjectSettings
+from cirro_api_client.models.project_settings import ProjectSettings
 
 class TestProjectSettings(unittest.TestCase):
     """ProjectSettings unit test stubs"""
@@ -59,7 +59,6 @@ class TestProjectSettings(unittest.TestCase):
             )
         else:
             return ProjectSettings(
-                budget_period = None,
                 service_connections = [
                     ''
                     ],

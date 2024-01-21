@@ -15,7 +15,7 @@
 
 import unittest
 
-from cirro.api.api.datasets_api import DatasetsApi
+from cirro_api_client.api.datasets_api import DatasetsApi
 
 
 class TestDatasetsApi(unittest.TestCase):

@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.update_user_request import UpdateUserRequest
+from cirro_api_client.models.update_user_request import UpdateUserRequest
 
 class TestUpdateUserRequest(unittest.TestCase):
     """UpdateUserRequest unit test stubs"""

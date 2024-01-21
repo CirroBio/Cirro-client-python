@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.set_user_project_role_request import SetUserProjectRoleRequest
+from cirro_api_client.models.set_user_project_role_request import SetUserProjectRoleRequest
 
 class TestSetUserProjectRoleRequest(unittest.TestCase):
     """SetUserProjectRoleRequest unit test stubs"""

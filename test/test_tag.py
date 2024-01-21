@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.tag import Tag
+from cirro_api_client.models.tag import Tag
 
 class TestTag(unittest.TestCase):
     """Tag unit test stubs"""

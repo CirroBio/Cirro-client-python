@@ -15,7 +15,7 @@
 
 import unittest
 
-from cirro.api.api.dashboards_api import DashboardsApi
+from cirro_api_client.api.dashboards_api import DashboardsApi
 
 
 class TestDashboardsApi(unittest.TestCase):

@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.project import Project
+from cirro_api_client.models.project import Project
 
 class TestProject(unittest.TestCase):
     """Project unit test stubs"""
@@ -42,7 +42,7 @@ class TestProject(unittest.TestCase):
                 description = '',
                 status = 'COMPLETED',
                 tags = [
-                    cirro.api.models.tag.Tag(
+                    cirro_api_client.models.tag.Tag(
                         key = '', 
                         value = '', 
                         editable = True, )
@@ -56,7 +56,7 @@ class TestProject(unittest.TestCase):
                 description = '',
                 status = 'COMPLETED',
                 tags = [
-                    cirro.api.models.tag.Tag(
+                    cirro_api_client.models.tag.Tag(
                         key = '', 
                         value = '', 
                         editable = True, )

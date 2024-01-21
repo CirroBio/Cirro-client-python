@@ -15,7 +15,7 @@
 
 import unittest
 
-from cirro.api.api.notebooks_api import NotebooksApi
+from cirro_api_client.api.notebooks_api import NotebooksApi
 
 
 class TestNotebooksApi(unittest.TestCase):

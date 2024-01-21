@@ -16,10 +16,10 @@
 import unittest
 import datetime
 
-from cirro.api.models.dataset_file import DatasetFile
+from cirro_api_client.models.file_entry import FileEntry
 
-class TestDatasetFile(unittest.TestCase):
-    """DatasetFile unit test stubs"""
+class TestFileEntry(unittest.TestCase):
+    """FileEntry unit test stubs"""
 
     def setUp(self):
         pass
@@ -27,27 +27,27 @@ class TestDatasetFile(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> DatasetFile:
-        """Test DatasetFile
+    def make_instance(self, include_optional) -> FileEntry:
+        """Test FileEntry
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `DatasetFile`
+        # uncomment below to create an instance of `FileEntry`
         """
-        model = DatasetFile()
+        model = FileEntry()
         if include_optional:
-            return DatasetFile(
+            return FileEntry(
                 path = 'data/fastq/SRX12875516_SRR16674827_1.fastq.gz',
                 size = 1435658507,
                 metadata = {"read":1}
             )
         else:
-            return DatasetFile(
+            return FileEntry(
         )
         """
 
-    def testDatasetFile(self):
-        """Test DatasetFile"""
+    def testFileEntry(self):
+        """Test FileEntry"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

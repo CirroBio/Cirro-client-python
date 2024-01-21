@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.billing_account import BillingAccount
+from cirro_api_client.models.billing_account import BillingAccount
 
 class TestBillingAccount(unittest.TestCase):
     """BillingAccount unit test stubs"""
@@ -41,7 +41,7 @@ class TestBillingAccount(unittest.TestCase):
                 name = '',
                 organization = '',
                 contacts = [
-                    cirro.api.models.contact.Contact(
+                    cirro_api_client.models.contact.Contact(
                         name = '', 
                         organization = '', 
                         email = '', 
@@ -62,7 +62,7 @@ class TestBillingAccount(unittest.TestCase):
                 name = '',
                 organization = '',
                 contacts = [
-                    cirro.api.models.contact.Contact(
+                    cirro_api_client.models.contact.Contact(
                         name = '', 
                         organization = '', 
                         email = '', 

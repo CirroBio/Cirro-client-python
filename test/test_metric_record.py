@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.metric_record import MetricRecord
+from cirro_api_client.models.metric_record import MetricRecord
 
 class TestMetricRecord(unittest.TestCase):
     """MetricRecord unit test stubs"""

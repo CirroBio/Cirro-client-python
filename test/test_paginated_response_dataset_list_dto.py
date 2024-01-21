@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.paginated_response_dataset_list_dto import PaginatedResponseDatasetListDto
+from cirro_api_client.models.paginated_response_dataset_list_dto import PaginatedResponseDatasetListDto
 
 class TestPaginatedResponseDatasetListDto(unittest.TestCase):
     """PaginatedResponseDatasetListDto unit test stubs"""
@@ -38,7 +38,7 @@ class TestPaginatedResponseDatasetListDto(unittest.TestCase):
         if include_optional:
             return PaginatedResponseDatasetListDto(
                 data = [
-                    cirro.api.models.dataset.Dataset(
+                    cirro_api_client.models.dataset.Dataset(
                         id = '0', 
                         name = '', 
                         description = '', 
@@ -49,7 +49,7 @@ class TestPaginatedResponseDatasetListDto(unittest.TestCase):
                             ], 
                         status = 'COMPLETED', 
                         tags = [
-                            cirro.api.models.tag.Tag(
+                            cirro_api_client.models.tag.Tag(
                                 key = '', 
                                 value = '', 
                                 editable = True, )
@@ -63,7 +63,7 @@ class TestPaginatedResponseDatasetListDto(unittest.TestCase):
         else:
             return PaginatedResponseDatasetListDto(
                 data = [
-                    cirro.api.models.dataset.Dataset(
+                    cirro_api_client.models.dataset.Dataset(
                         id = '0', 
                         name = '', 
                         description = '', 
@@ -74,7 +74,7 @@ class TestPaginatedResponseDatasetListDto(unittest.TestCase):
                             ], 
                         status = 'COMPLETED', 
                         tags = [
-                            cirro.api.models.tag.Tag(
+                            cirro_api_client.models.tag.Tag(
                                 key = '', 
                                 value = '', 
                                 editable = True, )

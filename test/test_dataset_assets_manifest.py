@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.dataset_assets_manifest import DatasetAssetsManifest
+from cirro_api_client.models.dataset_assets_manifest import DatasetAssetsManifest
 
 class TestDatasetAssetsManifest(unittest.TestCase):
     """DatasetAssetsManifest unit test stubs"""
@@ -39,13 +39,13 @@ class TestDatasetAssetsManifest(unittest.TestCase):
             return DatasetAssetsManifest(
                 domain = 's3://project-1a1a/datasets/1a1a',
                 files = [
-                    cirro.api.models.dataset_file.DatasetFile(
+                    cirro_api_client.models.file_entry.FileEntry(
                         path = 'data/fastq/SRX12875516_SRR16674827_1.fastq.gz', 
                         size = 1435658507, 
                         metadata = {"read":1}, )
                     ],
                 viz = [
-                    cirro.api.models.dataset_viz.DatasetViz(
+                    cirro_api_client.models.dataset_viz.DatasetViz(
                         name = '', 
                         desc = '', 
                         type = 'vitescce', 

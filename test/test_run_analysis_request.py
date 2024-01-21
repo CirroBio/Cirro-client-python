@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.run_analysis_request import RunAnalysisRequest
+from cirro_api_client.models.run_analysis_request import RunAnalysisRequest
 
 class TestRunAnalysisRequest(unittest.TestCase):
     """RunAnalysisRequest unit test stubs"""

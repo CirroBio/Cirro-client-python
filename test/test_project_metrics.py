@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.project_metrics import ProjectMetrics
+from cirro_api_client.models.project_metrics import ProjectMetrics
 
 class TestProjectMetrics(unittest.TestCase):
     """ProjectMetrics unit test stubs"""

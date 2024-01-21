@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.sftp_credentials import SftpCredentials
+from cirro_api_client.models.sftp_credentials import SftpCredentials
 
 class TestSftpCredentials(unittest.TestCase):
     """SftpCredentials unit test stubs"""

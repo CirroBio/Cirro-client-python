@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.create_response import CreateResponse
+from cirro_api_client.models.create_response import CreateResponse
 
 class TestCreateResponse(unittest.TestCase):
     """CreateResponse unit test stubs"""

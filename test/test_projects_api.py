@@ -15,7 +15,7 @@
 
 import unittest
 
-from cirro.api.api.projects_api import ProjectsApi
+from cirro_api_client.api.projects_api import ProjectsApi
 
 
 class TestProjectsApi(unittest.TestCase):

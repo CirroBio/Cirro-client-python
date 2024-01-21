@@ -15,7 +15,7 @@
 
 import unittest
 
-from cirro.api.api.execution_api import ExecutionApi
+from cirro_api_client.api.execution_api import ExecutionApi
 
 
 class TestExecutionApi(unittest.TestCase):

@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.invite_user_request import InviteUserRequest
+from cirro_api_client.models.invite_user_request import InviteUserRequest
 
 class TestInviteUserRequest(unittest.TestCase):
     """InviteUserRequest unit test stubs"""

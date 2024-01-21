@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.reference_type import ReferenceType
+from cirro_api_client.models.reference_type import ReferenceType
 
 class TestReferenceType(unittest.TestCase):
     """ReferenceType unit test stubs"""

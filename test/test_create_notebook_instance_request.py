@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.create_notebook_instance_request import CreateNotebookInstanceRequest
+from cirro_api_client.models.create_notebook_instance_request import CreateNotebookInstanceRequest
 
 class TestCreateNotebookInstanceRequest(unittest.TestCase):
     """CreateNotebookInstanceRequest unit test stubs"""

@@ -15,7 +15,7 @@
 
 import unittest
 
-from cirro.api.api.metrics_api import MetricsApi
+from cirro_api_client.api.metrics_api import MetricsApi
 
 
 class TestMetricsApi(unittest.TestCase):

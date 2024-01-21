@@ -22,8 +22,8 @@ import json
 from typing import Any, ClassVar, Dict, List, Optional
 from pydantic import BaseModel, StrictStr
 from pydantic import Field
-from cirro_api_client.models.dataset_file import DatasetFile
 from cirro_api_client.models.dataset_viz import DatasetViz
+from cirro_api_client.models.file_entry import FileEntry
 try:
     from typing import Self
 except ImportError:
@@ -34,7 +34,7 @@ class DatasetAssetsManifest(BaseModel):
     DatasetAssetsManifest
     """ # noqa: E501
     domain: Optional[StrictStr] = Field(default=None, description="Base URL for files")
-    files: Optional[List[DatasetFile]] = Field(default=None, description="List of files in the dataset, including metadata")
+    files: Optional[List[FileEntry]] = Field(default=None, description="List of files in the dataset, including metadata")
     viz: Optional[List[DatasetViz]] = Field(default=None, description="List of viz to render for the dataset")
     __properties: ClassVar[List[str]] = ["domain", "files", "viz"]
 
@@ -102,7 +102,7 @@ class DatasetAssetsManifest(BaseModel):
 
         _obj = cls.model_validate({
             "domain": obj.get("domain"),
-            "files": [DatasetFile.from_dict(_item) for _item in obj.get("files")] if obj.get("files") is not None else None,
+            "files": [FileEntry.from_dict(_item) for _item in obj.get("files")] if obj.get("files") is not None else None,
             "viz": [DatasetViz.from_dict(_item) for _item in obj.get("viz")] if obj.get("viz") is not None else None
         })
         return _obj

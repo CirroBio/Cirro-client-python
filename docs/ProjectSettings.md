@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **budget_amount** | **int** | Total allowed cost for the budget period | [optional] 
-**budget_period** | [**BudgetPeriod**](BudgetPeriod.md) |  | 
+**budget_period** | [**BudgetPeriod**](BudgetPeriod.md) |  | [optional] 
 **dragen_ami** | **str** | AMI ID for the DRAGEN compute environment (if enabled) | [optional] 
 **enable_compute** | **bool** | Enables the default compute environment | [optional] [default to True]
 **enable_dragen** | **bool** | Enables the DRAGEN compute environment | [optional] [default to False]

@@ -22,6 +22,7 @@ import json
 from typing import Any, ClassVar, Dict, List
 from pydantic import BaseModel, StrictStr
 from pydantic import Field
+from cirro_api_client.models.resources_info import ResourcesInfo
 try:
     from typing import Self
 except ImportError:
@@ -38,7 +39,8 @@ class SystemInfoResponse(BaseModel):
     system_message: StrictStr = Field(alias="systemMessage")
     commit_hash: StrictStr = Field(alias="commitHash")
     version: StrictStr
-    __properties: ClassVar[List[str]] = ["sdkAppId", "resourcesBucket", "dataEndpoint", "region", "systemMessage", "commitHash", "version"]
+    resources_info: ResourcesInfo = Field(alias="resourcesInfo")
+    __properties: ClassVar[List[str]] = ["sdkAppId", "resourcesBucket", "dataEndpoint", "region", "systemMessage", "commitHash", "version", "resourcesInfo"]
 
     model_config = {
         "populate_by_name": True,
@@ -77,6 +79,9 @@ class SystemInfoResponse(BaseModel):
             },
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of resources_info
+        if self.resources_info:
+            _dict['resourcesInfo'] = self.resources_info.to_dict()
         return _dict
 
     @classmethod
@@ -95,7 +100,8 @@ class SystemInfoResponse(BaseModel):
             "region": obj.get("region"),
             "systemMessage": obj.get("systemMessage"),
             "commitHash": obj.get("commitHash"),
-            "version": obj.get("version")
+            "version": obj.get("version"),
+            "resourcesInfo": ResourcesInfo.from_dict(obj.get("resourcesInfo")) if obj.get("resourcesInfo") is not None else None
         })
         return _obj
 

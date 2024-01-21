@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.custom_pipeline_settings import CustomPipelineSettings
+from cirro_api_client.models.custom_pipeline_settings import CustomPipelineSettings
 
 class TestCustomPipelineSettings(unittest.TestCase):
     """CustomPipelineSettings unit test stubs"""
@@ -37,21 +37,16 @@ class TestCustomPipelineSettings(unittest.TestCase):
         model = CustomPipelineSettings()
         if include_optional:
             return CustomPipelineSettings(
-                repository = '',
-                branch = '',
-                folder = '',
+                repository = 'CirroBio/my-pipeline',
+                branch = 'main',
+                folder = '.cirro',
                 last_sync = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
-                sync_status = '',
+                sync_status = None,
                 commit_hash = ''
             )
         else:
             return CustomPipelineSettings(
-                repository = '',
-                branch = '',
-                folder = '',
-                last_sync = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
-                sync_status = '',
-                commit_hash = '',
+                repository = 'CirroBio/my-pipeline',
         )
         """
 

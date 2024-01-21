@@ -20,10 +20,12 @@ import json
 
 
 from typing import Any, ClassVar, Dict, List, Optional
-from pydantic import BaseModel, StrictBool, StrictStr
+from pydantic import BaseModel, StrictBool, StrictStr, field_validator
 from pydantic import Field
+from typing_extensions import Annotated
 from cirro_api_client.models.custom_pipeline_settings import CustomPipelineSettings
 from cirro_api_client.models.executor import Executor
+from cirro_api_client.models.process_detail_all_of_pipeline_code import ProcessDetailAllOfPipelineCode
 try:
     from typing import Self
 except ImportError:
@@ -33,19 +35,27 @@ class ProcessDetail(BaseModel):
     """
     ProcessDetail
     """ # noqa: E501
-    id: StrictStr = Field(description="Unique ID of the Process")
-    name: StrictStr
-    description: StrictStr
+    id: Annotated[str, Field(min_length=4, strict=True, max_length=40)]
+    name: Annotated[str, Field(min_length=4, strict=True, max_length=50)]
+    description: Annotated[str, Field(min_length=1, strict=True)]
     executor: Executor
-    documentation_url: StrictStr = Field(alias="documentationUrl")
-    file_requirements_message: Optional[StrictStr] = Field(default=None, description="Description of the files to be uploaded (optional)", alias="fileRequirementsMessage")
+    documentation_url: Optional[StrictStr] = Field(default=None, alias="documentationUrl")
+    file_requirements_message: Optional[StrictStr] = Field(default=None, alias="fileRequirementsMessage")
     child_process_ids: List[StrictStr] = Field(alias="childProcessIds")
     parent_process_ids: List[StrictStr] = Field(alias="parentProcessIds")
-    owner: StrictStr
+    owner: Optional[StrictStr] = None
     linked_project_ids: List[StrictStr] = Field(alias="linkedProjectIds")
+    pipeline_code: Optional[ProcessDetailAllOfPipelineCode] = Field(default=None, alias="pipelineCode")
     custom_settings: CustomPipelineSettings = Field(alias="customSettings")
-    is_archived: StrictBool = Field(alias="isArchived")
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "executor", "documentationUrl", "fileRequirementsMessage", "childProcessIds", "parentProcessIds", "owner", "linkedProjectIds", "customSettings", "isArchived"]
+    is_archived: Optional[StrictBool] = Field(default=None, description="Whether the process is marked for removal", alias="isArchived")
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "executor", "documentationUrl", "fileRequirementsMessage", "childProcessIds", "parentProcessIds", "owner", "linkedProjectIds", "pipelineCode", "customSettings", "isArchived"]
+
+    @field_validator('id')
+    def id_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if not re.match(r"^[a-z0-9-]+$", value):
+            raise ValueError(r"must validate the regular expression /^[a-z0-9-]+$/")
+        return value
 
     model_config = {
         "populate_by_name": True,
@@ -84,9 +94,27 @@ class ProcessDetail(BaseModel):
             },
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of pipeline_code
+        if self.pipeline_code:
+            _dict['pipelineCode'] = self.pipeline_code.to_dict()
         # override the default output from pydantic by calling `to_dict()` of custom_settings
         if self.custom_settings:
             _dict['customSettings'] = self.custom_settings.to_dict()
+        # set to None if documentation_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.documentation_url is None and "documentation_url" in self.model_fields_set:
+            _dict['documentationUrl'] = None
+
+        # set to None if file_requirements_message (nullable) is None
+        # and model_fields_set contains the field
+        if self.file_requirements_message is None and "file_requirements_message" in self.model_fields_set:
+            _dict['fileRequirementsMessage'] = None
+
+        # set to None if pipeline_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.pipeline_code is None and "pipeline_code" in self.model_fields_set:
+            _dict['pipelineCode'] = None
+
         return _dict
 
     @classmethod
@@ -109,6 +137,7 @@ class ProcessDetail(BaseModel):
             "parentProcessIds": obj.get("parentProcessIds"),
             "owner": obj.get("owner"),
             "linkedProjectIds": obj.get("linkedProjectIds"),
+            "pipelineCode": ProcessDetailAllOfPipelineCode.from_dict(obj.get("pipelineCode")) if obj.get("pipelineCode") is not None else None,
             "customSettings": CustomPipelineSettings.from_dict(obj.get("customSettings")) if obj.get("customSettings") is not None else None,
             "isArchived": obj.get("isArchived")
         })

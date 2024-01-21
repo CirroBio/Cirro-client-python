@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.sample_request import SampleRequest
+from cirro_api_client.models.sample_request import SampleRequest
 
 class TestSampleRequest(unittest.TestCase):
     """SampleRequest unit test stubs"""

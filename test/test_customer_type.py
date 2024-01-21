@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.customer_type import CustomerType
+from cirro_api_client.models.customer_type import CustomerType
 
 class TestCustomerType(unittest.TestCase):
     """CustomerType unit test stubs"""

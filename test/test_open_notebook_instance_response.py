@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.open_notebook_instance_response import OpenNotebookInstanceResponse
+from cirro_api_client.models.open_notebook_instance_response import OpenNotebookInstanceResponse
 
 class TestOpenNotebookInstanceResponse(unittest.TestCase):
     """OpenNotebookInstanceResponse unit test stubs"""

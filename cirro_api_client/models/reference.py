@@ -22,6 +22,7 @@ from datetime import datetime
 from typing import Any, ClassVar, Dict, List
 from pydantic import BaseModel, StrictStr
 from pydantic import Field
+from cirro_api_client.models.file_entry import FileEntry
 try:
     from typing import Self
 except ImportError:
@@ -31,12 +32,14 @@ class Reference(BaseModel):
     """
     Reference
     """ # noqa: E501
+    id: StrictStr
     name: StrictStr
-    reference_type: StrictStr = Field(alias="referenceType")
-    files: List[StrictStr]
+    description: StrictStr
+    type: StrictStr
+    files: List[FileEntry]
     created_by: StrictStr = Field(alias="createdBy")
     created_at: datetime = Field(alias="createdAt")
-    __properties: ClassVar[List[str]] = ["name", "referenceType", "files", "createdBy", "createdAt"]
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "type", "files", "createdBy", "createdAt"]
 
     model_config = {
         "populate_by_name": True,
@@ -75,6 +78,13 @@ class Reference(BaseModel):
             },
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in files (list)
+        _items = []
+        if self.files:
+            for _item in self.files:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['files'] = _items
         return _dict
 
     @classmethod
@@ -87,9 +97,11 @@ class Reference(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "id": obj.get("id"),
             "name": obj.get("name"),
-            "referenceType": obj.get("referenceType"),
-            "files": obj.get("files"),
+            "description": obj.get("description"),
+            "type": obj.get("type"),
+            "files": [FileEntry.from_dict(_item) for _item in obj.get("files")] if obj.get("files") is not None else None,
             "createdBy": obj.get("createdBy"),
             "createdAt": obj.get("createdAt")
         })

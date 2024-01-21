@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.budget_period import BudgetPeriod
+from cirro_api_client.models.budget_period import BudgetPeriod
 
 class TestBudgetPeriod(unittest.TestCase):
     """BudgetPeriod unit test stubs"""

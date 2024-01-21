@@ -15,7 +15,7 @@
 
 import unittest
 
-from cirro.api.api.metadata_api import MetadataApi
+from cirro_api_client.api.metadata_api import MetadataApi
 
 
 class TestMetadataApi(unittest.TestCase):

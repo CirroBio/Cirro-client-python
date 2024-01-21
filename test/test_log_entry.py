@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.log_entry import LogEntry
+from cirro_api_client.models.log_entry import LogEntry
 
 class TestLogEntry(unittest.TestCase):
     """LogEntry unit test stubs"""

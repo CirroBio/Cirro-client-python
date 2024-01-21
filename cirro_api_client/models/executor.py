@@ -29,7 +29,7 @@ except ImportError:
 
 class Executor(str, Enum):
     """
-    Process executor
+    How the workflow is executed
     """
 
     """

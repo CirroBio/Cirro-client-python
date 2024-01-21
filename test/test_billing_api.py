@@ -15,7 +15,7 @@
 
 import unittest
 
-from cirro.api.api.billing_api import BillingApi
+from cirro_api_client.api.billing_api import BillingApi
 
 
 class TestBillingApi(unittest.TestCase):

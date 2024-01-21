@@ -31,9 +31,9 @@ class ValidateFileRequirementsRequest(BaseModel):
     """
     ValidateFileRequirementsRequest
     """ # noqa: E501
-    sample_sheet: StrictStr = Field(alias="sampleSheet")
     file_names: List[StrictStr] = Field(alias="fileNames")
-    __properties: ClassVar[List[str]] = ["sampleSheet", "fileNames"]
+    sample_sheet: StrictStr = Field(alias="sampleSheet")
+    __properties: ClassVar[List[str]] = ["fileNames", "sampleSheet"]
 
     model_config = {
         "populate_by_name": True,
@@ -84,8 +84,8 @@ class ValidateFileRequirementsRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "sampleSheet": obj.get("sampleSheet"),
-            "fileNames": obj.get("fileNames")
+            "fileNames": obj.get("fileNames"),
+            "sampleSheet": obj.get("sampleSheet")
         })
         return _obj
 

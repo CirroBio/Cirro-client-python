@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.import_data_request import ImportDataRequest
+from cirro_api_client.models.import_data_request import ImportDataRequest
 
 class TestImportDataRequest(unittest.TestCase):
     """ImportDataRequest unit test stubs"""

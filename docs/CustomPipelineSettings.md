@@ -1,16 +1,17 @@
 # CustomPipelineSettings
 
+Used to describe the location of the process definition dependencies
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**repository** | **str** |  | 
-**branch** | **str** |  | 
-**folder** | **str** |  | 
-**last_sync** | **datetime** |  | 
-**sync_status** | **str** |  | 
-**commit_hash** | **str** |  | 
+**repository** | **str** | GitHub repository that contains the process definition | 
+**branch** | **str** | Branch, tag, or commit hash of the repo that contains the process definition | [optional] [default to 'main']
+**folder** | **str** | Folder within the repo that contains the process definition | [optional] [default to '.cirro']
+**last_sync** | **datetime** | Time of last sync | [optional] 
+**sync_status** | [**SyncStatus**](SyncStatus.md) |  | [optional] 
+**commit_hash** | **str** | Commit hash of the last successful sync | [optional] 
 
 ## Example
 

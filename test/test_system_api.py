@@ -15,7 +15,7 @@
 
 import unittest
 
-from cirro.api.api.system_api import SystemApi
+from cirro_api_client.api.system_api import SystemApi
 
 
 class TestSystemApi(unittest.TestCase):
@@ -36,13 +36,6 @@ class TestSystemApi(unittest.TestCase):
 
     def test_info(self) -> None:
         """Test case for info
-
-        Get system info
-        """
-        pass
-
-    def test_info1(self) -> None:
-        """Test case for info1
 
         Get system info
         """

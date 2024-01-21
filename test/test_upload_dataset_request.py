@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.upload_dataset_request import UploadDatasetRequest
+from cirro_api_client.models.upload_dataset_request import UploadDatasetRequest
 
 class TestUploadDatasetRequest(unittest.TestCase):
     """UploadDatasetRequest unit test stubs"""

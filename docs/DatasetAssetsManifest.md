@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **domain** | **str** | Base URL for files | [optional] 
-**files** | [**List[DatasetFile]**](DatasetFile.md) | List of files in the dataset, including metadata | [optional] 
+**files** | [**List[FileEntry]**](FileEntry.md) | List of files in the dataset, including metadata | [optional] 
 **viz** | [**List[DatasetViz]**](DatasetViz.md) | List of viz to render for the dataset | [optional] 
 
 ## Example

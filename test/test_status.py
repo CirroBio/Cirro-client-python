@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.status import Status
+from cirro_api_client.models.status import Status
 
 class TestStatus(unittest.TestCase):
     """Status unit test stubs"""

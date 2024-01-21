@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.task import Task
+from cirro_api_client.models.task import Task
 
 class TestTask(unittest.TestCase):
     """Task unit test stubs"""

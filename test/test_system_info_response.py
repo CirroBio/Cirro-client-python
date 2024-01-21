@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.system_info_response import SystemInfoResponse
+from cirro_api_client.models.system_info_response import SystemInfoResponse
 
 class TestSystemInfoResponse(unittest.TestCase):
     """SystemInfoResponse unit test stubs"""
@@ -43,7 +43,12 @@ class TestSystemInfoResponse(unittest.TestCase):
                 region = '',
                 system_message = '',
                 commit_hash = '',
-                version = ''
+                version = '',
+                resources_info = cirro_api_client.models.resources_info.ResourcesInfo(
+                    commit = '', 
+                    date = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                    repository = '', 
+                    source_version = '', )
             )
         else:
             return SystemInfoResponse(
@@ -54,6 +59,11 @@ class TestSystemInfoResponse(unittest.TestCase):
                 system_message = '',
                 commit_hash = '',
                 version = '',
+                resources_info = cirro_api_client.models.resources_info.ResourcesInfo(
+                    commit = '', 
+                    date = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                    repository = '', 
+                    source_version = '', ),
         )
         """
 

@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.0.0"
+__version__ = "0.0.1-alpha"
 
 # import apis into sdk package
 from cirro_api_client.api.billing_api import BillingApi
@@ -44,6 +44,8 @@ from cirro_api_client.exceptions import ApiAttributeError
 from cirro_api_client.exceptions import ApiException
 
 # import models into sdk package
+from cirro_api_client.models.aws_credentials import AWSCredentials
+from cirro_api_client.models.access_type import AccessType
 from cirro_api_client.models.allowed_data_type import AllowedDataType
 from cirro_api_client.models.billing_account import BillingAccount
 from cirro_api_client.models.billing_account_request import BillingAccountRequest
@@ -52,6 +54,7 @@ from cirro_api_client.models.budget_period import BudgetPeriod
 from cirro_api_client.models.cloud_account import CloudAccount
 from cirro_api_client.models.contact import Contact
 from cirro_api_client.models.create_notebook_instance_request import CreateNotebookInstanceRequest
+from cirro_api_client.models.create_reference_request import CreateReferenceRequest
 from cirro_api_client.models.create_response import CreateResponse
 from cirro_api_client.models.custom_pipeline_settings import CustomPipelineSettings
 from cirro_api_client.models.customer_type import CustomerType
@@ -60,9 +63,11 @@ from cirro_api_client.models.dashboard_request import DashboardRequest
 from cirro_api_client.models.dataset import Dataset
 from cirro_api_client.models.dataset_assets_manifest import DatasetAssetsManifest
 from cirro_api_client.models.dataset_detail import DatasetDetail
-from cirro_api_client.models.dataset_file import DatasetFile
 from cirro_api_client.models.dataset_viz import DatasetViz
+from cirro_api_client.models.error_message import ErrorMessage
 from cirro_api_client.models.executor import Executor
+from cirro_api_client.models.file_access_request import FileAccessRequest
+from cirro_api_client.models.file_entry import FileEntry
 from cirro_api_client.models.file_name_pattern import FileNamePattern
 from cirro_api_client.models.file_requirements import FileRequirements
 from cirro_api_client.models.form_schema import FormSchema
@@ -78,8 +83,11 @@ from cirro_api_client.models.notebook_instance_status_response import NotebookIn
 from cirro_api_client.models.open_notebook_instance_response import OpenNotebookInstanceResponse
 from cirro_api_client.models.paginated_response_dataset_list_dto import PaginatedResponseDatasetListDto
 from cirro_api_client.models.paginated_response_sample_dto import PaginatedResponseSampleDto
+from cirro_api_client.models.pipeline_code import PipelineCode
+from cirro_api_client.models.portal_error_response import PortalErrorResponse
 from cirro_api_client.models.process import Process
 from cirro_api_client.models.process_detail import ProcessDetail
+from cirro_api_client.models.process_detail_all_of_pipeline_code import ProcessDetailAllOfPipelineCode
 from cirro_api_client.models.project import Project
 from cirro_api_client.models.project_detail import ProjectDetail
 from cirro_api_client.models.project_metrics import ProjectMetrics
@@ -89,6 +97,8 @@ from cirro_api_client.models.project_settings import ProjectSettings
 from cirro_api_client.models.project_user import ProjectUser
 from cirro_api_client.models.reference import Reference
 from cirro_api_client.models.reference_type import ReferenceType
+from cirro_api_client.models.repository_type import RepositoryType
+from cirro_api_client.models.resources_info import ResourcesInfo
 from cirro_api_client.models.run_analysis_request import RunAnalysisRequest
 from cirro_api_client.models.sample import Sample
 from cirro_api_client.models.sample_request import SampleRequest
@@ -97,6 +107,7 @@ from cirro_api_client.models.set_user_project_role_request import SetUserProject
 from cirro_api_client.models.sftp_credentials import SftpCredentials
 from cirro_api_client.models.status import Status
 from cirro_api_client.models.stop_execution_response import StopExecutionResponse
+from cirro_api_client.models.sync_status import SyncStatus
 from cirro_api_client.models.system_info_response import SystemInfoResponse
 from cirro_api_client.models.tag import Tag
 from cirro_api_client.models.task import Task

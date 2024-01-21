@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.form_schema import FormSchema
+from cirro_api_client.models.form_schema import FormSchema
 
 class TestFormSchema(unittest.TestCase):
     """FormSchema unit test stubs"""

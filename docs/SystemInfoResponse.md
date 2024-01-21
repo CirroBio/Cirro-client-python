@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **system_message** | **str** |  | 
 **commit_hash** | **str** |  | 
 **version** | **str** |  | 
+**resources_info** | [**ResourcesInfo**](ResourcesInfo.md) |  | 
 
 ## Example
 

@@ -40,9 +40,9 @@ class ProjectRequest(BaseModel):
     description: Annotated[str, Field(min_length=1, strict=True)]
     billing_account_id: Annotated[str, Field(min_length=1, strict=True)] = Field(alias="billingAccountId")
     settings: ProjectSettings
-    contacts: List[Contact]
-    account: Optional[CloudAccount]
-    tags: Optional[List[Tag]]
+    contacts: Annotated[List[Contact], Field(min_length=1)]
+    account: Optional[CloudAccount] = None
+    tags: Optional[List[Tag]] = None
     __properties: ClassVar[List[str]] = ["name", "description", "billingAccountId", "settings", "contacts", "account", "tags"]
 
     model_config = {

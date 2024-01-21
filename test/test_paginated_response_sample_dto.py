@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.paginated_response_sample_dto import PaginatedResponseSampleDto
+from cirro_api_client.models.paginated_response_sample_dto import PaginatedResponseSampleDto
 
 class TestPaginatedResponseSampleDto(unittest.TestCase):
     """PaginatedResponseSampleDto unit test stubs"""
@@ -38,7 +38,7 @@ class TestPaginatedResponseSampleDto(unittest.TestCase):
         if include_optional:
             return PaginatedResponseSampleDto(
                 data = [
-                    cirro.api.models.sample.Sample(
+                    cirro_api_client.models.sample.Sample(
                         id = '', 
                         name = '', 
                         metadata = { }, 
@@ -53,7 +53,7 @@ class TestPaginatedResponseSampleDto(unittest.TestCase):
         else:
             return PaginatedResponseSampleDto(
                 data = [
-                    cirro.api.models.sample.Sample(
+                    cirro_api_client.models.sample.Sample(
                         id = '', 
                         name = '', 
                         metadata = { }, 

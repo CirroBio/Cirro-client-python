@@ -5,9 +5,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**id** | **str** |  | 
 **name** | **str** |  | 
-**reference_type** | **str** |  | 
-**files** | **List[str]** |  | 
+**description** | **str** |  | 
+**type** | **str** |  | 
+**files** | [**List[FileEntry]**](FileEntry.md) |  | 
 **created_by** | **str** |  | 
 **created_at** | **datetime** |  | 
 

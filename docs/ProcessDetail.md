@@ -5,18 +5,19 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** | Unique ID of the Process | 
+**id** | **str** |  | 
 **name** | **str** |  | 
 **description** | **str** |  | 
 **executor** | [**Executor**](Executor.md) |  | 
-**documentation_url** | **str** |  | 
-**file_requirements_message** | **str** | Description of the files to be uploaded (optional) | [optional] 
+**documentation_url** | **str** |  | [optional] 
+**file_requirements_message** | **str** |  | [optional] 
 **child_process_ids** | **List[str]** |  | 
 **parent_process_ids** | **List[str]** |  | 
-**owner** | **str** |  | 
+**owner** | **str** |  | [optional] 
 **linked_project_ids** | **List[str]** |  | 
+**pipeline_code** | [**ProcessDetailAllOfPipelineCode**](ProcessDetailAllOfPipelineCode.md) |  | [optional] 
 **custom_settings** | [**CustomPipelineSettings**](CustomPipelineSettings.md) |  | 
-**is_archived** | **bool** |  | 
+**is_archived** | **bool** | Whether the process is marked for removal | [optional] 
 
 ## Example
 

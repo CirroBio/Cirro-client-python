@@ -1,7 +1,3 @@
-.github/workflows/python.yml
-.gitignore
-.gitlab-ci.yml
-.travis.yml
 README.md
 cirro_api_client/__init__.py
 cirro_api_client/api/__init__.py
@@ -23,7 +19,9 @@ cirro_api_client/api_response.py
 cirro_api_client/configuration.py
 cirro_api_client/exceptions.py
 cirro_api_client/models/__init__.py
+cirro_api_client/models/access_type.py
 cirro_api_client/models/allowed_data_type.py
+cirro_api_client/models/aws_credentials.py
 cirro_api_client/models/billing_account.py
 cirro_api_client/models/billing_account_request.py
 cirro_api_client/models/billing_method.py
@@ -31,6 +29,7 @@ cirro_api_client/models/budget_period.py
 cirro_api_client/models/cloud_account.py
 cirro_api_client/models/contact.py
 cirro_api_client/models/create_notebook_instance_request.py
+cirro_api_client/models/create_reference_request.py
 cirro_api_client/models/create_response.py
 cirro_api_client/models/custom_pipeline_settings.py
 cirro_api_client/models/customer_type.py
@@ -39,9 +38,11 @@ cirro_api_client/models/dashboard_request.py
 cirro_api_client/models/dataset.py
 cirro_api_client/models/dataset_assets_manifest.py
 cirro_api_client/models/dataset_detail.py
-cirro_api_client/models/dataset_file.py
 cirro_api_client/models/dataset_viz.py
+cirro_api_client/models/error_message.py
 cirro_api_client/models/executor.py
+cirro_api_client/models/file_access_request.py
+cirro_api_client/models/file_entry.py
 cirro_api_client/models/file_name_pattern.py
 cirro_api_client/models/file_requirements.py
 cirro_api_client/models/form_schema.py
@@ -57,8 +58,11 @@ cirro_api_client/models/notebook_instance_status_response.py
 cirro_api_client/models/open_notebook_instance_response.py
 cirro_api_client/models/paginated_response_dataset_list_dto.py
 cirro_api_client/models/paginated_response_sample_dto.py
+cirro_api_client/models/pipeline_code.py
+cirro_api_client/models/portal_error_response.py
 cirro_api_client/models/process.py
 cirro_api_client/models/process_detail.py
+cirro_api_client/models/process_detail_all_of_pipeline_code.py
 cirro_api_client/models/project.py
 cirro_api_client/models/project_detail.py
 cirro_api_client/models/project_metrics.py
@@ -68,6 +72,8 @@ cirro_api_client/models/project_settings.py
 cirro_api_client/models/project_user.py
 cirro_api_client/models/reference.py
 cirro_api_client/models/reference_type.py
+cirro_api_client/models/repository_type.py
+cirro_api_client/models/resources_info.py
 cirro_api_client/models/run_analysis_request.py
 cirro_api_client/models/sample.py
 cirro_api_client/models/sample_request.py
@@ -76,6 +82,7 @@ cirro_api_client/models/set_user_project_role_request.py
 cirro_api_client/models/sftp_credentials.py
 cirro_api_client/models/status.py
 cirro_api_client/models/stop_execution_response.py
+cirro_api_client/models/sync_status.py
 cirro_api_client/models/system_info_response.py
 cirro_api_client/models/tag.py
 cirro_api_client/models/task.py
@@ -87,6 +94,8 @@ cirro_api_client/models/user.py
 cirro_api_client/models/validate_file_requirements_request.py
 cirro_api_client/py.typed
 cirro_api_client/rest.py
+docs/AWSCredentials.md
+docs/AccessType.md
 docs/AllowedDataType.md
 docs/BillingAccount.md
 docs/BillingAccountRequest.md
@@ -96,6 +105,7 @@ docs/BudgetPeriod.md
 docs/CloudAccount.md
 docs/Contact.md
 docs/CreateNotebookInstanceRequest.md
+docs/CreateReferenceRequest.md
 docs/CreateResponse.md
 docs/CustomPipelineSettings.md
 docs/CustomerType.md
@@ -105,12 +115,14 @@ docs/DashboardsApi.md
 docs/Dataset.md
 docs/DatasetAssetsManifest.md
 docs/DatasetDetail.md
-docs/DatasetFile.md
 docs/DatasetViz.md
 docs/DatasetsApi.md
+docs/ErrorMessage.md
 docs/ExecutionApi.md
 docs/Executor.md
+docs/FileAccessRequest.md
 docs/FileApi.md
+docs/FileEntry.md
 docs/FileNamePattern.md
 docs/FileRequirements.md
 docs/FormSchema.md
@@ -129,8 +141,11 @@ docs/NotebooksApi.md
 docs/OpenNotebookInstanceResponse.md
 docs/PaginatedResponseDatasetListDto.md
 docs/PaginatedResponseSampleDto.md
+docs/PipelineCode.md
+docs/PortalErrorResponse.md
 docs/Process.md
 docs/ProcessDetail.md
+docs/ProcessDetailAllOfPipelineCode.md
 docs/ProcessesApi.md
 docs/Project.md
 docs/ProjectDetail.md
@@ -143,6 +158,8 @@ docs/ProjectsApi.md
 docs/Reference.md
 docs/ReferenceType.md
 docs/ReferencesApi.md
+docs/RepositoryType.md
+docs/ResourcesInfo.md
 docs/RunAnalysisRequest.md
 docs/Sample.md
 docs/SampleRequest.md
@@ -151,6 +168,7 @@ docs/SetUserProjectRoleRequest.md
 docs/SftpCredentials.md
 docs/Status.md
 docs/StopExecutionResponse.md
+docs/SyncStatus.md
 docs/SystemApi.md
 docs/SystemInfoResponse.md
 docs/Tag.md
@@ -162,7 +180,6 @@ docs/UploadDatasetRequest.md
 docs/User.md
 docs/UsersApi.md
 docs/ValidateFileRequirementsRequest.md
-git_push.sh
 pyproject.toml
 requirements.txt
 setup.cfg

@@ -32,13 +32,13 @@ class Process(BaseModel):
     Process
     """ # noqa: E501
     id: StrictStr = Field(description="Unique ID of the Process")
-    name: Optional[StrictStr] = None
+    name: Optional[StrictStr] = Field(default=None, description="Friendly name for the process")
     description: Optional[StrictStr] = None
     executor: Optional[Any] = None
     documentation_url: Optional[StrictStr] = Field(default=None, description="Link to pipeline documentation", alias="documentationUrl")
     file_requirements_message: Optional[StrictStr] = Field(default=None, description="Description of the files to be uploaded (optional)", alias="fileRequirementsMessage")
     child_process_ids: Optional[List[StrictStr]] = Field(default=None, description="IDs of pipelines that can be ran downstream", alias="childProcessIds")
-    parent_process_ids: Optional[List[StrictStr]] = Field(default=None, description="IDs of pipelines that can be ran upstream", alias="parentProcessIds")
+    parent_process_ids: Optional[List[StrictStr]] = Field(default=None, description="IDs of pipelines that can run this pipeline", alias="parentProcessIds")
     owner: Optional[StrictStr] = Field(default=None, description="Username of the pipeline creator (blank if Cirro curated)")
     linked_project_ids: Optional[List[StrictStr]] = Field(default=None, description="Projects that can run this pipeline", alias="linkedProjectIds")
     __properties: ClassVar[List[str]] = ["id", "name", "description", "executor", "documentationUrl", "fileRequirementsMessage", "childProcessIds", "parentProcessIds", "owner", "linkedProjectIds"]

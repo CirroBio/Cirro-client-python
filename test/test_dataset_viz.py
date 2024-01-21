@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.dataset_viz import DatasetViz
+from cirro_api_client.models.dataset_viz import DatasetViz
 
 class TestDatasetViz(unittest.TestCase):
     """DatasetViz unit test stubs"""

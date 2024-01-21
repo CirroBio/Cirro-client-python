@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.allowed_data_type import AllowedDataType
+from cirro_api_client.models.allowed_data_type import AllowedDataType
 
 class TestAllowedDataType(unittest.TestCase):
     """AllowedDataType unit test stubs"""
@@ -40,7 +40,7 @@ class TestAllowedDataType(unittest.TestCase):
                 description = '',
                 error_msg = '',
                 allowed_patterns = [
-                    cirro.api.models.file_name_pattern.FileNamePattern(
+                    cirro_api_client.models.file_name_pattern.FileNamePattern(
                         example_name = '', 
                         description = '', )
                     ]
@@ -50,7 +50,7 @@ class TestAllowedDataType(unittest.TestCase):
                 description = '',
                 error_msg = '',
                 allowed_patterns = [
-                    cirro.api.models.file_name_pattern.FileNamePattern(
+                    cirro_api_client.models.file_name_pattern.FileNamePattern(
                         example_name = '', 
                         description = '', )
                     ],

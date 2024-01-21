@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 **billing_account_id** | **str** |  | 
 **settings** | [**ProjectSettings**](ProjectSettings.md) |  | 
 **contacts** | [**List[Contact]**](Contact.md) |  | 
-**account** | [**CloudAccount**](CloudAccount.md) |  | 
-**tags** | [**List[Tag]**](Tag.md) |  | 
+**account** | [**CloudAccount**](CloudAccount.md) |  | [optional] 
+**tags** | [**List[Tag]**](Tag.md) |  | [optional] 
 
 ## Example
 

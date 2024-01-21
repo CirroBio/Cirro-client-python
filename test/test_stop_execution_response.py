@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.stop_execution_response import StopExecutionResponse
+from cirro_api_client.models.stop_execution_response import StopExecutionResponse
 
 class TestStopExecutionResponse(unittest.TestCase):
     """StopExecutionResponse unit test stubs"""

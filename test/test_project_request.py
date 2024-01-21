@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.project_request import ProjectRequest
+from cirro_api_client.models.project_request import ProjectRequest
 
 class TestProjectRequest(unittest.TestCase):
     """ProjectRequest unit test stubs"""
@@ -40,7 +40,7 @@ class TestProjectRequest(unittest.TestCase):
                 name = '012',
                 description = '0',
                 billing_account_id = '0',
-                settings = cirro.api.models.project_settings.ProjectSettings(
+                settings = cirro_api_client.models.project_settings.ProjectSettings(
                     budget_amount = 0, 
                     budget_period = null, 
                     dragen_ami = 'ami----------------------', 
@@ -61,18 +61,18 @@ class TestProjectRequest(unittest.TestCase):
                         ], 
                     kms_arn = 'arn:aws::::::::::::::::::::::', ),
                 contacts = [
-                    cirro.api.models.contact.Contact(
+                    cirro_api_client.models.contact.Contact(
                         name = '', 
                         organization = '', 
                         email = '', 
                         phone = '', )
                     ],
-                account = cirro.api.models.cloud_account.CloudAccount(
+                account = cirro_api_client.models.cloud_account.CloudAccount(
                     account_id = '048072888001', 
                     account_name = '', 
                     region_name = 'us-west-2', ),
                 tags = [
-                    cirro.api.models.tag.Tag(
+                    cirro_api_client.models.tag.Tag(
                         key = '', 
                         value = '', 
                         editable = True, )
@@ -83,7 +83,7 @@ class TestProjectRequest(unittest.TestCase):
                 name = '012',
                 description = '0',
                 billing_account_id = '0',
-                settings = cirro.api.models.project_settings.ProjectSettings(
+                settings = cirro_api_client.models.project_settings.ProjectSettings(
                     budget_amount = 0, 
                     budget_period = null, 
                     dragen_ami = 'ami----------------------', 
@@ -104,21 +104,11 @@ class TestProjectRequest(unittest.TestCase):
                         ], 
                     kms_arn = 'arn:aws::::::::::::::::::::::', ),
                 contacts = [
-                    cirro.api.models.contact.Contact(
+                    cirro_api_client.models.contact.Contact(
                         name = '', 
                         organization = '', 
                         email = '', 
                         phone = '', )
-                    ],
-                account = cirro.api.models.cloud_account.CloudAccount(
-                    account_id = '048072888001', 
-                    account_name = '', 
-                    region_name = 'us-west-2', ),
-                tags = [
-                    cirro.api.models.tag.Tag(
-                        key = '', 
-                        value = '', 
-                        editable = True, )
                     ],
         )
         """

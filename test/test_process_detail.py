@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.process_detail import ProcessDetail
+from cirro_api_client.models.process_detail import ProcessDetail
 
 class TestProcessDetail(unittest.TestCase):
     """ProcessDetail unit test stubs"""
@@ -37,9 +37,9 @@ class TestProcessDetail(unittest.TestCase):
         model = ProcessDetail()
         if include_optional:
             return ProcessDetail(
-                id = 'process-hutch-magic_flute-1_0',
-                name = '',
-                description = '',
+                id = 'p0123',
+                name = '0123',
+                description = '0',
                 executor = 'NEXTFLOW',
                 documentation_url = '',
                 file_requirements_message = '',
@@ -53,40 +53,38 @@ class TestProcessDetail(unittest.TestCase):
                 linked_project_ids = [
                     ''
                     ],
-                custom_settings = cirro.api.models.custom_pipeline_settings.CustomPipelineSettings(
-                    repository = '', 
-                    branch = '', 
-                    folder = '', 
+                pipeline_code = None,
+                custom_settings = cirro_api_client.models.custom_pipeline_settings.CustomPipelineSettings(
+                    repository = 'CirroBio/my-pipeline', 
+                    branch = 'main', 
+                    folder = '.cirro', 
                     last_sync = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
-                    sync_status = '', 
+                    sync_status = null, 
                     commit_hash = '', ),
                 is_archived = True
             )
         else:
             return ProcessDetail(
-                id = 'process-hutch-magic_flute-1_0',
-                name = '',
-                description = '',
+                id = 'p0123',
+                name = '0123',
+                description = '0',
                 executor = 'NEXTFLOW',
-                documentation_url = '',
                 child_process_ids = [
                     ''
                     ],
                 parent_process_ids = [
                     ''
                     ],
-                owner = '',
                 linked_project_ids = [
                     ''
                     ],
-                custom_settings = cirro.api.models.custom_pipeline_settings.CustomPipelineSettings(
-                    repository = '', 
-                    branch = '', 
-                    folder = '', 
+                custom_settings = cirro_api_client.models.custom_pipeline_settings.CustomPipelineSettings(
+                    repository = 'CirroBio/my-pipeline', 
+                    branch = 'main', 
+                    folder = '.cirro', 
                     last_sync = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
-                    sync_status = '', 
+                    sync_status = null, 
                     commit_hash = '', ),
-                is_archived = True,
         )
         """
 

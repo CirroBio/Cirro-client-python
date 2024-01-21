@@ -7,8 +7,15 @@
       "cirro": {
         "generatorName": "python",
         "inputSpec": "https://api.cirro.bio/openapi/cirro-data-latest.yml",
+        "gitRepoId": "Cirro-client-python",
+        "gitUserId": "CirroBio",
+        "templateDir": "#{cwd}/templates",
         "additionalProperties": {
-          "packageName": "cirro_api_client"
+          "packageName": "cirro_api_client",
+          "packageVersion": "0.0.1-alpha",
+          "projectName": "cirro-api-client",
+          "licenseInfo": "MIT",
+          "appName": "Cirro API Client"
         }
       }
     }

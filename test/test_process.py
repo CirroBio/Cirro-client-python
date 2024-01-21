@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.process import Process
+from cirro_api_client.models.process import Process
 
 class TestProcess(unittest.TestCase):
     """Process unit test stubs"""

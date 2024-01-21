@@ -15,7 +15,7 @@
 
 import unittest
 
-from cirro.api.api.file_api import FileApi
+from cirro_api_client.api.file_api import FileApi
 
 
 class TestFileApi(unittest.TestCase):
@@ -27,10 +27,17 @@ class TestFileApi(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
-    def test_generate_sftp_token(self) -> None:
-        """Test case for generate_sftp_token
+    def test_generate_project_file_access_token(self) -> None:
+        """Test case for generate_project_file_access_token
 
-        Create SFTP Token
+        Create project file access token
+        """
+        pass
+
+    def test_generate_project_sftp_token(self) -> None:
+        """Test case for generate_project_sftp_token
+
+        Create project SFTP Token
         """
         pass
 

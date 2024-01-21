@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.dashboard_request import DashboardRequest
+from cirro_api_client.models.dashboard_request import DashboardRequest
 
 class TestDashboardRequest(unittest.TestCase):
     """DashboardRequest unit test stubs"""

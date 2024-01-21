@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.reference import Reference
+from cirro_api_client.models.reference import Reference
 
 class TestReference(unittest.TestCase):
     """Reference unit test stubs"""
@@ -37,20 +37,30 @@ class TestReference(unittest.TestCase):
         model = Reference()
         if include_optional:
             return Reference(
+                id = '',
                 name = '',
-                reference_type = '',
+                description = '',
+                type = '',
                 files = [
-                    ''
+                    cirro_api_client.models.file_entry.FileEntry(
+                        path = 'data/fastq/SRX12875516_SRR16674827_1.fastq.gz', 
+                        size = 1435658507, 
+                        metadata = {"read":1}, )
                     ],
                 created_by = '',
                 created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f')
             )
         else:
             return Reference(
+                id = '',
                 name = '',
-                reference_type = '',
+                description = '',
+                type = '',
                 files = [
-                    ''
+                    cirro_api_client.models.file_entry.FileEntry(
+                        path = 'data/fastq/SRX12875516_SRR16674827_1.fastq.gz', 
+                        size = 1435658507, 
+                        metadata = {"read":1}, )
                     ],
                 created_by = '',
                 created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),

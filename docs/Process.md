@@ -6,13 +6,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | Unique ID of the Process | 
-**name** | **str** |  | [optional] 
+**name** | **str** | Friendly name for the process | [optional] 
 **description** | **str** |  | [optional] 
 **executor** | [**Executor**](Executor.md) |  | [optional] 
 **documentation_url** | **str** | Link to pipeline documentation | [optional] 
 **file_requirements_message** | **str** | Description of the files to be uploaded (optional) | [optional] 
 **child_process_ids** | **List[str]** | IDs of pipelines that can be ran downstream | [optional] 
-**parent_process_ids** | **List[str]** | IDs of pipelines that can be ran upstream | [optional] 
+**parent_process_ids** | **List[str]** | IDs of pipelines that can run this pipeline | [optional] 
 **owner** | **str** | Username of the pipeline creator (blank if Cirro curated) | [optional] 
 **linked_project_ids** | **List[str]** | Projects that can run this pipeline | [optional] 
 

@@ -15,7 +15,7 @@
 
 import unittest
 
-from cirro.api.api.processes_api import ProcessesApi
+from cirro_api_client.api.processes_api import ProcessesApi
 
 
 class TestProcessesApi(unittest.TestCase):
@@ -25,6 +25,20 @@ class TestProcessesApi(unittest.TestCase):
         self.api = ProcessesApi()
 
     def tearDown(self) -> None:
+        pass
+
+    def test_archive_custom_process(self) -> None:
+        """Test case for archive_custom_process
+
+        Archive custom process
+        """
+        pass
+
+    def test_create_custom_process(self) -> None:
+        """Test case for create_custom_process
+
+        Create custom process
+        """
         pass
 
     def test_get_process(self) -> None:
@@ -45,6 +59,20 @@ class TestProcessesApi(unittest.TestCase):
         """Test case for get_processes
 
         List processes
+        """
+        pass
+
+    def test_sync_custom_process(self) -> None:
+        """Test case for sync_custom_process
+
+        Sync custom process
+        """
+        pass
+
+    def test_update_custom_process(self) -> None:
+        """Test case for update_custom_process
+
+        Update custom process
         """
         pass
 

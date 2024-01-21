@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.billing_method import BillingMethod
+from cirro_api_client.models.billing_method import BillingMethod
 
 class TestBillingMethod(unittest.TestCase):
     """BillingMethod unit test stubs"""

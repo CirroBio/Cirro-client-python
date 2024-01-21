@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**sample_sheet** | **str** |  | 
 **file_names** | **List[str]** |  | 
+**sample_sheet** | **str** |  | 
 
 ## Example
 

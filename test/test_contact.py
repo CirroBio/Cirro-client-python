@@ -16,7 +16,7 @@
 import unittest
 import datetime
 
-from cirro.api.models.contact import Contact
+from cirro_api_client.models.contact import Contact
 
 class TestContact(unittest.TestCase):
     """Contact unit test stubs"""

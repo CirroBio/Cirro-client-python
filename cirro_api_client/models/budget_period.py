@@ -29,7 +29,7 @@ except ImportError:
 
 class BudgetPeriod(str, Enum):
     """
-    Time period associated with the budget amount
+    BudgetPeriod
     """
 
     """

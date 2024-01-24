@@ -1,6 +1,5 @@
 # BudgetPeriod
 
-Time period associated with the budget amount
 
 ## Properties
 

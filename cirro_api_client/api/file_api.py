@@ -38,7 +38,7 @@ class FileApi:
     def __init__(self, api_client=None) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
-        self.api_client = api_client
+        self._api_client = api_client
 
     @validate_call
     def generate_project_file_access_token(
@@ -121,12 +121,12 @@ class FileApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AWSCredentials",
         }
-        response_data = self.api_client.call_api(
+        response_data = self._api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
         response_data.read()
-        return self.api_client.response_deserialize(
+        return self._api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
@@ -158,7 +158,7 @@ class FileApi:
             _body_params = file_access_request
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
+        _header_params['Accept'] = self._api_client.select_header_accept(
             [
                 'application/json'
             ]
@@ -273,12 +273,12 @@ class FileApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SftpCredentials",
         }
-        response_data = self.api_client.call_api(
+        response_data = self._api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
         response_data.read()
-        return self.api_client.response_deserialize(
+        return self._api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
@@ -310,7 +310,7 @@ class FileApi:
             _body_params = generate_sftp_credentials_request
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
+        _header_params['Accept'] = self._api_client.select_header_accept(
             [
                 'application/json'
             ]

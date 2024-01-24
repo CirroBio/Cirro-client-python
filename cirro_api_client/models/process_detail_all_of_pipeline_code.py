@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List
 from pydantic import BaseModel, field_validator
 from pydantic import Field
 from typing_extensions import Annotated
@@ -35,7 +35,7 @@ class ProcessDetailAllOfPipelineCode(BaseModel):
     """ # noqa: E501
     repository_path: Annotated[str, Field(min_length=1, strict=True)] = Field(description="GitHub repository which contains the workflow code", alias="repositoryPath")
     version: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Branch, tag, or commit hash of the pipeline code")
-    repository_type: Optional[Any] = Field(default=None, alias="repositoryType")
+    repository_type: RepositoryType = Field(alias="repositoryType")
     entry_point: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Main script for running the pipeline", alias="entryPoint")
     __properties: ClassVar[List[str]] = ["repositoryPath", "version", "repositoryType", "entryPoint"]
 
@@ -83,9 +83,6 @@ class ProcessDetailAllOfPipelineCode(BaseModel):
             },
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of repository_type
-        if self.repository_type:
-            _dict['repositoryType'] = self.repository_type.to_dict()
         return _dict
 
     @classmethod
@@ -100,7 +97,7 @@ class ProcessDetailAllOfPipelineCode(BaseModel):
         _obj = cls.model_validate({
             "repositoryPath": obj.get("repositoryPath"),
             "version": obj.get("version"),
-            "repositoryType": RepositoryType.from_dict(obj.get("repositoryType")) if obj.get("repositoryType") is not None else None,
+            "repositoryType": obj.get("repositoryType"),
             "entryPoint": obj.get("entryPoint")
         })
         return _obj

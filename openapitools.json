@@ -12,10 +12,11 @@
         "templateDir": "#{cwd}/templates",
         "additionalProperties": {
           "packageName": "cirro_api_client",
-          "packageVersion": "0.0.1-alpha",
+          "packageVersion": "0.0.1",
           "projectName": "cirro-api-client",
           "licenseInfo": "MIT",
-          "appName": "Cirro API Client"
+          "appName": "Cirro API Client",
+          "httpUserAgent": "Cirro-API-Client/0.0.1/python"
         }
       }
     }

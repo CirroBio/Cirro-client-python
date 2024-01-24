@@ -36,7 +36,7 @@ class SystemApi:
     def __init__(self, api_client=None) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
-        self.api_client = api_client
+        self._api_client = api_client
 
     @validate_call
     def get_service_connections(
@@ -105,12 +105,12 @@ class SystemApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[ServiceConnection]",
         }
-        response_data = self.api_client.call_api(
+        response_data = self._api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
         response_data.read()
-        return self.api_client.response_deserialize(
+        return self._api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
@@ -136,7 +136,7 @@ class SystemApi:
         # process the body parameter
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
+        _header_params['Accept'] = self._api_client.select_header_accept(
             [
                 'application/json'
             ]
@@ -225,12 +225,12 @@ class SystemApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SystemInfoResponse",
         }
-        response_data = self.api_client.call_api(
+        response_data = self._api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
         response_data.read()
-        return self.api_client.response_deserialize(
+        return self._api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
@@ -256,7 +256,7 @@ class SystemApi:
         # process the body parameter
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
+        _header_params['Accept'] = self._api_client.select_header_accept(
             [
                 'application/json'
             ]

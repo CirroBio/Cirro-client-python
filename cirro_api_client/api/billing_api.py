@@ -41,7 +41,7 @@ class BillingApi:
     def __init__(self, api_client=None) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
-        self.api_client = api_client
+        self._api_client = api_client
 
     @validate_call
     def create_billing_account(
@@ -117,12 +117,12 @@ class BillingApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateResponse",
         }
-        response_data = self.api_client.call_api(
+        response_data = self._api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
         response_data.read()
-        return self.api_client.response_deserialize(
+        return self._api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
@@ -151,7 +151,7 @@ class BillingApi:
             _body_params = billing_account_request
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
+        _header_params['Accept'] = self._api_client.select_header_accept(
             [
                 'application/json'
             ]
@@ -259,12 +259,12 @@ class BillingApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
         }
-        response_data = self.api_client.call_api(
+        response_data = self._api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
         response_data.read()
-        return self.api_client.response_deserialize(
+        return self._api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
@@ -379,12 +379,12 @@ class BillingApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
         }
-        response_data = self.api_client.call_api(
+        response_data = self._api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
         response_data.read()
-        return self.api_client.response_deserialize(
+        return self._api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
@@ -410,7 +410,7 @@ class BillingApi:
         # process the body parameter
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
+        _header_params['Accept'] = self._api_client.select_header_accept(
             [
                 'application/vnd.ms-excel'
             ]
@@ -508,12 +508,12 @@ class BillingApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[BillingAccount]",
         }
-        response_data = self.api_client.call_api(
+        response_data = self._api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
         response_data.read()
-        return self.api_client.response_deserialize(
+        return self._api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
@@ -544,7 +544,7 @@ class BillingApi:
         # process the body parameter
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
+        _header_params['Accept'] = self._api_client.select_header_accept(
             [
                 'application/json'
             ]
@@ -649,12 +649,12 @@ class BillingApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
         }
-        response_data = self.api_client.call_api(
+        response_data = self._api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
         response_data.read()
-        return self.api_client.response_deserialize(
+        return self._api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )

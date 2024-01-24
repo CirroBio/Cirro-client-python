@@ -1,6 +1,5 @@
 # Executor
 
-How the workflow is executed
 
 ## Properties
 

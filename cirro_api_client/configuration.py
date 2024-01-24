@@ -18,8 +18,7 @@ import logging
 from logging import FileHandler
 import multiprocessing
 import sys
-from typing import Optional
-import urllib3
+from typing import Optional, Union, Callable
 
 import http.client as httplib
 
@@ -29,30 +28,12 @@ JSON_SCHEMA_VALIDATION_KEYWORDS = {
     'minLength', 'pattern', 'maxItems', 'minItems'
 }
 
+
 class Configuration:
     """This class contains various settings of the API client.
 
     :param host: Base url.
-    :param api_key: Dict to store API key(s).
-      Each entry in the dict specifies an API key.
-      The dict key is the name of the security scheme in the OAS specification.
-      The dict value is the API key secret.
-    :param api_key_prefix: Dict to store API prefix (e.g. Bearer).
-      The dict key is the name of the security scheme in the OAS specification.
-      The dict value is an API key prefix when generating the auth data.
-    :param username: Username for HTTP basic authentication.
-    :param password: Password for HTTP basic authentication.
-    :param access_token: Access token.
-    :param server_index: Index to servers configuration.
-    :param server_variables: Mapping with string values to replace variables in
-      templated server configuration. The validation of enums is performed for
-      variables with defined enum values before.
-    :param server_operation_index: Mapping from operation ID to an index to server
-      configuration.
-    :param server_operation_variables: Mapping from operation ID to a mapping with
-      string values to replace variables in templated server configuration.
-      The validation of enums is performed for variables with defined enum
-      values before.
+    :param access_token: Access token. Can be either a string or a function that returns a string.
     :param ssl_ca_cert: str - the path to a file of concatenated CA certificates
       in PEM format.
 
@@ -62,12 +43,10 @@ class Configuration:
     _default = None
 
     def __init__(self,
-                 host=None,
-                 access_token=None,
+                 host: str = None,
+                 access_token: Union[Callable[[], str], str] = None,
                  ssl_ca_cert=None
                  ) -> None:
-        """Constructor
-        """
         self._base_path = "https://api.cirro.bio" if host is None else host
         self.temp_folder_path = None
         # Authentication Settings
@@ -209,8 +188,8 @@ class Configuration:
         If the logger_file is None, then add stream handler and remove file
         handler. Otherwise, add file handler and remove stream handler.
 
-        :param value: The logger_file path.
-        :type: str
+        :return: The logger_file path.
+        :rtype: str
         """
         return self.__logger_file
 
@@ -237,8 +216,8 @@ class Configuration:
     def debug(self):
         """Debug status
 
-        :param value: The debug status, True or False.
-        :type: bool
+        :return: The debug status, True or False.
+        :rtype: bool
         """
         return self.__debug
 
@@ -270,8 +249,8 @@ class Configuration:
 
         The logger_formatter will be updated when sets logger_format.
 
-        :param value: The format string.
-        :type: str
+        :return: The format string.
+        :rtype: str
         """
         return self.__logger_format
 
@@ -287,38 +266,6 @@ class Configuration:
         self.__logger_format = value
         self.logger_formatter = logging.Formatter(self.__logger_format)
 
-    def get_api_key_with_prefix(self, identifier, alias=None):
-        """Gets API key (with prefix if set).
-
-        :param identifier: The identifier of apiKey.
-        :param alias: The alternative identifier of apiKey.
-        :return: The token for api key authentication.
-        """
-        if self.refresh_api_key_hook is not None:
-            self.refresh_api_key_hook(self)
-        key = self.api_key.get(identifier, self.api_key.get(alias) if alias is not None else None)
-        if key:
-            prefix = self.api_key_prefix.get(identifier)
-            if prefix:
-                return "%s %s" % (prefix, key)
-            else:
-                return key
-
-    def get_basic_auth_token(self):
-        """Gets HTTP basic authentication header (string).
-
-        :return: The token for basic HTTP authentication.
-        """
-        username = ""
-        if self.username is not None:
-            username = self.username
-        password = ""
-        if self.password is not None:
-            password = self.password
-        return urllib3.util.make_headers(
-            basic_auth=username + ':' + password
-        ).get('authorization')
-
     def auth_settings(self):
         """Gets Auth Settings dict for api client.
 
@@ -326,12 +273,17 @@ class Configuration:
         """
         auth = {}
         if self.access_token is not None:
+            if callable(self.access_token):
+                access_token = self.access_token()
+            else:
+                access_token = self.access_token
+
             auth['accessToken'] = {
                 'type': 'bearer',
                 'in': 'header',
                 'format': 'JWT',
                 'key': 'Authorization',
-                'value': 'Bearer ' + self.access_token
+                'value': 'Bearer ' + access_token
             }
         return auth
 
@@ -344,7 +296,7 @@ class Configuration:
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: latest\n"\
-               "SDK Package Version: 0.0.1-alpha".\
+               "SDK Package Version: 0.0.1".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self):
@@ -359,52 +311,12 @@ class Configuration:
             }
         ]
 
-    def get_host_from_settings(self, index, variables=None, servers=None):
-        """Gets host URL based on the index and variables
-        :param index: array index of the host settings
-        :param variables: hash of variable and the corresponding value
-        :param servers: an array of host settings or None
-        :return: URL based on host settings
-        """
-        if index is None:
-            return self._base_path
-
-        variables = {} if variables is None else variables
-        servers = self.get_host_settings() if servers is None else servers
-
-        try:
-            server = servers[index]
-        except IndexError:
-            raise ValueError(
-                "Invalid index {0} when selecting the host settings. "
-                "Must be less than {1}".format(index, len(servers)))
-
-        url = server['url']
-
-        # go through variables and replace placeholders
-        for variable_name, variable in server.get('variables', {}).items():
-            used_value = variables.get(
-                variable_name, variable['default_value'])
-
-            if 'enum_values' in variable \
-                    and used_value not in variable['enum_values']:
-                raise ValueError(
-                    "The variable `{0}` in the host URL has invalid value "
-                    "{1}. Must be {2}.".format(
-                        variable_name, variables[variable_name],
-                        variable['enum_values']))
-
-            url = url.replace("{" + variable_name + "}", used_value)
-
-        return url
-
     @property
     def host(self):
         """Return generated host."""
-        return self.get_host_from_settings(self.server_index, variables=self.server_variables)
+        return self._base_path
 
     @host.setter
     def host(self, value):
         """Fix base path."""
         self._base_path = value
-        self.server_index = None

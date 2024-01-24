@@ -23,6 +23,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from pydantic import BaseModel, StrictBool, StrictStr, field_validator
 from pydantic import Field
 from typing_extensions import Annotated
+from cirro_api_client.models.budget_period import BudgetPeriod
 try:
     from typing import Self
 except ImportError:
@@ -33,7 +34,7 @@ class ProjectSettings(BaseModel):
     ProjectSettings
     """ # noqa: E501
     budget_amount: Optional[Annotated[int, Field(strict=True, ge=0)]] = Field(default=None, description="Total allowed cost for the budget period", alias="budgetAmount")
-    budget_period: Optional[Any] = Field(default=None, alias="budgetPeriod")
+    budget_period: BudgetPeriod = Field(alias="budgetPeriod")
     dragen_ami: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="AMI ID for the DRAGEN compute environment (if enabled)", alias="dragenAmi")
     enable_compute: Optional[StrictBool] = Field(default=True, description="Enables the default compute environment", alias="enableCompute")
     enable_dragen: Optional[StrictBool] = Field(default=False, description="Enables the DRAGEN compute environment", alias="enableDragen")
@@ -116,9 +117,6 @@ class ProjectSettings(BaseModel):
             },
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of budget_period
-        if self.budget_period:
-            _dict['budgetPeriod'] = self.budget_period.to_dict()
         # set to None if dragen_ami (nullable) is None
         # and model_fields_set contains the field
         if self.dragen_ami is None and "dragen_ami" in self.model_fields_set:
@@ -152,7 +150,7 @@ class ProjectSettings(BaseModel):
 
         _obj = cls.model_validate({
             "budgetAmount": obj.get("budgetAmount"),
-            "budgetPeriod": BudgetPeriod.from_dict(obj.get("budgetPeriod")) if obj.get("budgetPeriod") is not None else None,
+            "budgetPeriod": obj.get("budgetPeriod"),
             "dragenAmi": obj.get("dragenAmi"),
             "enableCompute": obj.get("enableCompute") if obj.get("enableCompute") is not None else True,
             "enableDragen": obj.get("enableDragen") if obj.get("enableDragen") is not None else False,

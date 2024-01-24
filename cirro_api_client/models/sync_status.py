@@ -29,7 +29,7 @@ except ImportError:
 
 class SyncStatus(str, Enum):
     """
-    Status of last sync
+    SyncStatus
     """
 
     """

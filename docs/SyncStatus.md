@@ -1,6 +1,5 @@
 # SyncStatus
 
-Status of last sync
 
 ## Properties
 

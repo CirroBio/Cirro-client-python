@@ -23,6 +23,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from pydantic import BaseModel, StrictStr, field_validator
 from pydantic import Field
 from typing_extensions import Annotated
+from cirro_api_client.models.sync_status import SyncStatus
 try:
     from typing import Self
 except ImportError:
@@ -36,7 +37,7 @@ class CustomPipelineSettings(BaseModel):
     branch: Optional[StrictStr] = Field(default='main', description="Branch, tag, or commit hash of the repo that contains the process definition")
     folder: Optional[StrictStr] = Field(default='.cirro', description="Folder within the repo that contains the process definition")
     last_sync: Optional[datetime] = Field(default=None, description="Time of last sync", alias="lastSync")
-    sync_status: Optional[Any] = Field(default=None, alias="syncStatus")
+    sync_status: Optional[SyncStatus] = Field(default=None, alias="syncStatus")
     commit_hash: Optional[StrictStr] = Field(default=None, description="Commit hash of the last successful sync", alias="commitHash")
     __properties: ClassVar[List[str]] = ["repository", "branch", "folder", "lastSync", "syncStatus", "commitHash"]
 
@@ -84,9 +85,6 @@ class CustomPipelineSettings(BaseModel):
             },
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of sync_status
-        if self.sync_status:
-            _dict['syncStatus'] = self.sync_status.to_dict()
         # set to None if last_sync (nullable) is None
         # and model_fields_set contains the field
         if self.last_sync is None and "last_sync" in self.model_fields_set:
@@ -118,7 +116,7 @@ class CustomPipelineSettings(BaseModel):
             "branch": obj.get("branch") if obj.get("branch") is not None else 'main',
             "folder": obj.get("folder") if obj.get("folder") is not None else '.cirro',
             "lastSync": obj.get("lastSync"),
-            "syncStatus": SyncStatus.from_dict(obj.get("syncStatus")) if obj.get("syncStatus") is not None else None,
+            "syncStatus": obj.get("syncStatus"),
             "commitHash": obj.get("commitHash")
         })
         return _obj

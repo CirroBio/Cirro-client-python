@@ -22,6 +22,7 @@ import json
 from typing import Any, ClassVar, Dict, List, Optional
 from pydantic import BaseModel, StrictStr
 from pydantic import Field
+from cirro_api_client.models.executor import Executor
 try:
     from typing import Self
 except ImportError:
@@ -34,7 +35,7 @@ class Process(BaseModel):
     id: StrictStr = Field(description="Unique ID of the Process")
     name: Optional[StrictStr] = Field(default=None, description="Friendly name for the process")
     description: Optional[StrictStr] = None
-    executor: Optional[Any] = None
+    executor: Executor
     documentation_url: Optional[StrictStr] = Field(default=None, description="Link to pipeline documentation", alias="documentationUrl")
     file_requirements_message: Optional[StrictStr] = Field(default=None, description="Description of the files to be uploaded (optional)", alias="fileRequirementsMessage")
     child_process_ids: Optional[List[StrictStr]] = Field(default=None, description="IDs of pipelines that can be ran downstream", alias="childProcessIds")
@@ -80,9 +81,6 @@ class Process(BaseModel):
             },
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of executor
-        if self.executor:
-            _dict['executor'] = self.executor.to_dict()
         return _dict
 
     @classmethod
@@ -98,7 +96,7 @@ class Process(BaseModel):
             "id": obj.get("id"),
             "name": obj.get("name"),
             "description": obj.get("description"),
-            "executor": Executor.from_dict(obj.get("executor")) if obj.get("executor") is not None else None,
+            "executor": obj.get("executor"),
             "documentationUrl": obj.get("documentationUrl"),
             "fileRequirementsMessage": obj.get("fileRequirementsMessage"),
             "childProcessIds": obj.get("childProcessIds"),

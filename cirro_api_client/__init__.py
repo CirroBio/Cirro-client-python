@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "0.0.1-alpha"
+__version__ = "0.0.1"
 
 # import apis into sdk package
 from cirro_api_client.api.billing_api import BillingApi
@@ -34,7 +34,7 @@ from cirro_api_client.api.users_api import UsersApi
 
 # import ApiClient
 from cirro_api_client.api_response import ApiResponse
-from cirro_api_client.api_client import ApiClient
+from cirro_api_client.cirro_api_client import CirroApiClient
 from cirro_api_client.configuration import Configuration
 from cirro_api_client.exceptions import OpenApiException
 from cirro_api_client.exceptions import ApiTypeError

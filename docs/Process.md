@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **id** | **str** | Unique ID of the Process | 
 **name** | **str** | Friendly name for the process | [optional] 
 **description** | **str** |  | [optional] 
-**executor** | [**Executor**](Executor.md) |  | [optional] 
+**executor** | [**Executor**](Executor.md) |  | 
 **documentation_url** | **str** | Link to pipeline documentation | [optional] 
 **file_requirements_message** | **str** | Description of the files to be uploaded (optional) | [optional] 
 **child_process_ids** | **List[str]** | IDs of pipelines that can be ran downstream | [optional] 

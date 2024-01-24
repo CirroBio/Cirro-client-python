@@ -29,7 +29,7 @@ except ImportError:
 
 class RepositoryType(str, Enum):
     """
-    Type of repository
+    RepositoryType
     """
 
     """

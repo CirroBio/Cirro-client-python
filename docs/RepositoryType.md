@@ -1,6 +1,5 @@
 # RepositoryType
 
-Type of repository
 
 ## Properties
 

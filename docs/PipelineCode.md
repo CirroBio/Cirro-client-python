@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **repository_path** | **str** | GitHub repository which contains the workflow code | 
 **version** | **str** | Branch, tag, or commit hash of the pipeline code | 
-**repository_type** | [**RepositoryType**](RepositoryType.md) |  | [optional] 
+**repository_type** | [**RepositoryType**](RepositoryType.md) |  | 
 **entry_point** | **str** | Main script for running the pipeline | 
 
 ## Example

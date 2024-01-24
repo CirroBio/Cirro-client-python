@@ -26,3 +26,4 @@ git_push.sh
 .gitlab-ci.yml
 .gitignore
 .github/workflows/python.yml
+test/*.py

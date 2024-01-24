@@ -4,12 +4,6 @@ on:
   release:
     types:
       - published
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
   build-and-push-image:
@@ -34,16 +28,11 @@ jobs:
         run: |
           poetry install --all-extras
 
-      - name: Run tests
-        run: |
-          pytest
-
       - name: Build python package
         run: |
           poetry build
 
       - name: Publish python package
-        if: github.event_name == 'release'
         run: |
           poetry publish
         env:

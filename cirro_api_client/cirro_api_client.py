@@ -12,7 +12,7 @@ from cirro_api_client.api.references_api import ReferencesApi
 from cirro_api_client.api.system_api import SystemApi
 from cirro_api_client.api.users_api import UsersApi
 from cirro_api_client.api_client import ApiClient
-from configuration import Configuration
+from cirro_api_client.configuration import Configuration
 
 
 class CirroApiClient:

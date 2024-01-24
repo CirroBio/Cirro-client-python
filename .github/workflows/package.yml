@@ -36,7 +36,7 @@ jobs:
 
       - name: Pytest
         run: |
-          poetry run pytest --cov --cov-report=xml --cov-branch -o junit_family=xunit2 --junitxml=junit/test-results.xml
+          poetry run pytest
 
       - name: Build python package
         run: |

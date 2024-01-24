@@ -74,9 +74,13 @@ class UsersApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_user_raw(**locals()).data
+        return self.get_user_raw(
+            username=username,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_user_raw(
@@ -206,9 +210,13 @@ class UsersApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_users_raw(**locals()).data
+        return self.get_users_raw(
+            username=username,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_users_raw(
@@ -340,9 +348,13 @@ class UsersApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.invite_user_raw(**locals()).data
+        return self.invite_user_raw(
+            invite_user_request=invite_user_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def invite_user_raw(
@@ -485,9 +497,14 @@ class UsersApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.update_user_raw(**locals()).data
+        return self.update_user_raw(
+            username=username,
+            update_user_request=update_user_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def update_user_raw(

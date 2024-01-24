@@ -74,9 +74,14 @@ class ReferencesApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.create_project_reference_raw(**locals()).data
+        return self.create_project_reference_raw(
+            project_id=project_id,
+            create_reference_request=create_reference_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def create_project_reference_raw(
@@ -223,9 +228,13 @@ class ReferencesApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.delete_project_reference_raw(**locals()).data
+        return self.delete_project_reference_raw(
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def delete_project_reference_raw(
@@ -347,9 +356,12 @@ class ReferencesApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_reference_types_raw(**locals()).data
+        return self.get_reference_types_raw(
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_reference_types_raw(
@@ -469,9 +481,12 @@ class ReferencesApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_references_raw(**locals()).data
+        return self.get_references_raw(
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_references_raw(
@@ -594,9 +609,13 @@ class ReferencesApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_references_for_project_raw(**locals()).data
+        return self.get_references_for_project_raw(
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_references_for_project_raw(
@@ -726,10 +745,14 @@ class ReferencesApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
         warnings.warn("PUT /projects/{projectId}/references is deprecated.", DeprecationWarning)
 
-        return self.refresh_project_references_raw(**locals()).data
+        return self.refresh_project_references_raw(
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def refresh_project_references_raw(

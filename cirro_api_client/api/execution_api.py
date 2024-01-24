@@ -81,9 +81,15 @@ class ExecutionApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_execution_logs_raw(**locals()).data
+        return self.get_execution_logs_raw(
+            dataset_id=dataset_id,
+            project_id=project_id,
+            force_live=force_live,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_execution_logs_raw(
@@ -232,9 +238,14 @@ class ExecutionApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_project_summary_raw(**locals()).data
+        return self.get_project_summary_raw(
+            project_id=project_id,
+            number_of_days=number_of_days,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_project_summary_raw(
@@ -382,9 +393,16 @@ class ExecutionApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_task_logs_raw(**locals()).data
+        return self.get_task_logs_raw(
+            dataset_id=dataset_id,
+            project_id=project_id,
+            task_id=task_id,
+            force_live=force_live,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_task_logs_raw(
@@ -543,9 +561,15 @@ class ExecutionApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_tasks_for_execution_raw(**locals()).data
+        return self.get_tasks_for_execution_raw(
+            dataset_id=dataset_id,
+            project_id=project_id,
+            force_live=force_live,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_tasks_for_execution_raw(
@@ -694,9 +718,14 @@ class ExecutionApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.run_analysis_raw(**locals()).data
+        return self.run_analysis_raw(
+            project_id=project_id,
+            run_analysis_request=run_analysis_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def run_analysis_raw(
@@ -846,9 +875,14 @@ class ExecutionApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.stop_analysis_raw(**locals()).data
+        return self.stop_analysis_raw(
+            dataset_id=dataset_id,
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def stop_analysis_raw(

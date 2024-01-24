@@ -80,9 +80,15 @@ class MetadataApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_project_samples_raw(**locals()).data
+        return self.get_project_samples_raw(
+            project_id=project_id,
+            limit=limit,
+            next_token=next_token,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_project_samples_raw(
@@ -229,9 +235,13 @@ class MetadataApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_project_schema_raw(**locals()).data
+        return self.get_project_schema_raw(
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_project_schema_raw(
@@ -362,9 +372,14 @@ class MetadataApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.update_project_schema_raw(**locals()).data
+        return self.update_project_schema_raw(
+            project_id=project_id,
+            form_schema=form_schema,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def update_project_schema_raw(
@@ -511,9 +526,15 @@ class MetadataApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.update_sample_raw(**locals()).data
+        return self.update_sample_raw(
+            project_id=project_id,
+            sample_id=sample_id,
+            sample_request=sample_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def update_sample_raw(

@@ -73,9 +73,13 @@ class BillingApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.create_billing_account_raw(**locals()).data
+        return self.create_billing_account_raw(
+            billing_account_request=billing_account_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def create_billing_account_raw(
@@ -215,9 +219,13 @@ class BillingApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.delete_billing_account_raw(**locals()).data
+        return self.delete_billing_account_raw(
+            billing_account_id=billing_account_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def delete_billing_account_raw(
@@ -339,9 +347,12 @@ class BillingApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.generate_billing_report_raw(**locals()).data
+        return self.generate_billing_report_raw(
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def generate_billing_report_raw(
@@ -464,9 +475,13 @@ class BillingApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_billing_accounts_raw(**locals()).data
+        return self.get_billing_accounts_raw(
+            include_archived=include_archived,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_billing_accounts_raw(
@@ -601,9 +616,14 @@ class BillingApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.update_billing_account_raw(**locals()).data
+        return self.update_billing_account_raw(
+            billing_account_id=billing_account_id,
+            billing_account_request=billing_account_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def update_billing_account_raw(

@@ -66,9 +66,12 @@ class MetricsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_all_metrics_raw(**locals()).data
+        return self.get_all_metrics_raw(
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_all_metrics_raw(
@@ -191,9 +194,13 @@ class MetricsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_project_metrics_raw(**locals()).data
+        return self.get_project_metrics_raw(
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_project_metrics_raw(

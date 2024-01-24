@@ -74,9 +74,14 @@ class DashboardsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.create_dashboard_raw(**locals()).data
+        return self.create_dashboard_raw(
+            project_id=project_id,
+            dashboard_request=dashboard_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def create_dashboard_raw(
@@ -226,9 +231,14 @@ class DashboardsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.delete_dashboard_raw(**locals()).data
+        return self.delete_dashboard_raw(
+            project_id=project_id,
+            dashboard_id=dashboard_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def delete_dashboard_raw(
@@ -368,9 +378,14 @@ class DashboardsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_dashboard_raw(**locals()).data
+        return self.get_dashboard_raw(
+            project_id=project_id,
+            dashboard_id=dashboard_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_dashboard_raw(
@@ -507,9 +522,13 @@ class DashboardsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_dashboards_raw(**locals()).data
+        return self.get_dashboards_raw(
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_dashboards_raw(
@@ -645,9 +664,15 @@ class DashboardsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.update_dashboard_raw(**locals()).data
+        return self.update_dashboard_raw(
+            project_id=project_id,
+            dashboard_id=dashboard_id,
+            dashboard_request=dashboard_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def update_dashboard_raw(

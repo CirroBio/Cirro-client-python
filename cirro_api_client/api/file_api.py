@@ -73,9 +73,14 @@ class FileApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.generate_project_file_access_token_raw(**locals()).data
+        return self.generate_project_file_access_token_raw(
+            project_id=project_id,
+            file_access_request=file_access_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def generate_project_file_access_token_raw(
@@ -225,9 +230,14 @@ class FileApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.generate_project_sftp_token_raw(**locals()).data
+        return self.generate_project_sftp_token_raw(
+            project_id=project_id,
+            generate_sftp_credentials_request=generate_sftp_credentials_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def generate_project_sftp_token_raw(

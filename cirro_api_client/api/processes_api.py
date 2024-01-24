@@ -77,9 +77,13 @@ class ProcessesApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.archive_custom_process_raw(**locals()).data
+        return self.archive_custom_process_raw(
+            process_id=process_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def archive_custom_process_raw(
@@ -204,9 +208,13 @@ class ProcessesApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.create_custom_process_raw(**locals()).data
+        return self.create_custom_process_raw(
+            process_detail=process_detail,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def create_custom_process_raw(
@@ -348,9 +356,13 @@ class ProcessesApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_process_raw(**locals()).data
+        return self.get_process_raw(
+            process_id=process_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_process_raw(
@@ -480,9 +492,13 @@ class ProcessesApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_process_parameters_raw(**locals()).data
+        return self.get_process_parameters_raw(
+            process_id=process_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_process_parameters_raw(
@@ -612,9 +628,13 @@ class ProcessesApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_processes_raw(**locals()).data
+        return self.get_processes_raw(
+            include_archived=include_archived,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_processes_raw(
@@ -746,9 +766,13 @@ class ProcessesApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.sync_custom_process_raw(**locals()).data
+        return self.sync_custom_process_raw(
+            process_id=process_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def sync_custom_process_raw(
@@ -881,9 +905,14 @@ class ProcessesApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.update_custom_process_raw(**locals()).data
+        return self.update_custom_process_raw(
+            process_id=process_id,
+            process_detail=process_detail,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def update_custom_process_raw(
@@ -1028,9 +1057,14 @@ class ProcessesApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.validate_file_requirements_raw(**locals()).data
+        return self.validate_file_requirements_raw(
+            process_id=process_id,
+            validate_file_requirements_request=validate_file_requirements_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def validate_file_requirements_raw(

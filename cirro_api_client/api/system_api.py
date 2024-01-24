@@ -65,9 +65,12 @@ class SystemApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_service_connections_raw(**locals()).data
+        return self.get_service_connections_raw(
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_service_connections_raw(
@@ -186,9 +189,12 @@ class SystemApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.info_raw(**locals()).data
+        return self.info_raw(
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def info_raw(

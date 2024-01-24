@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cirro_api_client"
-version = "0.0.1"
+version = "0.0.2"
 description = "Cirro Data"
 authors = ["Cirro <support@cirro.bio>"]
 license = "MIT"
@@ -19,7 +19,6 @@ typing-extensions = ">=4.7.1"
 
 [tool.poetry.dev-dependencies]
 pytest = ">=7.2.1"
-pytest-cov = "*"
 tox = ">=3.9.0"
 flake8 = ">=4.0.0"
 

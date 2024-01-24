@@ -76,9 +76,14 @@ class NotebooksApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.create_notebook_instance_raw(**locals()).data
+        return self.create_notebook_instance_raw(
+            project_id=project_id,
+            create_notebook_instance_request=create_notebook_instance_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def create_notebook_instance_raw(
@@ -228,9 +233,14 @@ class NotebooksApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.delete_notebook_instance_raw(**locals()).data
+        return self.delete_notebook_instance_raw(
+            notebook_instance_id=notebook_instance_id,
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def delete_notebook_instance_raw(
@@ -365,9 +375,14 @@ class NotebooksApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.generate_notebook_instance_url_raw(**locals()).data
+        return self.generate_notebook_instance_url_raw(
+            notebook_instance_id=notebook_instance_id,
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def generate_notebook_instance_url_raw(
@@ -507,9 +522,14 @@ class NotebooksApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_notebook_instance_status_raw(**locals()).data
+        return self.get_notebook_instance_status_raw(
+            notebook_instance_id=notebook_instance_id,
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_notebook_instance_status_raw(
@@ -646,9 +666,13 @@ class NotebooksApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_notebook_instances_raw(**locals()).data
+        return self.get_notebook_instances_raw(
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_notebook_instances_raw(
@@ -781,9 +805,14 @@ class NotebooksApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.stop_notebook_instance_raw(**locals()).data
+        return self.stop_notebook_instance_raw(
+            notebook_instance_id=notebook_instance_id,
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def stop_notebook_instance_raw(

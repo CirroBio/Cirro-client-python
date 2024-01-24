@@ -50,12 +50,18 @@ class {{classname}}:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
         {{#isDeprecated}}
         warnings.warn("{{{httpMethod}}} {{{path}}} is deprecated.", DeprecationWarning)
         {{/isDeprecated}}
 
-        return self.{{operationId}}_raw(**locals()).data
+        return self.{{operationId}}_raw(
+            {{#allParams}}
+            {{paramName}}={{paramName}},
+            {{/allParams}}
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     {{#asyncio}}async {{/asyncio}}def {{operationId}}_raw{{>partial_api_args}} -> ApiResponse[{{{returnType}}}{{^returnType}}None{{/returnType}}]:

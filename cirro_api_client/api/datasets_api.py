@@ -81,9 +81,14 @@ class DatasetsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.delete_dataset_raw(**locals()).data
+        return self.delete_dataset_raw(
+            project_id=project_id,
+            dataset_id=dataset_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def delete_dataset_raw(
@@ -218,9 +223,14 @@ class DatasetsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_dataset_raw(**locals()).data
+        return self.get_dataset_raw(
+            dataset_id=dataset_id,
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_dataset_raw(
@@ -360,9 +370,14 @@ class DatasetsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_dataset_manifest_raw(**locals()).data
+        return self.get_dataset_manifest_raw(
+            dataset_id=dataset_id,
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_dataset_manifest_raw(
@@ -505,9 +520,15 @@ class DatasetsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_datasets_raw(**locals()).data
+        return self.get_datasets_raw(
+            project_id=project_id,
+            limit=limit,
+            next_token=next_token,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_datasets_raw(
@@ -658,9 +679,14 @@ class DatasetsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.import_public_dataset_raw(**locals()).data
+        return self.import_public_dataset_raw(
+            project_id=project_id,
+            import_data_request=import_data_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def import_public_dataset_raw(
@@ -810,9 +836,14 @@ class DatasetsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.ingest_samples_raw(**locals()).data
+        return self.ingest_samples_raw(
+            project_id=project_id,
+            dataset_id=dataset_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def ingest_samples_raw(
@@ -947,9 +978,14 @@ class DatasetsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.regenerate_manifest_raw(**locals()).data
+        return self.regenerate_manifest_raw(
+            project_id=project_id,
+            dataset_id=dataset_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def regenerate_manifest_raw(
@@ -1084,9 +1120,14 @@ class DatasetsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.rerun_transform_raw(**locals()).data
+        return self.rerun_transform_raw(
+            project_id=project_id,
+            dataset_id=dataset_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def rerun_transform_raw(
@@ -1224,9 +1265,15 @@ class DatasetsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.update_dataset_raw(**locals()).data
+        return self.update_dataset_raw(
+            project_id=project_id,
+            dataset_id=dataset_id,
+            update_dataset_request=update_dataset_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def update_dataset_raw(
@@ -1383,9 +1430,14 @@ class DatasetsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.upload_dataset_raw(**locals()).data
+        return self.upload_dataset_raw(
+            project_id=project_id,
+            upload_dataset_request=upload_dataset_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def upload_dataset_raw(

@@ -75,9 +75,13 @@ class ProjectsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.create_project_raw(**locals()).data
+        return self.create_project_raw(
+            project_request=project_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def create_project_raw(
@@ -217,9 +221,13 @@ class ProjectsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_project_raw(**locals()).data
+        return self.get_project_raw(
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_project_raw(
@@ -349,9 +357,13 @@ class ProjectsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_project_users_raw(**locals()).data
+        return self.get_project_users_raw(
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_project_users_raw(
@@ -478,9 +490,12 @@ class ProjectsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.get_projects_raw(**locals()).data
+        return self.get_projects_raw(
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def get_projects_raw(
@@ -603,9 +618,13 @@ class ProjectsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.redeploy_project_raw(**locals()).data
+        return self.redeploy_project_raw(
+            project_id=project_id,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def redeploy_project_raw(
@@ -733,9 +752,14 @@ class ProjectsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.set_user_project_role_raw(**locals()).data
+        return self.set_user_project_role_raw(
+            project_id=project_id,
+            set_user_project_role_request=set_user_project_role_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def set_user_project_role_raw(
@@ -880,9 +904,14 @@ class ProjectsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.update_project_raw(**locals()).data
+        return self.update_project_raw(
+            project_id=project_id,
+            project_request=project_request,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def update_project_raw(
@@ -1032,9 +1061,14 @@ class ProjectsApi:
                          in the spec for a single request.
         :type _headers: dict, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
-        return self.update_project_tags_raw(**locals()).data
+        return self.update_project_tags_raw(
+            project_id=project_id,
+            tag=tag,
+            _request_timeout=_request_timeout,
+            _headers=_headers
+        ).data
 
     @validate_call
     def update_project_tags_raw(

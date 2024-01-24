@@ -21,49 +21,6 @@ Retrieves a list of samples associated with a project along with their metadata
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.paginated_response_sample_dto import PaginatedResponseSampleDto
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.MetadataApi(api_client)
-    project_id = 'project_id_example' # str | 
-    limit = 10000 # int | number of records to get (optional) (default to 10000)
-    next_token = 'next_token_example' # str | cursor to request the next page (optional)
-
-    try:
-        # Get project samples
-        api_response = api_instance.get_project_samples(project_id, limit=limit, next_token=next_token)
-        print("The response of MetadataApi->get_project_samples:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling MetadataApi->get_project_samples: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -103,47 +60,6 @@ Get project metadata schema
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.form_schema import FormSchema
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.MetadataApi(api_client)
-    project_id = 'project_id_example' # str | 
-
-    try:
-        # Get project metadata schema
-        api_response = api_instance.get_project_schema(project_id)
-        print("The response of MetadataApi->get_project_schema:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling MetadataApi->get_project_schema: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -180,46 +96,6 @@ Update project metadata schema
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.form_schema import FormSchema
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.MetadataApi(api_client)
-    project_id = 'project_id_example' # str | 
-    form_schema = cirro_api_client.FormSchema() # FormSchema | 
-
-    try:
-        # Update project metadata schema
-        api_instance.update_project_schema(project_id, form_schema)
-    except Exception as e:
-        print("Exception when calling MetadataApi->update_project_schema: %s\n" % e)
-```
-
-
 
 ### Parameters
 
@@ -260,50 +136,6 @@ Updates metadata on a sample
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.sample import Sample
-from cirro_api_client.models.sample_request import SampleRequest
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.MetadataApi(api_client)
-    project_id = 'project_id_example' # str | 
-    sample_id = 'sample_id_example' # str | 
-    sample_request = cirro_api_client.SampleRequest() # SampleRequest | 
-
-    try:
-        # Update sample
-        api_response = api_instance.update_sample(project_id, sample_id, sample_request)
-        print("The response of MetadataApi->update_sample:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling MetadataApi->update_sample: %s\n" % e)
-```
-
-
 
 ### Parameters
 

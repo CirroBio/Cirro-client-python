@@ -23,49 +23,6 @@ Gets live logs from main execution task
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.get_execution_logs_response import GetExecutionLogsResponse
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ExecutionApi(api_client)
-    dataset_id = 'dataset_id_example' # str | 
-    project_id = 'project_id_example' # str | 
-    force_live = False # bool | force retrieving this info from the executor (optional) (default to False)
-
-    try:
-        # Get execution logs
-        api_response = api_instance.get_execution_logs(dataset_id, project_id, force_live=force_live)
-        print("The response of ExecutionApi->get_execution_logs:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ExecutionApi->get_execution_logs: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -107,48 +64,6 @@ Gets an overview of the executions currently running in the project
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.task import Task
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ExecutionApi(api_client)
-    project_id = 'project_id_example' # str | 
-    number_of_days = 1 # int | Number of days of job history to pull (optional) (default to 1)
-
-    try:
-        # Get execution summary
-        api_response = api_instance.get_project_summary(project_id, number_of_days=number_of_days)
-        print("The response of ExecutionApi->get_project_summary:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ExecutionApi->get_project_summary: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -188,50 +103,6 @@ Gets the log output from an individual task
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.get_execution_logs_response import GetExecutionLogsResponse
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ExecutionApi(api_client)
-    dataset_id = 'dataset_id_example' # str | 
-    project_id = 'project_id_example' # str | 
-    task_id = 'task_id_example' # str | 
-    force_live = False # bool | force retrieving this info from the executor (optional) (default to False)
-
-    try:
-        # Get task logs
-        api_response = api_instance.get_task_logs(dataset_id, project_id, task_id, force_live=force_live)
-        print("The response of ExecutionApi->get_task_logs:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ExecutionApi->get_task_logs: %s\n" % e)
-```
-
-
 
 ### Parameters
 
@@ -275,49 +146,6 @@ Gets the tasks submitted by the workflow execution
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.task import Task
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ExecutionApi(api_client)
-    dataset_id = 'dataset_id_example' # str | 
-    project_id = 'project_id_example' # str | 
-    force_live = False # bool | force retrieving this info from the executor (optional) (default to False)
-
-    try:
-        # Get execution tasks
-        api_response = api_instance.get_tasks_for_execution(dataset_id, project_id, force_live=force_live)
-        print("The response of ExecutionApi->get_tasks_for_execution:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ExecutionApi->get_tasks_for_execution: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -359,49 +187,6 @@ Run analysis
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.create_response import CreateResponse
-from cirro_api_client.models.run_analysis_request import RunAnalysisRequest
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ExecutionApi(api_client)
-    project_id = 'project_id_example' # str | 
-    run_analysis_request = cirro_api_client.RunAnalysisRequest() # RunAnalysisRequest | 
-
-    try:
-        # Run analysis
-        api_response = api_instance.run_analysis(project_id, run_analysis_request)
-        print("The response of ExecutionApi->run_analysis:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ExecutionApi->run_analysis: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -441,48 +226,6 @@ Terminates all analysis jobs related to this execution
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.stop_execution_response import StopExecutionResponse
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ExecutionApi(api_client)
-    dataset_id = 'dataset_id_example' # str | 
-    project_id = 'project_id_example' # str | 
-
-    try:
-        # Stop execution
-        api_response = api_instance.stop_analysis(dataset_id, project_id)
-        print("The response of ExecutionApi->stop_analysis:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ExecutionApi->stop_analysis: %s\n" % e)
-```
-
-
 
 ### Parameters
 

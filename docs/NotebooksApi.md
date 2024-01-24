@@ -23,49 +23,6 @@ Creates a notebook instance within the project
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.create_notebook_instance_request import CreateNotebookInstanceRequest
-from cirro_api_client.models.create_response import CreateResponse
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.NotebooksApi(api_client)
-    project_id = 'project_id_example' # str | 
-    create_notebook_instance_request = cirro_api_client.CreateNotebookInstanceRequest() # CreateNotebookInstanceRequest | 
-
-    try:
-        # Create notebook instance
-        api_response = api_instance.create_notebook_instance(project_id, create_notebook_instance_request)
-        print("The response of NotebooksApi->create_notebook_instance:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling NotebooksApi->create_notebook_instance: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -105,45 +62,6 @@ Triggers a deletion of the notebook instance
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.NotebooksApi(api_client)
-    notebook_instance_id = 'notebook_instance_id_example' # str | 
-    project_id = 'project_id_example' # str | 
-
-    try:
-        # Delete notebook instance
-        api_instance.delete_notebook_instance(notebook_instance_id, project_id)
-    except Exception as e:
-        print("Exception when calling NotebooksApi->delete_notebook_instance: %s\n" % e)
-```
-
-
 
 ### Parameters
 
@@ -185,48 +103,6 @@ Creates an authenticated URL to open up the notebook instance in your browser
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.open_notebook_instance_response import OpenNotebookInstanceResponse
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.NotebooksApi(api_client)
-    notebook_instance_id = 'notebook_instance_id_example' # str | 
-    project_id = 'project_id_example' # str | 
-
-    try:
-        # Generate notebook instance URL
-        api_response = api_instance.generate_notebook_instance_url(notebook_instance_id, project_id)
-        print("The response of NotebooksApi->generate_notebook_instance_url:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling NotebooksApi->generate_notebook_instance_url: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -266,48 +142,6 @@ Retrieves the status of the instance
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.notebook_instance_status_response import NotebookInstanceStatusResponse
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.NotebooksApi(api_client)
-    notebook_instance_id = 'notebook_instance_id_example' # str | 
-    project_id = 'project_id_example' # str | 
-
-    try:
-        # Get notebook instance status
-        api_response = api_instance.get_notebook_instance_status(notebook_instance_id, project_id)
-        print("The response of NotebooksApi->get_notebook_instance_status:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling NotebooksApi->get_notebook_instance_status: %s\n" % e)
-```
-
-
 
 ### Parameters
 
@@ -349,47 +183,6 @@ Retrieves a list of notebook instances that the user has access to
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.notebook_instance import NotebookInstance
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.NotebooksApi(api_client)
-    project_id = 'project_id_example' # str | 
-
-    try:
-        # Get notebook instances
-        api_response = api_instance.get_notebook_instances(project_id)
-        print("The response of NotebooksApi->get_notebook_instances:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling NotebooksApi->get_notebook_instances: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -428,45 +221,6 @@ Shuts down a running notebook instance
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.NotebooksApi(api_client)
-    notebook_instance_id = 'notebook_instance_id_example' # str | 
-    project_id = 'project_id_example' # str | 
-
-    try:
-        # Stop notebook instance
-        api_instance.stop_notebook_instance(notebook_instance_id, project_id)
-    except Exception as e:
-        print("Exception when calling NotebooksApi->stop_notebook_instance: %s\n" % e)
-```
-
-
 
 ### Parameters
 

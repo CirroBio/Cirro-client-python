@@ -25,48 +25,6 @@ Creates a project
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.create_response import CreateResponse
-from cirro_api_client.models.project_request import ProjectRequest
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProjectsApi(api_client)
-    project_request = cirro_api_client.ProjectRequest() # ProjectRequest | 
-
-    try:
-        # Create project
-        api_response = api_instance.create_project(project_request)
-        print("The response of ProjectsApi->create_project:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ProjectsApi->create_project: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -105,47 +63,6 @@ Get detailed project information
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.project_detail import ProjectDetail
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProjectsApi(api_client)
-    project_id = 'project_id_example' # str | 
-
-    try:
-        # Get project
-        api_response = api_instance.get_project(project_id)
-        print("The response of ProjectsApi->get_project:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ProjectsApi->get_project: %s\n" % e)
-```
-
-
 
 ### Parameters
 
@@ -186,47 +103,6 @@ Gets users who have access to the project
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.project_user import ProjectUser
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProjectsApi(api_client)
-    project_id = 'project_id_example' # str | 
-
-    try:
-        # Get project permissions
-        api_response = api_instance.get_project_users(project_id)
-        print("The response of ProjectsApi->get_project_users:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ProjectsApi->get_project_users: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -266,46 +142,6 @@ Retrieve a list of projects
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.project import Project
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProjectsApi(api_client)
-
-    try:
-        # Get projects
-        api_response = api_instance.get_projects()
-        print("The response of ProjectsApi->get_projects:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ProjectsApi->get_projects: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 This endpoint does not need any parameter.
@@ -341,44 +177,6 @@ Redeploys cloud resources for a project
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProjectsApi(api_client)
-    project_id = 'project_id_example' # str | 
-
-    try:
-        # Redeploy project
-        api_instance.redeploy_project(project_id)
-    except Exception as e:
-        print("Exception when calling ProjectsApi->redeploy_project: %s\n" % e)
-```
-
-
 
 ### Parameters
 
@@ -418,46 +216,6 @@ Sets a user's role within a project
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.set_user_project_role_request import SetUserProjectRoleRequest
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProjectsApi(api_client)
-    project_id = 'project_id_example' # str | 
-    set_user_project_role_request = cirro_api_client.SetUserProjectRoleRequest() # SetUserProjectRoleRequest | 
-
-    try:
-        # Set role
-        api_instance.set_user_project_role(project_id, set_user_project_role_request)
-    except Exception as e:
-        print("Exception when calling ProjectsApi->set_user_project_role: %s\n" % e)
-```
-
-
 
 ### Parameters
 
@@ -499,49 +257,6 @@ Updates a project
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.project_detail import ProjectDetail
-from cirro_api_client.models.project_request import ProjectRequest
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProjectsApi(api_client)
-    project_id = 'project_id_example' # str | 
-    project_request = cirro_api_client.ProjectRequest() # ProjectRequest | 
-
-    try:
-        # Update project
-        api_response = api_instance.update_project(project_id, project_request)
-        print("The response of ProjectsApi->update_project:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ProjectsApi->update_project: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -581,46 +296,6 @@ Sets tags on a project
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.tag import Tag
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProjectsApi(api_client)
-    project_id = 'project_id_example' # str | 
-    tag = [cirro_api_client.Tag()] # List[Tag] | 
-
-    try:
-        # Set project tags
-        api_instance.update_project_tags(project_id, tag)
-    except Exception as e:
-        print("Exception when calling ProjectsApi->update_project_tags: %s\n" % e)
-```
-
-
 
 ### Parameters
 

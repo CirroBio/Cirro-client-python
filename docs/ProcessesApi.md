@@ -25,44 +25,6 @@ Removes the process from the list of available options
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProcessesApi(api_client)
-    process_id = 'process_id_example' # str | 
-
-    try:
-        # Archive custom process
-        api_instance.archive_custom_process(process_id)
-    except Exception as e:
-        print("Exception when calling ProcessesApi->archive_custom_process: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -101,48 +63,6 @@ Creates a custom data type or pipeline which you can use in the listed projects.
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.create_response import CreateResponse
-from cirro_api_client.models.process_detail import ProcessDetail
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProcessesApi(api_client)
-    process_detail = cirro_api_client.ProcessDetail() # ProcessDetail | 
-
-    try:
-        # Create custom process
-        api_response = api_instance.create_custom_process(process_detail)
-        print("The response of ProcessesApi->create_custom_process:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ProcessesApi->create_custom_process: %s\n" % e)
-```
-
-
 
 ### Parameters
 
@@ -185,47 +105,6 @@ Retrieves detailed information on a process
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.process_detail import ProcessDetail
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProcessesApi(api_client)
-    process_id = 'process_id_example' # str | 
-
-    try:
-        # Get process
-        api_response = api_instance.get_process(process_id)
-        print("The response of ProcessesApi->get_process:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ProcessesApi->get_process: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -264,47 +143,6 @@ Retrieves the input parameters for a process
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.form_schema import FormSchema
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProcessesApi(api_client)
-    process_id = 'process_id_example' # str | 
-
-    try:
-        # Get process parameters
-        api_response = api_instance.get_process_parameters(process_id)
-        print("The response of ProcessesApi->get_process_parameters:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ProcessesApi->get_process_parameters: %s\n" % e)
-```
-
-
 
 ### Parameters
 
@@ -345,47 +183,6 @@ Retrieves a list of available processes
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.process import Process
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProcessesApi(api_client)
-    include_archived = False # bool | Include processes that are no longer in use (optional) (default to False)
-
-    try:
-        # List processes
-        api_response = api_instance.get_processes(include_archived=include_archived)
-        print("The response of ProcessesApi->get_processes:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ProcessesApi->get_processes: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -424,47 +221,6 @@ Updates the process definition from the repository
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.custom_pipeline_settings import CustomPipelineSettings
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProcessesApi(api_client)
-    process_id = 'process_id_example' # str | 
-
-    try:
-        # Sync custom process
-        api_response = api_instance.sync_custom_process(process_id)
-        print("The response of ProcessesApi->sync_custom_process:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ProcessesApi->sync_custom_process: %s\n" % e)
-```
-
-
 
 ### Parameters
 
@@ -505,46 +261,6 @@ Updates the custom process
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.process_detail import ProcessDetail
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProcessesApi(api_client)
-    process_id = 'process_id_example' # str | 
-    process_detail = cirro_api_client.ProcessDetail() # ProcessDetail | 
-
-    try:
-        # Update custom process
-        api_instance.update_custom_process(process_id, process_detail)
-    except Exception as e:
-        print("Exception when calling ProcessesApi->update_custom_process: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -584,49 +300,6 @@ Checks the input file names with the expected files for a data type (ingest proc
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.file_requirements import FileRequirements
-from cirro_api_client.models.validate_file_requirements_request import ValidateFileRequirementsRequest
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.ProcessesApi(api_client)
-    process_id = 'process_id_example' # str | 
-    validate_file_requirements_request = cirro_api_client.ValidateFileRequirementsRequest() # ValidateFileRequirementsRequest | 
-
-    try:
-        # Validate file requirements
-        api_response = api_instance.validate_file_requirements(process_id, validate_file_requirements_request)
-        print("The response of ProcessesApi->validate_file_requirements:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ProcessesApi->validate_file_requirements: %s\n" % e)
-```
-
-
 
 ### Parameters
 

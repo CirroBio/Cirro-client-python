@@ -10,17 +10,17 @@ Python 3.7+
 ## Installation & Usage
 ### pip install
 
+Via PyPI:
+```sh
+pip install cirro-api-client
+```
+
 If the python package is hosted on a repository, you can install directly using:
 
 ```sh
 pip install git+https://github.com/CirroBio/Cirro-client-python.git
 ```
 (you may need to run `pip` with root permission: `sudo pip install git+https://github.com/CirroBio/Cirro-client-python.git`)
-
-Then import the package:
-```python
-import cirro_api_client
-```
 
 ### Setuptools
 
@@ -30,11 +30,6 @@ Install via [Setuptools](http://pypi.python.org/pypi/setuptools).
 python setup.py install --user
 ```
 (or `sudo python setup.py install` to install the package for all users)
-
-Then import the package:
-```python
-import cirro_api_client
-```
 
 ### Tests
 
@@ -46,41 +41,29 @@ Please follow the [installation procedure](#installation--usage) and then run th
 
 ```python
 
-import time
-import cirro_api_client
+import os
+from cirro_api_client import Configuration, CirroApiClient
 from cirro_api_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.cirro.bio
 # See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
+# The access_token param can be either a string, or a function that returns a string.
+configuration = Configuration(
+    host = "https://api.cirro.bio",
     access_token = os.environ["BEARER_TOKEN"]
 )
 
+# Create instance of the API client
+api_client = CirroApiClient(configuration)
 
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.BillingApi(api_client)
-    billing_account_request = cirro_api_client.BillingAccountRequest() # BillingAccountRequest | 
-
-    try:
-        # Create billing account
-        api_response = api_instance.create_billing_account(billing_account_request)
-        print("The response of BillingApi->create_billing_account:\n")
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling BillingApi->create_billing_account: %s\n" % e)
+try:
+    # Get list of projects
+    projects = api_client.projects.get_projects()
+    print("The response of Projects->get_projects:\n")
+    pprint(projects)
+except ApiException as e:
+    print("Exception when calling Projects->get_projects: %s\n" % e)
 
 ```
 

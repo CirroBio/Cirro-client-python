@@ -22,49 +22,6 @@ Creates a dashboard
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.create_response import CreateResponse
-from cirro_api_client.models.dashboard_request import DashboardRequest
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.DashboardsApi(api_client)
-    project_id = 'project_id_example' # str | 
-    dashboard_request = cirro_api_client.DashboardRequest() # DashboardRequest | 
-
-    try:
-        # Create dashboard
-        api_response = api_instance.create_dashboard(project_id, dashboard_request)
-        print("The response of DashboardsApi->create_dashboard:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DashboardsApi->create_dashboard: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -104,48 +61,6 @@ Deletes a dashboard
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.dashboard import Dashboard
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.DashboardsApi(api_client)
-    project_id = 'project_id_example' # str | 
-    dashboard_id = 'dashboard_id_example' # str | 
-
-    try:
-        # Delete dashboard
-        api_response = api_instance.delete_dashboard(project_id, dashboard_id)
-        print("The response of DashboardsApi->delete_dashboard:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DashboardsApi->delete_dashboard: %s\n" % e)
-```
-
-
 
 ### Parameters
 
@@ -187,48 +102,6 @@ Retrieves a dashboard
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.dashboard import Dashboard
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.DashboardsApi(api_client)
-    project_id = 'project_id_example' # str | 
-    dashboard_id = 'dashboard_id_example' # str | 
-
-    try:
-        # Get dashboard
-        api_response = api_instance.get_dashboard(project_id, dashboard_id)
-        print("The response of DashboardsApi->get_dashboard:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DashboardsApi->get_dashboard: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -269,47 +142,6 @@ Retrieves a list of dashboards for a given project
 
 * Bearer (JWT) Authentication (accessToken):
 
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.dashboard import Dashboard
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.DashboardsApi(api_client)
-    project_id = 'project_id_example' # str | 
-
-    try:
-        # List dashboards
-        api_response = api_instance.get_dashboards(project_id)
-        print("The response of DashboardsApi->get_dashboards:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DashboardsApi->get_dashboards: %s\n" % e)
-```
-
-
-
 ### Parameters
 
 
@@ -348,50 +180,6 @@ Updates a dashboard
 ### Example
 
 * Bearer (JWT) Authentication (accessToken):
-
-```python
-import time
-import os
-import cirro_api_client
-from cirro_api_client.models.dashboard import Dashboard
-from cirro_api_client.models.dashboard_request import DashboardRequest
-from cirro_api_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.cirro.bio
-# See configuration.py for a list of all supported configuration parameters.
-configuration = cirro_api_client.Configuration(
-    host = "https://api.cirro.bio"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): accessToken
-configuration = cirro_api_client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with cirro_api_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = cirro_api_client.DashboardsApi(api_client)
-    project_id = 'project_id_example' # str | 
-    dashboard_id = 'dashboard_id_example' # str | 
-    dashboard_request = cirro_api_client.DashboardRequest() # DashboardRequest | 
-
-    try:
-        # Update dashboard
-        api_response = api_instance.update_dashboard(project_id, dashboard_id, dashboard_request)
-        print("The response of DashboardsApi->update_dashboard:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DashboardsApi->update_dashboard: %s\n" % e)
-```
-
-
 
 ### Parameters
 

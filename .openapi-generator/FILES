@@ -185,5 +185,4 @@ requirements.txt
 setup.cfg
 setup.py
 test-requirements.txt
-test/__init__.py
 tox.ini

@@ -165,7 +165,7 @@ class ProcessesApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='DELETE',
             resource_path='/processes/{processId}',
             path_params=_path_params,
@@ -299,7 +299,7 @@ class ProcessesApi:
         )
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -313,7 +313,7 @@ class ProcessesApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='POST',
             resource_path='/processes',
             path_params=_path_params,
@@ -449,7 +449,7 @@ class ProcessesApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/processes/{processId}',
             path_params=_path_params,
@@ -585,7 +585,7 @@ class ProcessesApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/processes/{processId}/parameters',
             path_params=_path_params,
@@ -723,7 +723,7 @@ class ProcessesApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/processes',
             path_params=_path_params,
@@ -859,7 +859,7 @@ class ProcessesApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='PUT',
             resource_path='/processes/{processId}:sync',
             path_params=_path_params,
@@ -997,7 +997,7 @@ class ProcessesApi:
 
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -1011,7 +1011,7 @@ class ProcessesApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='PUT',
             resource_path='/processes/{processId}',
             path_params=_path_params,
@@ -1154,7 +1154,7 @@ class ProcessesApi:
         )
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -1168,7 +1168,7 @@ class ProcessesApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='POST',
             resource_path='/processes/{processId}/validate-files',
             path_params=_path_params,

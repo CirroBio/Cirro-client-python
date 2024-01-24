@@ -170,7 +170,7 @@ class FileApi:
         )
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -184,7 +184,7 @@ class FileApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='POST',
             resource_path='/projects/{projectId}/s3-token',
             path_params=_path_params,
@@ -327,7 +327,7 @@ class FileApi:
         )
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -341,7 +341,7 @@ class FileApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='POST',
             resource_path='/projects/{projectId}/sftp-token',
             path_params=_path_params,

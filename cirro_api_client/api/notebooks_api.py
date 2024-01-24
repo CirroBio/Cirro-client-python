@@ -173,7 +173,7 @@ class NotebooksApi:
         )
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -187,7 +187,7 @@ class NotebooksApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='POST',
             resource_path='/projects/{projectId}/notebook-instances',
             path_params=_path_params,
@@ -329,7 +329,7 @@ class NotebooksApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='DELETE',
             resource_path='/projects/{projectId}/notebook-instances/{notebookInstanceId}',
             path_params=_path_params,
@@ -476,7 +476,7 @@ class NotebooksApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/projects/{projectId}/notebook-instances/{notebookInstanceId}:generate-url',
             path_params=_path_params,
@@ -623,7 +623,7 @@ class NotebooksApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/projects/{projectId}/notebook-instances/{notebookInstanceId}:status',
             path_params=_path_params,
@@ -759,7 +759,7 @@ class NotebooksApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/projects/{projectId}/notebook-instances',
             path_params=_path_params,
@@ -901,7 +901,7 @@ class NotebooksApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='POST',
             resource_path='/projects/{projectId}/notebook-instances/{notebookInstanceId}:stop',
             path_params=_path_params,

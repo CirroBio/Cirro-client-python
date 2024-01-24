@@ -164,7 +164,7 @@ class ProjectsApi:
         )
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -178,7 +178,7 @@ class ProjectsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='POST',
             resource_path='/projects',
             path_params=_path_params,
@@ -314,7 +314,7 @@ class ProjectsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/projects/{projectId}',
             path_params=_path_params,
@@ -450,7 +450,7 @@ class ProjectsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/projects/{projectId}/permissions',
             path_params=_path_params,
@@ -575,7 +575,7 @@ class ProjectsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/projects',
             path_params=_path_params,
@@ -706,7 +706,7 @@ class ProjectsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='PUT',
             resource_path='/projects/{projectId}:re-deploy',
             path_params=_path_params,
@@ -844,7 +844,7 @@ class ProjectsApi:
 
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -858,7 +858,7 @@ class ProjectsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='PUT',
             resource_path='/projects/{projectId}/permissions',
             path_params=_path_params,
@@ -1001,7 +1001,7 @@ class ProjectsApi:
         )
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -1015,7 +1015,7 @@ class ProjectsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='PUT',
             resource_path='/projects/{projectId}',
             path_params=_path_params,
@@ -1154,7 +1154,7 @@ class ProjectsApi:
 
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -1168,7 +1168,7 @@ class ProjectsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='PUT',
             resource_path='/projects/{projectId}:tags',
             path_params=_path_params,

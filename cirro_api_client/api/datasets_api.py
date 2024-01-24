@@ -177,7 +177,7 @@ class DatasetsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='DELETE',
             resource_path='/projects/{projectId}/datasets/{datasetId}',
             path_params=_path_params,
@@ -324,7 +324,7 @@ class DatasetsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/projects/{projectId}/datasets/{datasetId}',
             path_params=_path_params,
@@ -471,7 +471,7 @@ class DatasetsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/projects/{projectId}/datasets/{datasetId}/files',
             path_params=_path_params,
@@ -633,7 +633,7 @@ class DatasetsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/projects/{projectId}/datasets',
             path_params=_path_params,
@@ -776,7 +776,7 @@ class DatasetsApi:
         )
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -790,7 +790,7 @@ class DatasetsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='POST',
             resource_path='/projects/{projectId}/datasets/import',
             path_params=_path_params,
@@ -932,7 +932,7 @@ class DatasetsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='PUT',
             resource_path='/projects/{projectId}/datasets/{datasetId}/ingest-samples',
             path_params=_path_params,
@@ -1074,7 +1074,7 @@ class DatasetsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='PUT',
             resource_path='/projects/{projectId}/datasets/{datasetId}/regenerate-manifest',
             path_params=_path_params,
@@ -1216,7 +1216,7 @@ class DatasetsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='PUT',
             resource_path='/projects/{projectId}/datasets/{datasetId}/rerun-transform',
             path_params=_path_params,
@@ -1370,7 +1370,7 @@ class DatasetsApi:
         )
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -1384,7 +1384,7 @@ class DatasetsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='PUT',
             resource_path='/projects/{projectId}/datasets/{datasetId}',
             path_params=_path_params,
@@ -1527,7 +1527,7 @@ class DatasetsApi:
         )
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -1541,7 +1541,7 @@ class DatasetsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='POST',
             resource_path='/projects/{projectId}/datasets/upload',
             path_params=_path_params,

@@ -167,7 +167,7 @@ class UsersApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/users/{username}',
             path_params=_path_params,
@@ -305,7 +305,7 @@ class UsersApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/users',
             path_params=_path_params,
@@ -437,7 +437,7 @@ class UsersApi:
         )
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -451,7 +451,7 @@ class UsersApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='POST',
             resource_path='/users',
             path_params=_path_params,
@@ -594,7 +594,7 @@ class UsersApi:
         )
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -608,7 +608,7 @@ class UsersApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='PUT',
             resource_path='/users/{username}',
             path_params=_path_params,

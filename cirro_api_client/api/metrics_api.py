@@ -151,7 +151,7 @@ class MetricsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/metrics',
             path_params=_path_params,
@@ -287,7 +287,7 @@ class MetricsApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/projects/{projectId}/metrics',
             path_params=_path_params,

@@ -150,7 +150,7 @@ class SystemApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/service-connections',
             path_params=_path_params,
@@ -273,7 +273,7 @@ class SystemApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/info',
             path_params=_path_params,

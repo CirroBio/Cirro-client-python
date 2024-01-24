@@ -187,7 +187,7 @@ class {{classname}}:
         {{#hasConsumes}}
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [{{#consumes}}
                     '{{{mediaType}}}'{{^-last}}, {{/-last}}{{/consumes}}
                 ]
@@ -202,7 +202,7 @@ class {{classname}}:
             '{{name}}'{{^-last}}, {{/-last}}{{/authMethods}}
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='{{httpMethod}}',
             resource_path='{{{path}}}',
             path_params=_path_params,

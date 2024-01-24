@@ -193,7 +193,7 @@ class MetadataApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/projects/{projectId}/samples',
             path_params=_path_params,
@@ -327,7 +327,7 @@ class MetadataApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='GET',
             resource_path='/projects/{projectId}/schema',
             path_params=_path_params,
@@ -463,7 +463,7 @@ class MetadataApi:
 
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -477,7 +477,7 @@ class MetadataApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='PUT',
             resource_path='/projects/{projectId}/schema',
             path_params=_path_params,
@@ -631,7 +631,7 @@ class MetadataApi:
         )
         # set the HTTP header `Content-Type`
         _default_content_type = (
-            self.api_client.select_header_content_type(
+            self._api_client.select_header_content_type(
                 [
                     'application/json'
                 ]
@@ -645,7 +645,7 @@ class MetadataApi:
             'accessToken'
         ]
 
-        return self.api_client.param_serialize(
+        return self._api_client.param_serialize(
             method='PUT',
             resource_path='/projects/{projectId}/samples/{sampleId}',
             path_params=_path_params,

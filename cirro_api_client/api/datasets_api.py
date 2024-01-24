@@ -12,17 +12,10 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
-import io
 import warnings
-
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
-from typing import Dict, List, Optional, Tuple, Union, Any
-
-try:
-    from typing import Annotated
-except ImportError:
-    from typing_extensions import Annotated
+from typing import Any, Dict, List, Optional, Tuple, Union
+from typing_extensions import Annotated
 
 from pydantic import Field
 from typing_extensions import Annotated
@@ -39,9 +32,8 @@ from cirro_api_client.models.update_dataset_request import UpdateDatasetRequest
 from cirro_api_client.models.upload_dataset_create_response import UploadDatasetCreateResponse
 from cirro_api_client.models.upload_dataset_request import UploadDatasetRequest
 
-from cirro_api_client.api_client import ApiClient
+from cirro_api_client.api_client import ApiClient, RequestSerialized
 from cirro_api_client.api_response import ApiResponse
-from cirro_api_client.rest import RESTResponseType
 
 
 class DatasetsApi:
@@ -56,7 +48,6 @@ class DatasetsApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
-
     @validate_call
     def delete_dataset(
         self,
@@ -70,10 +61,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
         """Delete a dataset
 
@@ -88,48 +76,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._delete_dataset_serialize(
-            project_id=project_id,
-            dataset_id=dataset_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': None,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
+        return self.delete_dataset_raw(**locals()).data
 
     @validate_call
-    def delete_dataset_with_http_info(
+    def delete_dataset_raw(
         self,
         project_id: StrictStr,
         dataset_id: StrictStr,
@@ -141,10 +98,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
         """Delete a dataset
 
@@ -159,30 +113,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._delete_dataset_serialize(
             project_id=project_id,
             dataset_id=dataset_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
@@ -198,86 +139,12 @@ class DatasetsApi:
             response_types_map=_response_types_map,
         )
 
-
-    @validate_call
-    def delete_dataset_without_preload_content(
-        self,
-        project_id: StrictStr,
-        dataset_id: StrictStr,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Delete a dataset
-
-        Deletes the dataset, files are saved according to the project's retention time.
-
-        :param project_id: (required)
-        :type project_id: str
-        :param dataset_id: (required)
-        :type dataset_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._delete_dataset_serialize(
-            project_id=project_id,
-            dataset_id=dataset_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': None,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
     def _delete_dataset_serialize(
         self,
         project_id,
         dataset_id,
-        _request_auth,
-        _content_type,
         _headers,
-        _host_index,
-    ) -> Tuple:
-
-        _host = None
-
+    ) -> RequestSerialized:
         _collection_formats: Dict[str, str] = {
         }
 
@@ -297,7 +164,6 @@ class DatasetsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-
 
 
 
@@ -316,13 +182,8 @@ class DatasetsApi:
             post_params=_form_params,
             files=_files,
             auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
+            collection_formats=_collection_formats
         )
-
-
-
 
     @validate_call
     def get_dataset(
@@ -337,10 +198,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> DatasetDetail:
         """Get dataset
 
@@ -355,48 +213,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_dataset_serialize(
-            dataset_id=dataset_id,
-            project_id=project_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DatasetDetail",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
+        return self.get_dataset_raw(**locals()).data
 
     @validate_call
-    def get_dataset_with_http_info(
+    def get_dataset_raw(
         self,
         dataset_id: StrictStr,
         project_id: StrictStr,
@@ -408,10 +235,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[DatasetDetail]:
         """Get dataset
 
@@ -426,30 +250,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_dataset_serialize(
             dataset_id=dataset_id,
             project_id=project_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
@@ -465,86 +276,12 @@ class DatasetsApi:
             response_types_map=_response_types_map,
         )
 
-
-    @validate_call
-    def get_dataset_without_preload_content(
-        self,
-        dataset_id: StrictStr,
-        project_id: StrictStr,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get dataset
-
-        Gets detailed information about a dataset
-
-        :param dataset_id: (required)
-        :type dataset_id: str
-        :param project_id: (required)
-        :type project_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._get_dataset_serialize(
-            dataset_id=dataset_id,
-            project_id=project_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DatasetDetail",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
     def _get_dataset_serialize(
         self,
         dataset_id,
         project_id,
-        _request_auth,
-        _content_type,
         _headers,
-        _host_index,
-    ) -> Tuple:
-
-        _host = None
-
+    ) -> RequestSerialized:
         _collection_formats: Dict[str, str] = {
         }
 
@@ -565,14 +302,12 @@ class DatasetsApi:
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
             [
                 'application/json'
             ]
         )
-
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -589,13 +324,8 @@ class DatasetsApi:
             post_params=_form_params,
             files=_files,
             auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
+            collection_formats=_collection_formats
         )
-
-
-
 
     @validate_call
     def get_dataset_manifest(
@@ -610,10 +340,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> DatasetAssetsManifest:
         """Get dataset manifest
 
@@ -628,48 +355,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_dataset_manifest_serialize(
-            dataset_id=dataset_id,
-            project_id=project_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DatasetAssetsManifest",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
+        return self.get_dataset_manifest_raw(**locals()).data
 
     @validate_call
-    def get_dataset_manifest_with_http_info(
+    def get_dataset_manifest_raw(
         self,
         dataset_id: StrictStr,
         project_id: StrictStr,
@@ -681,10 +377,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[DatasetAssetsManifest]:
         """Get dataset manifest
 
@@ -699,30 +392,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_dataset_manifest_serialize(
             dataset_id=dataset_id,
             project_id=project_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
@@ -738,86 +418,12 @@ class DatasetsApi:
             response_types_map=_response_types_map,
         )
 
-
-    @validate_call
-    def get_dataset_manifest_without_preload_content(
-        self,
-        dataset_id: StrictStr,
-        project_id: StrictStr,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get dataset manifest
-
-        Gets a listing of files, charts, and other assets available for the dataset
-
-        :param dataset_id: (required)
-        :type dataset_id: str
-        :param project_id: (required)
-        :type project_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._get_dataset_manifest_serialize(
-            dataset_id=dataset_id,
-            project_id=project_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DatasetAssetsManifest",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
     def _get_dataset_manifest_serialize(
         self,
         dataset_id,
         project_id,
-        _request_auth,
-        _content_type,
         _headers,
-        _host_index,
-    ) -> Tuple:
-
-        _host = None
-
+    ) -> RequestSerialized:
         _collection_formats: Dict[str, str] = {
         }
 
@@ -838,14 +444,12 @@ class DatasetsApi:
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
             [
                 'application/json'
             ]
         )
-
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -862,13 +466,8 @@ class DatasetsApi:
             post_params=_form_params,
             files=_files,
             auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
+            collection_formats=_collection_formats
         )
-
-
-
 
     @validate_call
     def get_datasets(
@@ -884,10 +483,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PaginatedResponseDatasetListDto:
         """List datasets
 
@@ -904,49 +500,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_datasets_serialize(
-            project_id=project_id,
-            limit=limit,
-            next_token=next_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginatedResponseDatasetListDto",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
+        return self.get_datasets_raw(**locals()).data
 
     @validate_call
-    def get_datasets_with_http_info(
+    def get_datasets_raw(
         self,
         project_id: StrictStr,
         limit: Annotated[Optional[StrictInt], Field(description="number of records to get")] = None,
@@ -959,10 +523,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PaginatedResponseDatasetListDto]:
         """List datasets
 
@@ -979,31 +540,18 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_datasets_serialize(
             project_id=project_id,
             limit=limit,
             next_token=next_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
@@ -1019,91 +567,13 @@ class DatasetsApi:
             response_types_map=_response_types_map,
         )
 
-
-    @validate_call
-    def get_datasets_without_preload_content(
-        self,
-        project_id: StrictStr,
-        limit: Annotated[Optional[StrictInt], Field(description="number of records to get")] = None,
-        next_token: Annotated[Optional[StrictStr], Field(description="cursor to request the next page")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """List datasets
-
-        Retrieves a list of datasets for a given project
-
-        :param project_id: (required)
-        :type project_id: str
-        :param limit: number of records to get
-        :type limit: int
-        :param next_token: cursor to request the next page
-        :type next_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._get_datasets_serialize(
-            project_id=project_id,
-            limit=limit,
-            next_token=next_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginatedResponseDatasetListDto",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
     def _get_datasets_serialize(
         self,
         project_id,
         limit,
         next_token,
-        _request_auth,
-        _content_type,
         _headers,
-        _host_index,
-    ) -> Tuple:
-
-        _host = None
-
+    ) -> RequestSerialized:
         _collection_formats: Dict[str, str] = {
         }
 
@@ -1130,14 +600,12 @@ class DatasetsApi:
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
             [
                 'application/json'
             ]
         )
-
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1154,13 +622,8 @@ class DatasetsApi:
             post_params=_form_params,
             files=_files,
             auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
+            collection_formats=_collection_formats
         )
-
-
-
 
     @validate_call
     def import_public_dataset(
@@ -1175,10 +638,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> CreateResponse:
         """Import public dataset
 
@@ -1193,48 +653,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._import_public_dataset_serialize(
-            project_id=project_id,
-            import_data_request=import_data_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateResponse",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
+        return self.import_public_dataset_raw(**locals()).data
 
     @validate_call
-    def import_public_dataset_with_http_info(
+    def import_public_dataset_raw(
         self,
         project_id: StrictStr,
         import_data_request: ImportDataRequest,
@@ -1246,10 +675,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[CreateResponse]:
         """Import public dataset
 
@@ -1264,30 +690,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._import_public_dataset_serialize(
             project_id=project_id,
             import_data_request=import_data_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
@@ -1303,86 +716,12 @@ class DatasetsApi:
             response_types_map=_response_types_map,
         )
 
-
-    @validate_call
-    def import_public_dataset_without_preload_content(
-        self,
-        project_id: StrictStr,
-        import_data_request: ImportDataRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Import public dataset
-
-        Download data from public repositories
-
-        :param project_id: (required)
-        :type project_id: str
-        :param import_data_request: (required)
-        :type import_data_request: ImportDataRequest
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._import_public_dataset_serialize(
-            project_id=project_id,
-            import_data_request=import_data_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateResponse",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
     def _import_public_dataset_serialize(
         self,
         project_id,
         import_data_request,
-        _request_auth,
-        _content_type,
         _headers,
-        _host_index,
-    ) -> Tuple:
-
-        _host = None
-
+    ) -> RequestSerialized:
         _collection_formats: Dict[str, str] = {
         }
 
@@ -1403,27 +742,22 @@ class DatasetsApi:
         if import_data_request is not None:
             _body_params = import_data_request
 
-
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
             [
                 'application/json'
             ]
         )
-
         # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params['Content-Type'] = _content_type
-        else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
+        _default_content_type = (
+            self.api_client.select_header_content_type(
+                [
+                    'application/json'
+                ]
             )
-            if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
+        )
+        if _default_content_type is not None:
+            _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1440,13 +774,8 @@ class DatasetsApi:
             post_params=_form_params,
             files=_files,
             auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
+            collection_formats=_collection_formats
         )
-
-
-
 
     @validate_call
     def ingest_samples(
@@ -1461,10 +790,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
         """Rerun sample ingest
 
@@ -1479,48 +805,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._ingest_samples_serialize(
-            project_id=project_id,
-            dataset_id=dataset_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': None,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
+        return self.ingest_samples_raw(**locals()).data
 
     @validate_call
-    def ingest_samples_with_http_info(
+    def ingest_samples_raw(
         self,
         project_id: StrictStr,
         dataset_id: StrictStr,
@@ -1532,10 +827,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
         """Rerun sample ingest
 
@@ -1550,30 +842,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._ingest_samples_serialize(
             project_id=project_id,
             dataset_id=dataset_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
@@ -1589,86 +868,12 @@ class DatasetsApi:
             response_types_map=_response_types_map,
         )
 
-
-    @validate_call
-    def ingest_samples_without_preload_content(
-        self,
-        project_id: StrictStr,
-        dataset_id: StrictStr,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Rerun sample ingest
-
-        Rerun sample ingest (TODO).
-
-        :param project_id: (required)
-        :type project_id: str
-        :param dataset_id: (required)
-        :type dataset_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._ingest_samples_serialize(
-            project_id=project_id,
-            dataset_id=dataset_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': None,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
     def _ingest_samples_serialize(
         self,
         project_id,
         dataset_id,
-        _request_auth,
-        _content_type,
         _headers,
-        _host_index,
-    ) -> Tuple:
-
-        _host = None
-
+    ) -> RequestSerialized:
         _collection_formats: Dict[str, str] = {
         }
 
@@ -1688,7 +893,6 @@ class DatasetsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-
 
 
 
@@ -1707,13 +911,8 @@ class DatasetsApi:
             post_params=_form_params,
             files=_files,
             auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
+            collection_formats=_collection_formats
         )
-
-
-
 
     @validate_call
     def regenerate_manifest(
@@ -1728,10 +927,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
         """Regenerate dataset manifest
 
@@ -1746,48 +942,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._regenerate_manifest_serialize(
-            project_id=project_id,
-            dataset_id=dataset_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': None,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
+        return self.regenerate_manifest_raw(**locals()).data
 
     @validate_call
-    def regenerate_manifest_with_http_info(
+    def regenerate_manifest_raw(
         self,
         project_id: StrictStr,
         dataset_id: StrictStr,
@@ -1799,10 +964,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
         """Regenerate dataset manifest
 
@@ -1817,30 +979,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._regenerate_manifest_serialize(
             project_id=project_id,
             dataset_id=dataset_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
@@ -1856,86 +1005,12 @@ class DatasetsApi:
             response_types_map=_response_types_map,
         )
 
-
-    @validate_call
-    def regenerate_manifest_without_preload_content(
-        self,
-        project_id: StrictStr,
-        dataset_id: StrictStr,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Regenerate dataset manifest
-
-        Regenerate dataset manifest (TODO).
-
-        :param project_id: (required)
-        :type project_id: str
-        :param dataset_id: (required)
-        :type dataset_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._regenerate_manifest_serialize(
-            project_id=project_id,
-            dataset_id=dataset_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': None,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
     def _regenerate_manifest_serialize(
         self,
         project_id,
         dataset_id,
-        _request_auth,
-        _content_type,
         _headers,
-        _host_index,
-    ) -> Tuple:
-
-        _host = None
-
+    ) -> RequestSerialized:
         _collection_formats: Dict[str, str] = {
         }
 
@@ -1955,7 +1030,6 @@ class DatasetsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-
 
 
 
@@ -1974,13 +1048,8 @@ class DatasetsApi:
             post_params=_form_params,
             files=_files,
             auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
+            collection_formats=_collection_formats
         )
-
-
-
 
     @validate_call
     def rerun_transform(
@@ -1995,10 +1064,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
         """Rerun data transforms
 
@@ -2013,48 +1079,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._rerun_transform_serialize(
-            project_id=project_id,
-            dataset_id=dataset_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': None,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
+        return self.rerun_transform_raw(**locals()).data
 
     @validate_call
-    def rerun_transform_with_http_info(
+    def rerun_transform_raw(
         self,
         project_id: StrictStr,
         dataset_id: StrictStr,
@@ -2066,10 +1101,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
         """Rerun data transforms
 
@@ -2084,30 +1116,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._rerun_transform_serialize(
             project_id=project_id,
             dataset_id=dataset_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
@@ -2123,86 +1142,12 @@ class DatasetsApi:
             response_types_map=_response_types_map,
         )
 
-
-    @validate_call
-    def rerun_transform_without_preload_content(
-        self,
-        project_id: StrictStr,
-        dataset_id: StrictStr,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Rerun data transforms
-
-        Rerun data transforms (TODO).
-
-        :param project_id: (required)
-        :type project_id: str
-        :param dataset_id: (required)
-        :type dataset_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._rerun_transform_serialize(
-            project_id=project_id,
-            dataset_id=dataset_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': None,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
     def _rerun_transform_serialize(
         self,
         project_id,
         dataset_id,
-        _request_auth,
-        _content_type,
         _headers,
-        _host_index,
-    ) -> Tuple:
-
-        _host = None
-
+    ) -> RequestSerialized:
         _collection_formats: Dict[str, str] = {
         }
 
@@ -2225,7 +1170,6 @@ class DatasetsApi:
 
 
 
-
         # authentication setting
         _auth_settings: List[str] = [
             'accessToken'
@@ -2241,13 +1185,8 @@ class DatasetsApi:
             post_params=_form_params,
             files=_files,
             auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
+            collection_formats=_collection_formats
         )
-
-
-
 
     @validate_call
     def update_dataset(
@@ -2263,10 +1202,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> DatasetDetail:
         """Update dataset
 
@@ -2283,49 +1219,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._update_dataset_serialize(
-            project_id=project_id,
-            dataset_id=dataset_id,
-            update_dataset_request=update_dataset_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DatasetDetail",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
+        return self.update_dataset_raw(**locals()).data
 
     @validate_call
-    def update_dataset_with_http_info(
+    def update_dataset_raw(
         self,
         project_id: StrictStr,
         dataset_id: StrictStr,
@@ -2338,10 +1242,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[DatasetDetail]:
         """Update dataset
 
@@ -2358,31 +1259,18 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._update_dataset_serialize(
             project_id=project_id,
             dataset_id=dataset_id,
             update_dataset_request=update_dataset_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
@@ -2398,91 +1286,13 @@ class DatasetsApi:
             response_types_map=_response_types_map,
         )
 
-
-    @validate_call
-    def update_dataset_without_preload_content(
-        self,
-        project_id: StrictStr,
-        dataset_id: StrictStr,
-        update_dataset_request: UpdateDatasetRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Update dataset
-
-        Update info on a dataset
-
-        :param project_id: (required)
-        :type project_id: str
-        :param dataset_id: (required)
-        :type dataset_id: str
-        :param update_dataset_request: (required)
-        :type update_dataset_request: UpdateDatasetRequest
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._update_dataset_serialize(
-            project_id=project_id,
-            dataset_id=dataset_id,
-            update_dataset_request=update_dataset_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DatasetDetail",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
     def _update_dataset_serialize(
         self,
         project_id,
         dataset_id,
         update_dataset_request,
-        _request_auth,
-        _content_type,
         _headers,
-        _host_index,
-    ) -> Tuple:
-
-        _host = None
-
+    ) -> RequestSerialized:
         _collection_formats: Dict[str, str] = {
         }
 
@@ -2505,27 +1315,22 @@ class DatasetsApi:
         if update_dataset_request is not None:
             _body_params = update_dataset_request
 
-
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
             [
                 'application/json'
             ]
         )
-
         # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params['Content-Type'] = _content_type
-        else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
+        _default_content_type = (
+            self.api_client.select_header_content_type(
+                [
+                    'application/json'
+                ]
             )
-            if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
+        )
+        if _default_content_type is not None:
+            _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2542,13 +1347,8 @@ class DatasetsApi:
             post_params=_form_params,
             files=_files,
             auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
+            collection_formats=_collection_formats
         )
-
-
-
 
     @validate_call
     def upload_dataset(
@@ -2563,10 +1363,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> UploadDatasetCreateResponse:
         """Upload private dataset
 
@@ -2581,48 +1378,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._upload_dataset_serialize(
-            project_id=project_id,
-            upload_dataset_request=upload_dataset_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UploadDatasetCreateResponse",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
+        return self.upload_dataset_raw(**locals()).data
 
     @validate_call
-    def upload_dataset_with_http_info(
+    def upload_dataset_raw(
         self,
         project_id: StrictStr,
         upload_dataset_request: UploadDatasetRequest,
@@ -2634,10 +1400,7 @@ class DatasetsApi:
                 Annotated[StrictFloat, Field(gt=0)]
             ]
         ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[UploadDatasetCreateResponse]:
         """Upload private dataset
 
@@ -2652,30 +1415,17 @@ class DatasetsApi:
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
         :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
         :param _headers: set to override the headers for a single
                          request; this effectively ignores the headers
                          in the spec for a single request.
         :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._upload_dataset_serialize(
             project_id=project_id,
             upload_dataset_request=upload_dataset_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
@@ -2691,86 +1441,12 @@ class DatasetsApi:
             response_types_map=_response_types_map,
         )
 
-
-    @validate_call
-    def upload_dataset_without_preload_content(
-        self,
-        project_id: StrictStr,
-        upload_dataset_request: UploadDatasetRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Upload private dataset
-
-        Registers a dataset in the system that you upload files into
-
-        :param project_id: (required)
-        :type project_id: str
-        :param upload_dataset_request: (required)
-        :type upload_dataset_request: UploadDatasetRequest
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._upload_dataset_serialize(
-            project_id=project_id,
-            upload_dataset_request=upload_dataset_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UploadDatasetCreateResponse",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
     def _upload_dataset_serialize(
         self,
         project_id,
         upload_dataset_request,
-        _request_auth,
-        _content_type,
         _headers,
-        _host_index,
-    ) -> Tuple:
-
-        _host = None
-
+    ) -> RequestSerialized:
         _collection_formats: Dict[str, str] = {
         }
 
@@ -2791,27 +1467,22 @@ class DatasetsApi:
         if upload_dataset_request is not None:
             _body_params = upload_dataset_request
 
-
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
             [
                 'application/json'
             ]
         )
-
         # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params['Content-Type'] = _content_type
-        else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
+        _default_content_type = (
+            self.api_client.select_header_content_type(
+                [
+                    'application/json'
+                ]
             )
-            if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
+        )
+        if _default_content_type is not None:
+            _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -2828,9 +1499,5 @@ class DatasetsApi:
             post_params=_form_params,
             files=_files,
             auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
+            collection_formats=_collection_formats
         )
-
-

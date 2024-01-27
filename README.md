@@ -1,4 +1,5 @@
 # Cirro API Client
+[![](https://img.shields.io/pypi/v/cirro-api-client.svg)](https://pypi.org/project/cirro_api_client/)
 
 Low-level client for the Cirro API. Rather than using this package directly, we recommend using the [Cirro SDK](https://github.com/CirroBio/Cirro-client).
 

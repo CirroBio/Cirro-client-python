@@ -38,6 +38,10 @@ jobs:
         run: |
           poetry run pytest
 
+      - name: Lint
+        run: |
+          ruff check .
+
       - name: Build python package
         run: |
           poetry build

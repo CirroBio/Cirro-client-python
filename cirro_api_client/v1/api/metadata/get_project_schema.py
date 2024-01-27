@@ -43,7 +43,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[FormSchema]:
     """Get project metadata schema
 
@@ -72,7 +72,7 @@ def sync_detailed(
 def sync(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[FormSchema]:
     """Get project metadata schema
 
@@ -96,7 +96,7 @@ def sync(
 async def asyncio_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[FormSchema]:
     """Get project metadata schema
 
@@ -123,7 +123,7 @@ async def asyncio_detailed(
 async def asyncio(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[FormSchema]:
     """Get project metadata schema
 

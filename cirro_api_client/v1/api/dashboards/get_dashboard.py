@@ -45,7 +45,7 @@ def sync_detailed(
     project_id: str,
     dashboard_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[Dashboard]:
     """Get dashboard
 
@@ -79,7 +79,7 @@ def sync(
     project_id: str,
     dashboard_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[Dashboard]:
     """Get dashboard
 
@@ -108,7 +108,7 @@ async def asyncio_detailed(
     project_id: str,
     dashboard_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[Dashboard]:
     """Get dashboard
 
@@ -140,7 +140,7 @@ async def asyncio(
     project_id: str,
     dashboard_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[Dashboard]:
     """Get dashboard
 

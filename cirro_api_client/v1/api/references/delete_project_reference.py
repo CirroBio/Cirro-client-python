@@ -40,7 +40,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[Any]:
     """Delete project reference
 
@@ -71,7 +71,7 @@ def sync_detailed(
 async def asyncio_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[Any]:
     """Delete project reference
 

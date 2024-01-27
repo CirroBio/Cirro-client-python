@@ -56,7 +56,7 @@ def _build_response(
 def sync_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     number_of_days: Union[Unset, int] = 1,
 ) -> Response[GetProjectSummaryResponse200]:
     """Get execution summary
@@ -90,7 +90,7 @@ def sync_detailed(
 def sync(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     number_of_days: Union[Unset, int] = 1,
 ) -> Optional[GetProjectSummaryResponse200]:
     """Get execution summary
@@ -119,7 +119,7 @@ def sync(
 async def asyncio_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     number_of_days: Union[Unset, int] = 1,
 ) -> Response[GetProjectSummaryResponse200]:
     """Get execution summary
@@ -151,7 +151,7 @@ async def asyncio_detailed(
 async def asyncio(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     number_of_days: Union[Unset, int] = 1,
 ) -> Optional[GetProjectSummaryResponse200]:
     """Get execution summary

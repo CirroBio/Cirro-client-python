@@ -45,6 +45,9 @@ class Client:
     _client: Optional[httpx.Client] = field(default=None, init=False)
     _async_client: Optional[httpx.AsyncClient] = field(default=None, init=False)
 
+    def get_headers(self) -> Dict[str, str]:
+        return {**self._headers}
+
     def with_headers(self, headers: Dict[str, str]) -> "Client":
         """Get a new client matching this one with additional headers"""
         if self._client is not None:
@@ -52,6 +55,9 @@ class Client:
         if self._async_client is not None:
             self._async_client.headers.update(headers)
         return evolve(self, headers={**self._headers, **headers})
+
+    def get_cookies(self) -> Dict[str, str]:
+        return {**self._cookies}
 
     def with_cookies(self, cookies: Dict[str, str]) -> "Client":
         """Get a new client matching this one with additional cookies"""
@@ -89,6 +95,10 @@ class Client:
                 follow_redirects=self._follow_redirects,
                 **self._httpx_args,
             )
+        else:
+            # Update headers and cookies with latest value
+            self._client.headers.update(self.get_headers())
+            self._client.cookies.update(self.get_cookies())
         return self._client
 
     def __enter__(self) -> "Client":
@@ -179,6 +189,9 @@ class AuthenticatedClient:
     prefix: str = "Bearer"
     auth_header_name: str = "Authorization"
 
+    def get_headers(self) -> Dict[str, str]:
+        return {**self._headers}
+
     def with_headers(self, headers: Dict[str, str]) -> "AuthenticatedClient":
         """Get a new client matching this one with additional headers"""
         if self._client is not None:
@@ -186,6 +199,9 @@ class AuthenticatedClient:
         if self._async_client is not None:
             self._async_client.headers.update(headers)
         return evolve(self, headers={**self._headers, **headers})
+
+    def get_cookies(self) -> Dict[str, str]:
+        return {**self._cookies}
 
     def with_cookies(self, cookies: Dict[str, str]) -> "AuthenticatedClient":
         """Get a new client matching this one with additional cookies"""
@@ -224,6 +240,10 @@ class AuthenticatedClient:
                 follow_redirects=self._follow_redirects,
                 **self._httpx_args,
             )
+        else:
+            # Update headers and cookies with latest value
+            self._client.headers.update(self.get_headers())
+            self._client.cookies.update(self.get_cookies())
         return self._client
 
     def __enter__(self) -> "AuthenticatedClient":

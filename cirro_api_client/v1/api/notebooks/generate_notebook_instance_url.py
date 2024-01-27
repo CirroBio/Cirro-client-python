@@ -49,7 +49,7 @@ def sync_detailed(
     project_id: str,
     notebook_instance_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[OpenNotebookInstanceResponse]:
     """Generate notebook instance URL
 
@@ -83,7 +83,7 @@ def sync(
     project_id: str,
     notebook_instance_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[OpenNotebookInstanceResponse]:
     """Generate notebook instance URL
 
@@ -112,7 +112,7 @@ async def asyncio_detailed(
     project_id: str,
     notebook_instance_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[OpenNotebookInstanceResponse]:
     """Generate notebook instance URL
 
@@ -144,7 +144,7 @@ async def asyncio(
     project_id: str,
     notebook_instance_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[OpenNotebookInstanceResponse]:
     """Generate notebook instance URL
 

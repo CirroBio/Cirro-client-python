@@ -49,7 +49,7 @@ def sync_detailed(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[StopExecutionResponse]:
     """Stop execution
 
@@ -83,7 +83,7 @@ def sync(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[StopExecutionResponse]:
     """Stop execution
 
@@ -112,7 +112,7 @@ async def asyncio_detailed(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[StopExecutionResponse]:
     """Stop execution
 
@@ -144,7 +144,7 @@ async def asyncio(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[StopExecutionResponse]:
     """Stop execution
 

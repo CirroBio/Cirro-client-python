@@ -43,7 +43,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     process_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[FormSchema]:
     """Get process parameters
 
@@ -74,7 +74,7 @@ def sync_detailed(
 def sync(
     process_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[FormSchema]:
     """Get process parameters
 
@@ -100,7 +100,7 @@ def sync(
 async def asyncio_detailed(
     process_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[FormSchema]:
     """Get process parameters
 
@@ -129,7 +129,7 @@ async def asyncio_detailed(
 async def asyncio(
     process_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[FormSchema]:
     """Get process parameters
 

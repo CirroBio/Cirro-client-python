@@ -58,7 +58,7 @@ def sync_detailed(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     force_live: Union[Unset, bool] = False,
 ) -> Response[GetExecutionLogsResponse]:
     """Get execution logs
@@ -95,7 +95,7 @@ def sync(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     force_live: Union[Unset, bool] = False,
 ) -> Optional[GetExecutionLogsResponse]:
     """Get execution logs
@@ -127,7 +127,7 @@ async def asyncio_detailed(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     force_live: Union[Unset, bool] = False,
 ) -> Response[GetExecutionLogsResponse]:
     """Get execution logs
@@ -162,7 +162,7 @@ async def asyncio(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     force_live: Union[Unset, bool] = False,
 ) -> Optional[GetExecutionLogsResponse]:
     """Get execution logs

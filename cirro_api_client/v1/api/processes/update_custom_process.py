@@ -51,7 +51,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     process_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: ProcessDetail,
 ) -> Response[Any]:
     """Update custom process
@@ -85,7 +85,7 @@ def sync_detailed(
 async def asyncio_detailed(
     process_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: ProcessDetail,
 ) -> Response[Any]:
     """Update custom process

@@ -59,7 +59,7 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: AuthenticatedClient,
+    client: Client,
     include_archived: Union[Unset, bool] = False,
 ) -> Response[List["BillingAccount"]]:
     """List billing accounts
@@ -90,7 +90,7 @@ def sync_detailed(
 
 def sync(
     *,
-    client: AuthenticatedClient,
+    client: Client,
     include_archived: Union[Unset, bool] = False,
 ) -> Optional[List["BillingAccount"]]:
     """List billing accounts
@@ -116,7 +116,7 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: AuthenticatedClient,
+    client: Client,
     include_archived: Union[Unset, bool] = False,
 ) -> Response[List["BillingAccount"]]:
     """List billing accounts
@@ -145,7 +145,7 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: AuthenticatedClient,
+    client: Client,
     include_archived: Union[Unset, bool] = False,
 ) -> Optional[List["BillingAccount"]]:
     """List billing accounts

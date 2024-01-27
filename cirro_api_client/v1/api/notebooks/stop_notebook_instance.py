@@ -42,7 +42,7 @@ def sync_detailed(
     project_id: str,
     notebook_instance_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[Any]:
     """Stop notebook instance
 
@@ -76,7 +76,7 @@ async def asyncio_detailed(
     project_id: str,
     notebook_instance_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[Any]:
     """Stop notebook instance
 

@@ -42,7 +42,7 @@ def sync_detailed(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[Any]:
     """Delete a dataset
 
@@ -76,7 +76,7 @@ async def asyncio_detailed(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[Any]:
     """Delete a dataset
 

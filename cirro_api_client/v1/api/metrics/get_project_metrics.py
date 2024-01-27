@@ -47,7 +47,7 @@ def _build_response(
 def sync_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[ProjectMetrics]:
     """Get project metrics
 
@@ -78,7 +78,7 @@ def sync_detailed(
 def sync(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[ProjectMetrics]:
     """Get project metrics
 
@@ -104,7 +104,7 @@ def sync(
 async def asyncio_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[ProjectMetrics]:
     """Get project metrics
 
@@ -133,7 +133,7 @@ async def asyncio_detailed(
 async def asyncio(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[ProjectMetrics]:
     """Get project metrics
 

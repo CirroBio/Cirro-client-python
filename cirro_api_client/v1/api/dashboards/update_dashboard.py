@@ -56,7 +56,7 @@ def sync_detailed(
     project_id: str,
     dashboard_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: DashboardRequest,
 ) -> Response[Dashboard]:
     """Update dashboard
@@ -93,7 +93,7 @@ def sync(
     project_id: str,
     dashboard_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: DashboardRequest,
 ) -> Optional[Dashboard]:
     """Update dashboard
@@ -125,7 +125,7 @@ async def asyncio_detailed(
     project_id: str,
     dashboard_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: DashboardRequest,
 ) -> Response[Dashboard]:
     """Update dashboard
@@ -160,7 +160,7 @@ async def asyncio(
     project_id: str,
     dashboard_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: DashboardRequest,
 ) -> Optional[Dashboard]:
     """Update dashboard

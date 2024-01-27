@@ -49,7 +49,7 @@ def sync_detailed(
     project_id: str,
     notebook_instance_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[NotebookInstanceStatusResponse]:
     """Get notebook instance status
 
@@ -83,7 +83,7 @@ def sync(
     project_id: str,
     notebook_instance_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[NotebookInstanceStatusResponse]:
     """Get notebook instance status
 
@@ -112,7 +112,7 @@ async def asyncio_detailed(
     project_id: str,
     notebook_instance_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[NotebookInstanceStatusResponse]:
     """Get notebook instance status
 
@@ -144,7 +144,7 @@ async def asyncio(
     project_id: str,
     notebook_instance_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[NotebookInstanceStatusResponse]:
     """Get notebook instance status
 

@@ -58,7 +58,7 @@ def _build_response(
 def sync_detailed(
     process_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: ValidateFileRequirementsRequest,
 ) -> Response[FileRequirements]:
     """Validate file requirements
@@ -92,7 +92,7 @@ def sync_detailed(
 def sync(
     process_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: ValidateFileRequirementsRequest,
 ) -> Optional[FileRequirements]:
     """Validate file requirements
@@ -121,7 +121,7 @@ def sync(
 async def asyncio_detailed(
     process_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: ValidateFileRequirementsRequest,
 ) -> Response[FileRequirements]:
     """Validate file requirements
@@ -153,7 +153,7 @@ async def asyncio_detailed(
 async def asyncio(
     process_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: ValidateFileRequirementsRequest,
 ) -> Optional[FileRequirements]:
     """Validate file requirements

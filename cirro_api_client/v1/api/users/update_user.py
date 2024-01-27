@@ -54,7 +54,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     username: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: UpdateUserRequest,
 ) -> Response[User]:
     """Update user
@@ -88,7 +88,7 @@ def sync_detailed(
 def sync(
     username: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: UpdateUserRequest,
 ) -> Optional[User]:
     """Update user
@@ -117,7 +117,7 @@ def sync(
 async def asyncio_detailed(
     username: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: UpdateUserRequest,
 ) -> Response[User]:
     """Update user
@@ -149,7 +149,7 @@ async def asyncio_detailed(
 async def asyncio(
     username: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: UpdateUserRequest,
 ) -> Optional[User]:
     """Update user

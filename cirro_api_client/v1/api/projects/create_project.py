@@ -56,7 +56,7 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: ProjectRequest,
 ) -> Response[CreateResponse]:
     """Create project
@@ -87,7 +87,7 @@ def sync_detailed(
 
 def sync(
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: ProjectRequest,
 ) -> Optional[CreateResponse]:
     """Create project
@@ -113,7 +113,7 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: ProjectRequest,
 ) -> Response[CreateResponse]:
     """Create project
@@ -142,7 +142,7 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: ProjectRequest,
 ) -> Optional[CreateResponse]:
     """Create project

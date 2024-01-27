@@ -43,7 +43,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     username: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[User]:
     """Get user
 
@@ -74,7 +74,7 @@ def sync_detailed(
 def sync(
     username: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[User]:
     """Get user
 
@@ -100,7 +100,7 @@ def sync(
 async def asyncio_detailed(
     username: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[User]:
     """Get user
 
@@ -129,7 +129,7 @@ async def asyncio_detailed(
 async def asyncio(
     username: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[User]:
     """Get user
 

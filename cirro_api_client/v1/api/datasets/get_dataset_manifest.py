@@ -49,7 +49,7 @@ def sync_detailed(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[DatasetAssetsManifest]:
     """Get dataset manifest
 
@@ -83,7 +83,7 @@ def sync(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[DatasetAssetsManifest]:
     """Get dataset manifest
 
@@ -112,7 +112,7 @@ async def asyncio_detailed(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[DatasetAssetsManifest]:
     """Get dataset manifest
 
@@ -144,7 +144,7 @@ async def asyncio(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[DatasetAssetsManifest]:
     """Get dataset manifest
 

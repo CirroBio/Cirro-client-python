@@ -58,7 +58,7 @@ def _build_response(
 def sync_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: RunAnalysisRequest,
 ) -> Response[CreateResponse]:
     """Run analysis
@@ -92,7 +92,7 @@ def sync_detailed(
 def sync(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: RunAnalysisRequest,
 ) -> Optional[CreateResponse]:
     """Run analysis
@@ -121,7 +121,7 @@ def sync(
 async def asyncio_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: RunAnalysisRequest,
 ) -> Response[CreateResponse]:
     """Run analysis
@@ -153,7 +153,7 @@ async def asyncio_detailed(
 async def asyncio(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: RunAnalysisRequest,
 ) -> Optional[CreateResponse]:
     """Run analysis

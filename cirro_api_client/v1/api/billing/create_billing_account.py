@@ -56,7 +56,7 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: BillingAccountRequest,
 ) -> Response[CreateResponse]:
     """Create billing account
@@ -87,7 +87,7 @@ def sync_detailed(
 
 def sync(
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: BillingAccountRequest,
 ) -> Optional[CreateResponse]:
     """Create billing account
@@ -113,7 +113,7 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: BillingAccountRequest,
 ) -> Response[CreateResponse]:
     """Create billing account
@@ -142,7 +142,7 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: BillingAccountRequest,
 ) -> Optional[CreateResponse]:
     """Create billing account

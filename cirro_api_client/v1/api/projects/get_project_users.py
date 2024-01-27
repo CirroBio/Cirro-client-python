@@ -52,7 +52,7 @@ def _build_response(
 def sync_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[List["ProjectUser"]]:
     """Get project permissions
 
@@ -83,7 +83,7 @@ def sync_detailed(
 def sync(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[List["ProjectUser"]]:
     """Get project permissions
 
@@ -109,7 +109,7 @@ def sync(
 async def asyncio_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[List["ProjectUser"]]:
     """Get project permissions
 
@@ -138,7 +138,7 @@ async def asyncio_detailed(
 async def asyncio(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[List["ProjectUser"]]:
     """Get project permissions
 

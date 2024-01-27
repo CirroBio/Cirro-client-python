@@ -59,7 +59,7 @@ def sync_detailed(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     force_live: Union[Unset, bool] = False,
 ) -> Response[List["Task"]]:
     """Get execution tasks
@@ -96,7 +96,7 @@ def sync(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     force_live: Union[Unset, bool] = False,
 ) -> Optional[List["Task"]]:
     """Get execution tasks
@@ -128,7 +128,7 @@ async def asyncio_detailed(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     force_live: Union[Unset, bool] = False,
 ) -> Response[List["Task"]]:
     """Get execution tasks
@@ -163,7 +163,7 @@ async def asyncio(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     force_live: Union[Unset, bool] = False,
 ) -> Optional[List["Task"]]:
     """Get execution tasks

@@ -47,7 +47,7 @@ def _build_response(
 def sync_detailed(
     process_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[CustomPipelineSettings]:
     """Sync custom process
 
@@ -78,7 +78,7 @@ def sync_detailed(
 def sync(
     process_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[CustomPipelineSettings]:
     """Sync custom process
 
@@ -104,7 +104,7 @@ def sync(
 async def asyncio_detailed(
     process_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[CustomPipelineSettings]:
     """Sync custom process
 
@@ -133,7 +133,7 @@ async def asyncio_detailed(
 async def asyncio(
     process_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[CustomPipelineSettings]:
     """Sync custom process
 

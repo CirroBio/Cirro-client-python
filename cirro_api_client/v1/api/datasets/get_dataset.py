@@ -45,7 +45,7 @@ def sync_detailed(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[DatasetDetail]:
     """Get dataset
 
@@ -79,7 +79,7 @@ def sync(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[DatasetDetail]:
     """Get dataset
 
@@ -108,7 +108,7 @@ async def asyncio_detailed(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[DatasetDetail]:
     """Get dataset
 
@@ -140,7 +140,7 @@ async def asyncio(
     project_id: str,
     dataset_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[DatasetDetail]:
     """Get dataset
 

@@ -56,7 +56,7 @@ def sync_detailed(
     project_id: str,
     sample_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: SampleRequest,
 ) -> Response[Sample]:
     """Update sample
@@ -93,7 +93,7 @@ def sync(
     project_id: str,
     sample_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: SampleRequest,
 ) -> Optional[Sample]:
     """Update sample
@@ -125,7 +125,7 @@ async def asyncio_detailed(
     project_id: str,
     sample_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: SampleRequest,
 ) -> Response[Sample]:
     """Update sample
@@ -160,7 +160,7 @@ async def asyncio(
     project_id: str,
     sample_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: SampleRequest,
 ) -> Optional[Sample]:
     """Update sample

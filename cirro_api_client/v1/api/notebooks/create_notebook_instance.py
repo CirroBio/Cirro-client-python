@@ -58,7 +58,7 @@ def _build_response(
 def sync_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: CreateNotebookInstanceRequest,
 ) -> Response[CreateResponse]:
     """Create notebook instance
@@ -92,7 +92,7 @@ def sync_detailed(
 def sync(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: CreateNotebookInstanceRequest,
 ) -> Optional[CreateResponse]:
     """Create notebook instance
@@ -121,7 +121,7 @@ def sync(
 async def asyncio_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: CreateNotebookInstanceRequest,
 ) -> Response[CreateResponse]:
     """Create notebook instance
@@ -153,7 +153,7 @@ async def asyncio_detailed(
 async def asyncio(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
     body: CreateNotebookInstanceRequest,
 ) -> Optional[CreateResponse]:
     """Create notebook instance

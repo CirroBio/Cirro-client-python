@@ -43,7 +43,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[ProjectDetail]:
     """Get project
 
@@ -74,7 +74,7 @@ def sync_detailed(
 def sync(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[ProjectDetail]:
     """Get project
 
@@ -100,7 +100,7 @@ def sync(
 async def asyncio_detailed(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Response[ProjectDetail]:
     """Get project
 
@@ -129,7 +129,7 @@ async def asyncio_detailed(
 async def asyncio(
     project_id: str,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[ProjectDetail]:
     """Get project
 

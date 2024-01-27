@@ -88,8 +88,8 @@ class Client:
         if self._client is None:
             self._client = httpx.Client(
                 base_url=self._base_url,
-                cookies=self._cookies,
-                headers=self._headers,
+                cookies=self.get_cookies(),
+                headers=self.get_headers(),
                 timeout=self._timeout,
                 verify=self._verify_ssl,
                 follow_redirects=self._follow_redirects,
@@ -233,8 +233,8 @@ class AuthenticatedClient:
             self._headers[self.auth_header_name] = f"{self.prefix} {self.token}" if self.prefix else self.token
             self._client = httpx.Client(
                 base_url=self._base_url,
-                cookies=self._cookies,
-                headers=self._headers,
+                cookies=self.get_cookies(),
+                headers=self.get_headers(),
                 timeout=self._timeout,
                 verify=self._verify_ssl,
                 follow_redirects=self._follow_redirects,

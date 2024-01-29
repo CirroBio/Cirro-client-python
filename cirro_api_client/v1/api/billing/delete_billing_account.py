@@ -1,10 +1,10 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ... import errors
-from ...client import AuthenticatedClient, Client
+from ...client import Client
 from ...types import Response
 
 
@@ -19,7 +19,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Any]:
     if response.status_code == HTTPStatus.OK:
         return None
     if client.raise_on_unexpected_status:
@@ -28,7 +28,7 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[Any]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[Any]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -48,6 +48,7 @@ def sync_detailed(
 
     Args:
         billing_account_id (str):
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -62,6 +63,7 @@ def sync_detailed(
     )
 
     response = client.get_httpx_client().request(
+        auth=client.get_auth(),
         **kwargs,
     )
 
@@ -79,6 +81,7 @@ async def asyncio_detailed(
 
     Args:
         billing_account_id (str):
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -92,6 +95,6 @@ async def asyncio_detailed(
         billing_account_id=billing_account_id,
     )
 
-    response = await client.get_async_httpx_client().request(**kwargs)
+    response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
 
     return _build_response(client=client, response=response)

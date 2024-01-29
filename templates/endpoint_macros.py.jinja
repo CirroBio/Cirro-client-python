@@ -163,6 +163,7 @@ Args:
     {% for parameter in all_parameters %}
     {{ parameter.to_docstring() | wordwrap(90) | indent(8) }}
     {% endfor %}
+    client (Client): instance of the API client
 
 {% endif %}
 Raises:

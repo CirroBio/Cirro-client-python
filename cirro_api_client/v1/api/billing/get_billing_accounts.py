@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional, Union
 import httpx
 
 from ... import errors
-from ...client import AuthenticatedClient, Client
+from ...client import Client
 from ...models.billing_account import BillingAccount
 from ...types import UNSET, Response, Unset
 
@@ -28,9 +28,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[List["BillingAccount"]]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["BillingAccount"]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
@@ -46,9 +44,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[List["BillingAccount"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[List["BillingAccount"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -68,6 +64,7 @@ def sync_detailed(
 
     Args:
         include_archived (Union[Unset, bool]):  Default: False.
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -82,6 +79,7 @@ def sync_detailed(
     )
 
     response = client.get_httpx_client().request(
+        auth=client.get_auth(),
         **kwargs,
     )
 
@@ -99,6 +97,7 @@ def sync(
 
     Args:
         include_archived (Union[Unset, bool]):  Default: False.
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -125,6 +124,7 @@ async def asyncio_detailed(
 
     Args:
         include_archived (Union[Unset, bool]):  Default: False.
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -138,7 +138,7 @@ async def asyncio_detailed(
         include_archived=include_archived,
     )
 
-    response = await client.get_async_httpx_client().request(**kwargs)
+    response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
 
     return _build_response(client=client, response=response)
 
@@ -154,6 +154,7 @@ async def asyncio(
 
     Args:
         include_archived (Union[Unset, bool]):  Default: False.
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

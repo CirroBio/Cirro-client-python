@@ -1,6 +1,5 @@
 import importlib.metadata
 import platform
-from typing import Dict
 
 from attrs import define, field
 
@@ -48,12 +47,8 @@ class CirroApiClient(Client):
 
     auth_method: AuthMethod
     raise_on_unexpected_status: bool = field(default=True, kw_only=True)
-    _client_name: str = field(init=False, default="Cirro API Client")
-    _package_name: str = field(init=False, default="cirro-api-client")
-    _user_agent: str = field(init=False)
+    client_name: str = field(kw_only=True, default="Cirro API Client")
+    package_name: str = field(kw_only=True, default="cirro-api-client")
 
     def __attrs_post_init__(self):
-        self._user_agent = _get_user_agent(self._package_name, self._client_name)
-
-    def get_headers(self) -> Dict[str, str]:
-        return {"User-Agent": self._user_agent, **self.auth_method.get_auth_headers()}
+        self._headers["User-Agent"] = _get_user_agent(self.package_name, self.client_name)

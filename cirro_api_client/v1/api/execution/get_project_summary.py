@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ... import errors
-from ...client import AuthenticatedClient, Client
+from ...client import Client
 from ...models.get_project_summary_response_200 import GetProjectSummaryResponse200
 from ...types import UNSET, Response, Unset
 
@@ -29,9 +29,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[GetProjectSummaryResponse200]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[GetProjectSummaryResponse200]:
     if response.status_code == HTTPStatus.OK:
         response_200 = GetProjectSummaryResponse200.from_dict(response.json())
 
@@ -42,9 +40,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[GetProjectSummaryResponse200]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[GetProjectSummaryResponse200]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -66,6 +62,7 @@ def sync_detailed(
     Args:
         project_id (str):
         number_of_days (Union[Unset, int]):  Default: 1.
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -81,6 +78,7 @@ def sync_detailed(
     )
 
     response = client.get_httpx_client().request(
+        auth=client.get_auth(),
         **kwargs,
     )
 
@@ -100,6 +98,7 @@ def sync(
     Args:
         project_id (str):
         number_of_days (Union[Unset, int]):  Default: 1.
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -129,6 +128,7 @@ async def asyncio_detailed(
     Args:
         project_id (str):
         number_of_days (Union[Unset, int]):  Default: 1.
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -143,7 +143,7 @@ async def asyncio_detailed(
         number_of_days=number_of_days,
     )
 
-    response = await client.get_async_httpx_client().request(**kwargs)
+    response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
 
     return _build_response(client=client, response=response)
 
@@ -161,6 +161,7 @@ async def asyncio(
     Args:
         project_id (str):
         number_of_days (Union[Unset, int]):  Default: 1.
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

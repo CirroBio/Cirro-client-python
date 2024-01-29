@@ -1,20 +1,29 @@
+import typing
 from abc import ABC
-from typing import Dict
 
 from attr import define
+from httpx import Auth, Request, Response
 
 
-class AuthMethod(ABC):
-    def get_auth_headers(self) -> Dict[str, str]:
-        """
-        The returned dict must include headers to add to authenticate properly to Cirro
-        """
-        raise NotImplementedError()
+class AuthMethod(Auth, ABC):
+    """
+    Defines the method used for authenticating with Cirro
+    """
 
 
 @define
 class TokenAuth(AuthMethod):
     token: str
 
-    def get_auth_headers(self) -> Dict[str, str]:
-        return {"Authorization": f"Bearer {self.token}"}
+    def auth_flow(self, request: Request) -> typing.Generator[Request, Response, None]:
+        request.headers["Authorization"] = f"Bearer {self.token}"
+        yield request
+
+
+@define
+class RefreshableTokenAuth(AuthMethod):
+    token_getter: typing.Callable[[], str]
+
+    def auth_flow(self, request: Request) -> typing.Generator[Request, Response, None]:
+        request.headers["Authorization"] = f"Bearer {self.token_getter()}"
+        yield request

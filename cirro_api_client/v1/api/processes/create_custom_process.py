@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ... import errors
-from ...client import AuthenticatedClient, Client
+from ...client import Client
 from ...models.create_response import CreateResponse
 from ...models.error_message import ErrorMessage
 from ...models.portal_error_response import PortalErrorResponse
@@ -33,7 +33,7 @@ def _get_kwargs(
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: Client, response: httpx.Response
 ) -> Optional[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
     if response.status_code == HTTPStatus.BAD_REQUEST:
         response_400 = PortalErrorResponse.from_dict(response.json())
@@ -54,7 +54,7 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: Client, response: httpx.Response
 ) -> Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -75,6 +75,7 @@ def sync_detailed(
 
     Args:
         body (ProcessDetail):
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -89,6 +90,7 @@ def sync_detailed(
     )
 
     response = client.get_httpx_client().request(
+        auth=client.get_auth(),
         **kwargs,
     )
 
@@ -106,6 +108,7 @@ def sync(
 
     Args:
         body (ProcessDetail):
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -132,6 +135,7 @@ async def asyncio_detailed(
 
     Args:
         body (ProcessDetail):
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -145,7 +149,7 @@ async def asyncio_detailed(
         body=body,
     )
 
-    response = await client.get_async_httpx_client().request(**kwargs)
+    response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
 
     return _build_response(client=client, response=response)
 
@@ -161,6 +165,7 @@ async def asyncio(
 
     Args:
         body (ProcessDetail):
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

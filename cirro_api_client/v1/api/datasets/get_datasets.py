@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ... import errors
-from ...client import AuthenticatedClient, Client
+from ...client import Client
 from ...models.paginated_response_dataset_list_dto import PaginatedResponseDatasetListDto
 from ...types import UNSET, Response, Unset
 
@@ -32,9 +32,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[PaginatedResponseDatasetListDto]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[PaginatedResponseDatasetListDto]:
     if response.status_code == HTTPStatus.OK:
         response_200 = PaginatedResponseDatasetListDto.from_dict(response.json())
 
@@ -45,9 +43,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[PaginatedResponseDatasetListDto]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[PaginatedResponseDatasetListDto]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -71,6 +67,7 @@ def sync_detailed(
         project_id (str):
         limit (Union[Unset, int]):  Default: 10000.
         next_token (Union[Unset, str]):
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -87,6 +84,7 @@ def sync_detailed(
     )
 
     response = client.get_httpx_client().request(
+        auth=client.get_auth(),
         **kwargs,
     )
 
@@ -108,6 +106,7 @@ def sync(
         project_id (str):
         limit (Union[Unset, int]):  Default: 10000.
         next_token (Union[Unset, str]):
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -140,6 +139,7 @@ async def asyncio_detailed(
         project_id (str):
         limit (Union[Unset, int]):  Default: 10000.
         next_token (Union[Unset, str]):
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -155,7 +155,7 @@ async def asyncio_detailed(
         next_token=next_token,
     )
 
-    response = await client.get_async_httpx_client().request(**kwargs)
+    response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
 
     return _build_response(client=client, response=response)
 
@@ -175,6 +175,7 @@ async def asyncio(
         project_id (str):
         limit (Union[Unset, int]):  Default: 10000.
         next_token (Union[Unset, str]):
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

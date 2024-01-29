@@ -1,10 +1,10 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ... import errors
-from ...client import AuthenticatedClient, Client
+from ...client import Client
 from ...models.system_info_response import SystemInfoResponse
 from ...types import Response
 
@@ -18,9 +18,7 @@ def _get_kwargs() -> Dict[str, Any]:
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[SystemInfoResponse]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[SystemInfoResponse]:
     if response.status_code == HTTPStatus.OK:
         response_200 = SystemInfoResponse.from_dict(response.json())
 
@@ -31,9 +29,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[SystemInfoResponse]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[SystemInfoResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -59,6 +55,7 @@ def sync_detailed(
     kwargs = _get_kwargs()
 
     response = client.get_httpx_client().request(
+        auth=client.get_auth(),
         **kwargs,
     )
 
@@ -100,7 +97,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs()
 
-    response = await client.get_async_httpx_client().request(**kwargs)
+    response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
 
     return _build_response(client=client, response=response)
 

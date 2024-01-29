@@ -34,9 +34,12 @@ class Client:
         raise_on_unexpected_status: Whether or not to raise an errors.UnexpectedStatus if the API returns a
             status code that was not documented in the source OpenAPI document. Can also be provided as a keyword
             argument to the constructor.
+
+        auth_method: Optionally provide a method used to authenticate API requests.
     """
 {% macro attributes() %}
     raise_on_unexpected_status: bool = field(default=False, kw_only=True)
+    auth_method: httpx.Auth = field(default=None, kw_only=True)
     _base_url: str
     _cookies: Dict[str, str] = field(factory=dict, kw_only=True)
     _headers: Dict[str, str] = field(factory=dict, kw_only=True)
@@ -48,8 +51,8 @@ class Client:
     _async_client: Optional[httpx.AsyncClient] = field(default=None, init=False)
 {% endmacro %}{{ attributes() }}
 {% macro builders(self) %}
-    def get_headers(self) -> Dict[str, str]:
-        return {**self._headers}
+    def get_auth(self):
+        return self.auth_method
 
     def with_headers(self, headers: Dict[str, str]) -> "{{ self }}":
         """Get a new client matching this one with additional headers"""
@@ -58,9 +61,6 @@ class Client:
         if self._async_client is not None:
             self._async_client.headers.update(headers)
         return evolve(self, headers={**self._headers, **headers})
-
-    def get_cookies(self) -> Dict[str, str]:
-        return {**self._cookies}
 
     def with_cookies(self, cookies: Dict[str, str]) -> "{{ self }}":
         """Get a new client matching this one with additional cookies"""
@@ -95,17 +95,13 @@ class Client:
         {% endif %}
             self._client = httpx.Client(
                 base_url=self._base_url,
-                cookies=self.get_cookies(),
-                headers=self.get_headers(),
+                cookies=self._cookies,
+                headers=self._headers,
                 timeout=self._timeout,
                 verify=self._verify_ssl,
                 follow_redirects=self._follow_redirects,
                 **self._httpx_args,
             )
-        else:
-            # Update headers and cookies with latest value
-            self._client.headers.update(self.get_headers())
-            self._client.cookies.update(self.get_cookies())
         return self._client
 
     def __enter__(self) -> "{{ name }}":
@@ -151,26 +147,3 @@ class Client:
         """Exit a context manager for underlying httpx.AsyncClient (see httpx docs)"""
         await self.get_async_httpx_client().__aexit__(*args, **kwargs)
 {% endmacro %}{{ httpx_stuff("Client") }}
-
-@define
-class AuthenticatedClient:
-    """A Client which has been authenticated for use on secured endpoints
-
-{{ httpx_args_docstring() }}
-
-    Attributes:
-        raise_on_unexpected_status: Whether or not to raise an errors.UnexpectedStatus if the API returns a
-            status code that was not documented in the source OpenAPI document. Can also be provided as a keyword
-            argument to the constructor.
-        token: The token to use for authentication
-        prefix: The prefix to use for the Authorization header
-        auth_header_name: The name of the Authorization header
-    """
-
-{{ attributes() }}
-    token: str
-    prefix: str = "Bearer"
-    auth_header_name: str = "Authorization"
-
-{{ builders("AuthenticatedClient") }}
-{{ httpx_stuff("AuthenticatedClient", "self._headers[self.auth_header_name] = f\"{self.prefix} {self.token}\" if self.prefix else self.token") }}

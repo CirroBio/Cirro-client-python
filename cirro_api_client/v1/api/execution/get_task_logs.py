@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ... import errors
-from ...client import AuthenticatedClient, Client
+from ...client import Client
 from ...models.get_execution_logs_response import GetExecutionLogsResponse
 from ...types import UNSET, Response, Unset
 
@@ -31,9 +31,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[GetExecutionLogsResponse]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[GetExecutionLogsResponse]:
     if response.status_code == HTTPStatus.OK:
         response_200 = GetExecutionLogsResponse.from_dict(response.json())
 
@@ -44,9 +42,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[GetExecutionLogsResponse]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[GetExecutionLogsResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -72,6 +68,7 @@ def sync_detailed(
         dataset_id (str):
         task_id (str):
         force_live (Union[Unset, bool]):  Default: False.
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -89,6 +86,7 @@ def sync_detailed(
     )
 
     response = client.get_httpx_client().request(
+        auth=client.get_auth(),
         **kwargs,
     )
 
@@ -112,6 +110,7 @@ def sync(
         dataset_id (str):
         task_id (str):
         force_live (Union[Unset, bool]):  Default: False.
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -147,6 +146,7 @@ async def asyncio_detailed(
         dataset_id (str):
         task_id (str):
         force_live (Union[Unset, bool]):  Default: False.
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -163,7 +163,7 @@ async def asyncio_detailed(
         force_live=force_live,
     )
 
-    response = await client.get_async_httpx_client().request(**kwargs)
+    response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
 
     return _build_response(client=client, response=response)
 
@@ -185,6 +185,7 @@ async def asyncio(
         dataset_id (str):
         task_id (str):
         force_live (Union[Unset, bool]):  Default: False.
+        client (Client): instance of the API client
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

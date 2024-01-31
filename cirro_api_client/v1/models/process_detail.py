@@ -26,12 +26,12 @@ class ProcessDetail:
         child_process_ids (List[str]): IDs of pipelines that can be run downstream
         parent_process_ids (List[str]): IDs of pipelines that can run this pipeline
         linked_project_ids (List[str]): Projects that can run this pipeline
-        custom_settings (CustomPipelineSettings): Used to describe the location of the process definition dependencies
         documentation_url (Union[None, Unset, str]): Link to pipeline documentation Example:
             https://docs.cirro.bio/pipelines/catalog_targeted_sequencing/#crispr-screen-analysis.
         file_requirements_message (Union[None, Unset, str]): Description of the files to be uploaded (optional)
         pipeline_code (Union['PipelineCode', None, Unset]):
         owner (Union[None, Unset, str]): Username of the pipeline creator (blank if Cirro curated)
+        custom_settings (Union['CustomPipelineSettings', None, Unset]):
         is_archived (Union[Unset, bool]): Whether the process is marked for removal
     """
 
@@ -42,15 +42,16 @@ class ProcessDetail:
     child_process_ids: List[str]
     parent_process_ids: List[str]
     linked_project_ids: List[str]
-    custom_settings: "CustomPipelineSettings"
     documentation_url: Union[None, Unset, str] = UNSET
     file_requirements_message: Union[None, Unset, str] = UNSET
     pipeline_code: Union["PipelineCode", None, Unset] = UNSET
     owner: Union[None, Unset, str] = UNSET
+    custom_settings: Union["CustomPipelineSettings", None, Unset] = UNSET
     is_archived: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        from ..models.custom_pipeline_settings import CustomPipelineSettings
         from ..models.pipeline_code import PipelineCode
 
         id = self.id
@@ -66,8 +67,6 @@ class ProcessDetail:
         parent_process_ids = self.parent_process_ids
 
         linked_project_ids = self.linked_project_ids
-
-        custom_settings = self.custom_settings.to_dict()
 
         documentation_url: Union[None, Unset, str]
         if isinstance(self.documentation_url, Unset):
@@ -95,6 +94,14 @@ class ProcessDetail:
         else:
             owner = self.owner
 
+        custom_settings: Union[Dict[str, Any], None, Unset]
+        if isinstance(self.custom_settings, Unset):
+            custom_settings = UNSET
+        elif isinstance(self.custom_settings, CustomPipelineSettings):
+            custom_settings = self.custom_settings.to_dict()
+        else:
+            custom_settings = self.custom_settings
+
         is_archived = self.is_archived
 
         field_dict: Dict[str, Any] = {}
@@ -108,7 +115,6 @@ class ProcessDetail:
                 "childProcessIds": child_process_ids,
                 "parentProcessIds": parent_process_ids,
                 "linkedProjectIds": linked_project_ids,
-                "customSettings": custom_settings,
             }
         )
         if documentation_url is not UNSET:
@@ -119,6 +125,8 @@ class ProcessDetail:
             field_dict["pipelineCode"] = pipeline_code
         if owner is not UNSET:
             field_dict["owner"] = owner
+        if custom_settings is not UNSET:
+            field_dict["customSettings"] = custom_settings
         if is_archived is not UNSET:
             field_dict["isArchived"] = is_archived
 
@@ -143,8 +151,6 @@ class ProcessDetail:
         parent_process_ids = cast(List[str], d.pop("parentProcessIds"))
 
         linked_project_ids = cast(List[str], d.pop("linkedProjectIds"))
-
-        custom_settings = CustomPipelineSettings.from_dict(d.pop("customSettings"))
 
         def _parse_documentation_url(data: object) -> Union[None, Unset, str]:
             if data is None:
@@ -190,6 +196,23 @@ class ProcessDetail:
 
         owner = _parse_owner(d.pop("owner", UNSET))
 
+        def _parse_custom_settings(data: object) -> Union["CustomPipelineSettings", None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                custom_settings_type_1 = CustomPipelineSettings.from_dict(data)
+
+                return custom_settings_type_1
+            except:  # noqa: E722
+                pass
+            return cast(Union["CustomPipelineSettings", None, Unset], data)
+
+        custom_settings = _parse_custom_settings(d.pop("customSettings", UNSET))
+
         is_archived = d.pop("isArchived", UNSET)
 
         process_detail = cls(
@@ -200,11 +223,11 @@ class ProcessDetail:
             child_process_ids=child_process_ids,
             parent_process_ids=parent_process_ids,
             linked_project_ids=linked_project_ids,
-            custom_settings=custom_settings,
             documentation_url=documentation_url,
             file_requirements_message=file_requirements_message,
             pipeline_code=pipeline_code,
             owner=owner,
+            custom_settings=custom_settings,
             is_archived=is_archived,
         )
 

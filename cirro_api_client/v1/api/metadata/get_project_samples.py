@@ -12,7 +12,7 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     project_id: str,
     *,
-    limit: Union[Unset, int] = 10000,
+    limit: Union[Unset, int] = 5000,
     next_token: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     params: Dict[str, Any] = {}
@@ -56,7 +56,7 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-    limit: Union[Unset, int] = 10000,
+    limit: Union[Unset, int] = 5000,
     next_token: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedResponseSampleDto]:
     """Get project samples
@@ -65,7 +65,7 @@ def sync_detailed(
 
     Args:
         project_id (str):
-        limit (Union[Unset, int]):  Default: 10000.
+        limit (Union[Unset, int]):  Default: 5000.
         next_token (Union[Unset, str]):
         client (Client): instance of the API client
 
@@ -95,7 +95,7 @@ def sync(
     project_id: str,
     *,
     client: Client,
-    limit: Union[Unset, int] = 10000,
+    limit: Union[Unset, int] = 5000,
     next_token: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedResponseSampleDto]:
     """Get project samples
@@ -104,7 +104,7 @@ def sync(
 
     Args:
         project_id (str):
-        limit (Union[Unset, int]):  Default: 10000.
+        limit (Union[Unset, int]):  Default: 5000.
         next_token (Union[Unset, str]):
         client (Client): instance of the API client
 
@@ -128,7 +128,7 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-    limit: Union[Unset, int] = 10000,
+    limit: Union[Unset, int] = 5000,
     next_token: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedResponseSampleDto]:
     """Get project samples
@@ -137,7 +137,7 @@ async def asyncio_detailed(
 
     Args:
         project_id (str):
-        limit (Union[Unset, int]):  Default: 10000.
+        limit (Union[Unset, int]):  Default: 5000.
         next_token (Union[Unset, str]):
         client (Client): instance of the API client
 
@@ -164,7 +164,7 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-    limit: Union[Unset, int] = 10000,
+    limit: Union[Unset, int] = 5000,
     next_token: Union[Unset, str] = UNSET,
 ) -> Optional[PaginatedResponseSampleDto]:
     """Get project samples
@@ -173,7 +173,7 @@ async def asyncio(
 
     Args:
         project_id (str):
-        limit (Union[Unset, int]):  Default: 10000.
+        limit (Union[Unset, int]):  Default: 5000.
         next_token (Union[Unset, str]):
         client (Client): instance of the API client
 

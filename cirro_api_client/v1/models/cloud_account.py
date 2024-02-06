@@ -13,7 +13,8 @@ class CloudAccount:
     """
     Attributes:
         account_id (Union[Unset, str]): AWS Account ID
-        account_name (Union[Unset, str]): Name used to describe the account
+        account_name (Union[Unset, str]): Name used to describe the account, useful when the account hosts multiple
+            projects
         region_name (Union[Unset, str]): AWS Region Code Example: us-west-2.
     """
 

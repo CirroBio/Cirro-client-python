@@ -26,6 +26,8 @@ class ProcessDetail:
         child_process_ids (List[str]): IDs of pipelines that can be run downstream
         parent_process_ids (List[str]): IDs of pipelines that can run this pipeline
         linked_project_ids (List[str]): Projects that can run this pipeline
+        data_type (Union[None, Unset, str]): Name of the data type this pipeline produces (if it is not defined, use the
+            name)
         documentation_url (Union[None, Unset, str]): Link to pipeline documentation Example:
             https://docs.cirro.bio/pipelines/catalog_targeted_sequencing/#crispr-screen-analysis.
         file_requirements_message (Union[None, Unset, str]): Description of the files to be uploaded (optional)
@@ -42,6 +44,7 @@ class ProcessDetail:
     child_process_ids: List[str]
     parent_process_ids: List[str]
     linked_project_ids: List[str]
+    data_type: Union[None, Unset, str] = UNSET
     documentation_url: Union[None, Unset, str] = UNSET
     file_requirements_message: Union[None, Unset, str] = UNSET
     pipeline_code: Union["PipelineCode", None, Unset] = UNSET
@@ -67,6 +70,12 @@ class ProcessDetail:
         parent_process_ids = self.parent_process_ids
 
         linked_project_ids = self.linked_project_ids
+
+        data_type: Union[None, Unset, str]
+        if isinstance(self.data_type, Unset):
+            data_type = UNSET
+        else:
+            data_type = self.data_type
 
         documentation_url: Union[None, Unset, str]
         if isinstance(self.documentation_url, Unset):
@@ -117,6 +126,8 @@ class ProcessDetail:
                 "linkedProjectIds": linked_project_ids,
             }
         )
+        if data_type is not UNSET:
+            field_dict["dataType"] = data_type
         if documentation_url is not UNSET:
             field_dict["documentationUrl"] = documentation_url
         if file_requirements_message is not UNSET:
@@ -151,6 +162,15 @@ class ProcessDetail:
         parent_process_ids = cast(List[str], d.pop("parentProcessIds"))
 
         linked_project_ids = cast(List[str], d.pop("linkedProjectIds"))
+
+        def _parse_data_type(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        data_type = _parse_data_type(d.pop("dataType", UNSET))
 
         def _parse_documentation_url(data: object) -> Union[None, Unset, str]:
             if data is None:
@@ -223,6 +243,7 @@ class ProcessDetail:
             child_process_ids=child_process_ids,
             parent_process_ids=parent_process_ids,
             linked_project_ids=linked_project_ids,
+            data_type=data_type,
             documentation_url=documentation_url,
             file_requirements_message=file_requirements_message,
             pipeline_code=pipeline_code,

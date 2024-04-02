@@ -14,7 +14,7 @@ class ProjectSettings:
     """
     Attributes:
         budget_amount (int): Total allowed cost for the budget period
-        budget_period (BudgetPeriod): Period of time for budgeting
+        budget_period (BudgetPeriod): Time period associated with the budget amount
         dragen_ami (Union[None, Unset, str]): AMI ID for the DRAGEN compute environment (if enabled)
         enable_compute (Union[Unset, bool]): Enables the default compute environment Default: True.
         enable_dragen (Union[Unset, bool]): Enables the DRAGEN compute environment Default: False.

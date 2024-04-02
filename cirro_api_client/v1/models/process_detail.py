@@ -22,7 +22,7 @@ class ProcessDetail:
         name (str): Friendly name for the process Example: MAGeCK Flute.
         description (str):  Example: MAGeCK Flute enables accurate identification of essential genes with their related
             biological functions.
-        executor (Executor): Type of executor to run the pipeline
+        executor (Executor): How the workflow is executed
         child_process_ids (List[str]): IDs of pipelines that can be run downstream
         parent_process_ids (List[str]): IDs of pipelines that can run this pipeline
         linked_project_ids (List[str]): Projects that can run this pipeline

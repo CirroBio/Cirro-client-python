@@ -15,7 +15,7 @@ class Process:
     Attributes:
         id (str): Unique ID of the Process Example: process-hutch-magic_flute-1_0.
         name (str): Friendly name for the process Example: MAGeCK Flute.
-        executor (Executor): Type of executor to run the pipeline
+        executor (Executor): How the workflow is executed
         description (Union[Unset, str]):  Example: MAGeCK Flute enables accurate identification of essential genes with
             their related biological functions.
         data_type (Union[None, Unset, str]): Name of the data type this pipeline produces (if it is not defined, use the

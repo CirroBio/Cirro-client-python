@@ -22,7 +22,7 @@ class ProcessDetail:
         name (str): Friendly name for the process Example: MAGeCK Flute.
         description (str):  Example: MAGeCK Flute enables accurate identification of essential genes with their related
             biological functions.
-        executor (Executor):
+        executor (Executor): Type of executor to run the pipeline
         child_process_ids (List[str]): IDs of pipelines that can be run downstream
         parent_process_ids (List[str]): IDs of pipelines that can run this pipeline
         linked_project_ids (List[str]): Projects that can run this pipeline
@@ -33,6 +33,7 @@ class ProcessDetail:
         file_requirements_message (Union[None, Unset, str]): Description of the files to be uploaded (optional)
         pipeline_code (Union['PipelineCode', None, Unset]):
         owner (Union[None, Unset, str]): Username of the pipeline creator (blank if Cirro curated)
+        allow_multiple_sources (Union[Unset, bool]): Whether the pipeline is allowed to have multiple dataset sources
         custom_settings (Union['CustomPipelineSettings', None, Unset]):
         is_archived (Union[Unset, bool]): Whether the process is marked for removal
     """
@@ -49,6 +50,7 @@ class ProcessDetail:
     file_requirements_message: Union[None, Unset, str] = UNSET
     pipeline_code: Union["PipelineCode", None, Unset] = UNSET
     owner: Union[None, Unset, str] = UNSET
+    allow_multiple_sources: Union[Unset, bool] = UNSET
     custom_settings: Union["CustomPipelineSettings", None, Unset] = UNSET
     is_archived: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -103,6 +105,8 @@ class ProcessDetail:
         else:
             owner = self.owner
 
+        allow_multiple_sources = self.allow_multiple_sources
+
         custom_settings: Union[Dict[str, Any], None, Unset]
         if isinstance(self.custom_settings, Unset):
             custom_settings = UNSET
@@ -136,6 +140,8 @@ class ProcessDetail:
             field_dict["pipelineCode"] = pipeline_code
         if owner is not UNSET:
             field_dict["owner"] = owner
+        if allow_multiple_sources is not UNSET:
+            field_dict["allowMultipleSources"] = allow_multiple_sources
         if custom_settings is not UNSET:
             field_dict["customSettings"] = custom_settings
         if is_archived is not UNSET:
@@ -216,6 +222,8 @@ class ProcessDetail:
 
         owner = _parse_owner(d.pop("owner", UNSET))
 
+        allow_multiple_sources = d.pop("allowMultipleSources", UNSET)
+
         def _parse_custom_settings(data: object) -> Union["CustomPipelineSettings", None, Unset]:
             if data is None:
                 return data
@@ -248,6 +256,7 @@ class ProcessDetail:
             file_requirements_message=file_requirements_message,
             pipeline_code=pipeline_code,
             owner=owner,
+            allow_multiple_sources=allow_multiple_sources,
             custom_settings=custom_settings,
             is_archived=is_archived,
         )

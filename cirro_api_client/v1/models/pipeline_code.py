@@ -15,7 +15,7 @@ class PipelineCode:
     Attributes:
         repository_path (str): GitHub repository which contains the workflow code Example: nf-core/rnaseq.
         version (str): Branch, tag, or commit hash of the pipeline code Example: main.
-        repository_type (RepositoryType):
+        repository_type (RepositoryType): Type of repository
         entry_point (str): Main script for running the pipeline Example: main.nf.
     """
 

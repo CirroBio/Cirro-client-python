@@ -13,9 +13,8 @@ T = TypeVar("T", bound="ProjectSettings")
 class ProjectSettings:
     """
     Attributes:
-        budget_period (BudgetPeriod):
-        service_connections (List[str]):
-        budget_amount (Union[Unset, int]): Total allowed cost for the budget period
+        budget_amount (int): Total allowed cost for the budget period
+        budget_period (BudgetPeriod): Period of time for budgeting
         dragen_ami (Union[None, Unset, str]): AMI ID for the DRAGEN compute environment (if enabled)
         enable_compute (Union[Unset, bool]): Enables the default compute environment Default: True.
         enable_dragen (Union[Unset, bool]): Enables the DRAGEN compute environment Default: False.
@@ -25,17 +24,16 @@ class ProjectSettings:
         max_spot_vcpu (Union[Unset, int]): Service quota limit for SPOT instances Default: 0.
         retention_policy_days (Union[Unset, int]): Days to keep deleted datasets before being permanently erased
             Default: 7.
-        create_vpc (Union[Unset, bool]): Creates a default VPC for the compute environment, if false, VPC ID must be
-            provided Default: False.
-        vpc_id (Union[None, Unset, str]): VPC that the compute environment will use
-        batch_subnets (Union[List[str], None, Unset]): List of subnets that the compute environment will use
-        kms_arn (Union[None, Unset, str]): KMS Key ARN to encrypt S3 objects, one will be created if the arn is not
-            provided
+        service_connections (Union[Unset, List[str]]): List of service connections to enable
+        vpc_id (Union[None, Unset, str]): VPC that the compute environment will use Example: vpc-00000000000000000.
+        batch_subnets (Union[List[str], None, Unset]): List of subnets that the compute environment will use Example:
+            ["subnet-00000000000000000"].
+        kms_arn (Union[None, Unset, str]): KMS Key ARN to encrypt S3 objects, if not provided, default bucket encryption
+            will be used
     """
 
+    budget_amount: int
     budget_period: BudgetPeriod
-    service_connections: List[str]
-    budget_amount: Union[Unset, int] = UNSET
     dragen_ami: Union[None, Unset, str] = UNSET
     enable_compute: Union[Unset, bool] = True
     enable_dragen: Union[Unset, bool] = False
@@ -44,18 +42,16 @@ class ProjectSettings:
     max_f1vcpu: Union[Unset, int] = 0
     max_spot_vcpu: Union[Unset, int] = 0
     retention_policy_days: Union[Unset, int] = 7
-    create_vpc: Union[Unset, bool] = False
+    service_connections: Union[Unset, List[str]] = UNSET
     vpc_id: Union[None, Unset, str] = UNSET
     batch_subnets: Union[List[str], None, Unset] = UNSET
     kms_arn: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        budget_period = self.budget_period.value
-
-        service_connections = self.service_connections
-
         budget_amount = self.budget_amount
+
+        budget_period = self.budget_period.value
 
         dragen_ami: Union[None, Unset, str]
         if isinstance(self.dragen_ami, Unset):
@@ -77,7 +73,9 @@ class ProjectSettings:
 
         retention_policy_days = self.retention_policy_days
 
-        create_vpc = self.create_vpc
+        service_connections: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.service_connections, Unset):
+            service_connections = self.service_connections
 
         vpc_id: Union[None, Unset, str]
         if isinstance(self.vpc_id, Unset):
@@ -104,12 +102,10 @@ class ProjectSettings:
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
+                "budgetAmount": budget_amount,
                 "budgetPeriod": budget_period,
-                "serviceConnections": service_connections,
             }
         )
-        if budget_amount is not UNSET:
-            field_dict["budgetAmount"] = budget_amount
         if dragen_ami is not UNSET:
             field_dict["dragenAmi"] = dragen_ami
         if enable_compute is not UNSET:
@@ -126,8 +122,8 @@ class ProjectSettings:
             field_dict["maxSpotVCPU"] = max_spot_vcpu
         if retention_policy_days is not UNSET:
             field_dict["retentionPolicyDays"] = retention_policy_days
-        if create_vpc is not UNSET:
-            field_dict["createVpc"] = create_vpc
+        if service_connections is not UNSET:
+            field_dict["serviceConnections"] = service_connections
         if vpc_id is not UNSET:
             field_dict["vpcId"] = vpc_id
         if batch_subnets is not UNSET:
@@ -140,11 +136,9 @@ class ProjectSettings:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        budget_amount = d.pop("budgetAmount")
+
         budget_period = BudgetPeriod(d.pop("budgetPeriod"))
-
-        service_connections = cast(List[str], d.pop("serviceConnections"))
-
-        budget_amount = d.pop("budgetAmount", UNSET)
 
         def _parse_dragen_ami(data: object) -> Union[None, Unset, str]:
             if data is None:
@@ -169,7 +163,7 @@ class ProjectSettings:
 
         retention_policy_days = d.pop("retentionPolicyDays", UNSET)
 
-        create_vpc = d.pop("createVpc", UNSET)
+        service_connections = cast(List[str], d.pop("serviceConnections", UNSET))
 
         def _parse_vpc_id(data: object) -> Union[None, Unset, str]:
             if data is None:
@@ -207,9 +201,8 @@ class ProjectSettings:
         kms_arn = _parse_kms_arn(d.pop("kmsArn", UNSET))
 
         project_settings = cls(
-            budget_period=budget_period,
-            service_connections=service_connections,
             budget_amount=budget_amount,
+            budget_period=budget_period,
             dragen_ami=dragen_ami,
             enable_compute=enable_compute,
             enable_dragen=enable_dragen,
@@ -218,7 +211,7 @@ class ProjectSettings:
             max_f1vcpu=max_f1vcpu,
             max_spot_vcpu=max_spot_vcpu,
             retention_policy_days=retention_policy_days,
-            create_vpc=create_vpc,
+            service_connections=service_connections,
             vpc_id=vpc_id,
             batch_subnets=batch_subnets,
             kms_arn=kms_arn,

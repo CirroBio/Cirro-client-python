@@ -4,7 +4,9 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 if TYPE_CHECKING:
+    from ..models.auth_info import AuthInfo
     from ..models.resources_info import ResourcesInfo
+    from ..models.tenant_info import TenantInfo
 
 
 T = TypeVar("T", bound="SystemInfoResponse")
@@ -14,36 +16,44 @@ T = TypeVar("T", bound="SystemInfoResponse")
 class SystemInfoResponse:
     """
     Attributes:
-        sdk_app_id (str):
         resources_bucket (str):
-        data_endpoint (str):
+        references_bucket (str):
+        live_endpoint (str):
         region (str):
         system_message (str):
+        maintenance_mode_enabled (bool):
         commit_hash (str):
         version (str):
         resources_info (ResourcesInfo):
+        tenant_info (TenantInfo):
+        auth (AuthInfo):
     """
 
-    sdk_app_id: str
     resources_bucket: str
-    data_endpoint: str
+    references_bucket: str
+    live_endpoint: str
     region: str
     system_message: str
+    maintenance_mode_enabled: bool
     commit_hash: str
     version: str
     resources_info: "ResourcesInfo"
+    tenant_info: "TenantInfo"
+    auth: "AuthInfo"
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        sdk_app_id = self.sdk_app_id
-
         resources_bucket = self.resources_bucket
 
-        data_endpoint = self.data_endpoint
+        references_bucket = self.references_bucket
+
+        live_endpoint = self.live_endpoint
 
         region = self.region
 
         system_message = self.system_message
+
+        maintenance_mode_enabled = self.maintenance_mode_enabled
 
         commit_hash = self.commit_hash
 
@@ -51,18 +61,25 @@ class SystemInfoResponse:
 
         resources_info = self.resources_info.to_dict()
 
+        tenant_info = self.tenant_info.to_dict()
+
+        auth = self.auth.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "sdkAppId": sdk_app_id,
                 "resourcesBucket": resources_bucket,
-                "dataEndpoint": data_endpoint,
+                "referencesBucket": references_bucket,
+                "liveEndpoint": live_endpoint,
                 "region": region,
                 "systemMessage": system_message,
+                "maintenanceModeEnabled": maintenance_mode_enabled,
                 "commitHash": commit_hash,
                 "version": version,
                 "resourcesInfo": resources_info,
+                "tenantInfo": tenant_info,
+                "auth": auth,
             }
         )
 
@@ -70,18 +87,22 @@ class SystemInfoResponse:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.auth_info import AuthInfo
         from ..models.resources_info import ResourcesInfo
+        from ..models.tenant_info import TenantInfo
 
         d = src_dict.copy()
-        sdk_app_id = d.pop("sdkAppId")
-
         resources_bucket = d.pop("resourcesBucket")
 
-        data_endpoint = d.pop("dataEndpoint")
+        references_bucket = d.pop("referencesBucket")
+
+        live_endpoint = d.pop("liveEndpoint")
 
         region = d.pop("region")
 
         system_message = d.pop("systemMessage")
+
+        maintenance_mode_enabled = d.pop("maintenanceModeEnabled")
 
         commit_hash = d.pop("commitHash")
 
@@ -89,15 +110,22 @@ class SystemInfoResponse:
 
         resources_info = ResourcesInfo.from_dict(d.pop("resourcesInfo"))
 
+        tenant_info = TenantInfo.from_dict(d.pop("tenantInfo"))
+
+        auth = AuthInfo.from_dict(d.pop("auth"))
+
         system_info_response = cls(
-            sdk_app_id=sdk_app_id,
             resources_bucket=resources_bucket,
-            data_endpoint=data_endpoint,
+            references_bucket=references_bucket,
+            live_endpoint=live_endpoint,
             region=region,
             system_message=system_message,
+            maintenance_mode_enabled=maintenance_mode_enabled,
             commit_hash=commit_hash,
             version=version,
             resources_info=resources_info,
+            tenant_info=tenant_info,
+            auth=auth,
         )
 
         system_info_response.additional_properties = d

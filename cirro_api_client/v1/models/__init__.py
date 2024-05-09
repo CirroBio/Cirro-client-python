@@ -2,12 +2,18 @@
 
 from .access_type import AccessType
 from .allowed_data_type import AllowedDataType
+from .audit_event import AuditEvent
+from .audit_event_changes_type_0 import AuditEventChangesType0
+from .audit_event_event_detail_type_0 import AuditEventEventDetailType0
+from .auth_info import AuthInfo
 from .aws_credentials import AWSCredentials
 from .billing_account import BillingAccount
 from .billing_account_request import BillingAccountRequest
 from .billing_method import BillingMethod
 from .budget_period import BudgetPeriod
 from .cloud_account import CloudAccount
+from .cloud_account_type import CloudAccountType
+from .column_definition import ColumnDefinition
 from .contact import Contact
 from .create_notebook_instance_request import CreateNotebookInstanceRequest
 from .create_reference_request import CreateReferenceRequest
@@ -43,6 +49,7 @@ from .import_data_request import ImportDataRequest
 from .invite_user_request import InviteUserRequest
 from .invite_user_response import InviteUserResponse
 from .log_entry import LogEntry
+from .login_provider import LoginProvider
 from .metric_record import MetricRecord
 from .metric_record_services import MetricRecordServices
 from .notebook_instance import NotebookInstance
@@ -79,8 +86,10 @@ from .status import Status
 from .stop_execution_response import StopExecutionResponse
 from .sync_status import SyncStatus
 from .system_info_response import SystemInfoResponse
+from .table import Table
 from .tag import Tag
 from .task import Task
+from .tenant_info import TenantInfo
 from .update_dataset_request import UpdateDatasetRequest
 from .update_user_request import UpdateUserRequest
 from .update_user_request_settings import UpdateUserRequestSettings
@@ -92,12 +101,18 @@ from .validate_file_requirements_request import ValidateFileRequirementsRequest
 __all__ = (
     "AccessType",
     "AllowedDataType",
+    "AuditEvent",
+    "AuditEventChangesType0",
+    "AuditEventEventDetailType0",
+    "AuthInfo",
     "AWSCredentials",
     "BillingAccount",
     "BillingAccountRequest",
     "BillingMethod",
     "BudgetPeriod",
     "CloudAccount",
+    "CloudAccountType",
+    "ColumnDefinition",
     "Contact",
     "CreateNotebookInstanceRequest",
     "CreateReferenceRequest",
@@ -133,6 +148,7 @@ __all__ = (
     "InviteUserRequest",
     "InviteUserResponse",
     "LogEntry",
+    "LoginProvider",
     "MetricRecord",
     "MetricRecordServices",
     "NotebookInstance",
@@ -169,8 +185,10 @@ __all__ = (
     "StopExecutionResponse",
     "SyncStatus",
     "SystemInfoResponse",
+    "Table",
     "Tag",
     "Task",
+    "TenantInfo",
     "UpdateDatasetRequest",
     "UpdateUserRequest",
     "UpdateUserRequestSettings",

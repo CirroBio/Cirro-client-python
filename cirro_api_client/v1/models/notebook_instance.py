@@ -17,6 +17,7 @@ class NotebookInstance:
         id (str):
         name (str):
         status (Status):
+        status_message (str):
         instance_type (str):
         accelerator_types (List[str]):
         volume_size_gb (int):
@@ -28,6 +29,7 @@ class NotebookInstance:
     id: str
     name: str
     status: Status
+    status_message: str
     instance_type: str
     accelerator_types: List[str]
     volume_size_gb: int
@@ -42,6 +44,8 @@ class NotebookInstance:
         name = self.name
 
         status = self.status.value
+
+        status_message = self.status_message
 
         instance_type = self.instance_type
 
@@ -62,6 +66,7 @@ class NotebookInstance:
                 "id": id,
                 "name": name,
                 "status": status,
+                "statusMessage": status_message,
                 "instanceType": instance_type,
                 "acceleratorTypes": accelerator_types,
                 "volumeSizeGB": volume_size_gb,
@@ -82,6 +87,8 @@ class NotebookInstance:
 
         status = Status(d.pop("status"))
 
+        status_message = d.pop("statusMessage")
+
         instance_type = d.pop("instanceType")
 
         accelerator_types = cast(List[str], d.pop("acceleratorTypes"))
@@ -98,6 +105,7 @@ class NotebookInstance:
             id=id,
             name=name,
             status=status,
+            status_message=status_message,
             instance_type=instance_type,
             accelerator_types=accelerator_types,
             volume_size_gb=volume_size_gb,

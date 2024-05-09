@@ -8,6 +8,7 @@ from ..types import UNSET, Unset
 if TYPE_CHECKING:
     from ..models.dataset_viz import DatasetViz
     from ..models.file_entry import FileEntry
+    from ..models.table import Table
 
 
 T = TypeVar("T", bound="DatasetAssetsManifest")
@@ -20,11 +21,13 @@ class DatasetAssetsManifest:
         domain (Union[Unset, str]): Base URL for files Example: s3://project-1a1a/datasets/1a1a.
         files (Union[Unset, List['FileEntry']]): List of files in the dataset, including metadata
         viz (Union[Unset, List['DatasetViz']]): List of viz to render for the dataset
+        tables (Union[Unset, List['Table']]): List of web optimized tables for the dataset
     """
 
     domain: Union[Unset, str] = UNSET
     files: Union[Unset, List["FileEntry"]] = UNSET
     viz: Union[Unset, List["DatasetViz"]] = UNSET
+    tables: Union[Unset, List["Table"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -44,6 +47,13 @@ class DatasetAssetsManifest:
                 viz_item = viz_item_data.to_dict()
                 viz.append(viz_item)
 
+        tables: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.tables, Unset):
+            tables = []
+            for tables_item_data in self.tables:
+                tables_item = tables_item_data.to_dict()
+                tables.append(tables_item)
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -53,6 +63,8 @@ class DatasetAssetsManifest:
             field_dict["files"] = files
         if viz is not UNSET:
             field_dict["viz"] = viz
+        if tables is not UNSET:
+            field_dict["tables"] = tables
 
         return field_dict
 
@@ -60,6 +72,7 @@ class DatasetAssetsManifest:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.dataset_viz import DatasetViz
         from ..models.file_entry import FileEntry
+        from ..models.table import Table
 
         d = src_dict.copy()
         domain = d.pop("domain", UNSET)
@@ -78,10 +91,18 @@ class DatasetAssetsManifest:
 
             viz.append(viz_item)
 
+        tables = []
+        _tables = d.pop("tables", UNSET)
+        for tables_item_data in _tables or []:
+            tables_item = Table.from_dict(tables_item_data)
+
+            tables.append(tables_item)
+
         dataset_assets_manifest = cls(
             domain=domain,
             files=files,
             viz=viz,
+            tables=tables,
         )
 
         dataset_assets_manifest.additional_properties = d

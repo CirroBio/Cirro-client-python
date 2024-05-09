@@ -15,9 +15,9 @@ class Process:
     Attributes:
         id (str): Unique ID of the Process Example: process-hutch-magic_flute-1_0.
         name (str): Friendly name for the process Example: MAGeCK Flute.
-        executor (Executor):
+        executor (Executor): How the workflow is executed
         description (Union[Unset, str]):  Example: MAGeCK Flute enables accurate identification of essential genes with
-            their related biological functions..
+            their related biological functions.
         data_type (Union[None, Unset, str]): Name of the data type this pipeline produces (if it is not defined, use the
             name)
         documentation_url (Union[Unset, str]): Link to pipeline documentation Example:
@@ -27,6 +27,7 @@ class Process:
         parent_process_ids (Union[Unset, List[str]]): IDs of pipelines that can run this pipeline
         owner (Union[Unset, str]): Username of the pipeline creator (blank if Cirro curated)
         linked_project_ids (Union[Unset, List[str]]): Projects that can run this pipeline
+        allow_multiple_sources (Union[Unset, bool]): Whether the pipeline is allowed to have multiple dataset sources
         is_archived (Union[Unset, bool]): Whether the pipeline is marked as archived
     """
 
@@ -41,6 +42,7 @@ class Process:
     parent_process_ids: Union[Unset, List[str]] = UNSET
     owner: Union[Unset, str] = UNSET
     linked_project_ids: Union[Unset, List[str]] = UNSET
+    allow_multiple_sources: Union[Unset, bool] = UNSET
     is_archived: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -77,6 +79,8 @@ class Process:
         if not isinstance(self.linked_project_ids, Unset):
             linked_project_ids = self.linked_project_ids
 
+        allow_multiple_sources = self.allow_multiple_sources
+
         is_archived = self.is_archived
 
         field_dict: Dict[str, Any] = {}
@@ -104,6 +108,8 @@ class Process:
             field_dict["owner"] = owner
         if linked_project_ids is not UNSET:
             field_dict["linkedProjectIds"] = linked_project_ids
+        if allow_multiple_sources is not UNSET:
+            field_dict["allowMultipleSources"] = allow_multiple_sources
         if is_archived is not UNSET:
             field_dict["isArchived"] = is_archived
 
@@ -141,6 +147,8 @@ class Process:
 
         linked_project_ids = cast(List[str], d.pop("linkedProjectIds", UNSET))
 
+        allow_multiple_sources = d.pop("allowMultipleSources", UNSET)
+
         is_archived = d.pop("isArchived", UNSET)
 
         process = cls(
@@ -155,6 +163,7 @@ class Process:
             parent_process_ids=parent_process_ids,
             owner=owner,
             linked_project_ids=linked_project_ids,
+            allow_multiple_sources=allow_multiple_sources,
             is_archived=is_archived,
         )
 

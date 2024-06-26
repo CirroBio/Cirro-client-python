@@ -8,6 +8,7 @@ from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.custom_pipeline_settings import CustomPipelineSettings
+    from ..models.file_mapping_rule import FileMappingRule
     from ..models.pipeline_code import PipelineCode
 
 
@@ -36,6 +37,8 @@ class ProcessDetail:
         allow_multiple_sources (Union[Unset, bool]): Whether the pipeline is allowed to have multiple dataset sources
         custom_settings (Union['CustomPipelineSettings', None, Unset]):
         is_archived (Union[Unset, bool]): Whether the process is marked for removal
+        file_mapping_rules (Union[List['FileMappingRule'], None, Unset]): Describes the files that this dataset type
+            expects.
     """
 
     id: str
@@ -53,6 +56,7 @@ class ProcessDetail:
     allow_multiple_sources: Union[Unset, bool] = UNSET
     custom_settings: Union["CustomPipelineSettings", None, Unset] = UNSET
     is_archived: Union[Unset, bool] = UNSET
+    file_mapping_rules: Union[List["FileMappingRule"], None, Unset] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -117,6 +121,18 @@ class ProcessDetail:
 
         is_archived = self.is_archived
 
+        file_mapping_rules: Union[List[Dict[str, Any]], None, Unset]
+        if isinstance(self.file_mapping_rules, Unset):
+            file_mapping_rules = UNSET
+        elif isinstance(self.file_mapping_rules, list):
+            file_mapping_rules = []
+            for file_mapping_rules_type_0_item_data in self.file_mapping_rules:
+                file_mapping_rules_type_0_item = file_mapping_rules_type_0_item_data.to_dict()
+                file_mapping_rules.append(file_mapping_rules_type_0_item)
+
+        else:
+            file_mapping_rules = self.file_mapping_rules
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -146,12 +162,15 @@ class ProcessDetail:
             field_dict["customSettings"] = custom_settings
         if is_archived is not UNSET:
             field_dict["isArchived"] = is_archived
+        if file_mapping_rules is not UNSET:
+            field_dict["fileMappingRules"] = file_mapping_rules
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.custom_pipeline_settings import CustomPipelineSettings
+        from ..models.file_mapping_rule import FileMappingRule
         from ..models.pipeline_code import PipelineCode
 
         d = src_dict.copy()
@@ -243,6 +262,28 @@ class ProcessDetail:
 
         is_archived = d.pop("isArchived", UNSET)
 
+        def _parse_file_mapping_rules(data: object) -> Union[List["FileMappingRule"], None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, list):
+                    raise TypeError()
+                file_mapping_rules_type_0 = []
+                _file_mapping_rules_type_0 = data
+                for file_mapping_rules_type_0_item_data in _file_mapping_rules_type_0:
+                    file_mapping_rules_type_0_item = FileMappingRule.from_dict(file_mapping_rules_type_0_item_data)
+
+                    file_mapping_rules_type_0.append(file_mapping_rules_type_0_item)
+
+                return file_mapping_rules_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[List["FileMappingRule"], None, Unset], data)
+
+        file_mapping_rules = _parse_file_mapping_rules(d.pop("fileMappingRules", UNSET))
+
         process_detail = cls(
             id=id,
             name=name,
@@ -259,6 +300,7 @@ class ProcessDetail:
             allow_multiple_sources=allow_multiple_sources,
             custom_settings=custom_settings,
             is_archived=is_archived,
+            file_mapping_rules=file_mapping_rules,
         )
 
         process_detail.additional_properties = d

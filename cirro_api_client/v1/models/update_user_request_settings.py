@@ -8,7 +8,7 @@ T = TypeVar("T", bound="UpdateUserRequestSettings")
 
 @_attrs_define
 class UpdateUserRequestSettings:
-    """ """
+    """Additional settings for the user"""
 
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 

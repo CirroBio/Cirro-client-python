@@ -20,12 +20,14 @@ class DatasetAssetsManifest:
     Attributes:
         domain (Union[Unset, str]): Base URL for files Example: s3://project-1a1a/datasets/1a1a.
         files (Union[Unset, List['FileEntry']]): List of files in the dataset, including metadata
+        total_files (Union[Unset, int]): Total number of files in the dataset, used for pagination
         viz (Union[Unset, List['DatasetViz']]): List of viz to render for the dataset
         tables (Union[Unset, List['Table']]): List of web optimized tables for the dataset
     """
 
     domain: Union[Unset, str] = UNSET
     files: Union[Unset, List["FileEntry"]] = UNSET
+    total_files: Union[Unset, int] = UNSET
     viz: Union[Unset, List["DatasetViz"]] = UNSET
     tables: Union[Unset, List["Table"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -39,6 +41,8 @@ class DatasetAssetsManifest:
             for files_item_data in self.files:
                 files_item = files_item_data.to_dict()
                 files.append(files_item)
+
+        total_files = self.total_files
 
         viz: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.viz, Unset):
@@ -61,6 +65,8 @@ class DatasetAssetsManifest:
             field_dict["domain"] = domain
         if files is not UNSET:
             field_dict["files"] = files
+        if total_files is not UNSET:
+            field_dict["totalFiles"] = total_files
         if viz is not UNSET:
             field_dict["viz"] = viz
         if tables is not UNSET:
@@ -84,6 +90,8 @@ class DatasetAssetsManifest:
 
             files.append(files_item)
 
+        total_files = d.pop("totalFiles", UNSET)
+
         viz = []
         _viz = d.pop("viz", UNSET)
         for viz_item_data in _viz or []:
@@ -101,6 +109,7 @@ class DatasetAssetsManifest:
         dataset_assets_manifest = cls(
             domain=domain,
             files=files,
+            total_files=total_files,
             viz=viz,
             tables=tables,
         )

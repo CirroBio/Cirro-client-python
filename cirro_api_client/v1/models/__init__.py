@@ -1,4 +1,4 @@
-""" Contains all the data models used in inputs/outputs """
+"""Contains all the data models used in inputs/outputs"""
 
 from .access_type import AccessType
 from .allowed_data_type import AllowedDataType
@@ -37,6 +37,7 @@ from .executor import Executor
 from .file_access_request import FileAccessRequest
 from .file_entry import FileEntry
 from .file_entry_metadata import FileEntryMetadata
+from .file_mapping_rule import FileMappingRule
 from .file_name_pattern import FileNamePattern
 from .file_requirements import FileRequirements
 from .form_schema import FormSchema
@@ -96,6 +97,8 @@ from .update_user_request_settings import UpdateUserRequestSettings
 from .upload_dataset_create_response import UploadDatasetCreateResponse
 from .upload_dataset_request import UploadDatasetRequest
 from .user import User
+from .user_detail import UserDetail
+from .user_project_assignment import UserProjectAssignment
 from .validate_file_requirements_request import ValidateFileRequirementsRequest
 
 __all__ = (
@@ -136,6 +139,7 @@ __all__ = (
     "FileAccessRequest",
     "FileEntry",
     "FileEntryMetadata",
+    "FileMappingRule",
     "FileNamePattern",
     "FileRequirements",
     "FormSchema",
@@ -195,5 +199,7 @@ __all__ = (
     "UploadDatasetCreateResponse",
     "UploadDatasetRequest",
     "User",
+    "UserDetail",
+    "UserProjectAssignment",
     "ValidateFileRequirementsRequest",
 )

@@ -37,10 +37,8 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Sam
         response_200 = Sample.from_dict(response.json())
 
         return response_200
-    if client.raise_on_unexpected_status:
-        raise errors.UnexpectedStatus(response.status_code, response.content)
-    else:
-        return None
+
+    errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
 def _build_response(*, client: Client, response: httpx.Response) -> Response[Sample]:
@@ -116,12 +114,15 @@ def sync(
         Sample
     """
 
-    return sync_detailed(
-        project_id=project_id,
-        sample_id=sample_id,
-        client=client,
-        body=body,
-    ).parsed
+    try:
+        return sync_detailed(
+            project_id=project_id,
+            sample_id=sample_id,
+            client=client,
+            body=body,
+        ).parsed
+    except errors.NotFoundException:
+        return None
 
 
 async def asyncio_detailed(
@@ -185,11 +186,14 @@ async def asyncio(
         Sample
     """
 
-    return (
-        await asyncio_detailed(
-            project_id=project_id,
-            sample_id=sample_id,
-            client=client,
-            body=body,
-        )
-    ).parsed
+    try:
+        return (
+            await asyncio_detailed(
+                project_id=project_id,
+                sample_id=sample_id,
+                client=client,
+                body=body,
+            )
+        ).parsed
+    except errors.NotFoundException:
+        return None

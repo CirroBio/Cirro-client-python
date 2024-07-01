@@ -25,10 +25,8 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Pro
         response_200 = ProjectDetail.from_dict(response.json())
 
         return response_200
-    if client.raise_on_unexpected_status:
-        raise errors.UnexpectedStatus(response.status_code, response.content)
-    else:
-        return None
+
+    errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
 def _build_response(*, client: Client, response: httpx.Response) -> Response[ProjectDetail]:
@@ -94,10 +92,13 @@ def sync(
         ProjectDetail
     """
 
-    return sync_detailed(
-        project_id=project_id,
-        client=client,
-    ).parsed
+    try:
+        return sync_detailed(
+            project_id=project_id,
+            client=client,
+        ).parsed
+    except errors.NotFoundException:
+        return None
 
 
 async def asyncio_detailed(
@@ -151,9 +152,12 @@ async def asyncio(
         ProjectDetail
     """
 
-    return (
-        await asyncio_detailed(
-            project_id=project_id,
-            client=client,
-        )
-    ).parsed
+    try:
+        return (
+            await asyncio_detailed(
+                project_id=project_id,
+                client=client,
+            )
+        ).parsed
+    except errors.NotFoundException:
+        return None

@@ -84,10 +84,8 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[{{ 
         return None
         {% endif %}
     {% endfor %}
-    if client.raise_on_unexpected_status:
-        raise errors.UnexpectedStatus(response.status_code, response.content)
-    else:
-        return None
+
+    errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
 def _build_response(*, client: Client, response: httpx.Response) -> Response[{{ return_string }}]:
@@ -120,10 +118,12 @@ def sync(
     {{ arguments(endpoint) | indent(4) }}
 ) -> Optional[{{ return_string }}]:
     {{ docstring(endpoint, return_string, is_detailed=false) | indent(4) }}
-
-    return sync_detailed(
-        {{ kwargs(endpoint) }}
-    ).parsed
+    try:
+        return sync_detailed(
+            {{ kwargs(endpoint) }}
+        ).parsed
+    except errors.NotFoundException:
+        return None
 {% endif %}
 
 async def asyncio_detailed(
@@ -148,7 +148,10 @@ async def asyncio(
 ) -> Optional[{{ return_string }}]:
     {{ docstring(endpoint, return_string, is_detailed=false) | indent(4) }}
 
-    return (await asyncio_detailed(
-        {{ kwargs(endpoint) }}
-    )).parsed
+    try:
+        return (await asyncio_detailed(
+            {{ kwargs(endpoint) }}
+        )).parsed
+    except errors.NotFoundException:
+        return None
 {% endif %}

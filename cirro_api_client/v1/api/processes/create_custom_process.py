@@ -47,10 +47,8 @@ def _parse_response(
         response_201 = CreateResponse.from_dict(response.json())
 
         return response_201
-    if client.raise_on_unexpected_status:
-        raise errors.UnexpectedStatus(response.status_code, response.content)
-    else:
-        return None
+
+    errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
 def _build_response(
@@ -118,10 +116,13 @@ def sync(
         Union[CreateResponse, ErrorMessage, PortalErrorResponse]
     """
 
-    return sync_detailed(
-        client=client,
-        body=body,
-    ).parsed
+    try:
+        return sync_detailed(
+            client=client,
+            body=body,
+        ).parsed
+    except errors.NotFoundException:
+        return None
 
 
 async def asyncio_detailed(
@@ -175,9 +176,12 @@ async def asyncio(
         Union[CreateResponse, ErrorMessage, PortalErrorResponse]
     """
 
-    return (
-        await asyncio_detailed(
-            client=client,
-            body=body,
-        )
-    ).parsed
+    try:
+        return (
+            await asyncio_detailed(
+                client=client,
+                body=body,
+            )
+        ).parsed
+    except errors.NotFoundException:
+        return None

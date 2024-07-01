@@ -1,5 +1,4 @@
-"""Contains shared errors types that can be raised from API functions"""
-
+""" Contains shared errors types that can be raised from API functions """
 from http import HTTPStatus
 from typing import Dict
 
@@ -50,17 +49,13 @@ class CirroException(Exception):
 class NotFoundException(CirroException):
     """Raised when the item requested is not found"""
 
-
 class BadRequestException(CirroException):
     """Raised when request is invalid"""
-
 
 class ForbiddenException(CirroException):
     """Raised when the user is not authorized to perform the requested action"""
 
-
 class InternalServerErrorException(CirroException):
     """Raised when the server returns an unexpected error"""
 
-
-__all__ = ["UnexpectedStatus", "NotFoundException", "BadRequestException", "ForbiddenException"]
+__all__ = ["UnexpectedStatus", "NotFoundException", "BadRequestException", "ForbiddenException", 'InternalServerErrorException']

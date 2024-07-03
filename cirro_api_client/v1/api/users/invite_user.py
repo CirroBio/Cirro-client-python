@@ -35,10 +35,8 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Inv
         response_200 = InviteUserResponse.from_dict(response.json())
 
         return response_200
-    if client.raise_on_unexpected_status:
-        raise errors.UnexpectedStatus(response.status_code, response.content)
-    else:
-        return None
+
+    errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
 def _build_response(*, client: Client, response: httpx.Response) -> Response[InviteUserResponse]:
@@ -104,10 +102,13 @@ def sync(
         InviteUserResponse
     """
 
-    return sync_detailed(
-        client=client,
-        body=body,
-    ).parsed
+    try:
+        return sync_detailed(
+            client=client,
+            body=body,
+        ).parsed
+    except errors.NotFoundException:
+        return None
 
 
 async def asyncio_detailed(
@@ -161,9 +162,12 @@ async def asyncio(
         InviteUserResponse
     """
 
-    return (
-        await asyncio_detailed(
-            client=client,
-            body=body,
-        )
-    ).parsed
+    try:
+        return (
+            await asyncio_detailed(
+                client=client,
+                body=body,
+            )
+        ).parsed
+    except errors.NotFoundException:
+        return None

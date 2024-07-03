@@ -34,10 +34,8 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Get
         response_200 = GetProjectSummaryResponse200.from_dict(response.json())
 
         return response_200
-    if client.raise_on_unexpected_status:
-        raise errors.UnexpectedStatus(response.status_code, response.content)
-    else:
-        return None
+
+    errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
 def _build_response(*, client: Client, response: httpx.Response) -> Response[GetProjectSummaryResponse200]:
@@ -108,11 +106,14 @@ def sync(
         GetProjectSummaryResponse200
     """
 
-    return sync_detailed(
-        project_id=project_id,
-        client=client,
-        number_of_days=number_of_days,
-    ).parsed
+    try:
+        return sync_detailed(
+            project_id=project_id,
+            client=client,
+            number_of_days=number_of_days,
+        ).parsed
+    except errors.NotFoundException:
+        return None
 
 
 async def asyncio_detailed(
@@ -171,10 +172,13 @@ async def asyncio(
         GetProjectSummaryResponse200
     """
 
-    return (
-        await asyncio_detailed(
-            project_id=project_id,
-            client=client,
-            number_of_days=number_of_days,
-        )
-    ).parsed
+    try:
+        return (
+            await asyncio_detailed(
+                project_id=project_id,
+                client=client,
+                number_of_days=number_of_days,
+            )
+        ).parsed
+    except errors.NotFoundException:
+        return None

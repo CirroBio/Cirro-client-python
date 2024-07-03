@@ -8,7 +8,7 @@ import httpx
 from cirro_api_client.v1.models import PortalErrorResponse
 
 
-def handle_error_response(response: httpx.Response, raise_on_unexpected_status: bool):
+def handle_error_response(response: httpx.Response, raise_on_unexpected_status: bool) -> None:
     """Parses a response from the server and returns an exception if the response indicates an error"""
     if response.status_code == HTTPStatus.BAD_REQUEST:
         raise BadRequestException(response.json())
@@ -18,9 +18,6 @@ def handle_error_response(response: httpx.Response, raise_on_unexpected_status: 
 
     if response.status_code == HTTPStatus.FORBIDDEN:
         raise ForbiddenException(response.json())
-
-    if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        raise InternalServerErrorException(response.json())
 
     if raise_on_unexpected_status:
         raise UnexpectedStatus(response.status_code, response.content)
@@ -57,10 +54,6 @@ class BadRequestException(CirroException):
 
 class ForbiddenException(CirroException):
     """Raised when the user is not authorized to perform the requested action"""
-
-
-class InternalServerErrorException(CirroException):
-    """Raised when the server returns an unexpected error"""
 
 
 __all__ = ["UnexpectedStatus", "NotFoundException", "BadRequestException", "ForbiddenException"]

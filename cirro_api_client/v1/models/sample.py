@@ -73,9 +73,9 @@ class Sample:
 
         dataset_ids = cast(List[str], d.pop("datasetIds"))
 
-        created_at = isoparse(d.pop("createdAt"))
+        created_at = (isoparse(d.pop("createdAt")) if d["createdAt"] else None)
 
-        updated_at = isoparse(d.pop("updatedAt"))
+        updated_at = (isoparse(d.pop("updatedAt")) if d["updatedAt"] else None)
 
         sample = cls(
             id=id,

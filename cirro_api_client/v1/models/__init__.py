@@ -3,14 +3,15 @@
 from .access_type import AccessType
 from .allowed_data_type import AllowedDataType
 from .audit_event import AuditEvent
-from .audit_event_changes_type_0 import AuditEventChangesType0
-from .audit_event_event_detail_type_0 import AuditEventEventDetailType0
+from .audit_event_changes import AuditEventChanges
+from .audit_event_event_detail import AuditEventEventDetail
 from .auth_info import AuthInfo
 from .aws_credentials import AWSCredentials
 from .billing_account import BillingAccount
 from .billing_account_request import BillingAccountRequest
 from .billing_method import BillingMethod
 from .budget_period import BudgetPeriod
+from .calculate_pipeline_cost_request import CalculatePipelineCostRequest
 from .cloud_account import CloudAccount
 from .cloud_account_type import CloudAccountType
 from .column_definition import ColumnDefinition
@@ -59,6 +60,7 @@ from .open_notebook_instance_response import OpenNotebookInstanceResponse
 from .paginated_response_dataset_list_dto import PaginatedResponseDatasetListDto
 from .paginated_response_sample_dto import PaginatedResponseSampleDto
 from .pipeline_code import PipelineCode
+from .pipeline_cost import PipelineCost
 from .portal_error_response import PortalErrorResponse
 from .process import Process
 from .process_detail import ProcessDetail
@@ -105,14 +107,15 @@ __all__ = (
     "AccessType",
     "AllowedDataType",
     "AuditEvent",
-    "AuditEventChangesType0",
-    "AuditEventEventDetailType0",
+    "AuditEventChanges",
+    "AuditEventEventDetail",
     "AuthInfo",
     "AWSCredentials",
     "BillingAccount",
     "BillingAccountRequest",
     "BillingMethod",
     "BudgetPeriod",
+    "CalculatePipelineCostRequest",
     "CloudAccount",
     "CloudAccountType",
     "ColumnDefinition",
@@ -161,6 +164,7 @@ __all__ = (
     "PaginatedResponseDatasetListDto",
     "PaginatedResponseSampleDto",
     "PipelineCode",
+    "PipelineCost",
     "PortalErrorResponse",
     "Process",
     "ProcessDetail",

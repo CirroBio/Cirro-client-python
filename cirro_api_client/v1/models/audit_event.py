@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -8,8 +8,8 @@ from dateutil.parser import isoparse
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.audit_event_changes_type_0 import AuditEventChangesType0
-    from ..models.audit_event_event_detail_type_0 import AuditEventEventDetailType0
+    from ..models.audit_event_changes import AuditEventChanges
+    from ..models.audit_event_event_detail import AuditEventEventDetail
 
 
 T = TypeVar("T", bound="AuditEvent")
@@ -38,17 +38,14 @@ class AuditEvent:
     project_id: Union[Unset, str] = UNSET
     entity_id: Union[Unset, str] = UNSET
     entity_type: Union[Unset, str] = UNSET
-    event_detail: Union["AuditEventEventDetailType0", None, Unset] = UNSET
-    changes: Union["AuditEventChangesType0", None, Unset] = UNSET
+    event_detail: Union[Unset, "AuditEventEventDetail"] = UNSET
+    changes: Union[Unset, "AuditEventChanges"] = UNSET
     username: Union[Unset, str] = UNSET
     ip_address: Union[Unset, str] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models.audit_event_changes_type_0 import AuditEventChangesType0
-        from ..models.audit_event_event_detail_type_0 import AuditEventEventDetailType0
-
         id = self.id
 
         event_type = self.event_type
@@ -59,21 +56,13 @@ class AuditEvent:
 
         entity_type = self.entity_type
 
-        event_detail: Union[Dict[str, Any], None, Unset]
-        if isinstance(self.event_detail, Unset):
-            event_detail = UNSET
-        elif isinstance(self.event_detail, AuditEventEventDetailType0):
+        event_detail: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.event_detail, Unset):
             event_detail = self.event_detail.to_dict()
-        else:
-            event_detail = self.event_detail
 
-        changes: Union[Dict[str, Any], None, Unset]
-        if isinstance(self.changes, Unset):
-            changes = UNSET
-        elif isinstance(self.changes, AuditEventChangesType0):
+        changes: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.changes, Unset):
             changes = self.changes.to_dict()
-        else:
-            changes = self.changes
 
         username = self.username
 
@@ -111,8 +100,8 @@ class AuditEvent:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.audit_event_changes_type_0 import AuditEventChangesType0
-        from ..models.audit_event_event_detail_type_0 import AuditEventEventDetailType0
+        from ..models.audit_event_changes import AuditEventChanges
+        from ..models.audit_event_event_detail import AuditEventEventDetail
 
         d = src_dict.copy()
         id = d.pop("id", UNSET)
@@ -125,39 +114,19 @@ class AuditEvent:
 
         entity_type = d.pop("entityType", UNSET)
 
-        def _parse_event_detail(data: object) -> Union["AuditEventEventDetailType0", None, Unset]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            try:
-                if not isinstance(data, dict):
-                    raise TypeError()
-                event_detail_type_0 = AuditEventEventDetailType0.from_dict(data)
+        _event_detail = d.pop("eventDetail", UNSET)
+        event_detail: Union[Unset, AuditEventEventDetail]
+        if isinstance(_event_detail, Unset):
+            event_detail = UNSET
+        else:
+            event_detail = AuditEventEventDetail.from_dict(_event_detail)
 
-                return event_detail_type_0
-            except:  # noqa: E722
-                pass
-            return cast(Union["AuditEventEventDetailType0", None, Unset], data)
-
-        event_detail = _parse_event_detail(d.pop("eventDetail", UNSET))
-
-        def _parse_changes(data: object) -> Union["AuditEventChangesType0", None, Unset]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            try:
-                if not isinstance(data, dict):
-                    raise TypeError()
-                changes_type_0 = AuditEventChangesType0.from_dict(data)
-
-                return changes_type_0
-            except:  # noqa: E722
-                pass
-            return cast(Union["AuditEventChangesType0", None, Unset], data)
-
-        changes = _parse_changes(d.pop("changes", UNSET))
+        _changes = d.pop("changes", UNSET)
+        changes: Union[Unset, AuditEventChanges]
+        if isinstance(_changes, Unset):
+            changes = UNSET
+        else:
+            changes = AuditEventChanges.from_dict(_changes)
 
         username = d.pop("username", UNSET)
 

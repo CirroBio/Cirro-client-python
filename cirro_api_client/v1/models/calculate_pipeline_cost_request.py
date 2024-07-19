@@ -3,12 +3,12 @@ from typing import Any, Dict, List, Type, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="AuditEventEventDetailType0")
+T = TypeVar("T", bound="CalculatePipelineCostRequest")
 
 
 @_attrs_define
-class AuditEventEventDetailType0:
-    """The details of the event, such as the request details sent from the client"""
+class CalculatePipelineCostRequest:
+    """ """
 
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -22,10 +22,10 @@ class AuditEventEventDetailType0:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        audit_event_event_detail_type_0 = cls()
+        calculate_pipeline_cost_request = cls()
 
-        audit_event_event_detail_type_0.additional_properties = d
-        return audit_event_event_detail_type_0
+        calculate_pipeline_cost_request.additional_properties = d
+        return calculate_pipeline_cost_request
 
     @property
     def additional_keys(self) -> List[str]:

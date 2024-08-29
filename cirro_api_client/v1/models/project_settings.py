@@ -32,6 +32,8 @@ class ProjectSettings:
             Example: ["subnet-00000000000000000"].
         kms_arn (Union[None, Unset, str]): KMS Key ARN to encrypt S3 objects, if not provided, default bucket encryption
             will be used
+        is_discoverable (Union[None, Unset, bool]): Enables the project to be discoverable by other users Default:
+            False.
     """
 
     budget_amount: int
@@ -49,6 +51,7 @@ class ProjectSettings:
     batch_subnets: Union[List[str], None, Unset] = UNSET
     sagemaker_subnets: Union[List[str], None, Unset] = UNSET
     kms_arn: Union[None, Unset, str] = UNSET
+    is_discoverable: Union[None, Unset, bool] = False
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -110,6 +113,12 @@ class ProjectSettings:
         else:
             kms_arn = self.kms_arn
 
+        is_discoverable: Union[None, Unset, bool]
+        if isinstance(self.is_discoverable, Unset):
+            is_discoverable = UNSET
+        else:
+            is_discoverable = self.is_discoverable
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -144,6 +153,8 @@ class ProjectSettings:
             field_dict["sagemakerSubnets"] = sagemaker_subnets
         if kms_arn is not UNSET:
             field_dict["kmsArn"] = kms_arn
+        if is_discoverable is not UNSET:
+            field_dict["isDiscoverable"] = is_discoverable
 
         return field_dict
 
@@ -231,6 +242,15 @@ class ProjectSettings:
 
         kms_arn = _parse_kms_arn(d.pop("kmsArn", UNSET))
 
+        def _parse_is_discoverable(data: object) -> Union[None, Unset, bool]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, bool], data)
+
+        is_discoverable = _parse_is_discoverable(d.pop("isDiscoverable", UNSET))
+
         project_settings = cls(
             budget_amount=budget_amount,
             budget_period=budget_period,
@@ -247,6 +267,7 @@ class ProjectSettings:
             batch_subnets=batch_subnets,
             sagemaker_subnets=sagemaker_subnets,
             kms_arn=kms_arn,
+            is_discoverable=is_discoverable,
         )
 
         project_settings.additional_properties = d

@@ -2,6 +2,7 @@
 
 from .access_type import AccessType
 from .allowed_data_type import AllowedDataType
+from .approve_project_access_request import ApproveProjectAccessRequest
 from .audit_event import AuditEvent
 from .audit_event_changes import AuditEventChanges
 from .audit_event_event_detail import AuditEventEventDetail
@@ -17,6 +18,7 @@ from .cloud_account_type import CloudAccountType
 from .column_definition import ColumnDefinition
 from .contact import Contact
 from .create_notebook_instance_request import CreateNotebookInstanceRequest
+from .create_project_access_request import CreateProjectAccessRequest
 from .create_reference_request import CreateReferenceRequest
 from .create_response import CreateResponse
 from .custom_pipeline_settings import CustomPipelineSettings
@@ -65,6 +67,7 @@ from .portal_error_response import PortalErrorResponse
 from .process import Process
 from .process_detail import ProcessDetail
 from .project import Project
+from .project_access_request import ProjectAccessRequest
 from .project_detail import ProjectDetail
 from .project_metrics import ProjectMetrics
 from .project_request import ProjectRequest
@@ -75,6 +78,7 @@ from .reference import Reference
 from .reference_type import ReferenceType
 from .reference_type_validation_item import ReferenceTypeValidationItem
 from .repository_type import RepositoryType
+from .request_status import RequestStatus
 from .resources_info import ResourcesInfo
 from .run_analysis_request import RunAnalysisRequest
 from .run_analysis_request_params import RunAnalysisRequestParams
@@ -106,6 +110,7 @@ from .validate_file_requirements_request import ValidateFileRequirementsRequest
 __all__ = (
     "AccessType",
     "AllowedDataType",
+    "ApproveProjectAccessRequest",
     "AuditEvent",
     "AuditEventChanges",
     "AuditEventEventDetail",
@@ -121,6 +126,7 @@ __all__ = (
     "ColumnDefinition",
     "Contact",
     "CreateNotebookInstanceRequest",
+    "CreateProjectAccessRequest",
     "CreateReferenceRequest",
     "CreateResponse",
     "CustomerType",
@@ -169,6 +175,7 @@ __all__ = (
     "Process",
     "ProcessDetail",
     "Project",
+    "ProjectAccessRequest",
     "ProjectDetail",
     "ProjectMetrics",
     "ProjectRequest",
@@ -179,6 +186,7 @@ __all__ = (
     "ReferenceType",
     "ReferenceTypeValidationItem",
     "RepositoryType",
+    "RequestStatus",
     "ResourcesInfo",
     "RunAnalysisRequest",
     "RunAnalysisRequestParams",

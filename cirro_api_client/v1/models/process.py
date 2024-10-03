@@ -16,6 +16,8 @@ class Process:
         id (str): Unique ID of the Process Example: process-hutch-magic_flute-1_0.
         name (str): Friendly name for the process Example: MAGeCK Flute.
         executor (Executor): How the workflow is executed
+        category (str): Category of the process Example: Microbial Analysis.
+        pipeline_type (str): Type of pipeline Example: nf-core.
         description (Union[Unset, str]):  Example: MAGeCK Flute enables accurate identification of essential genes with
             their related biological functions.
         data_type (Union[None, Unset, str]): Name of the data type this pipeline produces (if it is not defined, use the
@@ -34,6 +36,8 @@ class Process:
     id: str
     name: str
     executor: Executor
+    category: str
+    pipeline_type: str
     description: Union[Unset, str] = UNSET
     data_type: Union[None, Unset, str] = UNSET
     documentation_url: Union[Unset, str] = UNSET
@@ -52,6 +56,10 @@ class Process:
         name = self.name
 
         executor = self.executor.value
+
+        category = self.category
+
+        pipeline_type = self.pipeline_type
 
         description = self.description
 
@@ -90,6 +98,8 @@ class Process:
                 "id": id,
                 "name": name,
                 "executor": executor,
+                "category": category,
+                "pipelineType": pipeline_type,
             }
         )
         if description is not UNSET:
@@ -124,6 +134,10 @@ class Process:
 
         executor = Executor(d.pop("executor"))
 
+        category = d.pop("category")
+
+        pipeline_type = d.pop("pipelineType")
+
         description = d.pop("description", UNSET)
 
         def _parse_data_type(data: object) -> Union[None, Unset, str]:
@@ -155,6 +169,8 @@ class Process:
             id=id,
             name=name,
             executor=executor,
+            category=category,
+            pipeline_type=pipeline_type,
             description=description,
             data_type=data_type,
             documentation_url=documentation_url,

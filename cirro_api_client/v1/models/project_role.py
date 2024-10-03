@@ -6,6 +6,7 @@ class ProjectRole(str, Enum):
     COLLABORATOR = "COLLABORATOR"
     CONTRIBUTOR = "CONTRIBUTOR"
     NONE = "NONE"
+    OWNER = "OWNER"
     UNKNOWN = "UNKNOWN"
     """ This is a fallback value for when the value is not known, do not use this value when making requests """
 

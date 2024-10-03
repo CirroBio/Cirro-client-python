@@ -4,6 +4,7 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 if TYPE_CHECKING:
+    from ..models.feature_flags import FeatureFlags
     from ..models.login_provider import LoginProvider
 
 
@@ -23,6 +24,7 @@ class TenantInfo:
         terms_of_service_url (str):
         privacy_policy_url (str):
         login_providers (List['LoginProvider']):
+        features (FeatureFlags):
     """
 
     id: str
@@ -34,6 +36,7 @@ class TenantInfo:
     terms_of_service_url: str
     privacy_policy_url: str
     login_providers: List["LoginProvider"]
+    features: "FeatureFlags"
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -58,6 +61,8 @@ class TenantInfo:
             login_providers_item = login_providers_item_data.to_dict()
             login_providers.append(login_providers_item)
 
+        features = self.features.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -71,6 +76,7 @@ class TenantInfo:
                 "termsOfServiceUrl": terms_of_service_url,
                 "privacyPolicyUrl": privacy_policy_url,
                 "loginProviders": login_providers,
+                "features": features,
             }
         )
 
@@ -78,6 +84,7 @@ class TenantInfo:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.feature_flags import FeatureFlags
         from ..models.login_provider import LoginProvider
 
         d = src_dict.copy()
@@ -104,6 +111,8 @@ class TenantInfo:
 
             login_providers.append(login_providers_item)
 
+        features = FeatureFlags.from_dict(d.pop("features"))
+
         tenant_info = cls(
             id=id,
             name=name,
@@ -114,6 +123,7 @@ class TenantInfo:
             terms_of_service_url=terms_of_service_url,
             privacy_policy_url=privacy_policy_url,
             login_providers=login_providers,
+            features=features,
         )
 
         tenant_info.additional_properties = d

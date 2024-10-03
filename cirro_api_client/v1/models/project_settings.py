@@ -27,9 +27,9 @@ class ProjectSettings:
         service_connections (Union[Unset, List[str]]): List of service connections to enable
         vpc_id (Union[None, Unset, str]): VPC that the compute environment will use Example: vpc-00000000000000000.
         batch_subnets (Union[List[str], None, Unset]): List of subnets that the compute environment will use Example:
-            ["subnet-00000000000000000"].
+            ['subnet-00000000000000000'].
         sagemaker_subnets (Union[List[str], None, Unset]): List of subnets that the sagemaker instances will use
-            Example: ["subnet-00000000000000000"].
+            Example: ['subnet-00000000000000000'].
         kms_arn (Union[None, Unset, str]): KMS Key ARN to encrypt S3 objects, if not provided, default bucket encryption
             will be used
         is_discoverable (Union[None, Unset, bool]): Enables the project to be discoverable by other users Default:

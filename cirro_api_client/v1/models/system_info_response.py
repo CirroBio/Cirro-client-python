@@ -19,6 +19,7 @@ class SystemInfoResponse:
         resources_bucket (str):
         references_bucket (str):
         live_endpoint (str):
+        agent_endpoint (str):
         region (str):
         system_message (str):
         maintenance_mode_enabled (bool):
@@ -32,6 +33,7 @@ class SystemInfoResponse:
     resources_bucket: str
     references_bucket: str
     live_endpoint: str
+    agent_endpoint: str
     region: str
     system_message: str
     maintenance_mode_enabled: bool
@@ -48,6 +50,8 @@ class SystemInfoResponse:
         references_bucket = self.references_bucket
 
         live_endpoint = self.live_endpoint
+
+        agent_endpoint = self.agent_endpoint
 
         region = self.region
 
@@ -72,6 +76,7 @@ class SystemInfoResponse:
                 "resourcesBucket": resources_bucket,
                 "referencesBucket": references_bucket,
                 "liveEndpoint": live_endpoint,
+                "agentEndpoint": agent_endpoint,
                 "region": region,
                 "systemMessage": system_message,
                 "maintenanceModeEnabled": maintenance_mode_enabled,
@@ -98,6 +103,8 @@ class SystemInfoResponse:
 
         live_endpoint = d.pop("liveEndpoint")
 
+        agent_endpoint = d.pop("agentEndpoint")
+
         region = d.pop("region")
 
         system_message = d.pop("systemMessage")
@@ -118,6 +125,7 @@ class SystemInfoResponse:
             resources_bucket=resources_bucket,
             references_bucket=references_bucket,
             live_endpoint=live_endpoint,
+            agent_endpoint=agent_endpoint,
             region=region,
             system_message=system_message,
             maintenance_mode_enabled=maintenance_mode_enabled,

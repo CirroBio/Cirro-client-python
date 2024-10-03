@@ -37,6 +37,7 @@ from .dataset_detail_params import DatasetDetailParams
 from .dataset_viz import DatasetViz
 from .error_message import ErrorMessage
 from .executor import Executor
+from .feature_flags import FeatureFlags
 from .file_access_request import FileAccessRequest
 from .file_entry import FileEntry
 from .file_entry_metadata import FileEntryMetadata
@@ -145,6 +146,7 @@ __all__ = (
     "DatasetViz",
     "ErrorMessage",
     "Executor",
+    "FeatureFlags",
     "FileAccessRequest",
     "FileEntry",
     "FileEntryMetadata",

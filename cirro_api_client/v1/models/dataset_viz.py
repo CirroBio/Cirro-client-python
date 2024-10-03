@@ -15,13 +15,13 @@ class DatasetViz:
         name (Union[Unset, str]): Name of viz
         desc (Union[Unset, str]): Description of viz
         type (Union[Unset, str]): Type of viz Example: vitescce.
-        config (Union[Unset, str]): Path to config file used to render viz
+        config (Union[Unset, Any]): Config or path to config used to render viz
     """
 
     name: Union[Unset, str] = UNSET
     desc: Union[Unset, str] = UNSET
     type: Union[Unset, str] = UNSET
-    config: Union[Unset, str] = UNSET
+    config: Union[Unset, Any] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:

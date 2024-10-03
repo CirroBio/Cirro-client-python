@@ -23,6 +23,7 @@ class CustomPipelineSettings:
         last_sync (Union[None, Unset, datetime.datetime]): Time of last sync
         sync_status (Union[None, SyncStatus, Unset]):
         commit_hash (Union[None, Unset, str]): Commit hash of the last successful sync
+        is_authorized (Union[Unset, bool]): Whether we are authorized to access the repository Default: False.
     """
 
     repository: str
@@ -31,6 +32,7 @@ class CustomPipelineSettings:
     last_sync: Union[None, Unset, datetime.datetime] = UNSET
     sync_status: Union[None, SyncStatus, Unset] = UNSET
     commit_hash: Union[None, Unset, str] = UNSET
+    is_authorized: Union[Unset, bool] = False
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -62,6 +64,8 @@ class CustomPipelineSettings:
         else:
             commit_hash = self.commit_hash
 
+        is_authorized = self.is_authorized
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -79,6 +83,8 @@ class CustomPipelineSettings:
             field_dict["syncStatus"] = sync_status
         if commit_hash is not UNSET:
             field_dict["commitHash"] = commit_hash
+        if is_authorized is not UNSET:
+            field_dict["isAuthorized"] = is_authorized
 
         return field_dict
 
@@ -134,6 +140,8 @@ class CustomPipelineSettings:
 
         commit_hash = _parse_commit_hash(d.pop("commitHash", UNSET))
 
+        is_authorized = d.pop("isAuthorized", UNSET)
+
         custom_pipeline_settings = cls(
             repository=repository,
             branch=branch,
@@ -141,6 +149,7 @@ class CustomPipelineSettings:
             last_sync=last_sync,
             sync_status=sync_status,
             commit_hash=commit_hash,
+            is_authorized=is_authorized,
         )
 
         custom_pipeline_settings.additional_properties = d

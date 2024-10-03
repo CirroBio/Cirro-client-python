@@ -1,13 +1,15 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..models.status import Status
+from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
+    from ..models.cloud_account import CloudAccount
     from ..models.contact import Contact
     from ..models.project_settings import ProjectSettings
     from ..models.tag import Tag
@@ -32,6 +34,7 @@ class ProjectDetail:
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
+        account (Union['CloudAccount', None, Unset]):
     """
 
     id: str
@@ -46,9 +49,12 @@ class ProjectDetail:
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
+    account: Union["CloudAccount", None, Unset] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        from ..models.cloud_account import CloudAccount
+
         id = self.id
 
         name = self.name
@@ -79,6 +85,14 @@ class ProjectDetail:
 
         updated_at = self.updated_at.isoformat()
 
+        account: Union[Dict[str, Any], None, Unset]
+        if isinstance(self.account, Unset):
+            account = UNSET
+        elif isinstance(self.account, CloudAccount):
+            account = self.account.to_dict()
+        else:
+            account = self.account
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -97,11 +111,14 @@ class ProjectDetail:
                 "updatedAt": updated_at,
             }
         )
+        if account is not UNSET:
+            field_dict["account"] = account
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.cloud_account import CloudAccount
         from ..models.contact import Contact
         from ..models.project_settings import ProjectSettings
         from ..models.tag import Tag
@@ -141,6 +158,23 @@ class ProjectDetail:
 
         updated_at = isoparse(d.pop("updatedAt"))
 
+        def _parse_account(data: object) -> Union["CloudAccount", None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                account_type_1 = CloudAccount.from_dict(data)
+
+                return account_type_1
+            except:  # noqa: E722
+                pass
+            return cast(Union["CloudAccount", None, Unset], data)
+
+        account = _parse_account(d.pop("account", UNSET))
+
         project_detail = cls(
             id=id,
             name=name,
@@ -154,6 +188,7 @@ class ProjectDetail:
             created_by=created_by,
             created_at=created_at,
             updated_at=updated_at,
+            account=account,
         )
 
         project_detail.additional_properties = d

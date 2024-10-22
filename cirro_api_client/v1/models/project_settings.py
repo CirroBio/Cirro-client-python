@@ -21,7 +21,8 @@ class ProjectSettings:
         enable_backup (Union[Unset, bool]): Enables the AWS Backup service for S3 Default: False.
         enable_sftp (Union[Unset, bool]): Enables access to files over SFTP Default: False.
         max_f1vcpu (Union[Unset, int]): Service quota limit for On Demand F1 instances Default: 0.
-        max_spot_vcpu (Union[Unset, int]): Service quota limit for SPOT instances Default: 0.
+        max_spot_vcpu (Union[Unset, int]): Service quota limit for Spot instances Default: 0.
+        max_gpuvcpu (Union[Unset, int]): Service quota limit for GPU Spot instances Default: 0.
         retention_policy_days (Union[Unset, int]): Days to keep deleted datasets before being permanently erased
             Default: 7.
         service_connections (Union[Unset, List[str]]): List of service connections to enable
@@ -45,6 +46,7 @@ class ProjectSettings:
     enable_sftp: Union[Unset, bool] = False
     max_f1vcpu: Union[Unset, int] = 0
     max_spot_vcpu: Union[Unset, int] = 0
+    max_gpuvcpu: Union[Unset, int] = 0
     retention_policy_days: Union[Unset, int] = 7
     service_connections: Union[Unset, List[str]] = UNSET
     vpc_id: Union[None, Unset, str] = UNSET
@@ -76,6 +78,8 @@ class ProjectSettings:
         max_f1vcpu = self.max_f1vcpu
 
         max_spot_vcpu = self.max_spot_vcpu
+
+        max_gpuvcpu = self.max_gpuvcpu
 
         retention_policy_days = self.retention_policy_days
 
@@ -141,6 +145,8 @@ class ProjectSettings:
             field_dict["maxF1VCPU"] = max_f1vcpu
         if max_spot_vcpu is not UNSET:
             field_dict["maxSpotVCPU"] = max_spot_vcpu
+        if max_gpuvcpu is not UNSET:
+            field_dict["maxGPUVCPU"] = max_gpuvcpu
         if retention_policy_days is not UNSET:
             field_dict["retentionPolicyDays"] = retention_policy_days
         if service_connections is not UNSET:
@@ -185,6 +191,8 @@ class ProjectSettings:
         max_f1vcpu = d.pop("maxF1VCPU", UNSET)
 
         max_spot_vcpu = d.pop("maxSpotVCPU", UNSET)
+
+        max_gpuvcpu = d.pop("maxGPUVCPU", UNSET)
 
         retention_policy_days = d.pop("retentionPolicyDays", UNSET)
 
@@ -261,6 +269,7 @@ class ProjectSettings:
             enable_sftp=enable_sftp,
             max_f1vcpu=max_f1vcpu,
             max_spot_vcpu=max_spot_vcpu,
+            max_gpuvcpu=max_gpuvcpu,
             retention_policy_days=retention_policy_days,
             service_connections=service_connections,
             vpc_id=vpc_id,

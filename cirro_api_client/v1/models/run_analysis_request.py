@@ -24,6 +24,8 @@ class RunAnalysisRequest:
         description (Union[None, Unset, str]): Description of the dataset (optional)
         resume_dataset_id (Union[None, Unset, str]): Used for caching task execution. If the parameters are the same as
             the dataset specified here, it will re-use the output to minimize duplicate work
+        compute_environment_id (Union[None, Unset, str]): The compute environment where to run the workflow, if not
+            specified, it will run in AWS
     """
 
     name: str
@@ -33,6 +35,7 @@ class RunAnalysisRequest:
     notification_emails: List[str]
     description: Union[None, Unset, str] = UNSET
     resume_dataset_id: Union[None, Unset, str] = UNSET
+    compute_environment_id: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -58,6 +61,12 @@ class RunAnalysisRequest:
         else:
             resume_dataset_id = self.resume_dataset_id
 
+        compute_environment_id: Union[None, Unset, str]
+        if isinstance(self.compute_environment_id, Unset):
+            compute_environment_id = UNSET
+        else:
+            compute_environment_id = self.compute_environment_id
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -73,6 +82,8 @@ class RunAnalysisRequest:
             field_dict["description"] = description
         if resume_dataset_id is not UNSET:
             field_dict["resumeDatasetId"] = resume_dataset_id
+        if compute_environment_id is not UNSET:
+            field_dict["computeEnvironmentId"] = compute_environment_id
 
         return field_dict
 
@@ -109,6 +120,15 @@ class RunAnalysisRequest:
 
         resume_dataset_id = _parse_resume_dataset_id(d.pop("resumeDatasetId", UNSET))
 
+        def _parse_compute_environment_id(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        compute_environment_id = _parse_compute_environment_id(d.pop("computeEnvironmentId", UNSET))
+
         run_analysis_request = cls(
             name=name,
             process_id=process_id,
@@ -117,6 +137,7 @@ class RunAnalysisRequest:
             notification_emails=notification_emails,
             description=description,
             resume_dataset_id=resume_dataset_id,
+            compute_environment_id=compute_environment_id,
         )
 
         run_analysis_request.additional_properties = d

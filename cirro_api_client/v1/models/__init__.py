@@ -1,6 +1,9 @@
 """Contains all the data models used in inputs/outputs"""
 
 from .access_type import AccessType
+from .agent import Agent
+from .agent_status import AgentStatus
+from .agent_tags import AgentTags
 from .allowed_data_type import AllowedDataType
 from .approve_project_access_request import ApproveProjectAccessRequest
 from .audit_event import AuditEvent
@@ -16,6 +19,8 @@ from .calculate_pipeline_cost_request import CalculatePipelineCostRequest
 from .cloud_account import CloudAccount
 from .cloud_account_type import CloudAccountType
 from .column_definition import ColumnDefinition
+from .compute_environment_configuration import ComputeEnvironmentConfiguration
+from .compute_environment_configuration_properties import ComputeEnvironmentConfigurationProperties
 from .contact import Contact
 from .create_notebook_instance_request import CreateNotebookInstanceRequest
 from .create_project_access_request import CreateProjectAccessRequest
@@ -35,6 +40,7 @@ from .dataset_detail import DatasetDetail
 from .dataset_detail_info import DatasetDetailInfo
 from .dataset_detail_params import DatasetDetailParams
 from .dataset_viz import DatasetViz
+from .environment_type import EnvironmentType
 from .error_message import ErrorMessage
 from .executor import Executor
 from .feature_flags import FeatureFlags
@@ -69,6 +75,7 @@ from .process import Process
 from .process_detail import ProcessDetail
 from .project import Project
 from .project_access_request import ProjectAccessRequest
+from .project_create_options import ProjectCreateOptions
 from .project_detail import ProjectDetail
 from .project_metrics import ProjectMetrics
 from .project_request import ProjectRequest
@@ -110,6 +117,9 @@ from .validate_file_requirements_request import ValidateFileRequirementsRequest
 
 __all__ = (
     "AccessType",
+    "Agent",
+    "AgentStatus",
+    "AgentTags",
     "AllowedDataType",
     "ApproveProjectAccessRequest",
     "AuditEvent",
@@ -125,6 +135,8 @@ __all__ = (
     "CloudAccount",
     "CloudAccountType",
     "ColumnDefinition",
+    "ComputeEnvironmentConfiguration",
+    "ComputeEnvironmentConfigurationProperties",
     "Contact",
     "CreateNotebookInstanceRequest",
     "CreateProjectAccessRequest",
@@ -144,6 +156,7 @@ __all__ = (
     "DatasetDetailInfo",
     "DatasetDetailParams",
     "DatasetViz",
+    "EnvironmentType",
     "ErrorMessage",
     "Executor",
     "FeatureFlags",
@@ -178,6 +191,7 @@ __all__ = (
     "ProcessDetail",
     "Project",
     "ProjectAccessRequest",
+    "ProjectCreateOptions",
     "ProjectDetail",
     "ProjectMetrics",
     "ProjectRequest",

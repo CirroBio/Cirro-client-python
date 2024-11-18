@@ -8,9 +8,9 @@ T = TypeVar("T", bound="AgentTags")
 
 @_attrs_define
 class AgentTags:
-    """ """
+    """Tags associated with the agent"""
 
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, str] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         field_dict: Dict[str, Any] = {}

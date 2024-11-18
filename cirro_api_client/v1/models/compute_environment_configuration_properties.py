@@ -8,9 +8,9 @@ T = TypeVar("T", bound="ComputeEnvironmentConfigurationProperties")
 
 @_attrs_define
 class ComputeEnvironmentConfigurationProperties:
-    """ """
+    """Configuration properties passed to the environment"""
 
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, str] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         field_dict: Dict[str, Any] = {}

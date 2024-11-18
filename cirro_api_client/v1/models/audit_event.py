@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -23,7 +23,7 @@ class AuditEvent:
         event_type (Union[Unset, str]): The type of event Example: CREATE.
         project_id (Union[Unset, str]): The project ID associated with the event (if applicable)
         entity_id (Union[Unset, str]): The entity ID associated with the event
-        entity_type (Union[Unset, str]): The entity type associated with the event Example: ProjectRecord.
+        entity_type (Union[Unset, str]): The entity type associated with the event Example: Project.
         event_detail (Union['AuditEventEventDetailType0', None, Unset]): The details of the event, such as the request
             details sent from the client
         changes (Union['AuditEventChangesType0', None, Unset]): The changes made to the entity (if applicable) Example:

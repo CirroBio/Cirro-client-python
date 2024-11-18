@@ -5,21 +5,21 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.project_detail import ProjectDetail
-from ...models.project_input import ProjectInput
+from ...models.classification_input import ClassificationInput
+from ...models.governance_classification import GovernanceClassification
 from ...types import Response
 
 
 def _get_kwargs(
-    project_id: str,
+    classification_id: str,
     *,
-    body: ProjectInput,
+    body: ClassificationInput,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
     _kwargs: Dict[str, Any] = {
         "method": "put",
-        "url": f"/projects/{project_id}",
+        "url": f"/governance/classifications/{classification_id}",
     }
 
     _body = body.to_dict()
@@ -31,16 +31,16 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[ProjectDetail]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[GovernanceClassification]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = ProjectDetail.from_dict(response.json())
+        response_200 = GovernanceClassification.from_dict(response.json())
 
         return response_200
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[ProjectDetail]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[GovernanceClassification]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -50,18 +50,18 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Pro
 
 
 def sync_detailed(
-    project_id: str,
+    classification_id: str,
     *,
     client: Client,
-    body: ProjectInput,
-) -> Response[ProjectDetail]:
-    """Update project
+    body: ClassificationInput,
+) -> Response[GovernanceClassification]:
+    """Update classification
 
-     Updates a project
+     Updates a classification
 
     Args:
-        project_id (str):
-        body (ProjectInput):
+        classification_id (str):
+        body (ClassificationInput):
         client (Client): instance of the API client
 
     Raises:
@@ -69,11 +69,11 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ProjectDetail]
+        Response[GovernanceClassification]
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
+        classification_id=classification_id,
         body=body,
     )
 
@@ -86,18 +86,18 @@ def sync_detailed(
 
 
 def sync(
-    project_id: str,
+    classification_id: str,
     *,
     client: Client,
-    body: ProjectInput,
-) -> Optional[ProjectDetail]:
-    """Update project
+    body: ClassificationInput,
+) -> Optional[GovernanceClassification]:
+    """Update classification
 
-     Updates a project
+     Updates a classification
 
     Args:
-        project_id (str):
-        body (ProjectInput):
+        classification_id (str):
+        body (ClassificationInput):
         client (Client): instance of the API client
 
     Raises:
@@ -105,12 +105,12 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ProjectDetail
+        GovernanceClassification
     """
 
     try:
         return sync_detailed(
-            project_id=project_id,
+            classification_id=classification_id,
             client=client,
             body=body,
         ).parsed
@@ -119,18 +119,18 @@ def sync(
 
 
 async def asyncio_detailed(
-    project_id: str,
+    classification_id: str,
     *,
     client: Client,
-    body: ProjectInput,
-) -> Response[ProjectDetail]:
-    """Update project
+    body: ClassificationInput,
+) -> Response[GovernanceClassification]:
+    """Update classification
 
-     Updates a project
+     Updates a classification
 
     Args:
-        project_id (str):
-        body (ProjectInput):
+        classification_id (str):
+        body (ClassificationInput):
         client (Client): instance of the API client
 
     Raises:
@@ -138,11 +138,11 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ProjectDetail]
+        Response[GovernanceClassification]
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
+        classification_id=classification_id,
         body=body,
     )
 
@@ -152,18 +152,18 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    project_id: str,
+    classification_id: str,
     *,
     client: Client,
-    body: ProjectInput,
-) -> Optional[ProjectDetail]:
-    """Update project
+    body: ClassificationInput,
+) -> Optional[GovernanceClassification]:
+    """Update classification
 
-     Updates a project
+     Updates a classification
 
     Args:
-        project_id (str):
-        body (ProjectInput):
+        classification_id (str):
+        body (ClassificationInput):
         client (Client): instance of the API client
 
     Raises:
@@ -171,13 +171,13 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ProjectDetail
+        GovernanceClassification
     """
 
     try:
         return (
             await asyncio_detailed(
-                project_id=project_id,
+                classification_id=classification_id,
                 client=client,
                 body=body,
             )

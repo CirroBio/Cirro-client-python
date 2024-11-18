@@ -5,21 +5,20 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.project_detail import ProjectDetail
-from ...models.project_input import ProjectInput
+from ...models.create_response import CreateResponse
+from ...models.project_request import ProjectRequest
 from ...types import Response
 
 
 def _get_kwargs(
-    project_id: str,
     *,
-    body: ProjectInput,
+    body: ProjectRequest,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
     _kwargs: Dict[str, Any] = {
-        "method": "put",
-        "url": f"/projects/{project_id}",
+        "method": "post",
+        "url": "/project-requests",
     }
 
     _body = body.to_dict()
@@ -31,16 +30,16 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[ProjectDetail]:
-    if response.status_code == HTTPStatus.OK:
-        response_200 = ProjectDetail.from_dict(response.json())
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[CreateResponse]:
+    if response.status_code == HTTPStatus.CREATED:
+        response_201 = CreateResponse.from_dict(response.json())
 
-        return response_200
+        return response_201
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[ProjectDetail]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[CreateResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -50,18 +49,16 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Pro
 
 
 def sync_detailed(
-    project_id: str,
     *,
     client: Client,
-    body: ProjectInput,
-) -> Response[ProjectDetail]:
-    """Update project
+    body: ProjectRequest,
+) -> Response[CreateResponse]:
+    """Create project request
 
-     Updates a project
+     Request a new project to be created
 
     Args:
-        project_id (str):
-        body (ProjectInput):
+        body (ProjectRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -69,11 +66,10 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ProjectDetail]
+        Response[CreateResponse]
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
         body=body,
     )
 
@@ -86,18 +82,16 @@ def sync_detailed(
 
 
 def sync(
-    project_id: str,
     *,
     client: Client,
-    body: ProjectInput,
-) -> Optional[ProjectDetail]:
-    """Update project
+    body: ProjectRequest,
+) -> Optional[CreateResponse]:
+    """Create project request
 
-     Updates a project
+     Request a new project to be created
 
     Args:
-        project_id (str):
-        body (ProjectInput):
+        body (ProjectRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -105,12 +99,11 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ProjectDetail
+        CreateResponse
     """
 
     try:
         return sync_detailed(
-            project_id=project_id,
             client=client,
             body=body,
         ).parsed
@@ -119,18 +112,16 @@ def sync(
 
 
 async def asyncio_detailed(
-    project_id: str,
     *,
     client: Client,
-    body: ProjectInput,
-) -> Response[ProjectDetail]:
-    """Update project
+    body: ProjectRequest,
+) -> Response[CreateResponse]:
+    """Create project request
 
-     Updates a project
+     Request a new project to be created
 
     Args:
-        project_id (str):
-        body (ProjectInput):
+        body (ProjectRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -138,11 +129,10 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ProjectDetail]
+        Response[CreateResponse]
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
         body=body,
     )
 
@@ -152,18 +142,16 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    project_id: str,
     *,
     client: Client,
-    body: ProjectInput,
-) -> Optional[ProjectDetail]:
-    """Update project
+    body: ProjectRequest,
+) -> Optional[CreateResponse]:
+    """Create project request
 
-     Updates a project
+     Request a new project to be created
 
     Args:
-        project_id (str):
-        body (ProjectInput):
+        body (ProjectRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -171,13 +159,12 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ProjectDetail
+        CreateResponse
     """
 
     try:
         return (
             await asyncio_detailed(
-                project_id=project_id,
                 client=client,
                 body=body,
             )

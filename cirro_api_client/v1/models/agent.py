@@ -21,7 +21,7 @@ class Agent:
         status (AgentStatus): The status of the agent
         id (Union[Unset, str]): The unique ID of the agent
         name (Union[Unset, str]): The display name of the agent
-        tags (Union[Unset, AgentTags]):
+        tags (Union[Unset, AgentTags]): Tags associated with the agent
     """
 
     status: AgentStatus

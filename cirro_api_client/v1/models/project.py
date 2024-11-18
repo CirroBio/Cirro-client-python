@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -21,6 +21,8 @@ class Project:
         description (str):
         status (Status):
         tags (List['Tag']):
+        organization (str):
+        classification_ids (List[str]):
         billing_account_id (str):
     """
 
@@ -29,6 +31,8 @@ class Project:
     description: str
     status: Status
     tags: List["Tag"]
+    organization: str
+    classification_ids: List[str]
     billing_account_id: str
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -46,6 +50,10 @@ class Project:
             tags_item = tags_item_data.to_dict()
             tags.append(tags_item)
 
+        organization = self.organization
+
+        classification_ids = self.classification_ids
+
         billing_account_id = self.billing_account_id
 
         field_dict: Dict[str, Any] = {}
@@ -57,6 +65,8 @@ class Project:
                 "description": description,
                 "status": status,
                 "tags": tags,
+                "organization": organization,
+                "classificationIds": classification_ids,
                 "billingAccountId": billing_account_id,
             }
         )
@@ -83,6 +93,10 @@ class Project:
 
             tags.append(tags_item)
 
+        organization = d.pop("organization")
+
+        classification_ids = cast(List[str], d.pop("classificationIds"))
+
         billing_account_id = d.pop("billingAccountId")
 
         project = cls(
@@ -91,6 +105,8 @@ class Project:
             description=description,
             status=status,
             tags=tags,
+            organization=organization,
+            classification_ids=classification_ids,
             billing_account_id=billing_account_id,
         )
 

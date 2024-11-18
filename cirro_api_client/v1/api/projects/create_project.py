@@ -6,13 +6,13 @@ import httpx
 from ... import errors
 from ...client import Client
 from ...models.create_response import CreateResponse
-from ...models.project_request import ProjectRequest
+from ...models.project_input import ProjectInput
 from ...types import Response
 
 
 def _get_kwargs(
     *,
-    body: ProjectRequest,
+    body: ProjectInput,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
@@ -51,14 +51,14 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Cre
 def sync_detailed(
     *,
     client: Client,
-    body: ProjectRequest,
+    body: ProjectInput,
 ) -> Response[CreateResponse]:
     """Create project
 
      Creates a project
 
     Args:
-        body (ProjectRequest):
+        body (ProjectInput):
         client (Client): instance of the API client
 
     Raises:
@@ -84,14 +84,14 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    body: ProjectRequest,
+    body: ProjectInput,
 ) -> Optional[CreateResponse]:
     """Create project
 
      Creates a project
 
     Args:
-        body (ProjectRequest):
+        body (ProjectInput):
         client (Client): instance of the API client
 
     Raises:
@@ -114,14 +114,14 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-    body: ProjectRequest,
+    body: ProjectInput,
 ) -> Response[CreateResponse]:
     """Create project
 
      Creates a project
 
     Args:
-        body (ProjectRequest):
+        body (ProjectInput):
         client (Client): instance of the API client
 
     Raises:
@@ -144,14 +144,14 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    body: ProjectRequest,
+    body: ProjectInput,
 ) -> Optional[CreateResponse]:
     """Create project
 
      Creates a project
 
     Args:
-        body (ProjectRequest):
+        body (ProjectInput):
         client (Client): instance of the API client
 
     Raises:

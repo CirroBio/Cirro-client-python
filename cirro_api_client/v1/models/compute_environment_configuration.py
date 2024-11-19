@@ -25,7 +25,8 @@ class ComputeEnvironmentConfiguration:
         updated_at (datetime.datetime):
         id (Union[Unset, str]): The unique ID of the environment
         name (Union[Unset, str]): The display name of the environment
-        properties (Union[Unset, ComputeEnvironmentConfigurationProperties]):
+        properties (Union[Unset, ComputeEnvironmentConfigurationProperties]): Configuration properties passed to the
+            environment
         agent (Union['Agent', None, Unset]):
         created_by (Union[Unset, str]): The user who created the environment
     """

@@ -16,6 +16,7 @@ from .billing_account_request import BillingAccountRequest
 from .billing_method import BillingMethod
 from .budget_period import BudgetPeriod
 from .calculate_pipeline_cost_request import CalculatePipelineCostRequest
+from .classification_input import ClassificationInput
 from .cloud_account import CloudAccount
 from .cloud_account_type import CloudAccountType
 from .column_definition import ColumnDefinition
@@ -56,9 +57,11 @@ from .form_schema_ui import FormSchemaUi
 from .generate_sftp_credentials_request import GenerateSftpCredentialsRequest
 from .get_execution_logs_response import GetExecutionLogsResponse
 from .get_project_summary_response_200 import GetProjectSummaryResponse200
+from .governance_classification import GovernanceClassification
 from .import_data_request import ImportDataRequest
 from .invite_user_request import InviteUserRequest
 from .invite_user_response import InviteUserResponse
+from .list_events_entity_type import ListEventsEntityType
 from .log_entry import LogEntry
 from .login_provider import LoginProvider
 from .metric_record import MetricRecord
@@ -77,6 +80,7 @@ from .project import Project
 from .project_access_request import ProjectAccessRequest
 from .project_create_options import ProjectCreateOptions
 from .project_detail import ProjectDetail
+from .project_input import ProjectInput
 from .project_metrics import ProjectMetrics
 from .project_request import ProjectRequest
 from .project_role import ProjectRole
@@ -132,6 +136,7 @@ __all__ = (
     "BillingMethod",
     "BudgetPeriod",
     "CalculatePipelineCostRequest",
+    "ClassificationInput",
     "CloudAccount",
     "CloudAccountType",
     "ColumnDefinition",
@@ -172,9 +177,11 @@ __all__ = (
     "GenerateSftpCredentialsRequest",
     "GetExecutionLogsResponse",
     "GetProjectSummaryResponse200",
+    "GovernanceClassification",
     "ImportDataRequest",
     "InviteUserRequest",
     "InviteUserResponse",
+    "ListEventsEntityType",
     "LogEntry",
     "LoginProvider",
     "MetricRecord",
@@ -193,6 +200,7 @@ __all__ = (
     "ProjectAccessRequest",
     "ProjectCreateOptions",
     "ProjectDetail",
+    "ProjectInput",
     "ProjectMetrics",
     "ProjectRequest",
     "ProjectRole",

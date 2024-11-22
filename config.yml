@@ -7,3 +7,17 @@ post_hooks:
 class_overrides:
   SampleMetadataType0:
     class_name: SampleMetadata
+  AgentInputTagsType0:
+    class_name: AgentInputTags
+  AgentInputEnvironmentConfigurationType0:
+    class_name: AgentInputEnvironmentConfiguration
+  AgentInputConfigurationOptionsSchemaType0:
+    class_name: AgentInputConfigurationOptionsSchema
+  AgentDetailTagsType0:
+    class_name: AgentDetailTags
+  AgentDetailEnvironmentConfigurationType0:
+    class_name: AgentDetailEnvironmentConfiguration
+  AuditEventChangesType0:
+    class_name: AuditEventChanges
+  AuditEventEventDetailType0:
+    class_name: AuditEventEventDetail

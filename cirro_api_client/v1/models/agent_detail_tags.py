@@ -3,17 +3,12 @@ from typing import Any, Dict, List, Type, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="AuditEventChanges")
+T = TypeVar("T", bound="AgentDetailTags")
 
 
 @_attrs_define
-class AuditEventChanges:
-    """The changes made to the entity (if applicable)
-
-    Example:
-        {'.settings.retentionPolicyDays': '1 -> 2'}
-
-    """
+class AgentDetailTags:
+    """ """
 
     additional_properties: Dict[str, str] = _attrs_field(init=False, factory=dict)
 
@@ -27,10 +22,10 @@ class AuditEventChanges:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        audit_event_changes = cls()
+        agent_detail_tags = cls()
 
-        audit_event_changes.additional_properties = d
-        return audit_event_changes
+        agent_detail_tags.additional_properties = d
+        return agent_detail_tags
 
     @property
     def additional_keys(self) -> List[str]:

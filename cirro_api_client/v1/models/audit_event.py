@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -24,9 +24,9 @@ class AuditEvent:
         project_id (Union[Unset, str]): The project ID associated with the event (if applicable)
         entity_id (Union[Unset, str]): The entity ID associated with the event
         entity_type (Union[Unset, str]): The entity type associated with the event Example: Project.
-        event_detail (Union['AuditEventEventDetailType0', None, Unset]): The details of the event, such as the request
+        event_detail (Union['AuditEventEventDetail', None, Unset]): The details of the event, such as the request
             details sent from the client
-        changes (Union['AuditEventChangesType0', None, Unset]): The changes made to the entity (if applicable) Example:
+        changes (Union['AuditEventChanges', None, Unset]): The changes made to the entity (if applicable) Example:
             {'.settings.retentionPolicyDays': '1 -> 2'}.
         username (Union[Unset, str]): The username of the user who performed the action Example: admin@cirro.bio.
         ip_address (Union[Unset, str]): The IP address of the user who performed the action Example: 0.0.0.0.
@@ -38,14 +38,17 @@ class AuditEvent:
     project_id: Union[Unset, str] = UNSET
     entity_id: Union[Unset, str] = UNSET
     entity_type: Union[Unset, str] = UNSET
-    event_detail: Union[Unset, "AuditEventEventDetail"] = UNSET
-    changes: Union[Unset, "AuditEventChanges"] = UNSET
+    event_detail: Union["AuditEventEventDetail", None, Unset] = UNSET
+    changes: Union["AuditEventChanges", None, Unset] = UNSET
     username: Union[Unset, str] = UNSET
     ip_address: Union[Unset, str] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        from ..models.audit_event_changes import AuditEventChanges
+        from ..models.audit_event_event_detail import AuditEventEventDetail
+
         id = self.id
 
         event_type = self.event_type
@@ -56,13 +59,21 @@ class AuditEvent:
 
         entity_type = self.entity_type
 
-        event_detail: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.event_detail, Unset):
+        event_detail: Union[Dict[str, Any], None, Unset]
+        if isinstance(self.event_detail, Unset):
+            event_detail = UNSET
+        elif isinstance(self.event_detail, AuditEventEventDetail):
             event_detail = self.event_detail.to_dict()
+        else:
+            event_detail = self.event_detail
 
-        changes: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.changes, Unset):
+        changes: Union[Dict[str, Any], None, Unset]
+        if isinstance(self.changes, Unset):
+            changes = UNSET
+        elif isinstance(self.changes, AuditEventChanges):
             changes = self.changes.to_dict()
+        else:
+            changes = self.changes
 
         username = self.username
 
@@ -114,19 +125,39 @@ class AuditEvent:
 
         entity_type = d.pop("entityType", UNSET)
 
-        _event_detail = d.pop("eventDetail", UNSET)
-        event_detail: Union[Unset, AuditEventEventDetail]
-        if isinstance(_event_detail, Unset):
-            event_detail = UNSET
-        else:
-            event_detail = AuditEventEventDetail.from_dict(_event_detail)
+        def _parse_event_detail(data: object) -> Union["AuditEventEventDetail", None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                event_detail_type_0 = AuditEventEventDetail.from_dict(data)
 
-        _changes = d.pop("changes", UNSET)
-        changes: Union[Unset, AuditEventChanges]
-        if isinstance(_changes, Unset):
-            changes = UNSET
-        else:
-            changes = AuditEventChanges.from_dict(_changes)
+                return event_detail_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["AuditEventEventDetail", None, Unset], data)
+
+        event_detail = _parse_event_detail(d.pop("eventDetail", UNSET))
+
+        def _parse_changes(data: object) -> Union["AuditEventChanges", None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                changes_type_0 = AuditEventChanges.from_dict(data)
+
+                return changes_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["AuditEventChanges", None, Unset], data)
+
+        changes = _parse_changes(d.pop("changes", UNSET))
 
         username = d.pop("username", UNSET)
 

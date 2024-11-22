@@ -5,35 +5,25 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.user import User
-from ...types import UNSET, Response
+from ...models.agent_detail import AgentDetail
+from ...types import Response
 
 
-def _get_kwargs(
-    *,
-    username: str,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
-
-    params["username"] = username
-
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
-
+def _get_kwargs() -> Dict[str, Any]:
     _kwargs: Dict[str, Any] = {
         "method": "get",
-        "url": "/users",
-        "params": params,
+        "url": "/agents",
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["User"]]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["AgentDetail"]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
         for response_200_item_data in _response_200:
-            response_200_item = User.from_dict(response_200_item_data)
+            response_200_item = AgentDetail.from_dict(response_200_item_data)
 
             response_200.append(response_200_item)
 
@@ -42,7 +32,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Lis
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[List["User"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[List["AgentDetail"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -54,27 +44,20 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Lis
 def sync_detailed(
     *,
     client: Client,
-    username: str,
-) -> Response[List["User"]]:
-    """List users
+) -> Response[List["AgentDetail"]]:
+    """Get agents
 
-     Gets a list of users matching the username pattern
-
-    Args:
-        username (str):
-        client (Client): instance of the API client
+     Get a list of agents
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['User']]
+        Response[List['AgentDetail']]
     """
 
-    kwargs = _get_kwargs(
-        username=username,
-    )
+    kwargs = _get_kwargs()
 
     response = client.get_httpx_client().request(
         auth=client.get_auth(),
@@ -87,28 +70,22 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    username: str,
-) -> Optional[List["User"]]:
-    """List users
+) -> Optional[List["AgentDetail"]]:
+    """Get agents
 
-     Gets a list of users matching the username pattern
-
-    Args:
-        username (str):
-        client (Client): instance of the API client
+     Get a list of agents
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['User']
+        List['AgentDetail']
     """
 
     try:
         return sync_detailed(
             client=client,
-            username=username,
         ).parsed
     except errors.NotFoundException:
         return None
@@ -117,27 +94,20 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-    username: str,
-) -> Response[List["User"]]:
-    """List users
+) -> Response[List["AgentDetail"]]:
+    """Get agents
 
-     Gets a list of users matching the username pattern
-
-    Args:
-        username (str):
-        client (Client): instance of the API client
+     Get a list of agents
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['User']]
+        Response[List['AgentDetail']]
     """
 
-    kwargs = _get_kwargs(
-        username=username,
-    )
+    kwargs = _get_kwargs()
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
 
@@ -147,29 +117,23 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    username: str,
-) -> Optional[List["User"]]:
-    """List users
+) -> Optional[List["AgentDetail"]]:
+    """Get agents
 
-     Gets a list of users matching the username pattern
-
-    Args:
-        username (str):
-        client (Client): instance of the API client
+     Get a list of agents
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['User']
+        List['AgentDetail']
     """
 
     try:
         return (
             await asyncio_detailed(
                 client=client,
-                username=username,
             )
         ).parsed
     except errors.NotFoundException:

@@ -2,6 +2,14 @@
 
 from .access_type import AccessType
 from .agent import Agent
+from .agent_detail import AgentDetail
+from .agent_detail_environment_configuration import AgentDetailEnvironmentConfiguration
+from .agent_detail_tags import AgentDetailTags
+from .agent_input import AgentInput
+from .agent_input_configuration_options_schema import AgentInputConfigurationOptionsSchema
+from .agent_input_environment_configuration import AgentInputEnvironmentConfiguration
+from .agent_input_tags import AgentInputTags
+from .agent_registration import AgentRegistration
 from .agent_status import AgentStatus
 from .agent_tags import AgentTags
 from .allowed_data_type import AllowedDataType
@@ -71,6 +79,7 @@ from .notebook_instance_status_response import NotebookInstanceStatusResponse
 from .open_notebook_instance_response import OpenNotebookInstanceResponse
 from .paginated_response_dataset_list_dto import PaginatedResponseDatasetListDto
 from .paginated_response_sample_dto import PaginatedResponseSampleDto
+from .paginated_response_user_dto import PaginatedResponseUserDto
 from .pipeline_code import PipelineCode
 from .pipeline_cost import PipelineCost
 from .portal_error_response import PortalErrorResponse
@@ -122,6 +131,14 @@ from .validate_file_requirements_request import ValidateFileRequirementsRequest
 __all__ = (
     "AccessType",
     "Agent",
+    "AgentDetail",
+    "AgentDetailEnvironmentConfiguration",
+    "AgentDetailTags",
+    "AgentInput",
+    "AgentInputConfigurationOptionsSchema",
+    "AgentInputEnvironmentConfiguration",
+    "AgentInputTags",
+    "AgentRegistration",
     "AgentStatus",
     "AgentTags",
     "AllowedDataType",
@@ -191,6 +208,7 @@ __all__ = (
     "OpenNotebookInstanceResponse",
     "PaginatedResponseDatasetListDto",
     "PaginatedResponseSampleDto",
+    "PaginatedResponseUserDto",
     "PipelineCode",
     "PipelineCost",
     "PortalErrorResponse",

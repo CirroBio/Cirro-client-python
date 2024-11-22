@@ -3,19 +3,14 @@ from typing import Any, Dict, List, Type, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="AuditEventChanges")
+T = TypeVar("T", bound="AgentInputConfigurationOptionsSchema")
 
 
 @_attrs_define
-class AuditEventChanges:
-    """The changes made to the entity (if applicable)
+class AgentInputConfigurationOptionsSchema:
+    """The configuration options available for the agent"""
 
-    Example:
-        {'.settings.retentionPolicyDays': '1 -> 2'}
-
-    """
-
-    additional_properties: Dict[str, str] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         field_dict: Dict[str, Any] = {}
@@ -27,10 +22,10 @@ class AuditEventChanges:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        audit_event_changes = cls()
+        agent_input_configuration_options_schema = cls()
 
-        audit_event_changes.additional_properties = d
-        return audit_event_changes
+        agent_input_configuration_options_schema.additional_properties = d
+        return agent_input_configuration_options_schema
 
     @property
     def additional_keys(self) -> List[str]:

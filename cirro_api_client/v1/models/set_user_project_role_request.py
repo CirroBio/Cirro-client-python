@@ -15,12 +15,12 @@ class SetUserProjectRoleRequest:
     Attributes:
         username (str):
         role (ProjectRole):
-        supress_notification (Union[Unset, bool]):  Default: False.
+        suppress_notification (Union[Unset, bool]):  Default: False.
     """
 
     username: str
     role: ProjectRole
-    supress_notification: Union[Unset, bool] = False
+    suppress_notification: Union[Unset, bool] = False
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -28,7 +28,7 @@ class SetUserProjectRoleRequest:
 
         role = self.role.value
 
-        supress_notification = self.supress_notification
+        suppress_notification = self.suppress_notification
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -38,8 +38,8 @@ class SetUserProjectRoleRequest:
                 "role": role,
             }
         )
-        if supress_notification is not UNSET:
-            field_dict["supressNotification"] = supress_notification
+        if suppress_notification is not UNSET:
+            field_dict["suppressNotification"] = suppress_notification
 
         return field_dict
 
@@ -50,12 +50,12 @@ class SetUserProjectRoleRequest:
 
         role = ProjectRole(d.pop("role"))
 
-        supress_notification = d.pop("supressNotification", UNSET)
+        suppress_notification = d.pop("suppressNotification", UNSET)
 
         set_user_project_role_request = cls(
             username=username,
             role=role,
-            supress_notification=supress_notification,
+            suppress_notification=suppress_notification,
         )
 
         set_user_project_role_request.additional_properties = d

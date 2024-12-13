@@ -21,3 +21,5 @@ class_overrides:
     class_name: AuditEventChanges
   AuditEventEventDetailType0:
     class_name: AuditEventEventDetail
+  ComputeEnvironmentConfigurationInputPropertiesType0:
+    class_name: ComputeEnvironmentConfigurationInputProperties

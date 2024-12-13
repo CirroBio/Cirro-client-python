@@ -29,6 +29,8 @@ from .cloud_account import CloudAccount
 from .cloud_account_type import CloudAccountType
 from .column_definition import ColumnDefinition
 from .compute_environment_configuration import ComputeEnvironmentConfiguration
+from .compute_environment_configuration_input import ComputeEnvironmentConfigurationInput
+from .compute_environment_configuration_input_properties import ComputeEnvironmentConfigurationInputProperties
 from .compute_environment_configuration_properties import ComputeEnvironmentConfigurationProperties
 from .contact import Contact
 from .create_notebook_instance_request import CreateNotebookInstanceRequest
@@ -158,6 +160,8 @@ __all__ = (
     "CloudAccountType",
     "ColumnDefinition",
     "ComputeEnvironmentConfiguration",
+    "ComputeEnvironmentConfigurationInput",
+    "ComputeEnvironmentConfigurationInputProperties",
     "ComputeEnvironmentConfigurationProperties",
     "Contact",
     "CreateNotebookInstanceRequest",

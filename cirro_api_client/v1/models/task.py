@@ -18,6 +18,7 @@ class Task:
         native_job_id (str):
         status (str):
         requested_at (datetime.datetime):
+        started_at (Union[Unset, datetime.datetime]):
         stopped_at (Union[Unset, datetime.datetime]):
         container_image (Union[Unset, str]):
         command_line (Union[Unset, str]):
@@ -28,6 +29,7 @@ class Task:
     native_job_id: str
     status: str
     requested_at: datetime.datetime
+    started_at: Union[Unset, datetime.datetime] = UNSET
     stopped_at: Union[Unset, datetime.datetime] = UNSET
     container_image: Union[Unset, str] = UNSET
     command_line: Union[Unset, str] = UNSET
@@ -42,6 +44,10 @@ class Task:
         status = self.status
 
         requested_at = self.requested_at.isoformat()
+
+        started_at: Union[Unset, str] = UNSET
+        if not isinstance(self.started_at, Unset):
+            started_at = self.started_at.isoformat()
 
         stopped_at: Union[Unset, str] = UNSET
         if not isinstance(self.stopped_at, Unset):
@@ -63,6 +69,8 @@ class Task:
                 "requestedAt": requested_at,
             }
         )
+        if started_at is not UNSET:
+            field_dict["startedAt"] = started_at
         if stopped_at is not UNSET:
             field_dict["stoppedAt"] = stopped_at
         if container_image is not UNSET:
@@ -85,6 +93,13 @@ class Task:
 
         requested_at = isoparse(d.pop("requestedAt"))
 
+        _started_at = d.pop("startedAt", UNSET)
+        started_at: Union[Unset, datetime.datetime]
+        if isinstance(_started_at, Unset):
+            started_at = UNSET
+        else:
+            started_at = isoparse(_started_at)
+
         _stopped_at = d.pop("stoppedAt", UNSET)
         stopped_at: Union[Unset, datetime.datetime]
         if isinstance(_stopped_at, Unset):
@@ -103,6 +118,7 @@ class Task:
             native_job_id=native_job_id,
             status=status,
             requested_at=requested_at,
+            started_at=started_at,
             stopped_at=stopped_at,
             container_image=container_image,
             command_line=command_line,

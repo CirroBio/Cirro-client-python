@@ -3,34 +3,42 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.access_type import AccessType
+from ..models.governance_access_type import GovernanceAccessType
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="FileAccessRequest")
+T = TypeVar("T", bound="GovernanceFileAccessRequest")
 
 
 @_attrs_define
-class FileAccessRequest:
+class GovernanceFileAccessRequest:
     """
     Attributes:
-        access_type (AccessType):
-        dataset_id (Union[None, Unset, str]):
+        access_type (GovernanceAccessType):
+        fulfillment_id (Union[None, Unset, str]):
+        project_id (Union[None, Unset, str]):
         token_lifetime_hours (Union[None, Unset, int]):
     """
 
-    access_type: AccessType
-    dataset_id: Union[None, Unset, str] = UNSET
+    access_type: GovernanceAccessType
+    fulfillment_id: Union[None, Unset, str] = UNSET
+    project_id: Union[None, Unset, str] = UNSET
     token_lifetime_hours: Union[None, Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         access_type = self.access_type.value
 
-        dataset_id: Union[None, Unset, str]
-        if isinstance(self.dataset_id, Unset):
-            dataset_id = UNSET
+        fulfillment_id: Union[None, Unset, str]
+        if isinstance(self.fulfillment_id, Unset):
+            fulfillment_id = UNSET
         else:
-            dataset_id = self.dataset_id
+            fulfillment_id = self.fulfillment_id
+
+        project_id: Union[None, Unset, str]
+        if isinstance(self.project_id, Unset):
+            project_id = UNSET
+        else:
+            project_id = self.project_id
 
         token_lifetime_hours: Union[None, Unset, int]
         if isinstance(self.token_lifetime_hours, Unset):
@@ -45,8 +53,10 @@ class FileAccessRequest:
                 "accessType": access_type,
             }
         )
-        if dataset_id is not UNSET:
-            field_dict["datasetId"] = dataset_id
+        if fulfillment_id is not UNSET:
+            field_dict["fulfillmentId"] = fulfillment_id
+        if project_id is not UNSET:
+            field_dict["projectId"] = project_id
         if token_lifetime_hours is not UNSET:
             field_dict["tokenLifetimeHours"] = token_lifetime_hours
 
@@ -55,16 +65,25 @@ class FileAccessRequest:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        access_type = AccessType(d.pop("accessType"))
+        access_type = GovernanceAccessType(d.pop("accessType"))
 
-        def _parse_dataset_id(data: object) -> Union[None, Unset, str]:
+        def _parse_fulfillment_id(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
             return cast(Union[None, Unset, str], data)
 
-        dataset_id = _parse_dataset_id(d.pop("datasetId", UNSET))
+        fulfillment_id = _parse_fulfillment_id(d.pop("fulfillmentId", UNSET))
+
+        def _parse_project_id(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        project_id = _parse_project_id(d.pop("projectId", UNSET))
 
         def _parse_token_lifetime_hours(data: object) -> Union[None, Unset, int]:
             if data is None:
@@ -75,14 +94,15 @@ class FileAccessRequest:
 
         token_lifetime_hours = _parse_token_lifetime_hours(d.pop("tokenLifetimeHours", UNSET))
 
-        file_access_request = cls(
+        governance_file_access_request = cls(
             access_type=access_type,
-            dataset_id=dataset_id,
+            fulfillment_id=fulfillment_id,
+            project_id=project_id,
             token_lifetime_hours=token_lifetime_hours,
         )
 
-        file_access_request.additional_properties = d
-        return file_access_request
+        governance_file_access_request.additional_properties = d
+        return governance_file_access_request
 
     @property
     def additional_keys(self) -> List[str]:

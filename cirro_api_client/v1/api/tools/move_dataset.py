@@ -5,21 +5,20 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.aws_credentials import AWSCredentials
-from ...models.project_file_access_request import ProjectFileAccessRequest
+from ...models.move_dataset_input import MoveDatasetInput
+from ...models.move_dataset_response import MoveDatasetResponse
 from ...types import Response
 
 
 def _get_kwargs(
-    project_id: str,
     *,
-    body: ProjectFileAccessRequest,
+    body: MoveDatasetInput,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
     _kwargs: Dict[str, Any] = {
-        "method": "post",
-        "url": f"/projects/{project_id}/s3-token",
+        "method": "put",
+        "url": "/tools/move-dataset",
     }
 
     _body = body.to_dict()
@@ -31,16 +30,16 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[AWSCredentials]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[MoveDatasetResponse]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = AWSCredentials.from_dict(response.json())
+        response_200 = MoveDatasetResponse.from_dict(response.json())
 
         return response_200
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[AWSCredentials]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[MoveDatasetResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -50,18 +49,17 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[AWS
 
 
 def sync_detailed(
-    project_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Response[AWSCredentials]:
-    """Create project file access token
+    body: MoveDatasetInput,
+) -> Response[MoveDatasetResponse]:
+    """Move a dataset to a different project
 
-     Generates credentials used for connecting via S3
+     Moves a dataset to a different project. The underlying S3 data is not transferred and will need to
+    be done manually. It is expected the user will also transfer all datasets in the lineage.
 
     Args:
-        project_id (str):
-        body (ProjectFileAccessRequest):
+        body (MoveDatasetInput):
         client (Client): instance of the API client
 
     Raises:
@@ -69,11 +67,10 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[AWSCredentials]
+        Response[MoveDatasetResponse]
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
         body=body,
     )
 
@@ -86,18 +83,17 @@ def sync_detailed(
 
 
 def sync(
-    project_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Optional[AWSCredentials]:
-    """Create project file access token
+    body: MoveDatasetInput,
+) -> Optional[MoveDatasetResponse]:
+    """Move a dataset to a different project
 
-     Generates credentials used for connecting via S3
+     Moves a dataset to a different project. The underlying S3 data is not transferred and will need to
+    be done manually. It is expected the user will also transfer all datasets in the lineage.
 
     Args:
-        project_id (str):
-        body (ProjectFileAccessRequest):
+        body (MoveDatasetInput):
         client (Client): instance of the API client
 
     Raises:
@@ -105,12 +101,11 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        AWSCredentials
+        MoveDatasetResponse
     """
 
     try:
         return sync_detailed(
-            project_id=project_id,
             client=client,
             body=body,
         ).parsed
@@ -119,18 +114,17 @@ def sync(
 
 
 async def asyncio_detailed(
-    project_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Response[AWSCredentials]:
-    """Create project file access token
+    body: MoveDatasetInput,
+) -> Response[MoveDatasetResponse]:
+    """Move a dataset to a different project
 
-     Generates credentials used for connecting via S3
+     Moves a dataset to a different project. The underlying S3 data is not transferred and will need to
+    be done manually. It is expected the user will also transfer all datasets in the lineage.
 
     Args:
-        project_id (str):
-        body (ProjectFileAccessRequest):
+        body (MoveDatasetInput):
         client (Client): instance of the API client
 
     Raises:
@@ -138,11 +132,10 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[AWSCredentials]
+        Response[MoveDatasetResponse]
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
         body=body,
     )
 
@@ -152,18 +145,17 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    project_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Optional[AWSCredentials]:
-    """Create project file access token
+    body: MoveDatasetInput,
+) -> Optional[MoveDatasetResponse]:
+    """Move a dataset to a different project
 
-     Generates credentials used for connecting via S3
+     Moves a dataset to a different project. The underlying S3 data is not transferred and will need to
+    be done manually. It is expected the user will also transfer all datasets in the lineage.
 
     Args:
-        project_id (str):
-        body (ProjectFileAccessRequest):
+        body (MoveDatasetInput):
         client (Client): instance of the API client
 
     Raises:
@@ -171,13 +163,12 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        AWSCredentials
+        MoveDatasetResponse
     """
 
     try:
         return (
             await asyncio_detailed(
-                project_id=project_id,
                 client=client,
                 body=body,
             )

@@ -3,42 +3,32 @@ from typing import Any, Dict, List, Type, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="UploadDatasetCreateResponse")
+T = TypeVar("T", bound="NamedItem")
 
 
 @_attrs_define
-class UploadDatasetCreateResponse:
+class NamedItem:
     """
     Attributes:
         id (str):
-        message (str):
-        upload_path (str):
-        bucket (str):
+        name (str):
     """
 
     id: str
-    message: str
-    upload_path: str
-    bucket: str
+    name: str
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         id = self.id
 
-        message = self.message
-
-        upload_path = self.upload_path
-
-        bucket = self.bucket
+        name = self.name
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "id": id,
-                "message": message,
-                "uploadPath": upload_path,
-                "bucket": bucket,
+                "name": name,
             }
         )
 
@@ -49,21 +39,15 @@ class UploadDatasetCreateResponse:
         d = src_dict.copy()
         id = d.pop("id")
 
-        message = d.pop("message")
+        name = d.pop("name")
 
-        upload_path = d.pop("uploadPath")
-
-        bucket = d.pop("bucket")
-
-        upload_dataset_create_response = cls(
+        named_item = cls(
             id=id,
-            message=message,
-            upload_path=upload_path,
-            bucket=bucket,
+            name=name,
         )
 
-        upload_dataset_create_response.additional_properties = d
-        return upload_dataset_create_response
+        named_item.additional_properties = d
+        return named_item
 
     @property
     def additional_keys(self) -> List[str]:

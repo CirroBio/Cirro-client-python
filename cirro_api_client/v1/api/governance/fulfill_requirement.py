@@ -5,21 +5,22 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.aws_credentials import AWSCredentials
-from ...models.project_file_access_request import ProjectFileAccessRequest
+from ...models.fulfillment_response import FulfillmentResponse
+from ...models.requirement_fulfillment_input import RequirementFulfillmentInput
 from ...types import Response
 
 
 def _get_kwargs(
     project_id: str,
+    requirement_id: str,
     *,
-    body: ProjectFileAccessRequest,
+    body: RequirementFulfillmentInput,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
     _kwargs: Dict[str, Any] = {
         "method": "post",
-        "url": f"/projects/{project_id}/s3-token",
+        "url": f"/governance/projects/{project_id}/requirements/{requirement_id}:fulfill",
     }
 
     _body = body.to_dict()
@@ -31,16 +32,16 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[AWSCredentials]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[FulfillmentResponse]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = AWSCredentials.from_dict(response.json())
+        response_200 = FulfillmentResponse.from_dict(response.json())
 
         return response_200
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[AWSCredentials]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[FulfillmentResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -51,17 +52,19 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[AWS
 
 def sync_detailed(
     project_id: str,
+    requirement_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Response[AWSCredentials]:
-    """Create project file access token
+    body: RequirementFulfillmentInput,
+) -> Response[FulfillmentResponse]:
+    """Fulfill a project's requirement
 
-     Generates credentials used for connecting via S3
+     Saves a record of the fulfillment of a governance requirement
 
     Args:
         project_id (str):
-        body (ProjectFileAccessRequest):
+        requirement_id (str):
+        body (RequirementFulfillmentInput):
         client (Client): instance of the API client
 
     Raises:
@@ -69,11 +72,12 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[AWSCredentials]
+        Response[FulfillmentResponse]
     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
+        requirement_id=requirement_id,
         body=body,
     )
 
@@ -87,17 +91,19 @@ def sync_detailed(
 
 def sync(
     project_id: str,
+    requirement_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Optional[AWSCredentials]:
-    """Create project file access token
+    body: RequirementFulfillmentInput,
+) -> Optional[FulfillmentResponse]:
+    """Fulfill a project's requirement
 
-     Generates credentials used for connecting via S3
+     Saves a record of the fulfillment of a governance requirement
 
     Args:
         project_id (str):
-        body (ProjectFileAccessRequest):
+        requirement_id (str):
+        body (RequirementFulfillmentInput):
         client (Client): instance of the API client
 
     Raises:
@@ -105,12 +111,13 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        AWSCredentials
+        FulfillmentResponse
     """
 
     try:
         return sync_detailed(
             project_id=project_id,
+            requirement_id=requirement_id,
             client=client,
             body=body,
         ).parsed
@@ -120,17 +127,19 @@ def sync(
 
 async def asyncio_detailed(
     project_id: str,
+    requirement_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Response[AWSCredentials]:
-    """Create project file access token
+    body: RequirementFulfillmentInput,
+) -> Response[FulfillmentResponse]:
+    """Fulfill a project's requirement
 
-     Generates credentials used for connecting via S3
+     Saves a record of the fulfillment of a governance requirement
 
     Args:
         project_id (str):
-        body (ProjectFileAccessRequest):
+        requirement_id (str):
+        body (RequirementFulfillmentInput):
         client (Client): instance of the API client
 
     Raises:
@@ -138,11 +147,12 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[AWSCredentials]
+        Response[FulfillmentResponse]
     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
+        requirement_id=requirement_id,
         body=body,
     )
 
@@ -153,17 +163,19 @@ async def asyncio_detailed(
 
 async def asyncio(
     project_id: str,
+    requirement_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Optional[AWSCredentials]:
-    """Create project file access token
+    body: RequirementFulfillmentInput,
+) -> Optional[FulfillmentResponse]:
+    """Fulfill a project's requirement
 
-     Generates credentials used for connecting via S3
+     Saves a record of the fulfillment of a governance requirement
 
     Args:
         project_id (str):
-        body (ProjectFileAccessRequest):
+        requirement_id (str):
+        body (RequirementFulfillmentInput):
         client (Client): instance of the API client
 
     Raises:
@@ -171,13 +183,14 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        AWSCredentials
+        FulfillmentResponse
     """
 
     try:
         return (
             await asyncio_detailed(
                 project_id=project_id,
+                requirement_id=requirement_id,
                 client=client,
                 body=body,
             )

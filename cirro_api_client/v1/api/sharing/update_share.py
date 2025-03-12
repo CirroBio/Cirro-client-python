@@ -5,23 +5,34 @@ import httpx
 
 from ... import errors
 from ...client import Client
+from ...models.share_input import ShareInput
 from ...types import Response
 
 
 def _get_kwargs(
     project_id: str,
-    dataset_id: str,
+    share_id: str,
+    *,
+    body: ShareInput,
 ) -> Dict[str, Any]:
+    headers: Dict[str, Any] = {}
+
     _kwargs: Dict[str, Any] = {
         "method": "put",
-        "url": f"/projects/{project_id}/datasets/{dataset_id}/regenerate-manifest",
+        "url": f"/projects/{project_id}/shares/{share_id}",
     }
 
+    _body = body.to_dict()
+
+    _kwargs["json"] = _body
+    headers["Content-Type"] = "application/json"
+
+    _kwargs["headers"] = headers
     return _kwargs
 
 
 def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Any]:
-    if response.status_code == HTTPStatus.ACCEPTED:
+    if response.status_code == HTTPStatus.OK:
         return None
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
@@ -38,17 +49,19 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Any
 
 def sync_detailed(
     project_id: str,
-    dataset_id: str,
+    share_id: str,
     *,
     client: Client,
+    body: ShareInput,
 ) -> Response[Any]:
-    """Regenerate dataset manifest
+    """Update share
 
-     Regenerate dataset file listing.
+     Update a share that you've published
 
     Args:
         project_id (str):
-        dataset_id (str):
+        share_id (str):
+        body (ShareInput):
         client (Client): instance of the API client
 
     Raises:
@@ -61,7 +74,8 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        dataset_id=dataset_id,
+        share_id=share_id,
+        body=body,
     )
 
     response = client.get_httpx_client().request(
@@ -74,17 +88,19 @@ def sync_detailed(
 
 async def asyncio_detailed(
     project_id: str,
-    dataset_id: str,
+    share_id: str,
     *,
     client: Client,
+    body: ShareInput,
 ) -> Response[Any]:
-    """Regenerate dataset manifest
+    """Update share
 
-     Regenerate dataset file listing.
+     Update a share that you've published
 
     Args:
         project_id (str):
-        dataset_id (str):
+        share_id (str):
+        body (ShareInput):
         client (Client): instance of the API client
 
     Raises:
@@ -97,7 +113,8 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        dataset_id=dataset_id,
+        share_id=share_id,
+        body=body,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)

@@ -6,20 +6,20 @@ import httpx
 from ... import errors
 from ...client import Client
 from ...models.aws_credentials import AWSCredentials
-from ...models.project_file_access_request import ProjectFileAccessRequest
+from ...models.governance_file_access_request import GovernanceFileAccessRequest
 from ...types import Response
 
 
 def _get_kwargs(
-    project_id: str,
+    requirement_id: str,
     *,
-    body: ProjectFileAccessRequest,
+    body: GovernanceFileAccessRequest,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
     _kwargs: Dict[str, Any] = {
         "method": "post",
-        "url": f"/projects/{project_id}/s3-token",
+        "url": f"/governance/requirements/{requirement_id}/s3-token",
     }
 
     _body = body.to_dict()
@@ -50,18 +50,18 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[AWS
 
 
 def sync_detailed(
-    project_id: str,
+    requirement_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
+    body: GovernanceFileAccessRequest,
 ) -> Response[AWSCredentials]:
-    """Create project file access token
+    """Create governance file access token
 
      Generates credentials used for connecting via S3
 
     Args:
-        project_id (str):
-        body (ProjectFileAccessRequest):
+        requirement_id (str):
+        body (GovernanceFileAccessRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -73,7 +73,7 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
+        requirement_id=requirement_id,
         body=body,
     )
 
@@ -86,18 +86,18 @@ def sync_detailed(
 
 
 def sync(
-    project_id: str,
+    requirement_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
+    body: GovernanceFileAccessRequest,
 ) -> Optional[AWSCredentials]:
-    """Create project file access token
+    """Create governance file access token
 
      Generates credentials used for connecting via S3
 
     Args:
-        project_id (str):
-        body (ProjectFileAccessRequest):
+        requirement_id (str):
+        body (GovernanceFileAccessRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -110,7 +110,7 @@ def sync(
 
     try:
         return sync_detailed(
-            project_id=project_id,
+            requirement_id=requirement_id,
             client=client,
             body=body,
         ).parsed
@@ -119,18 +119,18 @@ def sync(
 
 
 async def asyncio_detailed(
-    project_id: str,
+    requirement_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
+    body: GovernanceFileAccessRequest,
 ) -> Response[AWSCredentials]:
-    """Create project file access token
+    """Create governance file access token
 
      Generates credentials used for connecting via S3
 
     Args:
-        project_id (str):
-        body (ProjectFileAccessRequest):
+        requirement_id (str):
+        body (GovernanceFileAccessRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -142,7 +142,7 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
+        requirement_id=requirement_id,
         body=body,
     )
 
@@ -152,18 +152,18 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    project_id: str,
+    requirement_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
+    body: GovernanceFileAccessRequest,
 ) -> Optional[AWSCredentials]:
-    """Create project file access token
+    """Create governance file access token
 
      Generates credentials used for connecting via S3
 
     Args:
-        project_id (str):
-        body (ProjectFileAccessRequest):
+        requirement_id (str):
+        body (GovernanceFileAccessRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -177,7 +177,7 @@ async def asyncio(
     try:
         return (
             await asyncio_detailed(
-                project_id=project_id,
+                requirement_id=requirement_id,
                 client=client,
                 body=body,
             )

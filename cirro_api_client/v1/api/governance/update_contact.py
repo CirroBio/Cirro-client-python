@@ -5,21 +5,21 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.aws_credentials import AWSCredentials
-from ...models.project_file_access_request import ProjectFileAccessRequest
+from ...models.contact_input import ContactInput
+from ...models.governance_contact import GovernanceContact
 from ...types import Response
 
 
 def _get_kwargs(
-    project_id: str,
+    contact_id: str,
     *,
-    body: ProjectFileAccessRequest,
+    body: ContactInput,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
     _kwargs: Dict[str, Any] = {
-        "method": "post",
-        "url": f"/projects/{project_id}/s3-token",
+        "method": "put",
+        "url": f"/governance/contacts/{contact_id}",
     }
 
     _body = body.to_dict()
@@ -31,16 +31,16 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[AWSCredentials]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[GovernanceContact]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = AWSCredentials.from_dict(response.json())
+        response_200 = GovernanceContact.from_dict(response.json())
 
         return response_200
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[AWSCredentials]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[GovernanceContact]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -50,18 +50,18 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[AWS
 
 
 def sync_detailed(
-    project_id: str,
+    contact_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Response[AWSCredentials]:
-    """Create project file access token
+    body: ContactInput,
+) -> Response[GovernanceContact]:
+    """Update contact
 
-     Generates credentials used for connecting via S3
+     Updates a contact
 
     Args:
-        project_id (str):
-        body (ProjectFileAccessRequest):
+        contact_id (str):
+        body (ContactInput):
         client (Client): instance of the API client
 
     Raises:
@@ -69,11 +69,11 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[AWSCredentials]
+        Response[GovernanceContact]
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
+        contact_id=contact_id,
         body=body,
     )
 
@@ -86,18 +86,18 @@ def sync_detailed(
 
 
 def sync(
-    project_id: str,
+    contact_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Optional[AWSCredentials]:
-    """Create project file access token
+    body: ContactInput,
+) -> Optional[GovernanceContact]:
+    """Update contact
 
-     Generates credentials used for connecting via S3
+     Updates a contact
 
     Args:
-        project_id (str):
-        body (ProjectFileAccessRequest):
+        contact_id (str):
+        body (ContactInput):
         client (Client): instance of the API client
 
     Raises:
@@ -105,12 +105,12 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        AWSCredentials
+        GovernanceContact
     """
 
     try:
         return sync_detailed(
-            project_id=project_id,
+            contact_id=contact_id,
             client=client,
             body=body,
         ).parsed
@@ -119,18 +119,18 @@ def sync(
 
 
 async def asyncio_detailed(
-    project_id: str,
+    contact_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Response[AWSCredentials]:
-    """Create project file access token
+    body: ContactInput,
+) -> Response[GovernanceContact]:
+    """Update contact
 
-     Generates credentials used for connecting via S3
+     Updates a contact
 
     Args:
-        project_id (str):
-        body (ProjectFileAccessRequest):
+        contact_id (str):
+        body (ContactInput):
         client (Client): instance of the API client
 
     Raises:
@@ -138,11 +138,11 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[AWSCredentials]
+        Response[GovernanceContact]
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
+        contact_id=contact_id,
         body=body,
     )
 
@@ -152,18 +152,18 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    project_id: str,
+    contact_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Optional[AWSCredentials]:
-    """Create project file access token
+    body: ContactInput,
+) -> Optional[GovernanceContact]:
+    """Update contact
 
-     Generates credentials used for connecting via S3
+     Updates a contact
 
     Args:
-        project_id (str):
-        body (ProjectFileAccessRequest):
+        contact_id (str):
+        body (ContactInput):
         client (Client): instance of the API client
 
     Raises:
@@ -171,13 +171,13 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        AWSCredentials
+        GovernanceContact
     """
 
     try:
         return (
             await asyncio_detailed(
-                project_id=project_id,
+                contact_id=contact_id,
                 client=client,
                 body=body,
             )

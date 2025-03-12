@@ -25,6 +25,8 @@ class ProjectSettings:
         max_gpuvcpu (Union[Unset, int]): Service quota limit for GPU Spot instances Default: 0.
         retention_policy_days (Union[Unset, int]): Days to keep deleted datasets before being permanently erased
             Default: 7.
+        temporary_storage_lifetime_days (Union[Unset, int]): Days to keep temporary storage space (workflow executor
+            cache) Default: 14.
         service_connections (Union[Unset, List[str]]): List of service connections to enable
         vpc_id (Union[None, Unset, str]): VPC that the compute environment will use Example: vpc-00000000000000000.
         batch_subnets (Union[List[str], None, Unset]): List of subnets that the compute environment will use Example:
@@ -35,6 +37,7 @@ class ProjectSettings:
             will be used
         is_discoverable (Union[None, Unset, bool]): Enables the project to be discoverable by other users Default:
             False.
+        is_shareable (Union[None, Unset, bool]): Enables the project to be shared with other projects Default: False.
     """
 
     budget_amount: int
@@ -48,12 +51,14 @@ class ProjectSettings:
     max_spot_vcpu: Union[Unset, int] = 0
     max_gpuvcpu: Union[Unset, int] = 0
     retention_policy_days: Union[Unset, int] = 7
+    temporary_storage_lifetime_days: Union[Unset, int] = 14
     service_connections: Union[Unset, List[str]] = UNSET
     vpc_id: Union[None, Unset, str] = UNSET
     batch_subnets: Union[List[str], None, Unset] = UNSET
     sagemaker_subnets: Union[List[str], None, Unset] = UNSET
     kms_arn: Union[None, Unset, str] = UNSET
     is_discoverable: Union[None, Unset, bool] = False
+    is_shareable: Union[None, Unset, bool] = False
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -82,6 +87,8 @@ class ProjectSettings:
         max_gpuvcpu = self.max_gpuvcpu
 
         retention_policy_days = self.retention_policy_days
+
+        temporary_storage_lifetime_days = self.temporary_storage_lifetime_days
 
         service_connections: Union[Unset, List[str]] = UNSET
         if not isinstance(self.service_connections, Unset):
@@ -123,6 +130,12 @@ class ProjectSettings:
         else:
             is_discoverable = self.is_discoverable
 
+        is_shareable: Union[None, Unset, bool]
+        if isinstance(self.is_shareable, Unset):
+            is_shareable = UNSET
+        else:
+            is_shareable = self.is_shareable
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -149,6 +162,8 @@ class ProjectSettings:
             field_dict["maxGPUVCPU"] = max_gpuvcpu
         if retention_policy_days is not UNSET:
             field_dict["retentionPolicyDays"] = retention_policy_days
+        if temporary_storage_lifetime_days is not UNSET:
+            field_dict["temporaryStorageLifetimeDays"] = temporary_storage_lifetime_days
         if service_connections is not UNSET:
             field_dict["serviceConnections"] = service_connections
         if vpc_id is not UNSET:
@@ -161,6 +176,8 @@ class ProjectSettings:
             field_dict["kmsArn"] = kms_arn
         if is_discoverable is not UNSET:
             field_dict["isDiscoverable"] = is_discoverable
+        if is_shareable is not UNSET:
+            field_dict["isShareable"] = is_shareable
 
         return field_dict
 
@@ -195,6 +212,8 @@ class ProjectSettings:
         max_gpuvcpu = d.pop("maxGPUVCPU", UNSET)
 
         retention_policy_days = d.pop("retentionPolicyDays", UNSET)
+
+        temporary_storage_lifetime_days = d.pop("temporaryStorageLifetimeDays", UNSET)
 
         service_connections = cast(List[str], d.pop("serviceConnections", UNSET))
 
@@ -259,6 +278,15 @@ class ProjectSettings:
 
         is_discoverable = _parse_is_discoverable(d.pop("isDiscoverable", UNSET))
 
+        def _parse_is_shareable(data: object) -> Union[None, Unset, bool]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, bool], data)
+
+        is_shareable = _parse_is_shareable(d.pop("isShareable", UNSET))
+
         project_settings = cls(
             budget_amount=budget_amount,
             budget_period=budget_period,
@@ -271,12 +299,14 @@ class ProjectSettings:
             max_spot_vcpu=max_spot_vcpu,
             max_gpuvcpu=max_gpuvcpu,
             retention_policy_days=retention_policy_days,
+            temporary_storage_lifetime_days=temporary_storage_lifetime_days,
             service_connections=service_connections,
             vpc_id=vpc_id,
             batch_subnets=batch_subnets,
             sagemaker_subnets=sagemaker_subnets,
             kms_arn=kms_arn,
             is_discoverable=is_discoverable,
+            is_shareable=is_shareable,
         )
 
         project_settings.additional_properties = d

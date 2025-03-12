@@ -1,30 +1,34 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, cast
+from typing import Any, Dict, List, Type, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-T = TypeVar("T", bound="GovernanceClassification")
+T = TypeVar("T", bound="GovernanceContact")
 
 
 @_attrs_define
-class GovernanceClassification:
+class GovernanceContact:
     """
     Attributes:
         id (str):
-        name (str):
+        title (str):
         description (str):
-        requirement_ids (List[str]):
+        name (str):
+        phone (str):
+        email (str):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
     """
 
     id: str
-    name: str
+    title: str
     description: str
-    requirement_ids: List[str]
+    name: str
+    phone: str
+    email: str
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
@@ -33,11 +37,15 @@ class GovernanceClassification:
     def to_dict(self) -> Dict[str, Any]:
         id = self.id
 
-        name = self.name
+        title = self.title
 
         description = self.description
 
-        requirement_ids = self.requirement_ids
+        name = self.name
+
+        phone = self.phone
+
+        email = self.email
 
         created_by = self.created_by
 
@@ -50,9 +58,11 @@ class GovernanceClassification:
         field_dict.update(
             {
                 "id": id,
-                "name": name,
+                "title": title,
                 "description": description,
-                "requirementIds": requirement_ids,
+                "name": name,
+                "phone": phone,
+                "email": email,
                 "createdBy": created_by,
                 "createdAt": created_at,
                 "updatedAt": updated_at,
@@ -66,11 +76,15 @@ class GovernanceClassification:
         d = src_dict.copy()
         id = d.pop("id")
 
-        name = d.pop("name")
+        title = d.pop("title")
 
         description = d.pop("description")
 
-        requirement_ids = cast(List[str], d.pop("requirementIds"))
+        name = d.pop("name")
+
+        phone = d.pop("phone")
+
+        email = d.pop("email")
 
         created_by = d.pop("createdBy")
 
@@ -78,18 +92,20 @@ class GovernanceClassification:
 
         updated_at = isoparse(d.pop("updatedAt"))
 
-        governance_classification = cls(
+        governance_contact = cls(
             id=id,
-            name=name,
+            title=title,
             description=description,
-            requirement_ids=requirement_ids,
+            name=name,
+            phone=phone,
+            email=email,
             created_by=created_by,
             created_at=created_at,
             updated_at=updated_at,
         )
 
-        governance_classification.additional_properties = d
-        return governance_classification
+        governance_contact.additional_properties = d
+        return governance_contact
 
     @property
     def additional_keys(self) -> List[str]:

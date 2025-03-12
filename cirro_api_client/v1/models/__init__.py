@@ -1,6 +1,5 @@
 """Contains all the data models used in inputs/outputs"""
 
-from .access_type import AccessType
 from .agent import Agent
 from .agent_detail import AgentDetail
 from .agent_detail_environment_configuration import AgentDetailEnvironmentConfiguration
@@ -33,6 +32,7 @@ from .compute_environment_configuration_input import ComputeEnvironmentConfigura
 from .compute_environment_configuration_input_properties import ComputeEnvironmentConfigurationInputProperties
 from .compute_environment_configuration_properties import ComputeEnvironmentConfigurationProperties
 from .contact import Contact
+from .contact_input import ContactInput
 from .create_notebook_instance_request import CreateNotebookInstanceRequest
 from .create_project_access_request import CreateProjectAccessRequest
 from .create_reference_request import CreateReferenceRequest
@@ -47,6 +47,8 @@ from .dashboard_request_dashboard_data import DashboardRequestDashboardData
 from .dashboard_request_info import DashboardRequestInfo
 from .dataset import Dataset
 from .dataset_assets_manifest import DatasetAssetsManifest
+from .dataset_condition import DatasetCondition
+from .dataset_condition_field import DatasetConditionField
 from .dataset_detail import DatasetDetail
 from .dataset_detail_info import DatasetDetailInfo
 from .dataset_detail_params import DatasetDetailParams
@@ -55,7 +57,6 @@ from .environment_type import EnvironmentType
 from .error_message import ErrorMessage
 from .executor import Executor
 from .feature_flags import FeatureFlags
-from .file_access_request import FileAccessRequest
 from .file_entry import FileEntry
 from .file_entry_metadata import FileEntryMetadata
 from .file_mapping_rule import FileMappingRule
@@ -64,10 +65,22 @@ from .file_requirements import FileRequirements
 from .form_schema import FormSchema
 from .form_schema_form import FormSchemaForm
 from .form_schema_ui import FormSchemaUi
+from .fulfillment_response import FulfillmentResponse
 from .generate_sftp_credentials_request import GenerateSftpCredentialsRequest
 from .get_execution_logs_response import GetExecutionLogsResponse
 from .get_project_summary_response_200 import GetProjectSummaryResponse200
+from .governance_access_type import GovernanceAccessType
 from .governance_classification import GovernanceClassification
+from .governance_contact import GovernanceContact
+from .governance_expiry import GovernanceExpiry
+from .governance_expiry_type import GovernanceExpiryType
+from .governance_file import GovernanceFile
+from .governance_file_access_request import GovernanceFileAccessRequest
+from .governance_file_type import GovernanceFileType
+from .governance_requirement import GovernanceRequirement
+from .governance_scope import GovernanceScope
+from .governance_training_verification import GovernanceTrainingVerification
+from .governance_type import GovernanceType
 from .import_data_request import ImportDataRequest
 from .invite_user_request import InviteUserRequest
 from .invite_user_response import InviteUserResponse
@@ -76,6 +89,9 @@ from .log_entry import LogEntry
 from .login_provider import LoginProvider
 from .metric_record import MetricRecord
 from .metric_record_services import MetricRecordServices
+from .move_dataset_input import MoveDatasetInput
+from .move_dataset_response import MoveDatasetResponse
+from .named_item import NamedItem
 from .notebook_instance import NotebookInstance
 from .notebook_instance_status_response import NotebookInstanceStatusResponse
 from .open_notebook_instance_response import OpenNotebookInstanceResponse
@@ -89,11 +105,14 @@ from .process import Process
 from .process_detail import ProcessDetail
 from .project import Project
 from .project_access_request import ProjectAccessRequest
+from .project_access_type import ProjectAccessType
 from .project_create_options import ProjectCreateOptions
 from .project_detail import ProjectDetail
+from .project_file_access_request import ProjectFileAccessRequest
 from .project_input import ProjectInput
 from .project_metrics import ProjectMetrics
 from .project_request import ProjectRequest
+from .project_requirement import ProjectRequirement
 from .project_role import ProjectRole
 from .project_settings import ProjectSettings
 from .project_user import ProjectUser
@@ -102,6 +121,8 @@ from .reference_type import ReferenceType
 from .reference_type_validation_item import ReferenceTypeValidationItem
 from .repository_type import RepositoryType
 from .request_status import RequestStatus
+from .requirement_fulfillment_input import RequirementFulfillmentInput
+from .requirement_input import RequirementInput
 from .resources_info import ResourcesInfo
 from .run_analysis_request import RunAnalysisRequest
 from .run_analysis_request_params import RunAnalysisRequestParams
@@ -112,6 +133,10 @@ from .sample_request_metadata import SampleRequestMetadata
 from .service_connection import ServiceConnection
 from .set_user_project_role_request import SetUserProjectRoleRequest
 from .sftp_credentials import SftpCredentials
+from .share import Share
+from .share_detail import ShareDetail
+from .share_input import ShareInput
+from .share_type import ShareType
 from .status import Status
 from .stop_execution_response import StopExecutionResponse
 from .sync_status import SyncStatus
@@ -131,7 +156,6 @@ from .user_project_assignment import UserProjectAssignment
 from .validate_file_requirements_request import ValidateFileRequirementsRequest
 
 __all__ = (
-    "AccessType",
     "Agent",
     "AgentDetail",
     "AgentDetailEnvironmentConfiguration",
@@ -164,6 +188,7 @@ __all__ = (
     "ComputeEnvironmentConfigurationInputProperties",
     "ComputeEnvironmentConfigurationProperties",
     "Contact",
+    "ContactInput",
     "CreateNotebookInstanceRequest",
     "CreateProjectAccessRequest",
     "CreateReferenceRequest",
@@ -178,6 +203,8 @@ __all__ = (
     "DashboardRequestInfo",
     "Dataset",
     "DatasetAssetsManifest",
+    "DatasetCondition",
+    "DatasetConditionField",
     "DatasetDetail",
     "DatasetDetailInfo",
     "DatasetDetailParams",
@@ -186,7 +213,6 @@ __all__ = (
     "ErrorMessage",
     "Executor",
     "FeatureFlags",
-    "FileAccessRequest",
     "FileEntry",
     "FileEntryMetadata",
     "FileMappingRule",
@@ -195,10 +221,22 @@ __all__ = (
     "FormSchema",
     "FormSchemaForm",
     "FormSchemaUi",
+    "FulfillmentResponse",
     "GenerateSftpCredentialsRequest",
     "GetExecutionLogsResponse",
     "GetProjectSummaryResponse200",
+    "GovernanceAccessType",
     "GovernanceClassification",
+    "GovernanceContact",
+    "GovernanceExpiry",
+    "GovernanceExpiryType",
+    "GovernanceFile",
+    "GovernanceFileAccessRequest",
+    "GovernanceFileType",
+    "GovernanceRequirement",
+    "GovernanceScope",
+    "GovernanceTrainingVerification",
+    "GovernanceType",
     "ImportDataRequest",
     "InviteUserRequest",
     "InviteUserResponse",
@@ -207,6 +245,9 @@ __all__ = (
     "LoginProvider",
     "MetricRecord",
     "MetricRecordServices",
+    "MoveDatasetInput",
+    "MoveDatasetResponse",
+    "NamedItem",
     "NotebookInstance",
     "NotebookInstanceStatusResponse",
     "OpenNotebookInstanceResponse",
@@ -220,11 +261,14 @@ __all__ = (
     "ProcessDetail",
     "Project",
     "ProjectAccessRequest",
+    "ProjectAccessType",
     "ProjectCreateOptions",
     "ProjectDetail",
+    "ProjectFileAccessRequest",
     "ProjectInput",
     "ProjectMetrics",
     "ProjectRequest",
+    "ProjectRequirement",
     "ProjectRole",
     "ProjectSettings",
     "ProjectUser",
@@ -233,6 +277,8 @@ __all__ = (
     "ReferenceTypeValidationItem",
     "RepositoryType",
     "RequestStatus",
+    "RequirementFulfillmentInput",
+    "RequirementInput",
     "ResourcesInfo",
     "RunAnalysisRequest",
     "RunAnalysisRequestParams",
@@ -243,6 +289,10 @@ __all__ = (
     "ServiceConnection",
     "SetUserProjectRoleRequest",
     "SftpCredentials",
+    "Share",
+    "ShareDetail",
+    "ShareInput",
+    "ShareType",
     "Status",
     "StopExecutionResponse",
     "SyncStatus",

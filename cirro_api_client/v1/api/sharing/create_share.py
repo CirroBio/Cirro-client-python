@@ -5,21 +5,21 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.aws_credentials import AWSCredentials
-from ...models.project_file_access_request import ProjectFileAccessRequest
+from ...models.create_response import CreateResponse
+from ...models.share_input import ShareInput
 from ...types import Response
 
 
 def _get_kwargs(
     project_id: str,
     *,
-    body: ProjectFileAccessRequest,
+    body: ShareInput,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
     _kwargs: Dict[str, Any] = {
         "method": "post",
-        "url": f"/projects/{project_id}/s3-token",
+        "url": f"/projects/{project_id}/shares",
     }
 
     _body = body.to_dict()
@@ -31,16 +31,16 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[AWSCredentials]:
-    if response.status_code == HTTPStatus.OK:
-        response_200 = AWSCredentials.from_dict(response.json())
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[CreateResponse]:
+    if response.status_code == HTTPStatus.CREATED:
+        response_201 = CreateResponse.from_dict(response.json())
 
-        return response_200
+        return response_201
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[AWSCredentials]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[CreateResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -53,15 +53,15 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Response[AWSCredentials]:
-    """Create project file access token
+    body: ShareInput,
+) -> Response[CreateResponse]:
+    """Create share
 
-     Generates credentials used for connecting via S3
+     Create a new share to publish to other projects
 
     Args:
         project_id (str):
-        body (ProjectFileAccessRequest):
+        body (ShareInput):
         client (Client): instance of the API client
 
     Raises:
@@ -69,7 +69,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[AWSCredentials]
+        Response[CreateResponse]
     """
 
     kwargs = _get_kwargs(
@@ -89,15 +89,15 @@ def sync(
     project_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Optional[AWSCredentials]:
-    """Create project file access token
+    body: ShareInput,
+) -> Optional[CreateResponse]:
+    """Create share
 
-     Generates credentials used for connecting via S3
+     Create a new share to publish to other projects
 
     Args:
         project_id (str):
-        body (ProjectFileAccessRequest):
+        body (ShareInput):
         client (Client): instance of the API client
 
     Raises:
@@ -105,7 +105,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        AWSCredentials
+        CreateResponse
     """
 
     try:
@@ -122,15 +122,15 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Response[AWSCredentials]:
-    """Create project file access token
+    body: ShareInput,
+) -> Response[CreateResponse]:
+    """Create share
 
-     Generates credentials used for connecting via S3
+     Create a new share to publish to other projects
 
     Args:
         project_id (str):
-        body (ProjectFileAccessRequest):
+        body (ShareInput):
         client (Client): instance of the API client
 
     Raises:
@@ -138,7 +138,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[AWSCredentials]
+        Response[CreateResponse]
     """
 
     kwargs = _get_kwargs(
@@ -155,15 +155,15 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-    body: ProjectFileAccessRequest,
-) -> Optional[AWSCredentials]:
-    """Create project file access token
+    body: ShareInput,
+) -> Optional[CreateResponse]:
+    """Create share
 
-     Generates credentials used for connecting via S3
+     Create a new share to publish to other projects
 
     Args:
         project_id (str):
-        body (ProjectFileAccessRequest):
+        body (ShareInput):
         client (Client): instance of the API client
 
     Raises:
@@ -171,7 +171,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        AWSCredentials
+        CreateResponse
     """
 
     try:

@@ -11,8 +11,8 @@ from ...types import Response
 
 def _get_kwargs() -> Dict[str, Any]:
     _kwargs: Dict[str, Any] = {
-        "method": "options",
-        "url": "/projects",
+        "method": "get",
+        "url": "/projects/options",
     }
 
     return _kwargs

@@ -21,6 +21,7 @@ class NotebookInstance:
         instance_type (str):
         accelerator_types (List[str]):
         volume_size_gb (int):
+        is_shared_with_project (bool):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
@@ -33,6 +34,7 @@ class NotebookInstance:
     instance_type: str
     accelerator_types: List[str]
     volume_size_gb: int
+    is_shared_with_project: bool
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
@@ -53,6 +55,8 @@ class NotebookInstance:
 
         volume_size_gb = self.volume_size_gb
 
+        is_shared_with_project = self.is_shared_with_project
+
         created_by = self.created_by
 
         created_at = self.created_at.isoformat()
@@ -70,6 +74,7 @@ class NotebookInstance:
                 "instanceType": instance_type,
                 "acceleratorTypes": accelerator_types,
                 "volumeSizeGB": volume_size_gb,
+                "isSharedWithProject": is_shared_with_project,
                 "createdBy": created_by,
                 "createdAt": created_at,
                 "updatedAt": updated_at,
@@ -95,6 +100,8 @@ class NotebookInstance:
 
         volume_size_gb = d.pop("volumeSizeGB")
 
+        is_shared_with_project = d.pop("isSharedWithProject")
+
         created_by = d.pop("createdBy")
 
         created_at = isoparse(d.pop("createdAt"))
@@ -109,6 +116,7 @@ class NotebookInstance:
             instance_type=instance_type,
             accelerator_types=accelerator_types,
             volume_size_gb=volume_size_gb,
+            is_shared_with_project=is_shared_with_project,
             created_by=created_by,
             created_at=created_at,
             updated_at=updated_at,

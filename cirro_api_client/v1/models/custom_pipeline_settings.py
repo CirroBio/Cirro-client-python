@@ -5,6 +5,7 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
+from ..models.repository_type import RepositoryType
 from ..models.sync_status import SyncStatus
 from ..types import UNSET, Unset
 
@@ -20,6 +21,7 @@ class CustomPipelineSettings:
         branch (Union[Unset, str]): Branch, tag, or commit hash of the repo that contains the process definition
             Default: 'main'.
         folder (Union[Unset, str]): Folder within the repo that contains the process definition Default: '.cirro'.
+        repository_type (Union[None, RepositoryType, Unset]):
         last_sync (Union[None, Unset, datetime.datetime]): Time of last sync
         sync_status (Union[None, SyncStatus, Unset]):
         commit_hash (Union[None, Unset, str]): Commit hash of the last successful sync
@@ -29,6 +31,7 @@ class CustomPipelineSettings:
     repository: str
     branch: Union[Unset, str] = "main"
     folder: Union[Unset, str] = ".cirro"
+    repository_type: Union[None, RepositoryType, Unset] = UNSET
     last_sync: Union[None, Unset, datetime.datetime] = UNSET
     sync_status: Union[None, SyncStatus, Unset] = UNSET
     commit_hash: Union[None, Unset, str] = UNSET
@@ -41,6 +44,14 @@ class CustomPipelineSettings:
         branch = self.branch
 
         folder = self.folder
+
+        repository_type: Union[None, Unset, str]
+        if isinstance(self.repository_type, Unset):
+            repository_type = UNSET
+        elif isinstance(self.repository_type, RepositoryType):
+            repository_type = self.repository_type.value
+        else:
+            repository_type = self.repository_type
 
         last_sync: Union[None, Unset, str]
         if isinstance(self.last_sync, Unset):
@@ -77,6 +88,8 @@ class CustomPipelineSettings:
             field_dict["branch"] = branch
         if folder is not UNSET:
             field_dict["folder"] = folder
+        if repository_type is not UNSET:
+            field_dict["repositoryType"] = repository_type
         if last_sync is not UNSET:
             field_dict["lastSync"] = last_sync
         if sync_status is not UNSET:
@@ -96,6 +109,23 @@ class CustomPipelineSettings:
         branch = d.pop("branch", UNSET)
 
         folder = d.pop("folder", UNSET)
+
+        def _parse_repository_type(data: object) -> Union[None, RepositoryType, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                repository_type_type_1 = RepositoryType(data)
+
+                return repository_type_type_1
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, RepositoryType, Unset], data)
+
+        repository_type = _parse_repository_type(d.pop("repositoryType", UNSET))
 
         def _parse_last_sync(data: object) -> Union[None, Unset, datetime.datetime]:
             if data is None:
@@ -146,6 +176,7 @@ class CustomPipelineSettings:
             repository=repository,
             branch=branch,
             folder=folder,
+            repository_type=repository_type,
             last_sync=last_sync,
             sync_status=sync_status,
             commit_hash=commit_hash,

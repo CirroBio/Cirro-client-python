@@ -1,15 +1,17 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..models.status import Status
+from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.dataset_detail_info import DatasetDetailInfo
     from ..models.dataset_detail_params import DatasetDetailParams
+    from ..models.named_item import NamedItem
     from ..models.tag import Tag
 
 
@@ -27,14 +29,17 @@ class DatasetDetail:
         process_id (str):
         project_id (str):
         source_dataset_ids (List[str]):
+        source_datasets (List['NamedItem']):
         status (Status):
         status_message (str):
         tags (List['Tag']):
         params (DatasetDetailParams):
         info (DatasetDetailInfo):
+        is_view_restricted (bool):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
+        share (Union['NamedItem', None, Unset]):
     """
 
     id: str
@@ -44,17 +49,22 @@ class DatasetDetail:
     process_id: str
     project_id: str
     source_dataset_ids: List[str]
+    source_datasets: List["NamedItem"]
     status: Status
     status_message: str
     tags: List["Tag"]
     params: "DatasetDetailParams"
     info: "DatasetDetailInfo"
+    is_view_restricted: bool
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
+    share: Union["NamedItem", None, Unset] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        from ..models.named_item import NamedItem
+
         id = self.id
 
         name = self.name
@@ -69,6 +79,11 @@ class DatasetDetail:
 
         source_dataset_ids = self.source_dataset_ids
 
+        source_datasets = []
+        for source_datasets_item_data in self.source_datasets:
+            source_datasets_item = source_datasets_item_data.to_dict()
+            source_datasets.append(source_datasets_item)
+
         status = self.status.value
 
         status_message = self.status_message
@@ -82,11 +97,21 @@ class DatasetDetail:
 
         info = self.info.to_dict()
 
+        is_view_restricted = self.is_view_restricted
+
         created_by = self.created_by
 
         created_at = self.created_at.isoformat()
 
         updated_at = self.updated_at.isoformat()
+
+        share: Union[Dict[str, Any], None, Unset]
+        if isinstance(self.share, Unset):
+            share = UNSET
+        elif isinstance(self.share, NamedItem):
+            share = self.share.to_dict()
+        else:
+            share = self.share
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -99,16 +124,20 @@ class DatasetDetail:
                 "processId": process_id,
                 "projectId": project_id,
                 "sourceDatasetIds": source_dataset_ids,
+                "sourceDatasets": source_datasets,
                 "status": status,
                 "statusMessage": status_message,
                 "tags": tags,
                 "params": params,
                 "info": info,
+                "isViewRestricted": is_view_restricted,
                 "createdBy": created_by,
                 "createdAt": created_at,
                 "updatedAt": updated_at,
             }
         )
+        if share is not UNSET:
+            field_dict["share"] = share
 
         return field_dict
 
@@ -116,6 +145,7 @@ class DatasetDetail:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.dataset_detail_info import DatasetDetailInfo
         from ..models.dataset_detail_params import DatasetDetailParams
+        from ..models.named_item import NamedItem
         from ..models.tag import Tag
 
         d = src_dict.copy()
@@ -133,6 +163,13 @@ class DatasetDetail:
 
         source_dataset_ids = cast(List[str], d.pop("sourceDatasetIds"))
 
+        source_datasets = []
+        _source_datasets = d.pop("sourceDatasets")
+        for source_datasets_item_data in _source_datasets:
+            source_datasets_item = NamedItem.from_dict(source_datasets_item_data)
+
+            source_datasets.append(source_datasets_item)
+
         status = Status(d.pop("status"))
 
         status_message = d.pop("statusMessage")
@@ -148,11 +185,30 @@ class DatasetDetail:
 
         info = DatasetDetailInfo.from_dict(d.pop("info"))
 
+        is_view_restricted = d.pop("isViewRestricted")
+
         created_by = d.pop("createdBy")
 
         created_at = isoparse(d.pop("createdAt"))
 
         updated_at = isoparse(d.pop("updatedAt"))
+
+        def _parse_share(data: object) -> Union["NamedItem", None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                share_type_1 = NamedItem.from_dict(data)
+
+                return share_type_1
+            except:  # noqa: E722
+                pass
+            return cast(Union["NamedItem", None, Unset], data)
+
+        share = _parse_share(d.pop("share", UNSET))
 
         dataset_detail = cls(
             id=id,
@@ -162,14 +218,17 @@ class DatasetDetail:
             process_id=process_id,
             project_id=project_id,
             source_dataset_ids=source_dataset_ids,
+            source_datasets=source_datasets,
             status=status,
             status_message=status_message,
             tags=tags,
             params=params,
             info=info,
+            is_view_restricted=is_view_restricted,
             created_by=created_by,
             created_at=created_at,
             updated_at=updated_at,
+            share=share,
         )
 
         dataset_detail.additional_properties = d

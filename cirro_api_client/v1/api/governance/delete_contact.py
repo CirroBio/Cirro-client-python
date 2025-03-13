@@ -9,19 +9,18 @@ from ...types import Response
 
 
 def _get_kwargs(
-    project_id: str,
-    dataset_id: str,
+    contact_id: str,
 ) -> Dict[str, Any]:
     _kwargs: Dict[str, Any] = {
-        "method": "put",
-        "url": f"/projects/{project_id}/datasets/{dataset_id}/regenerate-manifest",
+        "method": "delete",
+        "url": f"/governance/contacts/{contact_id}",
     }
 
     return _kwargs
 
 
 def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Any]:
-    if response.status_code == HTTPStatus.ACCEPTED:
+    if response.status_code == HTTPStatus.OK:
         return None
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
@@ -37,18 +36,16 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Any
 
 
 def sync_detailed(
-    project_id: str,
-    dataset_id: str,
+    contact_id: str,
     *,
     client: Client,
 ) -> Response[Any]:
-    """Regenerate dataset manifest
+    """Delete a contact
 
-     Regenerate dataset file listing.
+     Deletes the contact, and removes it from all governance requirements.
 
     Args:
-        project_id (str):
-        dataset_id (str):
+        contact_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -60,8 +57,7 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
-        dataset_id=dataset_id,
+        contact_id=contact_id,
     )
 
     response = client.get_httpx_client().request(
@@ -73,18 +69,16 @@ def sync_detailed(
 
 
 async def asyncio_detailed(
-    project_id: str,
-    dataset_id: str,
+    contact_id: str,
     *,
     client: Client,
 ) -> Response[Any]:
-    """Regenerate dataset manifest
+    """Delete a contact
 
-     Regenerate dataset file listing.
+     Deletes the contact, and removes it from all governance requirements.
 
     Args:
-        project_id (str):
-        dataset_id (str):
+        contact_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -96,8 +90,7 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
-        dataset_id=dataset_id,
+        contact_id=contact_id,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)

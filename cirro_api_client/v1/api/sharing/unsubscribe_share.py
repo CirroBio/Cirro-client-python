@@ -10,18 +10,18 @@ from ...types import Response
 
 def _get_kwargs(
     project_id: str,
-    dataset_id: str,
+    share_id: str,
 ) -> Dict[str, Any]:
     _kwargs: Dict[str, Any] = {
         "method": "put",
-        "url": f"/projects/{project_id}/datasets/{dataset_id}/regenerate-manifest",
+        "url": f"/projects/{project_id}/shares/{share_id}:unsubscribe",
     }
 
     return _kwargs
 
 
 def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Any]:
-    if response.status_code == HTTPStatus.ACCEPTED:
+    if response.status_code == HTTPStatus.OK:
         return None
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
@@ -38,17 +38,17 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Any
 
 def sync_detailed(
     project_id: str,
-    dataset_id: str,
+    share_id: str,
     *,
     client: Client,
 ) -> Response[Any]:
-    """Regenerate dataset manifest
+    """Unsubscribe from share
 
-     Regenerate dataset file listing.
+     Unsubscribe from a share that has been shared with your project
 
     Args:
         project_id (str):
-        dataset_id (str):
+        share_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -61,7 +61,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        dataset_id=dataset_id,
+        share_id=share_id,
     )
 
     response = client.get_httpx_client().request(
@@ -74,17 +74,17 @@ def sync_detailed(
 
 async def asyncio_detailed(
     project_id: str,
-    dataset_id: str,
+    share_id: str,
     *,
     client: Client,
 ) -> Response[Any]:
-    """Regenerate dataset manifest
+    """Unsubscribe from share
 
-     Regenerate dataset file listing.
+     Unsubscribe from a share that has been shared with your project
 
     Args:
         project_id (str):
-        dataset_id (str):
+        share_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -97,7 +97,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        dataset_id=dataset_id,
+        share_id=share_id,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)

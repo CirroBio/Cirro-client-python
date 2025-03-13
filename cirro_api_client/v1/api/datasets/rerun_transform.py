@@ -44,7 +44,7 @@ def sync_detailed(
 ) -> Response[Any]:
     """Rerun data transforms
 
-     Rerun data transforms (TODO).
+     Rerun data transforms and web optimization.
 
     Args:
         project_id (str):
@@ -80,7 +80,7 @@ async def asyncio_detailed(
 ) -> Response[Any]:
     """Rerun data transforms
 
-     Rerun data transforms (TODO).
+     Rerun data transforms and web optimization.
 
     Args:
         project_id (str):

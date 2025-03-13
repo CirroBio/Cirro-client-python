@@ -44,7 +44,7 @@ def sync_detailed(
 ) -> Response[Any]:
     """Rerun sample ingest
 
-     Rerun sample ingest (TODO).
+     Rerun sample ingest.
 
     Args:
         project_id (str):
@@ -80,7 +80,7 @@ async def asyncio_detailed(
 ) -> Response[Any]:
     """Rerun sample ingest
 
-     Rerun sample ingest (TODO).
+     Rerun sample ingest.
 
     Args:
         project_id (str):

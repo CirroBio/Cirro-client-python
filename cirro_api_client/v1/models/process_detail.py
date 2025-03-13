@@ -36,6 +36,7 @@ class ProcessDetail:
         file_requirements_message (Union[None, Unset, str]): Description of the files to be uploaded (optional)
         pipeline_code (Union['PipelineCode', None, Unset]):
         owner (Union[None, Unset, str]): Username of the pipeline creator (blank if Cirro curated)
+        is_tenant_wide (Union[Unset, bool]): Whether the pipeline is available to all projects in the organization
         allow_multiple_sources (Union[Unset, bool]): Whether the pipeline is allowed to have multiple dataset sources
         custom_settings (Union['CustomPipelineSettings', None, Unset]):
         is_archived (Union[Unset, bool]): Whether the process is marked for removal
@@ -57,6 +58,7 @@ class ProcessDetail:
     file_requirements_message: Union[None, Unset, str] = UNSET
     pipeline_code: Union["PipelineCode", None, Unset] = UNSET
     owner: Union[None, Unset, str] = UNSET
+    is_tenant_wide: Union[Unset, bool] = UNSET
     allow_multiple_sources: Union[Unset, bool] = UNSET
     custom_settings: Union["CustomPipelineSettings", None, Unset] = UNSET
     is_archived: Union[Unset, bool] = UNSET
@@ -117,6 +119,8 @@ class ProcessDetail:
         else:
             owner = self.owner
 
+        is_tenant_wide = self.is_tenant_wide
+
         allow_multiple_sources = self.allow_multiple_sources
 
         custom_settings: Union[Dict[str, Any], None, Unset]
@@ -168,6 +172,8 @@ class ProcessDetail:
             field_dict["pipelineCode"] = pipeline_code
         if owner is not UNSET:
             field_dict["owner"] = owner
+        if is_tenant_wide is not UNSET:
+            field_dict["isTenantWide"] = is_tenant_wide
         if allow_multiple_sources is not UNSET:
             field_dict["allowMultipleSources"] = allow_multiple_sources
         if custom_settings is not UNSET:
@@ -257,6 +263,8 @@ class ProcessDetail:
 
         owner = _parse_owner(d.pop("owner", UNSET))
 
+        is_tenant_wide = d.pop("isTenantWide", UNSET)
+
         allow_multiple_sources = d.pop("allowMultipleSources", UNSET)
 
         def _parse_custom_settings(data: object) -> Union["CustomPipelineSettings", None, Unset]:
@@ -315,6 +323,7 @@ class ProcessDetail:
             file_requirements_message=file_requirements_message,
             pipeline_code=pipeline_code,
             owner=owner,
+            is_tenant_wide=is_tenant_wide,
             allow_multiple_sources=allow_multiple_sources,
             custom_settings=custom_settings,
             is_archived=is_archived,

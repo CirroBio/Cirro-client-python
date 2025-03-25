@@ -6,6 +6,7 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
+    from ..models.artifact import Artifact
     from ..models.dataset_viz import DatasetViz
     from ..models.file_entry import FileEntry
     from ..models.table import Table
@@ -23,6 +24,7 @@ class DatasetAssetsManifest:
         total_files (Union[Unset, int]): Total number of files in the dataset, used for pagination
         viz (Union[Unset, List['DatasetViz']]): List of viz to render for the dataset
         tables (Union[Unset, List['Table']]): List of web optimized tables for the dataset
+        artifacts (Union[Unset, List['Artifact']]): Artifacts associated with the dataset
     """
 
     domain: Union[Unset, str] = UNSET
@@ -30,6 +32,7 @@ class DatasetAssetsManifest:
     total_files: Union[Unset, int] = UNSET
     viz: Union[Unset, List["DatasetViz"]] = UNSET
     tables: Union[Unset, List["Table"]] = UNSET
+    artifacts: Union[Unset, List["Artifact"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -58,6 +61,13 @@ class DatasetAssetsManifest:
                 tables_item = tables_item_data.to_dict()
                 tables.append(tables_item)
 
+        artifacts: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.artifacts, Unset):
+            artifacts = []
+            for artifacts_item_data in self.artifacts:
+                artifacts_item = artifacts_item_data.to_dict()
+                artifacts.append(artifacts_item)
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -71,11 +81,14 @@ class DatasetAssetsManifest:
             field_dict["viz"] = viz
         if tables is not UNSET:
             field_dict["tables"] = tables
+        if artifacts is not UNSET:
+            field_dict["artifacts"] = artifacts
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.artifact import Artifact
         from ..models.dataset_viz import DatasetViz
         from ..models.file_entry import FileEntry
         from ..models.table import Table
@@ -106,12 +119,20 @@ class DatasetAssetsManifest:
 
             tables.append(tables_item)
 
+        artifacts = []
+        _artifacts = d.pop("artifacts", UNSET)
+        for artifacts_item_data in _artifacts or []:
+            artifacts_item = Artifact.from_dict(artifacts_item_data)
+
+            artifacts.append(artifacts_item)
+
         dataset_assets_manifest = cls(
             domain=domain,
             files=files,
             total_files=total_files,
             viz=viz,
             tables=tables,
+            artifacts=artifacts,
         )
 
         dataset_assets_manifest.additional_properties = d

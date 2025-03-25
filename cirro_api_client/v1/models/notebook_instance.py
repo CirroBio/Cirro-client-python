@@ -20,6 +20,7 @@ class NotebookInstance:
         status_message (str):
         instance_type (str):
         accelerator_types (List[str]):
+        git_repositories (List[str]):
         volume_size_gb (int):
         is_shared_with_project (bool):
         created_by (str):
@@ -33,6 +34,7 @@ class NotebookInstance:
     status_message: str
     instance_type: str
     accelerator_types: List[str]
+    git_repositories: List[str]
     volume_size_gb: int
     is_shared_with_project: bool
     created_by: str
@@ -52,6 +54,8 @@ class NotebookInstance:
         instance_type = self.instance_type
 
         accelerator_types = self.accelerator_types
+
+        git_repositories = self.git_repositories
 
         volume_size_gb = self.volume_size_gb
 
@@ -73,6 +77,7 @@ class NotebookInstance:
                 "statusMessage": status_message,
                 "instanceType": instance_type,
                 "acceleratorTypes": accelerator_types,
+                "gitRepositories": git_repositories,
                 "volumeSizeGB": volume_size_gb,
                 "isSharedWithProject": is_shared_with_project,
                 "createdBy": created_by,
@@ -98,6 +103,8 @@ class NotebookInstance:
 
         accelerator_types = cast(List[str], d.pop("acceleratorTypes"))
 
+        git_repositories = cast(List[str], d.pop("gitRepositories"))
+
         volume_size_gb = d.pop("volumeSizeGB")
 
         is_shared_with_project = d.pop("isSharedWithProject")
@@ -115,6 +122,7 @@ class NotebookInstance:
             status_message=status_message,
             instance_type=instance_type,
             accelerator_types=accelerator_types,
+            git_repositories=git_repositories,
             volume_size_gb=volume_size_gb,
             is_shared_with_project=is_shared_with_project,
             created_by=created_by,

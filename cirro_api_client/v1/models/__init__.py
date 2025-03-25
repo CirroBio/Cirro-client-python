@@ -13,6 +13,8 @@ from .agent_status import AgentStatus
 from .agent_tags import AgentTags
 from .allowed_data_type import AllowedDataType
 from .approve_project_access_request import ApproveProjectAccessRequest
+from .artifact import Artifact
+from .artifact_type import ArtifactType
 from .audit_event import AuditEvent
 from .audit_event_changes import AuditEventChanges
 from .audit_event_event_detail import AuditEventEventDetail
@@ -169,6 +171,8 @@ __all__ = (
     "AgentTags",
     "AllowedDataType",
     "ApproveProjectAccessRequest",
+    "Artifact",
+    "ArtifactType",
     "AuditEvent",
     "AuditEventChanges",
     "AuditEventEventDetail",

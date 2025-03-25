@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cirro_api_client"
-version = "0.3.0"
+version = "0.3.1"
 description = "A client library for accessing Cirro"
 authors = ["Cirro <support@cirro.bio>"]
 license = "MIT"

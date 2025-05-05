@@ -30,7 +30,6 @@ class CustomProcessInput:
         data_type (Union[None, Unset, str]): Name of the data type this pipeline produces (if it is not defined, use the
             name)
         category (Union[Unset, str]): Category of the process Example: Microbial Analysis.
-        pipeline_type (Union[Unset, str]): Type of pipeline Example: nf-core.
         documentation_url (Union[None, Unset, str]): Link to process documentation Example:
             https://docs.cirro.bio/pipelines/catalog_targeted_sequencing/#crispr-screen-analysis.
         file_requirements_message (Union[None, Unset, str]): Description of the files to be uploaded (optional)
@@ -39,7 +38,6 @@ class CustomProcessInput:
         allow_multiple_sources (Union[Unset, bool]): Whether the pipeline is allowed to have multiple dataset sources
         uses_sample_sheet (Union[Unset, bool]): Whether the pipeline uses the Cirro-provided sample sheet
         custom_settings (Union['CustomPipelineSettings', None, Unset]):
-        is_archived (Union[Unset, bool]): Whether the process is marked as archived
         file_mapping_rules (Union[List['FileMappingRule'], None, Unset]):
     """
 
@@ -52,7 +50,6 @@ class CustomProcessInput:
     linked_project_ids: List[str]
     data_type: Union[None, Unset, str] = UNSET
     category: Union[Unset, str] = UNSET
-    pipeline_type: Union[Unset, str] = UNSET
     documentation_url: Union[None, Unset, str] = UNSET
     file_requirements_message: Union[None, Unset, str] = UNSET
     pipeline_code: Union["PipelineCode", None, Unset] = UNSET
@@ -60,7 +57,6 @@ class CustomProcessInput:
     allow_multiple_sources: Union[Unset, bool] = UNSET
     uses_sample_sheet: Union[Unset, bool] = UNSET
     custom_settings: Union["CustomPipelineSettings", None, Unset] = UNSET
-    is_archived: Union[Unset, bool] = UNSET
     file_mapping_rules: Union[List["FileMappingRule"], None, Unset] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -89,8 +85,6 @@ class CustomProcessInput:
             data_type = self.data_type
 
         category = self.category
-
-        pipeline_type = self.pipeline_type
 
         documentation_url: Union[None, Unset, str]
         if isinstance(self.documentation_url, Unset):
@@ -126,8 +120,6 @@ class CustomProcessInput:
         else:
             custom_settings = self.custom_settings
 
-        is_archived = self.is_archived
-
         file_mapping_rules: Union[List[Dict[str, Any]], None, Unset]
         if isinstance(self.file_mapping_rules, Unset):
             file_mapping_rules = UNSET
@@ -157,8 +149,6 @@ class CustomProcessInput:
             field_dict["dataType"] = data_type
         if category is not UNSET:
             field_dict["category"] = category
-        if pipeline_type is not UNSET:
-            field_dict["pipelineType"] = pipeline_type
         if documentation_url is not UNSET:
             field_dict["documentationUrl"] = documentation_url
         if file_requirements_message is not UNSET:
@@ -173,8 +163,6 @@ class CustomProcessInput:
             field_dict["usesSampleSheet"] = uses_sample_sheet
         if custom_settings is not UNSET:
             field_dict["customSettings"] = custom_settings
-        if is_archived is not UNSET:
-            field_dict["isArchived"] = is_archived
         if file_mapping_rules is not UNSET:
             field_dict["fileMappingRules"] = file_mapping_rules
 
@@ -211,8 +199,6 @@ class CustomProcessInput:
         data_type = _parse_data_type(d.pop("dataType", UNSET))
 
         category = d.pop("category", UNSET)
-
-        pipeline_type = d.pop("pipelineType", UNSET)
 
         def _parse_documentation_url(data: object) -> Union[None, Unset, str]:
             if data is None:
@@ -272,8 +258,6 @@ class CustomProcessInput:
 
         custom_settings = _parse_custom_settings(d.pop("customSettings", UNSET))
 
-        is_archived = d.pop("isArchived", UNSET)
-
         def _parse_file_mapping_rules(data: object) -> Union[List["FileMappingRule"], None, Unset]:
             if data is None:
                 return data
@@ -306,7 +290,6 @@ class CustomProcessInput:
             linked_project_ids=linked_project_ids,
             data_type=data_type,
             category=category,
-            pipeline_type=pipeline_type,
             documentation_url=documentation_url,
             file_requirements_message=file_requirements_message,
             pipeline_code=pipeline_code,
@@ -314,7 +297,6 @@ class CustomProcessInput:
             allow_multiple_sources=allow_multiple_sources,
             uses_sample_sheet=uses_sample_sheet,
             custom_settings=custom_settings,
-            is_archived=is_archived,
             file_mapping_rules=file_mapping_rules,
         )
 

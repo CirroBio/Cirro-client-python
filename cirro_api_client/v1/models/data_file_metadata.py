@@ -3,12 +3,12 @@ from typing import Any, Dict, List, Type, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="UpdateUserRequestSettings")
+T = TypeVar("T", bound="DataFileMetadata")
 
 
 @_attrs_define
-class UpdateUserRequestSettings:
-    """Additional settings for the user"""
+class DataFileMetadata:
+    """ """
 
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -22,10 +22,10 @@ class UpdateUserRequestSettings:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        update_user_request_settings = cls()
+        data_file_metadata = cls()
 
-        update_user_request_settings.additional_properties = d
-        return update_user_request_settings
+        data_file_metadata.additional_properties = d
+        return data_file_metadata
 
     @property
     def additional_keys(self) -> List[str]:

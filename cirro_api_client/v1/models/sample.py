@@ -8,6 +8,7 @@ from dateutil.parser import isoparse
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
+    from ..models.data_file import DataFile
     from ..models.sample_metadata import SampleMetadata
 
 
@@ -21,6 +22,7 @@ class Sample:
         id (str):
         name (str):
         metadata (Union['SampleMetadata', None, Unset]):
+        files (Union[List['DataFile'], None, Unset]): Files associated with this sample
         dataset_ids (Union[List[str], None, Unset]):
         created_at (Union[None, Unset, datetime.datetime]):
         updated_at (Union[None, Unset, datetime.datetime]):
@@ -29,6 +31,7 @@ class Sample:
     id: str
     name: str
     metadata: Union["SampleMetadata", None, Unset] = UNSET
+    files: Union[List["DataFile"], None, Unset] = UNSET
     dataset_ids: Union[List[str], None, Unset] = UNSET
     created_at: Union[None, Unset, datetime.datetime] = UNSET
     updated_at: Union[None, Unset, datetime.datetime] = UNSET
@@ -48,6 +51,18 @@ class Sample:
             metadata = self.metadata.to_dict()
         else:
             metadata = self.metadata
+
+        files: Union[List[Dict[str, Any]], None, Unset]
+        if isinstance(self.files, Unset):
+            files = UNSET
+        elif isinstance(self.files, list):
+            files = []
+            for files_type_0_item_data in self.files:
+                files_type_0_item = files_type_0_item_data.to_dict()
+                files.append(files_type_0_item)
+
+        else:
+            files = self.files
 
         dataset_ids: Union[List[str], None, Unset]
         if isinstance(self.dataset_ids, Unset):
@@ -84,6 +99,8 @@ class Sample:
         )
         if metadata is not UNSET:
             field_dict["metadata"] = metadata
+        if files is not UNSET:
+            field_dict["files"] = files
         if dataset_ids is not UNSET:
             field_dict["datasetIds"] = dataset_ids
         if created_at is not UNSET:
@@ -95,6 +112,7 @@ class Sample:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.data_file import DataFile
         from ..models.sample_metadata import SampleMetadata
 
         d = src_dict.copy()
@@ -118,6 +136,28 @@ class Sample:
             return cast(Union["SampleMetadata", None, Unset], data)
 
         metadata = _parse_metadata(d.pop("metadata", UNSET))
+
+        def _parse_files(data: object) -> Union[List["DataFile"], None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, list):
+                    raise TypeError()
+                files_type_0 = []
+                _files_type_0 = data
+                for files_type_0_item_data in _files_type_0:
+                    files_type_0_item = DataFile.from_dict(files_type_0_item_data)
+
+                    files_type_0.append(files_type_0_item)
+
+                return files_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[List["DataFile"], None, Unset], data)
+
+        files = _parse_files(d.pop("files", UNSET))
 
         def _parse_dataset_ids(data: object) -> Union[List[str], None, Unset]:
             if data is None:
@@ -174,6 +214,7 @@ class Sample:
             id=id,
             name=name,
             metadata=metadata,
+            files=files,
             dataset_ids=dataset_ids,
             created_at=created_at,
             updated_at=updated_at,

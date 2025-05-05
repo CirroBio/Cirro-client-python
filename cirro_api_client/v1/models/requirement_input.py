@@ -28,6 +28,7 @@ class RequirementInput:
         scope (GovernanceScope): The levels at which governance requirements can be enforced
         contact_ids (List[str]):
         expiration (GovernanceExpiry):
+        project_id (Union[None, Unset, str]):
         acceptance (Union[GovernanceScope, None, Unset]):
         enactment_date (Union[None, Unset, datetime.datetime]):
         supplemental_docs (Union[List['GovernanceFile'], None, Unset]):
@@ -42,6 +43,7 @@ class RequirementInput:
     scope: GovernanceScope
     contact_ids: List[str]
     expiration: "GovernanceExpiry"
+    project_id: Union[None, Unset, str] = UNSET
     acceptance: Union[GovernanceScope, None, Unset] = UNSET
     enactment_date: Union[None, Unset, datetime.datetime] = UNSET
     supplemental_docs: Union[List["GovernanceFile"], None, Unset] = UNSET
@@ -64,6 +66,12 @@ class RequirementInput:
         contact_ids = self.contact_ids
 
         expiration = self.expiration.to_dict()
+
+        project_id: Union[None, Unset, str]
+        if isinstance(self.project_id, Unset):
+            project_id = UNSET
+        else:
+            project_id = self.project_id
 
         acceptance: Union[None, Unset, str]
         if isinstance(self.acceptance, Unset):
@@ -129,6 +137,8 @@ class RequirementInput:
                 "expiration": expiration,
             }
         )
+        if project_id is not UNSET:
+            field_dict["projectId"] = project_id
         if acceptance is not UNSET:
             field_dict["acceptance"] = acceptance
         if enactment_date is not UNSET:
@@ -161,6 +171,15 @@ class RequirementInput:
         contact_ids = cast(List[str], d.pop("contactIds"))
 
         expiration = GovernanceExpiry.from_dict(d.pop("expiration"))
+
+        def _parse_project_id(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        project_id = _parse_project_id(d.pop("projectId", UNSET))
 
         def _parse_acceptance(data: object) -> Union[GovernanceScope, None, Unset]:
             if data is None:
@@ -276,6 +295,7 @@ class RequirementInput:
             scope=scope,
             contact_ids=contact_ids,
             expiration=expiration,
+            project_id=project_id,
             acceptance=acceptance,
             enactment_date=enactment_date,
             supplemental_docs=supplemental_docs,

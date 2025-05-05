@@ -1,59 +1,41 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional
 
 import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.create_response import CreateResponse
-from ...models.custom_process_request import CustomProcessRequest
-from ...models.error_message import ErrorMessage
-from ...models.portal_error_response import PortalErrorResponse
+from ...models.sample import Sample
 from ...types import Response
 
 
 def _get_kwargs(
-    *,
-    body: CustomProcessRequest,
+    project_id: str,
+    dataset_id: str,
 ) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
-
     _kwargs: Dict[str, Any] = {
-        "method": "post",
-        "url": "/processes",
+        "method": "get",
+        "url": f"/projects/{project_id}/datasets/{dataset_id}/samples",
     }
 
-    _body = body.to_dict()
-
-    _kwargs["json"] = _body
-    headers["Content-Type"] = "application/json"
-
-    _kwargs["headers"] = headers
     return _kwargs
 
 
-def _parse_response(
-    *, client: Client, response: httpx.Response
-) -> Optional[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
-    if response.status_code == HTTPStatus.BAD_REQUEST:
-        response_400 = PortalErrorResponse.from_dict(response.json())
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["Sample"]]:
+    if response.status_code == HTTPStatus.OK:
+        response_200 = []
+        _response_200 = response.json()
+        for response_200_item_data in _response_200:
+            response_200_item = Sample.from_dict(response_200_item_data)
 
-        return response_400
-    if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = ErrorMessage.from_dict(response.json())
+            response_200.append(response_200_item)
 
-        return response_401
-    if response.status_code == HTTPStatus.CREATED:
-        response_201 = CreateResponse.from_dict(response.json())
-
-        return response_201
+        return response_200
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(
-    *, client: Client, response: httpx.Response
-) -> Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[List["Sample"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -63,16 +45,18 @@ def _build_response(
 
 
 def sync_detailed(
+    project_id: str,
+    dataset_id: str,
     *,
     client: Client,
-    body: CustomProcessRequest,
-) -> Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
-    """Create custom process
+) -> Response[List["Sample"]]:
+    """Get dataset samples
 
-     Creates a custom data type or pipeline which you can use in the listed projects.
+     Retrieves a list of samples associated with a dataset along with their metadata
 
     Args:
-        body (CustomProcessRequest):
+        project_id (str):
+        dataset_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -80,11 +64,12 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]
+        Response[List['Sample']]
     """
 
     kwargs = _get_kwargs(
-        body=body,
+        project_id=project_id,
+        dataset_id=dataset_id,
     )
 
     response = client.get_httpx_client().request(
@@ -96,16 +81,18 @@ def sync_detailed(
 
 
 def sync(
+    project_id: str,
+    dataset_id: str,
     *,
     client: Client,
-    body: CustomProcessRequest,
-) -> Optional[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
-    """Create custom process
+) -> Optional[List["Sample"]]:
+    """Get dataset samples
 
-     Creates a custom data type or pipeline which you can use in the listed projects.
+     Retrieves a list of samples associated with a dataset along with their metadata
 
     Args:
-        body (CustomProcessRequest):
+        project_id (str):
+        dataset_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -113,29 +100,32 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[CreateResponse, ErrorMessage, PortalErrorResponse]
+        List['Sample']
     """
 
     try:
         return sync_detailed(
+            project_id=project_id,
+            dataset_id=dataset_id,
             client=client,
-            body=body,
         ).parsed
     except errors.NotFoundException:
         return None
 
 
 async def asyncio_detailed(
+    project_id: str,
+    dataset_id: str,
     *,
     client: Client,
-    body: CustomProcessRequest,
-) -> Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
-    """Create custom process
+) -> Response[List["Sample"]]:
+    """Get dataset samples
 
-     Creates a custom data type or pipeline which you can use in the listed projects.
+     Retrieves a list of samples associated with a dataset along with their metadata
 
     Args:
-        body (CustomProcessRequest):
+        project_id (str):
+        dataset_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -143,11 +133,12 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]
+        Response[List['Sample']]
     """
 
     kwargs = _get_kwargs(
-        body=body,
+        project_id=project_id,
+        dataset_id=dataset_id,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
@@ -156,16 +147,18 @@ async def asyncio_detailed(
 
 
 async def asyncio(
+    project_id: str,
+    dataset_id: str,
     *,
     client: Client,
-    body: CustomProcessRequest,
-) -> Optional[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
-    """Create custom process
+) -> Optional[List["Sample"]]:
+    """Get dataset samples
 
-     Creates a custom data type or pipeline which you can use in the listed projects.
+     Retrieves a list of samples associated with a dataset along with their metadata
 
     Args:
-        body (CustomProcessRequest):
+        project_id (str):
+        dataset_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -173,14 +166,15 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[CreateResponse, ErrorMessage, PortalErrorResponse]
+        List['Sample']
     """
 
     try:
         return (
             await asyncio_detailed(
+                project_id=project_id,
+                dataset_id=dataset_id,
                 client=client,
-                body=body,
             )
         ).parsed
     except errors.NotFoundException:

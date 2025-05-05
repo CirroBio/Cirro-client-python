@@ -33,6 +33,7 @@ class GovernanceRequirement:
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
+        project_id (Union[Unset, str]): The project ID if the requirement is project scope
         acceptance (Union[GovernanceScope, None, Unset]): Specifies the level at which it is satisfied
         enactment_date (Union[None, Unset, datetime.datetime]): The date of enactment for a requirement
         supplemental_docs (Union[List['GovernanceFile'], None, Unset]): Optional files with extra information, e.g.
@@ -54,6 +55,7 @@ class GovernanceRequirement:
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
+    project_id: Union[Unset, str] = UNSET
     acceptance: Union[GovernanceScope, None, Unset] = UNSET
     enactment_date: Union[None, Unset, datetime.datetime] = UNSET
     supplemental_docs: Union[List["GovernanceFile"], None, Unset] = UNSET
@@ -86,6 +88,8 @@ class GovernanceRequirement:
         created_at = self.created_at.isoformat()
 
         updated_at = self.updated_at.isoformat()
+
+        project_id = self.project_id
 
         acceptance: Union[None, Unset, str]
         if isinstance(self.acceptance, Unset):
@@ -156,6 +160,8 @@ class GovernanceRequirement:
                 "updatedAt": updated_at,
             }
         )
+        if project_id is not UNSET:
+            field_dict["projectId"] = project_id
         if acceptance is not UNSET:
             field_dict["acceptance"] = acceptance
         if enactment_date is not UNSET:
@@ -198,6 +204,8 @@ class GovernanceRequirement:
         created_at = isoparse(d.pop("createdAt"))
 
         updated_at = isoparse(d.pop("updatedAt"))
+
+        project_id = d.pop("projectId", UNSET)
 
         def _parse_acceptance(data: object) -> Union[GovernanceScope, None, Unset]:
             if data is None:
@@ -318,6 +326,7 @@ class GovernanceRequirement:
             created_by=created_by,
             created_at=created_at,
             updated_at=updated_at,
+            project_id=project_id,
             acceptance=acceptance,
             enactment_date=enactment_date,
             supplemental_docs=supplemental_docs,

@@ -5,14 +5,14 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.process_detail import ProcessDetail
+from ...models.custom_process_request import CustomProcessRequest
 from ...types import Response
 
 
 def _get_kwargs(
     process_id: str,
     *,
-    body: ProcessDetail,
+    body: CustomProcessRequest,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
@@ -50,7 +50,7 @@ def sync_detailed(
     process_id: str,
     *,
     client: Client,
-    body: ProcessDetail,
+    body: CustomProcessRequest,
 ) -> Response[Any]:
     """Update custom process
 
@@ -58,7 +58,7 @@ def sync_detailed(
 
     Args:
         process_id (str):
-        body (ProcessDetail):
+        body (CustomProcessRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -86,7 +86,7 @@ async def asyncio_detailed(
     process_id: str,
     *,
     client: Client,
-    body: ProcessDetail,
+    body: CustomProcessRequest,
 ) -> Response[Any]:
     """Update custom process
 
@@ -94,7 +94,7 @@ async def asyncio_detailed(
 
     Args:
         process_id (str):
-        body (ProcessDetail):
+        body (CustomProcessRequest):
         client (Client): instance of the API client
 
     Raises:

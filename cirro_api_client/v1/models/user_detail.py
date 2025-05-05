@@ -9,6 +9,7 @@ from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.user_project_assignment import UserProjectAssignment
+    from ..models.user_settings import UserSettings
 
 
 T = TypeVar("T", bound="UserDetail")
@@ -23,10 +24,12 @@ class UserDetail:
         phone (str):
         email (str):
         organization (str):
+        job_title (str):
         department (str):
         invited_by (str):
         project_assignments (List['UserProjectAssignment']):
         groups (List[str]):
+        settings (UserSettings): Additional settings for the user
         sign_up_time (Union[None, Unset, datetime.datetime]):
     """
 
@@ -35,10 +38,12 @@ class UserDetail:
     phone: str
     email: str
     organization: str
+    job_title: str
     department: str
     invited_by: str
     project_assignments: List["UserProjectAssignment"]
     groups: List[str]
+    settings: "UserSettings"
     sign_up_time: Union[None, Unset, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -53,6 +58,8 @@ class UserDetail:
 
         organization = self.organization
 
+        job_title = self.job_title
+
         department = self.department
 
         invited_by = self.invited_by
@@ -63,6 +70,8 @@ class UserDetail:
             project_assignments.append(project_assignments_item)
 
         groups = self.groups
+
+        settings = self.settings.to_dict()
 
         sign_up_time: Union[None, Unset, str]
         if isinstance(self.sign_up_time, Unset):
@@ -81,10 +90,12 @@ class UserDetail:
                 "phone": phone,
                 "email": email,
                 "organization": organization,
+                "jobTitle": job_title,
                 "department": department,
                 "invitedBy": invited_by,
                 "projectAssignments": project_assignments,
                 "groups": groups,
+                "settings": settings,
             }
         )
         if sign_up_time is not UNSET:
@@ -95,6 +106,7 @@ class UserDetail:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.user_project_assignment import UserProjectAssignment
+        from ..models.user_settings import UserSettings
 
         d = src_dict.copy()
         username = d.pop("username")
@@ -106,6 +118,8 @@ class UserDetail:
         email = d.pop("email")
 
         organization = d.pop("organization")
+
+        job_title = d.pop("jobTitle")
 
         department = d.pop("department")
 
@@ -119,6 +133,8 @@ class UserDetail:
             project_assignments.append(project_assignments_item)
 
         groups = cast(List[str], d.pop("groups"))
+
+        settings = UserSettings.from_dict(d.pop("settings"))
 
         def _parse_sign_up_time(data: object) -> Union[None, Unset, datetime.datetime]:
             if data is None:
@@ -143,10 +159,12 @@ class UserDetail:
             phone=phone,
             email=email,
             organization=organization,
+            job_title=job_title,
             department=department,
             invited_by=invited_by,
             project_assignments=project_assignments,
             groups=groups,
+            settings=settings,
             sign_up_time=sign_up_time,
         )
 

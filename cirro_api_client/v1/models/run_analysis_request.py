@@ -22,6 +22,8 @@ class RunAnalysisRequest:
         params (RunAnalysisRequestParams): Parameters used in workflow (can be empty)
         notification_emails (List[str]): Emails to notify upon workflow success or failure
         description (Union[None, Unset, str]): Description of the dataset (optional)
+        source_sample_ids (Union[List[str], None, Unset]): Samples within the source datasets that will be used as
+            inputs to this workflow. If not specified, all samples will be used.
         resume_dataset_id (Union[None, Unset, str]): Used for caching task execution. If the parameters are the same as
             the dataset specified here, it will re-use the output to minimize duplicate work
         compute_environment_id (Union[None, Unset, str]): The compute environment where to run the workflow, if not
@@ -34,6 +36,7 @@ class RunAnalysisRequest:
     params: "RunAnalysisRequestParams"
     notification_emails: List[str]
     description: Union[None, Unset, str] = UNSET
+    source_sample_ids: Union[List[str], None, Unset] = UNSET
     resume_dataset_id: Union[None, Unset, str] = UNSET
     compute_environment_id: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -54,6 +57,15 @@ class RunAnalysisRequest:
             description = UNSET
         else:
             description = self.description
+
+        source_sample_ids: Union[List[str], None, Unset]
+        if isinstance(self.source_sample_ids, Unset):
+            source_sample_ids = UNSET
+        elif isinstance(self.source_sample_ids, list):
+            source_sample_ids = self.source_sample_ids
+
+        else:
+            source_sample_ids = self.source_sample_ids
 
         resume_dataset_id: Union[None, Unset, str]
         if isinstance(self.resume_dataset_id, Unset):
@@ -80,6 +92,8 @@ class RunAnalysisRequest:
         )
         if description is not UNSET:
             field_dict["description"] = description
+        if source_sample_ids is not UNSET:
+            field_dict["sourceSampleIds"] = source_sample_ids
         if resume_dataset_id is not UNSET:
             field_dict["resumeDatasetId"] = resume_dataset_id
         if compute_environment_id is not UNSET:
@@ -111,6 +125,23 @@ class RunAnalysisRequest:
 
         description = _parse_description(d.pop("description", UNSET))
 
+        def _parse_source_sample_ids(data: object) -> Union[List[str], None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, list):
+                    raise TypeError()
+                source_sample_ids_type_0 = cast(List[str], data)
+
+                return source_sample_ids_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[List[str], None, Unset], data)
+
+        source_sample_ids = _parse_source_sample_ids(d.pop("sourceSampleIds", UNSET))
+
         def _parse_resume_dataset_id(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
@@ -136,6 +167,7 @@ class RunAnalysisRequest:
             params=params,
             notification_emails=notification_emails,
             description=description,
+            source_sample_ids=source_sample_ids,
             resume_dataset_id=resume_dataset_id,
             compute_environment_id=compute_environment_id,
         )

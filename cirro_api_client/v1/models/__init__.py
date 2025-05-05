@@ -40,7 +40,7 @@ from .create_project_access_request import CreateProjectAccessRequest
 from .create_reference_request import CreateReferenceRequest
 from .create_response import CreateResponse
 from .custom_pipeline_settings import CustomPipelineSettings
-from .custom_process_request import CustomProcessRequest
+from .custom_process_input import CustomProcessInput
 from .customer_type import CustomerType
 from .dashboard import Dashboard
 from .dashboard_dashboard_data import DashboardDashboardData
@@ -202,7 +202,7 @@ __all__ = (
     "CreateResponse",
     "CustomerType",
     "CustomPipelineSettings",
-    "CustomProcessRequest",
+    "CustomProcessInput",
     "Dashboard",
     "DashboardDashboardData",
     "DashboardInfo",

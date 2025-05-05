@@ -6,7 +6,7 @@ import httpx
 from ... import errors
 from ...client import Client
 from ...models.create_response import CreateResponse
-from ...models.custom_process_request import CustomProcessRequest
+from ...models.custom_process_input import CustomProcessInput
 from ...models.error_message import ErrorMessage
 from ...models.portal_error_response import PortalErrorResponse
 from ...types import Response
@@ -14,7 +14,7 @@ from ...types import Response
 
 def _get_kwargs(
     *,
-    body: CustomProcessRequest,
+    body: CustomProcessInput,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
@@ -65,14 +65,14 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
-    body: CustomProcessRequest,
+    body: CustomProcessInput,
 ) -> Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
     """Create custom process
 
      Creates a custom data type or pipeline which you can use in the listed projects.
 
     Args:
-        body (CustomProcessRequest):
+        body (CustomProcessInput):
         client (Client): instance of the API client
 
     Raises:
@@ -98,14 +98,14 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    body: CustomProcessRequest,
+    body: CustomProcessInput,
 ) -> Optional[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
     """Create custom process
 
      Creates a custom data type or pipeline which you can use in the listed projects.
 
     Args:
-        body (CustomProcessRequest):
+        body (CustomProcessInput):
         client (Client): instance of the API client
 
     Raises:
@@ -128,14 +128,14 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-    body: CustomProcessRequest,
+    body: CustomProcessInput,
 ) -> Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
     """Create custom process
 
      Creates a custom data type or pipeline which you can use in the listed projects.
 
     Args:
-        body (CustomProcessRequest):
+        body (CustomProcessInput):
         client (Client): instance of the API client
 
     Raises:
@@ -158,14 +158,14 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    body: CustomProcessRequest,
+    body: CustomProcessInput,
 ) -> Optional[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
     """Create custom process
 
      Creates a custom data type or pipeline which you can use in the listed projects.
 
     Args:
-        body (CustomProcessRequest):
+        body (CustomProcessInput):
         client (Client): instance of the API client
 
     Raises:

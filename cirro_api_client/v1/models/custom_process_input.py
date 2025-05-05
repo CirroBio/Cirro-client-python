@@ -12,11 +12,11 @@ if TYPE_CHECKING:
     from ..models.pipeline_code import PipelineCode
 
 
-T = TypeVar("T", bound="CustomProcessRequest")
+T = TypeVar("T", bound="CustomProcessInput")
 
 
 @_attrs_define
-class CustomProcessRequest:
+class CustomProcessInput:
     """
     Attributes:
         id (str): Unique ID of the Process Example: process-hutch-magic_flute-1_0.
@@ -296,7 +296,7 @@ class CustomProcessRequest:
 
         file_mapping_rules = _parse_file_mapping_rules(d.pop("fileMappingRules", UNSET))
 
-        custom_process_request = cls(
+        custom_process_input = cls(
             id=id,
             name=name,
             description=description,
@@ -318,8 +318,8 @@ class CustomProcessRequest:
             file_mapping_rules=file_mapping_rules,
         )
 
-        custom_process_request.additional_properties = d
-        return custom_process_request
+        custom_process_input.additional_properties = d
+        return custom_process_input
 
     @property
     def additional_keys(self) -> List[str]:

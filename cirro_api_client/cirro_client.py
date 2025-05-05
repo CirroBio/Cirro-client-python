@@ -49,6 +49,8 @@ class CirroApiClient(Client):
     raise_on_unexpected_status: bool = field(default=True, kw_only=True)
     client_name: str = field(kw_only=True, default="Cirro API Client")
     package_name: str = field(kw_only=True, default="cirro-api-client")
+    user_agent: str = field(init=False, default=None)
 
     def __attrs_post_init__(self):
-        self._headers["User-Agent"] = _get_user_agent(self.package_name, self.client_name)
+        self.user_agent = _get_user_agent(self.package_name, self.client_name)
+        self._headers["User-Agent"] = self.user_agent

@@ -40,6 +40,7 @@ from .create_project_access_request import CreateProjectAccessRequest
 from .create_reference_request import CreateReferenceRequest
 from .create_response import CreateResponse
 from .custom_pipeline_settings import CustomPipelineSettings
+from .custom_process_input import CustomProcessInput
 from .customer_type import CustomerType
 from .dashboard import Dashboard
 from .dashboard_dashboard_data import DashboardDashboardData
@@ -47,6 +48,8 @@ from .dashboard_info import DashboardInfo
 from .dashboard_request import DashboardRequest
 from .dashboard_request_dashboard_data import DashboardRequestDashboardData
 from .dashboard_request_info import DashboardRequestInfo
+from .data_file import DataFile
+from .data_file_metadata import DataFileMetadata
 from .dataset import Dataset
 from .dataset_assets_manifest import DatasetAssetsManifest
 from .dataset_condition import DatasetCondition
@@ -149,12 +152,12 @@ from .task import Task
 from .tenant_info import TenantInfo
 from .update_dataset_request import UpdateDatasetRequest
 from .update_user_request import UpdateUserRequest
-from .update_user_request_settings import UpdateUserRequestSettings
 from .upload_dataset_create_response import UploadDatasetCreateResponse
 from .upload_dataset_request import UploadDatasetRequest
 from .user import User
 from .user_detail import UserDetail
 from .user_project_assignment import UserProjectAssignment
+from .user_settings import UserSettings
 from .validate_file_requirements_request import ValidateFileRequirementsRequest
 
 __all__ = (
@@ -199,12 +202,15 @@ __all__ = (
     "CreateResponse",
     "CustomerType",
     "CustomPipelineSettings",
+    "CustomProcessInput",
     "Dashboard",
     "DashboardDashboardData",
     "DashboardInfo",
     "DashboardRequest",
     "DashboardRequestDashboardData",
     "DashboardRequestInfo",
+    "DataFile",
+    "DataFileMetadata",
     "Dataset",
     "DatasetAssetsManifest",
     "DatasetCondition",
@@ -307,11 +313,11 @@ __all__ = (
     "TenantInfo",
     "UpdateDatasetRequest",
     "UpdateUserRequest",
-    "UpdateUserRequestSettings",
     "UploadDatasetCreateResponse",
     "UploadDatasetRequest",
     "User",
     "UserDetail",
     "UserProjectAssignment",
+    "UserSettings",
     "ValidateFileRequirementsRequest",
 )

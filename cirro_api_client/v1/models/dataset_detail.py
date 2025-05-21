@@ -30,6 +30,7 @@ class DatasetDetail:
         project_id (str):
         source_dataset_ids (List[str]):
         source_datasets (List['NamedItem']):
+        source_sample_ids (List[str]):
         status (Status):
         status_message (str):
         tags (List['Tag']):
@@ -50,6 +51,7 @@ class DatasetDetail:
     project_id: str
     source_dataset_ids: List[str]
     source_datasets: List["NamedItem"]
+    source_sample_ids: List[str]
     status: Status
     status_message: str
     tags: List["Tag"]
@@ -83,6 +85,8 @@ class DatasetDetail:
         for source_datasets_item_data in self.source_datasets:
             source_datasets_item = source_datasets_item_data.to_dict()
             source_datasets.append(source_datasets_item)
+
+        source_sample_ids = self.source_sample_ids
 
         status = self.status.value
 
@@ -125,6 +129,7 @@ class DatasetDetail:
                 "projectId": project_id,
                 "sourceDatasetIds": source_dataset_ids,
                 "sourceDatasets": source_datasets,
+                "sourceSampleIds": source_sample_ids,
                 "status": status,
                 "statusMessage": status_message,
                 "tags": tags,
@@ -169,6 +174,8 @@ class DatasetDetail:
             source_datasets_item = NamedItem.from_dict(source_datasets_item_data)
 
             source_datasets.append(source_datasets_item)
+
+        source_sample_ids = cast(List[str], d.pop("sourceSampleIds"))
 
         status = Status(d.pop("status"))
 
@@ -219,6 +226,7 @@ class DatasetDetail:
             project_id=project_id,
             source_dataset_ids=source_dataset_ids,
             source_datasets=source_datasets,
+            source_sample_ids=source_sample_ids,
             status=status,
             status_message=status_message,
             tags=tags,

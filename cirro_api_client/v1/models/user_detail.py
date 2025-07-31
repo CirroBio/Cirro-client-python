@@ -31,6 +31,7 @@ class UserDetail:
         groups (List[str]):
         settings (UserSettings): Additional settings for the user
         sign_up_time (Union[None, Unset, datetime.datetime]):
+        last_signed_in (Union[None, Unset, datetime.datetime]):
     """
 
     username: str
@@ -45,6 +46,7 @@ class UserDetail:
     groups: List[str]
     settings: "UserSettings"
     sign_up_time: Union[None, Unset, datetime.datetime] = UNSET
+    last_signed_in: Union[None, Unset, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -81,6 +83,14 @@ class UserDetail:
         else:
             sign_up_time = self.sign_up_time
 
+        last_signed_in: Union[None, Unset, str]
+        if isinstance(self.last_signed_in, Unset):
+            last_signed_in = UNSET
+        elif isinstance(self.last_signed_in, datetime.datetime):
+            last_signed_in = self.last_signed_in.isoformat()
+        else:
+            last_signed_in = self.last_signed_in
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -100,6 +110,8 @@ class UserDetail:
         )
         if sign_up_time is not UNSET:
             field_dict["signUpTime"] = sign_up_time
+        if last_signed_in is not UNSET:
+            field_dict["lastSignedIn"] = last_signed_in
 
         return field_dict
 
@@ -153,6 +165,23 @@ class UserDetail:
 
         sign_up_time = _parse_sign_up_time(d.pop("signUpTime", UNSET))
 
+        def _parse_last_signed_in(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                last_signed_in_type_0 = isoparse(data)
+
+                return last_signed_in_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        last_signed_in = _parse_last_signed_in(d.pop("lastSignedIn", UNSET))
+
         user_detail = cls(
             username=username,
             name=name,
@@ -166,6 +195,7 @@ class UserDetail:
             groups=groups,
             settings=settings,
             sign_up_time=sign_up_time,
+            last_signed_in=last_signed_in,
         )
 
         user_detail.additional_properties = d

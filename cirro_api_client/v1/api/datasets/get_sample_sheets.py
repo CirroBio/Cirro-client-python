@@ -1,49 +1,36 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.project_requirement import ProjectRequirement
-from ...types import UNSET, Response, Unset
+from ...models.sample_sheets import SampleSheets
+from ...types import Response
 
 
 def _get_kwargs(
     project_id: str,
-    *,
-    username: Union[Unset, str] = UNSET,
+    dataset_id: str,
 ) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
-
-    params["username"] = username
-
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
-
     _kwargs: Dict[str, Any] = {
         "method": "get",
-        "url": f"/governance/projects/{project_id}/requirements",
-        "params": params,
+        "url": f"/projects/{project_id}/datasets/{dataset_id}/samplesheet",
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["ProjectRequirement"]]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[SampleSheets]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = []
-        _response_200 = response.json()
-        for response_200_item_data in _response_200:
-            response_200_item = ProjectRequirement.from_dict(response_200_item_data)
-
-            response_200.append(response_200_item)
+        response_200 = SampleSheets.from_dict(response.json())
 
         return response_200
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[List["ProjectRequirement"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[SampleSheets]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -54,17 +41,17 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Lis
 
 def sync_detailed(
     project_id: str,
+    dataset_id: str,
     *,
     client: Client,
-    username: Union[Unset, str] = UNSET,
-) -> Response[List["ProjectRequirement"]]:
-    """Get project requirements
+) -> Response[SampleSheets]:
+    """Generate sample sheets
 
-     Retrieve governance requirements for a project with fulfillment information for the current user
+     Generates the sample sheet output for this dataset, useful for debugging the preprocess script.
 
     Args:
         project_id (str):
-        username (Union[Unset, str]):
+        dataset_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -72,12 +59,12 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['ProjectRequirement']]
+        Response[SampleSheets]
     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        username=username,
+        dataset_id=dataset_id,
     )
 
     response = client.get_httpx_client().request(
@@ -90,17 +77,17 @@ def sync_detailed(
 
 def sync(
     project_id: str,
+    dataset_id: str,
     *,
     client: Client,
-    username: Union[Unset, str] = UNSET,
-) -> Optional[List["ProjectRequirement"]]:
-    """Get project requirements
+) -> Optional[SampleSheets]:
+    """Generate sample sheets
 
-     Retrieve governance requirements for a project with fulfillment information for the current user
+     Generates the sample sheet output for this dataset, useful for debugging the preprocess script.
 
     Args:
         project_id (str):
-        username (Union[Unset, str]):
+        dataset_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -108,14 +95,14 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['ProjectRequirement']
+        SampleSheets
     """
 
     try:
         return sync_detailed(
             project_id=project_id,
+            dataset_id=dataset_id,
             client=client,
-            username=username,
         ).parsed
     except errors.NotFoundException:
         return None
@@ -123,17 +110,17 @@ def sync(
 
 async def asyncio_detailed(
     project_id: str,
+    dataset_id: str,
     *,
     client: Client,
-    username: Union[Unset, str] = UNSET,
-) -> Response[List["ProjectRequirement"]]:
-    """Get project requirements
+) -> Response[SampleSheets]:
+    """Generate sample sheets
 
-     Retrieve governance requirements for a project with fulfillment information for the current user
+     Generates the sample sheet output for this dataset, useful for debugging the preprocess script.
 
     Args:
         project_id (str):
-        username (Union[Unset, str]):
+        dataset_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -141,12 +128,12 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['ProjectRequirement']]
+        Response[SampleSheets]
     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        username=username,
+        dataset_id=dataset_id,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
@@ -156,17 +143,17 @@ async def asyncio_detailed(
 
 async def asyncio(
     project_id: str,
+    dataset_id: str,
     *,
     client: Client,
-    username: Union[Unset, str] = UNSET,
-) -> Optional[List["ProjectRequirement"]]:
-    """Get project requirements
+) -> Optional[SampleSheets]:
+    """Generate sample sheets
 
-     Retrieve governance requirements for a project with fulfillment information for the current user
+     Generates the sample sheet output for this dataset, useful for debugging the preprocess script.
 
     Args:
         project_id (str):
-        username (Union[Unset, str]):
+        dataset_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -174,15 +161,15 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['ProjectRequirement']
+        SampleSheets
     """
 
     try:
         return (
             await asyncio_detailed(
                 project_id=project_id,
+                dataset_id=dataset_id,
                 client=client,
-                username=username,
             )
         ).parsed
     except errors.NotFoundException:

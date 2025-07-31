@@ -12,12 +12,14 @@ T = TypeVar("T", bound="DatasetViz")
 class DatasetViz:
     """
     Attributes:
+        path (Union[Unset, str]): Path to viz configuration, if applicable
         name (Union[Unset, str]): Name of viz
         desc (Union[Unset, str]): Description of viz
         type (Union[Unset, str]): Type of viz Example: vitescce.
         config (Union[Unset, Any]): Config or path to config used to render viz
     """
 
+    path: Union[Unset, str] = UNSET
     name: Union[Unset, str] = UNSET
     desc: Union[Unset, str] = UNSET
     type: Union[Unset, str] = UNSET
@@ -25,6 +27,8 @@ class DatasetViz:
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        path = self.path
+
         name = self.name
 
         desc = self.desc
@@ -36,6 +40,8 @@ class DatasetViz:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if path is not UNSET:
+            field_dict["path"] = path
         if name is not UNSET:
             field_dict["name"] = name
         if desc is not UNSET:
@@ -50,6 +56,8 @@ class DatasetViz:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        path = d.pop("path", UNSET)
+
         name = d.pop("name", UNSET)
 
         desc = d.pop("desc", UNSET)
@@ -59,6 +67,7 @@ class DatasetViz:
         config = d.pop("config", UNSET)
 
         dataset_viz = cls(
+            path=path,
             name=name,
             desc=desc,
             type=type,

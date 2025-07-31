@@ -11,6 +11,7 @@ from ..types import UNSET, Unset
 if TYPE_CHECKING:
     from ..models.dataset_detail_info import DatasetDetailInfo
     from ..models.dataset_detail_params import DatasetDetailParams
+    from ..models.dataset_detail_source_sample_files_map import DatasetDetailSourceSampleFilesMap
     from ..models.named_item import NamedItem
     from ..models.tag import Tag
 
@@ -31,6 +32,8 @@ class DatasetDetail:
         source_dataset_ids (List[str]):
         source_datasets (List['NamedItem']):
         source_sample_ids (List[str]):
+        source_sample_files_map (DatasetDetailSourceSampleFilesMap): Keys are sampleIds, and the lists are file paths to
+            include.
         status (Status):
         status_message (str):
         tags (List['Tag']):
@@ -40,6 +43,8 @@ class DatasetDetail:
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
+        originating_project_id (Union[Unset, str]): The originating project ID might be different if the dataset was
+            shared from another project.
         share (Union['NamedItem', None, Unset]):
     """
 
@@ -52,6 +57,7 @@ class DatasetDetail:
     source_dataset_ids: List[str]
     source_datasets: List["NamedItem"]
     source_sample_ids: List[str]
+    source_sample_files_map: "DatasetDetailSourceSampleFilesMap"
     status: Status
     status_message: str
     tags: List["Tag"]
@@ -61,6 +67,7 @@ class DatasetDetail:
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
+    originating_project_id: Union[Unset, str] = UNSET
     share: Union["NamedItem", None, Unset] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -88,6 +95,8 @@ class DatasetDetail:
 
         source_sample_ids = self.source_sample_ids
 
+        source_sample_files_map = self.source_sample_files_map.to_dict()
+
         status = self.status.value
 
         status_message = self.status_message
@@ -108,6 +117,8 @@ class DatasetDetail:
         created_at = self.created_at.isoformat()
 
         updated_at = self.updated_at.isoformat()
+
+        originating_project_id = self.originating_project_id
 
         share: Union[Dict[str, Any], None, Unset]
         if isinstance(self.share, Unset):
@@ -130,6 +141,7 @@ class DatasetDetail:
                 "sourceDatasetIds": source_dataset_ids,
                 "sourceDatasets": source_datasets,
                 "sourceSampleIds": source_sample_ids,
+                "sourceSampleFilesMap": source_sample_files_map,
                 "status": status,
                 "statusMessage": status_message,
                 "tags": tags,
@@ -141,6 +153,8 @@ class DatasetDetail:
                 "updatedAt": updated_at,
             }
         )
+        if originating_project_id is not UNSET:
+            field_dict["originatingProjectId"] = originating_project_id
         if share is not UNSET:
             field_dict["share"] = share
 
@@ -150,6 +164,7 @@ class DatasetDetail:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.dataset_detail_info import DatasetDetailInfo
         from ..models.dataset_detail_params import DatasetDetailParams
+        from ..models.dataset_detail_source_sample_files_map import DatasetDetailSourceSampleFilesMap
         from ..models.named_item import NamedItem
         from ..models.tag import Tag
 
@@ -177,6 +192,8 @@ class DatasetDetail:
 
         source_sample_ids = cast(List[str], d.pop("sourceSampleIds"))
 
+        source_sample_files_map = DatasetDetailSourceSampleFilesMap.from_dict(d.pop("sourceSampleFilesMap"))
+
         status = Status(d.pop("status"))
 
         status_message = d.pop("statusMessage")
@@ -199,6 +216,8 @@ class DatasetDetail:
         created_at = isoparse(d.pop("createdAt"))
 
         updated_at = isoparse(d.pop("updatedAt"))
+
+        originating_project_id = d.pop("originatingProjectId", UNSET)
 
         def _parse_share(data: object) -> Union["NamedItem", None, Unset]:
             if data is None:
@@ -227,6 +246,7 @@ class DatasetDetail:
             source_dataset_ids=source_dataset_ids,
             source_datasets=source_datasets,
             source_sample_ids=source_sample_ids,
+            source_sample_files_map=source_sample_files_map,
             status=status,
             status_message=status_message,
             tags=tags,
@@ -236,6 +256,7 @@ class DatasetDetail:
             created_by=created_by,
             created_at=created_at,
             updated_at=updated_at,
+            originating_project_id=originating_project_id,
             share=share,
         )
 

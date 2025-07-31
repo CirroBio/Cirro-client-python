@@ -13,12 +13,14 @@ class AuthInfo:
         user_pool_id (str):
         sdk_app_id (str):
         ui_app_id (str):
+        drive_app_id (str):
         endpoint (str):
     """
 
     user_pool_id: str
     sdk_app_id: str
     ui_app_id: str
+    drive_app_id: str
     endpoint: str
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -29,6 +31,8 @@ class AuthInfo:
 
         ui_app_id = self.ui_app_id
 
+        drive_app_id = self.drive_app_id
+
         endpoint = self.endpoint
 
         field_dict: Dict[str, Any] = {}
@@ -38,6 +42,7 @@ class AuthInfo:
                 "userPoolId": user_pool_id,
                 "sdkAppId": sdk_app_id,
                 "uiAppId": ui_app_id,
+                "driveAppId": drive_app_id,
                 "endpoint": endpoint,
             }
         )
@@ -53,12 +58,15 @@ class AuthInfo:
 
         ui_app_id = d.pop("uiAppId")
 
+        drive_app_id = d.pop("driveAppId")
+
         endpoint = d.pop("endpoint")
 
         auth_info = cls(
             user_pool_id=user_pool_id,
             sdk_app_id=sdk_app_id,
             ui_app_id=ui_app_id,
+            drive_app_id=drive_app_id,
             endpoint=endpoint,
         )
 

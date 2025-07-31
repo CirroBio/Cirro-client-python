@@ -7,6 +7,7 @@ from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.run_analysis_request_params import RunAnalysisRequestParams
+    from ..models.run_analysis_request_source_sample_files_map import RunAnalysisRequestSourceSampleFilesMap
 
 
 T = TypeVar("T", bound="RunAnalysisRequest")
@@ -24,6 +25,9 @@ class RunAnalysisRequest:
         description (Union[None, Unset, str]): Description of the dataset (optional)
         source_sample_ids (Union[List[str], None, Unset]): Samples within the source datasets that will be used as
             inputs to this workflow. If not specified, all samples will be used.
+        source_sample_files_map (Union['RunAnalysisRequestSourceSampleFilesMap', None, Unset]): Files containing samples
+            used to define source data input to this workflow. If not specified, all files will be used. Keys are sampleIds,
+            and the lists are file paths to include.
         resume_dataset_id (Union[None, Unset, str]): Used for caching task execution. If the parameters are the same as
             the dataset specified here, it will re-use the output to minimize duplicate work
         compute_environment_id (Union[None, Unset, str]): The compute environment where to run the workflow, if not
@@ -37,11 +41,14 @@ class RunAnalysisRequest:
     notification_emails: List[str]
     description: Union[None, Unset, str] = UNSET
     source_sample_ids: Union[List[str], None, Unset] = UNSET
+    source_sample_files_map: Union["RunAnalysisRequestSourceSampleFilesMap", None, Unset] = UNSET
     resume_dataset_id: Union[None, Unset, str] = UNSET
     compute_environment_id: Union[None, Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        from ..models.run_analysis_request_source_sample_files_map import RunAnalysisRequestSourceSampleFilesMap
+
         name = self.name
 
         process_id = self.process_id
@@ -66,6 +73,14 @@ class RunAnalysisRequest:
 
         else:
             source_sample_ids = self.source_sample_ids
+
+        source_sample_files_map: Union[Dict[str, Any], None, Unset]
+        if isinstance(self.source_sample_files_map, Unset):
+            source_sample_files_map = UNSET
+        elif isinstance(self.source_sample_files_map, RunAnalysisRequestSourceSampleFilesMap):
+            source_sample_files_map = self.source_sample_files_map.to_dict()
+        else:
+            source_sample_files_map = self.source_sample_files_map
 
         resume_dataset_id: Union[None, Unset, str]
         if isinstance(self.resume_dataset_id, Unset):
@@ -94,6 +109,8 @@ class RunAnalysisRequest:
             field_dict["description"] = description
         if source_sample_ids is not UNSET:
             field_dict["sourceSampleIds"] = source_sample_ids
+        if source_sample_files_map is not UNSET:
+            field_dict["sourceSampleFilesMap"] = source_sample_files_map
         if resume_dataset_id is not UNSET:
             field_dict["resumeDatasetId"] = resume_dataset_id
         if compute_environment_id is not UNSET:
@@ -104,6 +121,7 @@ class RunAnalysisRequest:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.run_analysis_request_params import RunAnalysisRequestParams
+        from ..models.run_analysis_request_source_sample_files_map import RunAnalysisRequestSourceSampleFilesMap
 
         d = src_dict.copy()
         name = d.pop("name")
@@ -142,6 +160,25 @@ class RunAnalysisRequest:
 
         source_sample_ids = _parse_source_sample_ids(d.pop("sourceSampleIds", UNSET))
 
+        def _parse_source_sample_files_map(
+            data: object,
+        ) -> Union["RunAnalysisRequestSourceSampleFilesMap", None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                source_sample_files_map_type_0 = RunAnalysisRequestSourceSampleFilesMap.from_dict(data)
+
+                return source_sample_files_map_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["RunAnalysisRequestSourceSampleFilesMap", None, Unset], data)
+
+        source_sample_files_map = _parse_source_sample_files_map(d.pop("sourceSampleFilesMap", UNSET))
+
         def _parse_resume_dataset_id(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
@@ -168,6 +205,7 @@ class RunAnalysisRequest:
             notification_emails=notification_emails,
             description=description,
             source_sample_ids=source_sample_ids,
+            source_sample_files_map=source_sample_files_map,
             resume_dataset_id=resume_dataset_id,
             compute_environment_id=compute_environment_id,
         )

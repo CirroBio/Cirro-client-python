@@ -71,6 +71,7 @@ from .feature_flags import FeatureFlags
 from .file_entry import FileEntry
 from .file_entry_metadata import FileEntryMetadata
 from .file_mapping_rule import FileMappingRule
+from .file_name_match import FileNameMatch
 from .file_name_pattern import FileNamePattern
 from .file_requirements import FileRequirements
 from .form_schema import FormSchema
@@ -174,6 +175,7 @@ from .user import User
 from .user_detail import UserDetail
 from .user_project_assignment import UserProjectAssignment
 from .user_settings import UserSettings
+from .validate_file_name_patterns_request import ValidateFileNamePatternsRequest
 from .validate_file_requirements_request import ValidateFileRequirementsRequest
 
 __all__ = (
@@ -248,6 +250,7 @@ __all__ = (
     "FileEntry",
     "FileEntryMetadata",
     "FileMappingRule",
+    "FileNameMatch",
     "FileNamePattern",
     "FileRequirements",
     "FormSchema",
@@ -351,5 +354,6 @@ __all__ = (
     "UserDetail",
     "UserProjectAssignment",
     "UserSettings",
+    "ValidateFileNamePatternsRequest",
     "ValidateFileRequirementsRequest",
 )

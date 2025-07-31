@@ -13,6 +13,7 @@ from ..types import UNSET, Unset
 if TYPE_CHECKING:
     from ..models.governance_expiry import GovernanceExpiry
     from ..models.governance_file import GovernanceFile
+    from ..models.governance_requirement_project_file_map import GovernanceRequirementProjectFileMap
 
 
 T = TypeVar("T", bound="GovernanceRequirement")
@@ -40,6 +41,8 @@ class GovernanceRequirement:
             templates for documents, links, etc
         file (Union['GovernanceFile', None, Unset]):
         authorship (Union[GovernanceScope, None, Unset]): Who needs to supply the agreement document
+        project_file_map (Union['GovernanceRequirementProjectFileMap', None, Unset]): Files supplied by each project
+            when authorship is project
         verification_method (Union[GovernanceTrainingVerification, None, Unset]): The value indicating how the
             completion of the training is verified.
     """
@@ -61,11 +64,13 @@ class GovernanceRequirement:
     supplemental_docs: Union[List["GovernanceFile"], None, Unset] = UNSET
     file: Union["GovernanceFile", None, Unset] = UNSET
     authorship: Union[GovernanceScope, None, Unset] = UNSET
+    project_file_map: Union["GovernanceRequirementProjectFileMap", None, Unset] = UNSET
     verification_method: Union[GovernanceTrainingVerification, None, Unset] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         from ..models.governance_file import GovernanceFile
+        from ..models.governance_requirement_project_file_map import GovernanceRequirementProjectFileMap
 
         id = self.id
 
@@ -135,6 +140,14 @@ class GovernanceRequirement:
         else:
             authorship = self.authorship
 
+        project_file_map: Union[Dict[str, Any], None, Unset]
+        if isinstance(self.project_file_map, Unset):
+            project_file_map = UNSET
+        elif isinstance(self.project_file_map, GovernanceRequirementProjectFileMap):
+            project_file_map = self.project_file_map.to_dict()
+        else:
+            project_file_map = self.project_file_map
+
         verification_method: Union[None, Unset, str]
         if isinstance(self.verification_method, Unset):
             verification_method = UNSET
@@ -172,6 +185,8 @@ class GovernanceRequirement:
             field_dict["file"] = file
         if authorship is not UNSET:
             field_dict["authorship"] = authorship
+        if project_file_map is not UNSET:
+            field_dict["projectFileMap"] = project_file_map
         if verification_method is not UNSET:
             field_dict["verificationMethod"] = verification_method
 
@@ -181,6 +196,7 @@ class GovernanceRequirement:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.governance_expiry import GovernanceExpiry
         from ..models.governance_file import GovernanceFile
+        from ..models.governance_requirement_project_file_map import GovernanceRequirementProjectFileMap
 
         d = src_dict.copy()
         id = d.pop("id")
@@ -297,6 +313,23 @@ class GovernanceRequirement:
 
         authorship = _parse_authorship(d.pop("authorship", UNSET))
 
+        def _parse_project_file_map(data: object) -> Union["GovernanceRequirementProjectFileMap", None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                project_file_map_type_0 = GovernanceRequirementProjectFileMap.from_dict(data)
+
+                return project_file_map_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["GovernanceRequirementProjectFileMap", None, Unset], data)
+
+        project_file_map = _parse_project_file_map(d.pop("projectFileMap", UNSET))
+
         def _parse_verification_method(data: object) -> Union[GovernanceTrainingVerification, None, Unset]:
             if data is None:
                 return data
@@ -332,6 +365,7 @@ class GovernanceRequirement:
             supplemental_docs=supplemental_docs,
             file=file,
             authorship=authorship,
+            project_file_map=project_file_map,
             verification_method=verification_method,
         )
 

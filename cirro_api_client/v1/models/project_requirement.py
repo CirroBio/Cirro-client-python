@@ -27,9 +27,13 @@ class ProjectRequirement:
         name (str): The name of the requirement
         description (str): A brief description of the requirement
         type (GovernanceType): The types of governance requirements that can be enforced
-        path (str): S3 prefix where files for the requirement are saved
+        path (str): S3 prefix where the main file for the requirement is saved
+        supplemental_path (str): S3 prefix where supplemental files for the requirement are saved
         scope (GovernanceScope): The levels at which governance requirements can be enforced
         contacts (List['GovernanceContact']): The governance contacts assigned to the requirement.
+        is_enacted (bool): Whether the requirement is past the enactment date
+        is_project_configured (bool): A requirement is project configured if it was created by the tenant but needs a
+            file uploaded by the project
         is_fulfilled (bool): Whether the current user has fulfilled the requirement for this project
         acceptance (Union[GovernanceScope, None, Unset]): Specifies the level at which it is satisfied
         enactment_date (Union[None, Unset, datetime.datetime]): The date of enactment for the requirement
@@ -55,8 +59,11 @@ class ProjectRequirement:
     description: str
     type: GovernanceType
     path: str
+    supplemental_path: str
     scope: GovernanceScope
     contacts: List["GovernanceContact"]
+    is_enacted: bool
+    is_project_configured: bool
     is_fulfilled: bool
     acceptance: Union[GovernanceScope, None, Unset] = UNSET
     enactment_date: Union[None, Unset, datetime.datetime] = UNSET
@@ -86,12 +93,18 @@ class ProjectRequirement:
 
         path = self.path
 
+        supplemental_path = self.supplemental_path
+
         scope = self.scope.value
 
         contacts = []
         for contacts_item_data in self.contacts:
             contacts_item = contacts_item_data.to_dict()
             contacts.append(contacts_item)
+
+        is_enacted = self.is_enacted
+
+        is_project_configured = self.is_project_configured
 
         is_fulfilled = self.is_fulfilled
 
@@ -200,8 +213,11 @@ class ProjectRequirement:
                 "description": description,
                 "type": type,
                 "path": path,
+                "supplementalPath": supplemental_path,
                 "scope": scope,
                 "contacts": contacts,
+                "isEnacted": is_enacted,
+                "isProjectConfigured": is_project_configured,
                 "isFulfilled": is_fulfilled,
             }
         )
@@ -250,6 +266,8 @@ class ProjectRequirement:
 
         path = d.pop("path")
 
+        supplemental_path = d.pop("supplementalPath")
+
         scope = GovernanceScope(d.pop("scope"))
 
         contacts = []
@@ -258,6 +276,10 @@ class ProjectRequirement:
             contacts_item = GovernanceContact.from_dict(contacts_item_data)
 
             contacts.append(contacts_item)
+
+        is_enacted = d.pop("isEnacted")
+
+        is_project_configured = d.pop("isProjectConfigured")
 
         is_fulfilled = d.pop("isFulfilled")
 
@@ -453,8 +475,11 @@ class ProjectRequirement:
             description=description,
             type=type,
             path=path,
+            supplemental_path=supplemental_path,
             scope=scope,
             contacts=contacts,
+            is_enacted=is_enacted,
+            is_project_configured=is_project_configured,
             is_fulfilled=is_fulfilled,
             acceptance=acceptance,
             enactment_date=enactment_date,

@@ -1,40 +1,42 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
 
 import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.project_requirement import ProjectRequirement
-from ...types import UNSET, Response, Unset
+from ...models.file_name_match import FileNameMatch
+from ...models.validate_file_name_patterns_request import ValidateFileNamePatternsRequest
+from ...types import Response
 
 
 def _get_kwargs(
-    project_id: str,
+    process_id: str,
     *,
-    username: Union[Unset, str] = UNSET,
+    body: ValidateFileNamePatternsRequest,
 ) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
-
-    params["username"] = username
-
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+    headers: Dict[str, Any] = {}
 
     _kwargs: Dict[str, Any] = {
-        "method": "get",
-        "url": f"/governance/projects/{project_id}/requirements",
-        "params": params,
+        "method": "post",
+        "url": f"/processes/{process_id}/validate-files:test",
     }
 
+    _body = body.to_dict()
+
+    _kwargs["json"] = _body
+    headers["Content-Type"] = "application/json"
+
+    _kwargs["headers"] = headers
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["ProjectRequirement"]]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["FileNameMatch"]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
         for response_200_item_data in _response_200:
-            response_200_item = ProjectRequirement.from_dict(response_200_item_data)
+            response_200_item = FileNameMatch.from_dict(response_200_item_data)
 
             response_200.append(response_200_item)
 
@@ -43,7 +45,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Lis
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[List["ProjectRequirement"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[List["FileNameMatch"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -53,18 +55,18 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Lis
 
 
 def sync_detailed(
-    project_id: str,
+    process_id: str,
     *,
     client: Client,
-    username: Union[Unset, str] = UNSET,
-) -> Response[List["ProjectRequirement"]]:
-    """Get project requirements
+    body: ValidateFileNamePatternsRequest,
+) -> Response[List["FileNameMatch"]]:
+    """Validate file name patterns
 
-     Retrieve governance requirements for a project with fulfillment information for the current user
+     Checks the input file names with the patterns for testing regex matching
 
     Args:
-        project_id (str):
-        username (Union[Unset, str]):
+        process_id (str):
+        body (ValidateFileNamePatternsRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -72,12 +74,12 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['ProjectRequirement']]
+        Response[List['FileNameMatch']]
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
-        username=username,
+        process_id=process_id,
+        body=body,
     )
 
     response = client.get_httpx_client().request(
@@ -89,18 +91,18 @@ def sync_detailed(
 
 
 def sync(
-    project_id: str,
+    process_id: str,
     *,
     client: Client,
-    username: Union[Unset, str] = UNSET,
-) -> Optional[List["ProjectRequirement"]]:
-    """Get project requirements
+    body: ValidateFileNamePatternsRequest,
+) -> Optional[List["FileNameMatch"]]:
+    """Validate file name patterns
 
-     Retrieve governance requirements for a project with fulfillment information for the current user
+     Checks the input file names with the patterns for testing regex matching
 
     Args:
-        project_id (str):
-        username (Union[Unset, str]):
+        process_id (str):
+        body (ValidateFileNamePatternsRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -108,32 +110,32 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['ProjectRequirement']
+        List['FileNameMatch']
     """
 
     try:
         return sync_detailed(
-            project_id=project_id,
+            process_id=process_id,
             client=client,
-            username=username,
+            body=body,
         ).parsed
     except errors.NotFoundException:
         return None
 
 
 async def asyncio_detailed(
-    project_id: str,
+    process_id: str,
     *,
     client: Client,
-    username: Union[Unset, str] = UNSET,
-) -> Response[List["ProjectRequirement"]]:
-    """Get project requirements
+    body: ValidateFileNamePatternsRequest,
+) -> Response[List["FileNameMatch"]]:
+    """Validate file name patterns
 
-     Retrieve governance requirements for a project with fulfillment information for the current user
+     Checks the input file names with the patterns for testing regex matching
 
     Args:
-        project_id (str):
-        username (Union[Unset, str]):
+        process_id (str):
+        body (ValidateFileNamePatternsRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -141,12 +143,12 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['ProjectRequirement']]
+        Response[List['FileNameMatch']]
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
-        username=username,
+        process_id=process_id,
+        body=body,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
@@ -155,18 +157,18 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    project_id: str,
+    process_id: str,
     *,
     client: Client,
-    username: Union[Unset, str] = UNSET,
-) -> Optional[List["ProjectRequirement"]]:
-    """Get project requirements
+    body: ValidateFileNamePatternsRequest,
+) -> Optional[List["FileNameMatch"]]:
+    """Validate file name patterns
 
-     Retrieve governance requirements for a project with fulfillment information for the current user
+     Checks the input file names with the patterns for testing regex matching
 
     Args:
-        project_id (str):
-        username (Union[Unset, str]):
+        process_id (str):
+        body (ValidateFileNamePatternsRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -174,15 +176,15 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['ProjectRequirement']
+        List['FileNameMatch']
     """
 
     try:
         return (
             await asyncio_detailed(
-                project_id=project_id,
+                process_id=process_id,
                 client=client,
-                username=username,
+                body=body,
             )
         ).parsed
     except errors.NotFoundException:

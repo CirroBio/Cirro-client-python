@@ -57,7 +57,13 @@ from .dataset_condition_field import DatasetConditionField
 from .dataset_detail import DatasetDetail
 from .dataset_detail_info import DatasetDetailInfo
 from .dataset_detail_params import DatasetDetailParams
+from .dataset_detail_source_sample_files_map import DatasetDetailSourceSampleFilesMap
 from .dataset_viz import DatasetViz
+from .discussion import Discussion
+from .discussion_input import DiscussionInput
+from .discussion_type import DiscussionType
+from .entity import Entity
+from .entity_type import EntityType
 from .environment_type import EnvironmentType
 from .error_message import ErrorMessage
 from .executor import Executor
@@ -65,6 +71,7 @@ from .feature_flags import FeatureFlags
 from .file_entry import FileEntry
 from .file_entry_metadata import FileEntryMetadata
 from .file_mapping_rule import FileMappingRule
+from .file_name_match import FileNameMatch
 from .file_name_pattern import FileNamePattern
 from .file_requirements import FileRequirements
 from .form_schema import FormSchema
@@ -81,8 +88,10 @@ from .governance_expiry import GovernanceExpiry
 from .governance_expiry_type import GovernanceExpiryType
 from .governance_file import GovernanceFile
 from .governance_file_access_request import GovernanceFileAccessRequest
+from .governance_file_input import GovernanceFileInput
 from .governance_file_type import GovernanceFileType
 from .governance_requirement import GovernanceRequirement
+from .governance_requirement_project_file_map import GovernanceRequirementProjectFileMap
 from .governance_scope import GovernanceScope
 from .governance_training_verification import GovernanceTrainingVerification
 from .governance_type import GovernanceType
@@ -92,6 +101,9 @@ from .invite_user_response import InviteUserResponse
 from .list_events_entity_type import ListEventsEntityType
 from .log_entry import LogEntry
 from .login_provider import LoginProvider
+from .message import Message
+from .message_input import MessageInput
+from .message_type import MessageType
 from .metric_record import MetricRecord
 from .metric_record_services import MetricRecordServices
 from .move_dataset_input import MoveDatasetInput
@@ -101,6 +113,8 @@ from .notebook_instance import NotebookInstance
 from .notebook_instance_status_response import NotebookInstanceStatusResponse
 from .open_notebook_instance_response import OpenNotebookInstanceResponse
 from .paginated_response_dataset_list_dto import PaginatedResponseDatasetListDto
+from .paginated_response_discussion import PaginatedResponseDiscussion
+from .paginated_response_message import PaginatedResponseMessage
 from .paginated_response_sample_dto import PaginatedResponseSampleDto
 from .paginated_response_user_dto import PaginatedResponseUserDto
 from .pipeline_code import PipelineCode
@@ -131,10 +145,12 @@ from .requirement_input import RequirementInput
 from .resources_info import ResourcesInfo
 from .run_analysis_request import RunAnalysisRequest
 from .run_analysis_request_params import RunAnalysisRequestParams
+from .run_analysis_request_source_sample_files_map import RunAnalysisRequestSourceSampleFilesMap
 from .sample import Sample
 from .sample_metadata import SampleMetadata
 from .sample_request import SampleRequest
 from .sample_request_metadata import SampleRequestMetadata
+from .sample_sheets import SampleSheets
 from .service_connection import ServiceConnection
 from .set_user_project_role_request import SetUserProjectRoleRequest
 from .sftp_credentials import SftpCredentials
@@ -142,6 +158,7 @@ from .share import Share
 from .share_detail import ShareDetail
 from .share_input import ShareInput
 from .share_type import ShareType
+from .sort_order import SortOrder
 from .status import Status
 from .stop_execution_response import StopExecutionResponse
 from .sync_status import SyncStatus
@@ -158,6 +175,7 @@ from .user import User
 from .user_detail import UserDetail
 from .user_project_assignment import UserProjectAssignment
 from .user_settings import UserSettings
+from .validate_file_name_patterns_request import ValidateFileNamePatternsRequest
 from .validate_file_requirements_request import ValidateFileRequirementsRequest
 
 __all__ = (
@@ -218,7 +236,13 @@ __all__ = (
     "DatasetDetail",
     "DatasetDetailInfo",
     "DatasetDetailParams",
+    "DatasetDetailSourceSampleFilesMap",
     "DatasetViz",
+    "Discussion",
+    "DiscussionInput",
+    "DiscussionType",
+    "Entity",
+    "EntityType",
     "EnvironmentType",
     "ErrorMessage",
     "Executor",
@@ -226,6 +250,7 @@ __all__ = (
     "FileEntry",
     "FileEntryMetadata",
     "FileMappingRule",
+    "FileNameMatch",
     "FileNamePattern",
     "FileRequirements",
     "FormSchema",
@@ -242,8 +267,10 @@ __all__ = (
     "GovernanceExpiryType",
     "GovernanceFile",
     "GovernanceFileAccessRequest",
+    "GovernanceFileInput",
     "GovernanceFileType",
     "GovernanceRequirement",
+    "GovernanceRequirementProjectFileMap",
     "GovernanceScope",
     "GovernanceTrainingVerification",
     "GovernanceType",
@@ -253,6 +280,9 @@ __all__ = (
     "ListEventsEntityType",
     "LogEntry",
     "LoginProvider",
+    "Message",
+    "MessageInput",
+    "MessageType",
     "MetricRecord",
     "MetricRecordServices",
     "MoveDatasetInput",
@@ -262,6 +292,8 @@ __all__ = (
     "NotebookInstanceStatusResponse",
     "OpenNotebookInstanceResponse",
     "PaginatedResponseDatasetListDto",
+    "PaginatedResponseDiscussion",
+    "PaginatedResponseMessage",
     "PaginatedResponseSampleDto",
     "PaginatedResponseUserDto",
     "PipelineCode",
@@ -292,10 +324,12 @@ __all__ = (
     "ResourcesInfo",
     "RunAnalysisRequest",
     "RunAnalysisRequestParams",
+    "RunAnalysisRequestSourceSampleFilesMap",
     "Sample",
     "SampleMetadata",
     "SampleRequest",
     "SampleRequestMetadata",
+    "SampleSheets",
     "ServiceConnection",
     "SetUserProjectRoleRequest",
     "SftpCredentials",
@@ -303,6 +337,7 @@ __all__ = (
     "ShareDetail",
     "ShareInput",
     "ShareType",
+    "SortOrder",
     "Status",
     "StopExecutionResponse",
     "SyncStatus",
@@ -319,5 +354,6 @@ __all__ = (
     "UserDetail",
     "UserProjectAssignment",
     "UserSettings",
+    "ValidateFileNamePatternsRequest",
     "ValidateFileRequirementsRequest",
 )

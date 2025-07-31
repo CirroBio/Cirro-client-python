@@ -23,3 +23,7 @@ class_overrides:
     class_name: AuditEventEventDetail
   ComputeEnvironmentConfigurationInputPropertiesType0:
     class_name: ComputeEnvironmentConfigurationInputProperties
+  GovernanceRequirementProjectFileMapType0:
+    class_name: GovernanceRequirementProjectFileMap
+  RunAnalysisRequestSourceSampleFilesMapType0:
+    class_name: RunAnalysisRequestSourceSampleFilesMap

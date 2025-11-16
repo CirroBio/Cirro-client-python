@@ -6,9 +6,7 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.workspace_compute_config_environment_variables_type_0 import (
-        WorkspaceComputeConfigEnvironmentVariablesType0,
-    )
+    from ..models.workspace_compute_config_environment_variables import WorkspaceComputeConfigEnvironmentVariables
 
 
 T = TypeVar("T", bound="WorkspaceComputeConfig")
@@ -24,9 +22,9 @@ class WorkspaceComputeConfig:
         memory_gi_b (Union[Unset, int]): Memory allocated to the workspace container in GiB. Example: 8.
         volume_size_gi_b (Union[Unset, int]): Persistent storage volume size allocated to the workspace in GiB. Example:
             50.
-        environment_variables (Union['WorkspaceComputeConfigEnvironmentVariablesType0', None, Unset]): Map of
-            environment variables injected into the container at runtime. Keys must be non-blank. Example: {'ENV_MODE':
-            'production', 'LOG_LEVEL': 'debug'}.
+        environment_variables (Union['WorkspaceComputeConfigEnvironmentVariables', None, Unset]): Map of environment
+            variables injected into the container at runtime. Keys must be non-blank. Example: {'ENV_MODE': 'production',
+            'LOG_LEVEL': 'debug'}.
         local_port (Union[Unset, int]): User-facing web server port (http). Example: 8080.
     """
 
@@ -34,14 +32,12 @@ class WorkspaceComputeConfig:
     cpu: Union[Unset, int] = UNSET
     memory_gi_b: Union[Unset, int] = UNSET
     volume_size_gi_b: Union[Unset, int] = UNSET
-    environment_variables: Union["WorkspaceComputeConfigEnvironmentVariablesType0", None, Unset] = UNSET
+    environment_variables: Union["WorkspaceComputeConfigEnvironmentVariables", None, Unset] = UNSET
     local_port: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models.workspace_compute_config_environment_variables_type_0 import (
-            WorkspaceComputeConfigEnvironmentVariablesType0,
-        )
+        from ..models.workspace_compute_config_environment_variables import WorkspaceComputeConfigEnvironmentVariables
 
         container_image_uri = self.container_image_uri
 
@@ -54,7 +50,7 @@ class WorkspaceComputeConfig:
         environment_variables: Union[Dict[str, Any], None, Unset]
         if isinstance(self.environment_variables, Unset):
             environment_variables = UNSET
-        elif isinstance(self.environment_variables, WorkspaceComputeConfigEnvironmentVariablesType0):
+        elif isinstance(self.environment_variables, WorkspaceComputeConfigEnvironmentVariables):
             environment_variables = self.environment_variables.to_dict()
         else:
             environment_variables = self.environment_variables
@@ -83,9 +79,7 @@ class WorkspaceComputeConfig:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.workspace_compute_config_environment_variables_type_0 import (
-            WorkspaceComputeConfigEnvironmentVariablesType0,
-        )
+        from ..models.workspace_compute_config_environment_variables import WorkspaceComputeConfigEnvironmentVariables
 
         d = src_dict.copy()
         container_image_uri = d.pop("containerImageUri")
@@ -98,7 +92,7 @@ class WorkspaceComputeConfig:
 
         def _parse_environment_variables(
             data: object,
-        ) -> Union["WorkspaceComputeConfigEnvironmentVariablesType0", None, Unset]:
+        ) -> Union["WorkspaceComputeConfigEnvironmentVariables", None, Unset]:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -106,12 +100,12 @@ class WorkspaceComputeConfig:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                environment_variables_type_0 = WorkspaceComputeConfigEnvironmentVariablesType0.from_dict(data)
+                environment_variables_type_0 = WorkspaceComputeConfigEnvironmentVariables.from_dict(data)
 
                 return environment_variables_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union["WorkspaceComputeConfigEnvironmentVariablesType0", None, Unset], data)
+            return cast(Union["WorkspaceComputeConfigEnvironmentVariables", None, Unset], data)
 
         environment_variables = _parse_environment_variables(d.pop("environmentVariables", UNSET))
 

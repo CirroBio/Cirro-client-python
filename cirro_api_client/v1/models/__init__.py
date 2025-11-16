@@ -186,7 +186,7 @@ from .validate_file_requirements_request import ValidateFileRequirementsRequest
 from .version_specification import VersionSpecification
 from .workspace import Workspace
 from .workspace_compute_config import WorkspaceComputeConfig
-from .workspace_compute_config_environment_variables_type_0 import WorkspaceComputeConfigEnvironmentVariablesType0
+from .workspace_compute_config_environment_variables import WorkspaceComputeConfigEnvironmentVariables
 from .workspace_connection_response import WorkspaceConnectionResponse
 from .workspace_environment import WorkspaceEnvironment
 from .workspace_input import WorkspaceInput
@@ -379,7 +379,7 @@ __all__ = (
     "VersionSpecification",
     "Workspace",
     "WorkspaceComputeConfig",
-    "WorkspaceComputeConfigEnvironmentVariablesType0",
+    "WorkspaceComputeConfigEnvironmentVariables",
     "WorkspaceConnectionResponse",
     "WorkspaceEnvironment",
     "WorkspaceInput",

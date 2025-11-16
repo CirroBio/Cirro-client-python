@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -29,14 +29,14 @@ class Task:
     native_job_id: str
     status: str
     requested_at: datetime.datetime
-    started_at: Union[Unset, datetime.datetime] = UNSET
-    stopped_at: Union[Unset, datetime.datetime] = UNSET
-    container_image: Union[Unset, str] = UNSET
-    command_line: Union[Unset, str] = UNSET
-    log_location: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    started_at: Unset | datetime.datetime = UNSET
+    stopped_at: Unset | datetime.datetime = UNSET
+    container_image: Unset | str = UNSET
+    command_line: Unset | str = UNSET
+    log_location: Unset | str = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         name = self.name
 
         native_job_id = self.native_job_id
@@ -45,11 +45,11 @@ class Task:
 
         requested_at = self.requested_at.isoformat()
 
-        started_at: Union[Unset, str] = UNSET
+        started_at: Unset | str = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
 
-        stopped_at: Union[Unset, str] = UNSET
+        stopped_at: Unset | str = UNSET
         if not isinstance(self.stopped_at, Unset):
             stopped_at = self.stopped_at.isoformat()
 
@@ -59,7 +59,7 @@ class Task:
 
         log_location = self.log_location
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -83,7 +83,7 @@ class Task:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         name = d.pop("name")
 
@@ -94,14 +94,14 @@ class Task:
         requested_at = isoparse(d.pop("requestedAt"))
 
         _started_at = d.pop("startedAt", UNSET)
-        started_at: Union[Unset, datetime.datetime]
+        started_at: Unset | datetime.datetime
         if isinstance(_started_at, Unset):
             started_at = UNSET
         else:
             started_at = isoparse(_started_at)
 
         _stopped_at = d.pop("stoppedAt", UNSET)
-        stopped_at: Union[Unset, datetime.datetime]
+        stopped_at: Unset | datetime.datetime
         if isinstance(_stopped_at, Unset):
             stopped_at = UNSET
         else:
@@ -129,5 +129,5 @@ class Task:
         return task
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

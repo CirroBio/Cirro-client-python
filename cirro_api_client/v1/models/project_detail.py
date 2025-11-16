@@ -1,11 +1,12 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, cast
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..models.status import Status
+from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.cloud_account import CloudAccount
@@ -36,26 +37,28 @@ class ProjectDetail:
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
+        deployed_at (Union[None, Unset, datetime.datetime]):
     """
 
     id: str
     name: str
     description: str
     billing_account_id: str
-    contacts: List["Contact"]
+    contacts: list["Contact"]
     organization: str
     status: Status
     settings: "ProjectSettings"
     account: "CloudAccount"
     status_message: str
-    tags: List["Tag"]
-    classification_ids: List[str]
+    tags: list["Tag"]
+    classification_ids: list[str]
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    deployed_at: None | Unset | datetime.datetime = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         id = self.id
 
         name = self.name
@@ -92,7 +95,15 @@ class ProjectDetail:
 
         updated_at = self.updated_at.isoformat()
 
-        field_dict: Dict[str, Any] = {}
+        deployed_at: None | Unset | str
+        if isinstance(self.deployed_at, Unset):
+            deployed_at = UNSET
+        elif isinstance(self.deployed_at, datetime.datetime):
+            deployed_at = self.deployed_at.isoformat()
+        else:
+            deployed_at = self.deployed_at
+
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -113,11 +124,13 @@ class ProjectDetail:
                 "updatedAt": updated_at,
             }
         )
+        if deployed_at is not UNSET:
+            field_dict["deployedAt"] = deployed_at
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.cloud_account import CloudAccount
         from ..models.contact import Contact
         from ..models.project_settings import ProjectSettings
@@ -156,13 +169,30 @@ class ProjectDetail:
 
             tags.append(tags_item)
 
-        classification_ids = cast(List[str], d.pop("classificationIds"))
+        classification_ids = cast(list[str], d.pop("classificationIds"))
 
         created_by = d.pop("createdBy")
 
         created_at = isoparse(d.pop("createdAt"))
 
         updated_at = isoparse(d.pop("updatedAt"))
+
+        def _parse_deployed_at(data: object) -> None | Unset | datetime.datetime:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                deployed_at_type_0 = isoparse(data)
+
+                return deployed_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(None | Unset | datetime.datetime, data)
+
+        deployed_at = _parse_deployed_at(d.pop("deployedAt", UNSET))
 
         project_detail = cls(
             id=id,
@@ -180,11 +210,12 @@ class ProjectDetail:
             created_by=created_by,
             created_at=created_at,
             updated_at=updated_at,
+            deployed_at=deployed_at,
         )
 
         project_detail.additional_properties = d
         return project_detail
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

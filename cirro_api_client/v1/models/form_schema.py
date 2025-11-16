@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -23,18 +23,18 @@ class FormSchema:
 
     form: Union[Unset, "FormSchemaForm"] = UNSET
     ui: Union[Unset, "FormSchemaUi"] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        form: Union[Unset, Dict[str, Any]] = UNSET
+    def to_dict(self) -> dict[str, Any]:
+        form: Unset | dict[str, Any] = UNSET
         if not isinstance(self.form, Unset):
             form = self.form.to_dict()
 
-        ui: Union[Unset, Dict[str, Any]] = UNSET
+        ui: Unset | dict[str, Any] = UNSET
         if not isinstance(self.ui, Unset):
             ui = self.ui.to_dict()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if form is not UNSET:
@@ -45,20 +45,20 @@ class FormSchema:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.form_schema_form import FormSchemaForm
         from ..models.form_schema_ui import FormSchemaUi
 
         d = src_dict.copy()
         _form = d.pop("form", UNSET)
-        form: Union[Unset, FormSchemaForm]
+        form: Unset | FormSchemaForm
         if isinstance(_form, Unset):
             form = UNSET
         else:
             form = FormSchemaForm.from_dict(_form)
 
         _ui = d.pop("ui", UNSET)
-        ui: Union[Unset, FormSchemaUi]
+        ui: Unset | FormSchemaUi
         if isinstance(_ui, Unset):
             ui = UNSET
         else:
@@ -73,5 +73,5 @@ class FormSchema:
         return form_schema
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

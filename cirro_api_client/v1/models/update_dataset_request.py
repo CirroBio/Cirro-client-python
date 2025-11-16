@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -23,10 +23,10 @@ class UpdateDatasetRequest:
     name: str
     description: str
     process_id: str
-    tags: List["Tag"]
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    tags: list["Tag"]
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         name = self.name
 
         description = self.description
@@ -38,7 +38,7 @@ class UpdateDatasetRequest:
             tags_item = tags_item_data.to_dict()
             tags.append(tags_item)
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -52,7 +52,7 @@ class UpdateDatasetRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.tag import Tag
 
         d = src_dict.copy()
@@ -80,5 +80,5 @@ class UpdateDatasetRequest:
         return update_dataset_request
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

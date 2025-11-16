@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import httpx
 
@@ -11,8 +11,8 @@ from ...types import Response
 
 def _get_kwargs(
     project_id: str,
-) -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": f"/projects/{project_id}/permissions",
     }
@@ -20,7 +20,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["ProjectUser"]]:
+def _parse_response(*, client: Client, response: httpx.Response) -> list["ProjectUser"] | None:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
@@ -34,7 +34,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Lis
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[List["ProjectUser"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list["ProjectUser"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -47,7 +47,7 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-) -> Response[List["ProjectUser"]]:
+) -> Response[list["ProjectUser"]]:
     """Get project permissions
 
      Gets users who have access to the project
@@ -80,7 +80,7 @@ def sync(
     project_id: str,
     *,
     client: Client,
-) -> Optional[List["ProjectUser"]]:
+) -> list["ProjectUser"] | None:
     """Get project permissions
 
      Gets users who have access to the project
@@ -110,7 +110,7 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-) -> Response[List["ProjectUser"]]:
+) -> Response[list["ProjectUser"]]:
     """Get project permissions
 
      Gets users who have access to the project
@@ -140,7 +140,7 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-) -> Optional[List["ProjectUser"]]:
+) -> list["ProjectUser"] | None:
     """Get project permissions
 
      Gets users who have access to the project

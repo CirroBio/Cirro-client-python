@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -12,15 +12,15 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     project_id: str,
     *,
-    username: Union[Unset, str] = UNSET,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+    username: Unset | str = UNSET,
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["username"] = username
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": f"/governance/projects/{project_id}/requirements",
         "params": params,
@@ -29,7 +29,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["ProjectRequirement"]]:
+def _parse_response(*, client: Client, response: httpx.Response) -> list["ProjectRequirement"] | None:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
@@ -43,7 +43,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Lis
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[List["ProjectRequirement"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list["ProjectRequirement"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -56,8 +56,8 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-    username: Union[Unset, str] = UNSET,
-) -> Response[List["ProjectRequirement"]]:
+    username: Unset | str = UNSET,
+) -> Response[list["ProjectRequirement"]]:
     """Get project requirements
 
      Retrieve governance requirements for a project with fulfillment information for the current user
@@ -92,8 +92,8 @@ def sync(
     project_id: str,
     *,
     client: Client,
-    username: Union[Unset, str] = UNSET,
-) -> Optional[List["ProjectRequirement"]]:
+    username: Unset | str = UNSET,
+) -> list["ProjectRequirement"] | None:
     """Get project requirements
 
      Retrieve governance requirements for a project with fulfillment information for the current user
@@ -125,8 +125,8 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-    username: Union[Unset, str] = UNSET,
-) -> Response[List["ProjectRequirement"]]:
+    username: Unset | str = UNSET,
+) -> Response[list["ProjectRequirement"]]:
     """Get project requirements
 
      Retrieve governance requirements for a project with fulfillment information for the current user
@@ -158,8 +158,8 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-    username: Union[Unset, str] = UNSET,
-) -> Optional[List["ProjectRequirement"]]:
+    username: Unset | str = UNSET,
+) -> list["ProjectRequirement"] | None:
     """Get project requirements
 
      Retrieve governance requirements for a project with fulfillment information for the current user

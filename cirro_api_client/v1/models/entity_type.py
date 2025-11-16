@@ -11,8 +11,9 @@ class EntityType(str, Enum):
     SAMPLE = "SAMPLE"
     SHARE = "SHARE"
     TAG = "TAG"
-    UNKNOWN = "UNKNOWN"
     USER = "USER"
+    UNKNOWN = "UNKNOWN"
+    """ This is a fallback value for when the value is not known, do not use this value when making requests """
 
     def __str__(self) -> str:
         return str(self.value)

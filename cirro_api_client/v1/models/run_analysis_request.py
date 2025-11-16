@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -36,17 +36,17 @@ class RunAnalysisRequest:
 
     name: str
     process_id: str
-    source_dataset_ids: List[str]
+    source_dataset_ids: list[str]
     params: "RunAnalysisRequestParams"
-    notification_emails: List[str]
-    description: Union[None, Unset, str] = UNSET
-    source_sample_ids: Union[List[str], None, Unset] = UNSET
+    notification_emails: list[str]
+    description: None | Unset | str = UNSET
+    source_sample_ids: list[str] | None | Unset = UNSET
     source_sample_files_map: Union["RunAnalysisRequestSourceSampleFilesMap", None, Unset] = UNSET
-    resume_dataset_id: Union[None, Unset, str] = UNSET
-    compute_environment_id: Union[None, Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    resume_dataset_id: None | Unset | str = UNSET
+    compute_environment_id: None | Unset | str = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         from ..models.run_analysis_request_source_sample_files_map import RunAnalysisRequestSourceSampleFilesMap
 
         name = self.name
@@ -59,13 +59,13 @@ class RunAnalysisRequest:
 
         notification_emails = self.notification_emails
 
-        description: Union[None, Unset, str]
+        description: None | Unset | str
         if isinstance(self.description, Unset):
             description = UNSET
         else:
             description = self.description
 
-        source_sample_ids: Union[List[str], None, Unset]
+        source_sample_ids: list[str] | None | Unset
         if isinstance(self.source_sample_ids, Unset):
             source_sample_ids = UNSET
         elif isinstance(self.source_sample_ids, list):
@@ -74,7 +74,7 @@ class RunAnalysisRequest:
         else:
             source_sample_ids = self.source_sample_ids
 
-        source_sample_files_map: Union[Dict[str, Any], None, Unset]
+        source_sample_files_map: dict[str, Any] | None | Unset
         if isinstance(self.source_sample_files_map, Unset):
             source_sample_files_map = UNSET
         elif isinstance(self.source_sample_files_map, RunAnalysisRequestSourceSampleFilesMap):
@@ -82,19 +82,19 @@ class RunAnalysisRequest:
         else:
             source_sample_files_map = self.source_sample_files_map
 
-        resume_dataset_id: Union[None, Unset, str]
+        resume_dataset_id: None | Unset | str
         if isinstance(self.resume_dataset_id, Unset):
             resume_dataset_id = UNSET
         else:
             resume_dataset_id = self.resume_dataset_id
 
-        compute_environment_id: Union[None, Unset, str]
+        compute_environment_id: None | Unset | str
         if isinstance(self.compute_environment_id, Unset):
             compute_environment_id = UNSET
         else:
             compute_environment_id = self.compute_environment_id
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -119,7 +119,7 @@ class RunAnalysisRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.run_analysis_request_params import RunAnalysisRequestParams
         from ..models.run_analysis_request_source_sample_files_map import RunAnalysisRequestSourceSampleFilesMap
 
@@ -128,22 +128,22 @@ class RunAnalysisRequest:
 
         process_id = d.pop("processId")
 
-        source_dataset_ids = cast(List[str], d.pop("sourceDatasetIds"))
+        source_dataset_ids = cast(list[str], d.pop("sourceDatasetIds"))
 
         params = RunAnalysisRequestParams.from_dict(d.pop("params"))
 
-        notification_emails = cast(List[str], d.pop("notificationEmails"))
+        notification_emails = cast(list[str], d.pop("notificationEmails"))
 
-        def _parse_description(data: object) -> Union[None, Unset, str]:
+        def _parse_description(data: object) -> None | Unset | str:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, str], data)
+            return cast(None | Unset | str, data)
 
         description = _parse_description(d.pop("description", UNSET))
 
-        def _parse_source_sample_ids(data: object) -> Union[List[str], None, Unset]:
+        def _parse_source_sample_ids(data: object) -> list[str] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -151,12 +151,12 @@ class RunAnalysisRequest:
             try:
                 if not isinstance(data, list):
                     raise TypeError()
-                source_sample_ids_type_0 = cast(List[str], data)
+                source_sample_ids_type_0 = cast(list[str], data)
 
                 return source_sample_ids_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[List[str], None, Unset], data)
+            return cast(list[str] | None | Unset, data)
 
         source_sample_ids = _parse_source_sample_ids(d.pop("sourceSampleIds", UNSET))
 
@@ -179,21 +179,21 @@ class RunAnalysisRequest:
 
         source_sample_files_map = _parse_source_sample_files_map(d.pop("sourceSampleFilesMap", UNSET))
 
-        def _parse_resume_dataset_id(data: object) -> Union[None, Unset, str]:
+        def _parse_resume_dataset_id(data: object) -> None | Unset | str:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, str], data)
+            return cast(None | Unset | str, data)
 
         resume_dataset_id = _parse_resume_dataset_id(d.pop("resumeDatasetId", UNSET))
 
-        def _parse_compute_environment_id(data: object) -> Union[None, Unset, str]:
+        def _parse_compute_environment_id(data: object) -> None | Unset | str:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, str], data)
+            return cast(None | Unset | str, data)
 
         compute_environment_id = _parse_compute_environment_id(d.pop("computeEnvironmentId", UNSET))
 
@@ -214,5 +214,5 @@ class RunAnalysisRequest:
         return run_analysis_request
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

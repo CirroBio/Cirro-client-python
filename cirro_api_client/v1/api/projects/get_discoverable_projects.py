@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import httpx
 
@@ -9,8 +9,8 @@ from ...models.project import Project
 from ...types import Response
 
 
-def _get_kwargs() -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+def _get_kwargs() -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/projects/discover",
     }
@@ -18,7 +18,7 @@ def _get_kwargs() -> Dict[str, Any]:
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["Project"]]:
+def _parse_response(*, client: Client, response: httpx.Response) -> list["Project"] | None:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
@@ -32,7 +32,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Lis
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[List["Project"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list["Project"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -44,7 +44,7 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Lis
 def sync_detailed(
     *,
     client: Client,
-) -> Response[List["Project"]]:
+) -> Response[list["Project"]]:
     """Get discoverable projects
 
      Retrieve a list of projects that a user can request access to
@@ -70,7 +70,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[List["Project"]]:
+) -> list["Project"] | None:
     """Get discoverable projects
 
      Retrieve a list of projects that a user can request access to
@@ -94,7 +94,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[List["Project"]]:
+) -> Response[list["Project"]]:
     """Get discoverable projects
 
      Retrieve a list of projects that a user can request access to
@@ -117,7 +117,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[List["Project"]]:
+) -> list["Project"] | None:
     """Get discoverable projects
 
      Retrieve a list of projects that a user can request access to

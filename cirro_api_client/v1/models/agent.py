@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -25,23 +25,23 @@ class Agent:
     """
 
     status: AgentStatus
-    id: Union[Unset, str] = UNSET
-    name: Union[Unset, str] = UNSET
+    id: Unset | str = UNSET
+    name: Unset | str = UNSET
     tags: Union[Unset, "AgentTags"] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         status = self.status.value
 
         id = self.id
 
         name = self.name
 
-        tags: Union[Unset, Dict[str, Any]] = UNSET
+        tags: Unset | dict[str, Any] = UNSET
         if not isinstance(self.tags, Unset):
             tags = self.tags.to_dict()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -58,7 +58,7 @@ class Agent:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.agent_tags import AgentTags
 
         d = src_dict.copy()
@@ -69,7 +69,7 @@ class Agent:
         name = d.pop("name", UNSET)
 
         _tags = d.pop("tags", UNSET)
-        tags: Union[Unset, AgentTags]
+        tags: Unset | AgentTags
         if isinstance(_tags, Unset):
             tags = UNSET
         else:
@@ -86,5 +86,5 @@ class Agent:
         return agent
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -23,13 +23,13 @@ class CreateNotebookInstanceRequest:
 
     name: str
     instance_type: str
-    accelerator_types: List[str]
+    accelerator_types: list[str]
     volume_size_gb: int
-    git_repositories: Union[List[str], None, Unset] = UNSET
-    is_shared_with_project: Union[Unset, bool] = False
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    git_repositories: list[str] | None | Unset = UNSET
+    is_shared_with_project: Unset | bool = False
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         name = self.name
 
         instance_type = self.instance_type
@@ -38,7 +38,7 @@ class CreateNotebookInstanceRequest:
 
         volume_size_gb = self.volume_size_gb
 
-        git_repositories: Union[List[str], None, Unset]
+        git_repositories: list[str] | None | Unset
         if isinstance(self.git_repositories, Unset):
             git_repositories = UNSET
         elif isinstance(self.git_repositories, list):
@@ -49,7 +49,7 @@ class CreateNotebookInstanceRequest:
 
         is_shared_with_project = self.is_shared_with_project
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -67,17 +67,17 @@ class CreateNotebookInstanceRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         name = d.pop("name")
 
         instance_type = d.pop("instanceType")
 
-        accelerator_types = cast(List[str], d.pop("acceleratorTypes"))
+        accelerator_types = cast(list[str], d.pop("acceleratorTypes"))
 
         volume_size_gb = d.pop("volumeSizeGB")
 
-        def _parse_git_repositories(data: object) -> Union[List[str], None, Unset]:
+        def _parse_git_repositories(data: object) -> list[str] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -85,12 +85,12 @@ class CreateNotebookInstanceRequest:
             try:
                 if not isinstance(data, list):
                     raise TypeError()
-                git_repositories_type_0 = cast(List[str], data)
+                git_repositories_type_0 = cast(list[str], data)
 
                 return git_repositories_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[List[str], None, Unset], data)
+            return cast(list[str] | None | Unset, data)
 
         git_repositories = _parse_git_repositories(d.pop("gitRepositories", UNSET))
 
@@ -109,5 +109,5 @@ class CreateNotebookInstanceRequest:
         return create_notebook_instance_request
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

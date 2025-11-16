@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -13,15 +13,15 @@ def _get_kwargs(
     project_id: str,
     dataset_id: str,
     *,
-    force_live: Union[Unset, bool] = False,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+    force_live: Unset | bool = False,
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["forceLive"] = force_live
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": f"/projects/{project_id}/execution/{dataset_id}/logs",
         "params": params,
@@ -30,7 +30,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[GetExecutionLogsResponse]:
+def _parse_response(*, client: Client, response: httpx.Response) -> GetExecutionLogsResponse | None:
     if response.status_code == HTTPStatus.OK:
         response_200 = GetExecutionLogsResponse.from_dict(response.json())
 
@@ -53,7 +53,7 @@ def sync_detailed(
     dataset_id: str,
     *,
     client: Client,
-    force_live: Union[Unset, bool] = False,
+    force_live: Unset | bool = False,
 ) -> Response[GetExecutionLogsResponse]:
     """Get execution logs
 
@@ -92,8 +92,8 @@ def sync(
     dataset_id: str,
     *,
     client: Client,
-    force_live: Union[Unset, bool] = False,
-) -> Optional[GetExecutionLogsResponse]:
+    force_live: Unset | bool = False,
+) -> GetExecutionLogsResponse | None:
     """Get execution logs
 
      Gets live logs from main execution task
@@ -128,7 +128,7 @@ async def asyncio_detailed(
     dataset_id: str,
     *,
     client: Client,
-    force_live: Union[Unset, bool] = False,
+    force_live: Unset | bool = False,
 ) -> Response[GetExecutionLogsResponse]:
     """Get execution logs
 
@@ -164,8 +164,8 @@ async def asyncio(
     dataset_id: str,
     *,
     client: Client,
-    force_live: Union[Unset, bool] = False,
-) -> Optional[GetExecutionLogsResponse]:
+    force_live: Unset | bool = False,
+) -> GetExecutionLogsResponse | None:
     """Get execution logs
 
      Gets live logs from main execution task

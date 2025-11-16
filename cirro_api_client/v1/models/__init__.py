@@ -35,6 +35,7 @@ from .compute_environment_configuration_input_properties import ComputeEnvironme
 from .compute_environment_configuration_properties import ComputeEnvironmentConfigurationProperties
 from .contact import Contact
 from .contact_input import ContactInput
+from .cost_response import CostResponse
 from .create_notebook_instance_request import CreateNotebookInstanceRequest
 from .create_project_access_request import CreateProjectAccessRequest
 from .create_reference_request import CreateReferenceRequest
@@ -59,6 +60,7 @@ from .dataset_detail_info import DatasetDetailInfo
 from .dataset_detail_params import DatasetDetailParams
 from .dataset_detail_source_sample_files_map import DatasetDetailSourceSampleFilesMap
 from .dataset_viz import DatasetViz
+from .dataset_viz_config import DatasetVizConfig
 from .discussion import Discussion
 from .discussion_input import DiscussionInput
 from .discussion_type import DiscussionType
@@ -95,6 +97,7 @@ from .governance_requirement_project_file_map import GovernanceRequirementProjec
 from .governance_scope import GovernanceScope
 from .governance_training_verification import GovernanceTrainingVerification
 from .governance_type import GovernanceType
+from .group_cost import GroupCost
 from .import_data_request import ImportDataRequest
 from .invite_user_request import InviteUserRequest
 from .invite_user_response import InviteUserResponse
@@ -106,6 +109,7 @@ from .message_input import MessageInput
 from .message_type import MessageType
 from .metric_record import MetricRecord
 from .metric_record_services import MetricRecordServices
+from .mounted_dataset import MountedDataset
 from .move_dataset_input import MoveDatasetInput
 from .move_dataset_response import MoveDatasetResponse
 from .named_item import NamedItem
@@ -158,6 +162,7 @@ from .share import Share
 from .share_detail import ShareDetail
 from .share_input import ShareInput
 from .share_type import ShareType
+from .sharing_type import SharingType
 from .sort_order import SortOrder
 from .status import Status
 from .stop_execution_response import StopExecutionResponse
@@ -166,6 +171,7 @@ from .system_info_response import SystemInfoResponse
 from .table import Table
 from .tag import Tag
 from .task import Task
+from .task_cost import TaskCost
 from .tenant_info import TenantInfo
 from .update_dataset_request import UpdateDatasetRequest
 from .update_user_request import UpdateUserRequest
@@ -177,6 +183,14 @@ from .user_project_assignment import UserProjectAssignment
 from .user_settings import UserSettings
 from .validate_file_name_patterns_request import ValidateFileNamePatternsRequest
 from .validate_file_requirements_request import ValidateFileRequirementsRequest
+from .version_specification import VersionSpecification
+from .workspace import Workspace
+from .workspace_compute_config import WorkspaceComputeConfig
+from .workspace_compute_config_environment_variables_type_0 import WorkspaceComputeConfigEnvironmentVariablesType0
+from .workspace_connection_response import WorkspaceConnectionResponse
+from .workspace_environment import WorkspaceEnvironment
+from .workspace_input import WorkspaceInput
+from .workspace_session import WorkspaceSession
 
 __all__ = (
     "Agent",
@@ -214,6 +228,7 @@ __all__ = (
     "ComputeEnvironmentConfigurationProperties",
     "Contact",
     "ContactInput",
+    "CostResponse",
     "CreateNotebookInstanceRequest",
     "CreateProjectAccessRequest",
     "CreateReferenceRequest",
@@ -238,6 +253,7 @@ __all__ = (
     "DatasetDetailParams",
     "DatasetDetailSourceSampleFilesMap",
     "DatasetViz",
+    "DatasetVizConfig",
     "Discussion",
     "DiscussionInput",
     "DiscussionType",
@@ -274,6 +290,7 @@ __all__ = (
     "GovernanceScope",
     "GovernanceTrainingVerification",
     "GovernanceType",
+    "GroupCost",
     "ImportDataRequest",
     "InviteUserRequest",
     "InviteUserResponse",
@@ -285,6 +302,7 @@ __all__ = (
     "MessageType",
     "MetricRecord",
     "MetricRecordServices",
+    "MountedDataset",
     "MoveDatasetInput",
     "MoveDatasetResponse",
     "NamedItem",
@@ -337,6 +355,7 @@ __all__ = (
     "ShareDetail",
     "ShareInput",
     "ShareType",
+    "SharingType",
     "SortOrder",
     "Status",
     "StopExecutionResponse",
@@ -345,6 +364,7 @@ __all__ = (
     "Table",
     "Tag",
     "Task",
+    "TaskCost",
     "TenantInfo",
     "UpdateDatasetRequest",
     "UpdateUserRequest",
@@ -356,4 +376,12 @@ __all__ = (
     "UserSettings",
     "ValidateFileNamePatternsRequest",
     "ValidateFileRequirementsRequest",
+    "VersionSpecification",
+    "Workspace",
+    "WorkspaceComputeConfig",
+    "WorkspaceComputeConfigEnvironmentVariablesType0",
+    "WorkspaceConnectionResponse",
+    "WorkspaceEnvironment",
+    "WorkspaceInput",
+    "WorkspaceSession",
 )

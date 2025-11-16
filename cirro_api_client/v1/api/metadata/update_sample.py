@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
 
 import httpx
 
@@ -15,10 +15,10 @@ def _get_kwargs(
     sample_id: str,
     *,
     body: SampleRequest,
-) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    headers: dict[str, Any] = {}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "put",
         "url": f"/projects/{project_id}/samples/{sample_id}",
     }
@@ -32,7 +32,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Sample]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Sample | None:
     if response.status_code == HTTPStatus.OK:
         response_200 = Sample.from_dict(response.json())
 
@@ -95,7 +95,7 @@ def sync(
     *,
     client: Client,
     body: SampleRequest,
-) -> Optional[Sample]:
+) -> Sample | None:
     """Update sample
 
      Updates metadata on a sample
@@ -167,7 +167,7 @@ async def asyncio(
     *,
     client: Client,
     body: SampleRequest,
-) -> Optional[Sample]:
+) -> Sample | None:
     """Update sample
 
      Updates metadata on a sample

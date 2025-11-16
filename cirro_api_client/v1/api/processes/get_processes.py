@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -11,15 +11,15 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    include_archived: Union[Unset, bool] = False,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+    include_archived: Unset | bool = False,
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["includeArchived"] = include_archived
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/processes",
         "params": params,
@@ -28,7 +28,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["Process"]]:
+def _parse_response(*, client: Client, response: httpx.Response) -> list["Process"] | None:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
@@ -42,7 +42,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Lis
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[List["Process"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list["Process"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -54,8 +54,8 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Lis
 def sync_detailed(
     *,
     client: Client,
-    include_archived: Union[Unset, bool] = False,
-) -> Response[List["Process"]]:
+    include_archived: Unset | bool = False,
+) -> Response[list["Process"]]:
     """List processes
 
      Retrieves a list of available processes
@@ -87,8 +87,8 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    include_archived: Union[Unset, bool] = False,
-) -> Optional[List["Process"]]:
+    include_archived: Unset | bool = False,
+) -> list["Process"] | None:
     """List processes
 
      Retrieves a list of available processes
@@ -117,8 +117,8 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-    include_archived: Union[Unset, bool] = False,
-) -> Response[List["Process"]]:
+    include_archived: Unset | bool = False,
+) -> Response[list["Process"]]:
     """List processes
 
      Retrieves a list of available processes
@@ -147,8 +147,8 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    include_archived: Union[Unset, bool] = False,
-) -> Optional[List["Process"]]:
+    include_archived: Unset | bool = False,
+) -> list["Process"] | None:
     """List processes
 
      Retrieves a list of available processes

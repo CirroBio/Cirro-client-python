@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -43,9 +43,9 @@ class AgentDetail:
     registration: Union["AgentRegistration", None, Unset] = UNSET
     tags: Union["AgentDetailTags", None, Unset] = UNSET
     environment_configuration: Union["AgentDetailEnvironmentConfiguration", None, Unset] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         from ..models.agent_detail_environment_configuration import AgentDetailEnvironmentConfiguration
         from ..models.agent_detail_tags import AgentDetailTags
         from ..models.agent_registration import AgentRegistration
@@ -64,7 +64,7 @@ class AgentDetail:
 
         updated_at = self.updated_at.isoformat()
 
-        registration: Union[Dict[str, Any], None, Unset]
+        registration: dict[str, Any] | None | Unset
         if isinstance(self.registration, Unset):
             registration = UNSET
         elif isinstance(self.registration, AgentRegistration):
@@ -72,7 +72,7 @@ class AgentDetail:
         else:
             registration = self.registration
 
-        tags: Union[Dict[str, Any], None, Unset]
+        tags: dict[str, Any] | None | Unset
         if isinstance(self.tags, Unset):
             tags = UNSET
         elif isinstance(self.tags, AgentDetailTags):
@@ -80,7 +80,7 @@ class AgentDetail:
         else:
             tags = self.tags
 
-        environment_configuration: Union[Dict[str, Any], None, Unset]
+        environment_configuration: dict[str, Any] | None | Unset
         if isinstance(self.environment_configuration, Unset):
             environment_configuration = UNSET
         elif isinstance(self.environment_configuration, AgentDetailEnvironmentConfiguration):
@@ -88,7 +88,7 @@ class AgentDetail:
         else:
             environment_configuration = self.environment_configuration
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -111,7 +111,7 @@ class AgentDetail:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.agent_detail_environment_configuration import AgentDetailEnvironmentConfiguration
         from ..models.agent_detail_tags import AgentDetailTags
         from ..models.agent_registration import AgentRegistration
@@ -199,5 +199,5 @@ class AgentDetail:
         return agent_detail
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, cast
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -32,16 +32,16 @@ class BillingAccount:
     id: str
     name: str
     organization: str
-    contacts: List["Contact"]
+    contacts: list["Contact"]
     customer_type: CustomerType
     billing_method: BillingMethod
     primary_budget_number: str
     owner: str
-    shared_with: List[str]
+    shared_with: list[str]
     is_archived: bool
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         id = self.id
 
         name = self.name
@@ -65,7 +65,7 @@ class BillingAccount:
 
         is_archived = self.is_archived
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -85,7 +85,7 @@ class BillingAccount:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.contact import Contact
 
         d = src_dict.copy()
@@ -110,7 +110,7 @@ class BillingAccount:
 
         owner = d.pop("owner")
 
-        shared_with = cast(List[str], d.pop("sharedWith"))
+        shared_with = cast(list[str], d.pop("sharedWith"))
 
         is_archived = d.pop("isArchived")
 
@@ -131,5 +131,5 @@ class BillingAccount:
         return billing_account
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

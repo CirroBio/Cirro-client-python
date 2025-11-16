@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import httpx
 
@@ -12,8 +12,8 @@ from ...types import Response
 def _get_kwargs(
     project_id: str,
     dataset_id: str,
-) -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": f"/projects/{project_id}/datasets/{dataset_id}/samples",
     }
@@ -21,7 +21,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["Sample"]]:
+def _parse_response(*, client: Client, response: httpx.Response) -> list["Sample"] | None:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
@@ -35,7 +35,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Lis
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[List["Sample"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list["Sample"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -49,7 +49,7 @@ def sync_detailed(
     dataset_id: str,
     *,
     client: Client,
-) -> Response[List["Sample"]]:
+) -> Response[list["Sample"]]:
     """Get dataset samples
 
      Retrieves a list of samples associated with a dataset along with their metadata
@@ -85,7 +85,7 @@ def sync(
     dataset_id: str,
     *,
     client: Client,
-) -> Optional[List["Sample"]]:
+) -> list["Sample"] | None:
     """Get dataset samples
 
      Retrieves a list of samples associated with a dataset along with their metadata
@@ -118,7 +118,7 @@ async def asyncio_detailed(
     dataset_id: str,
     *,
     client: Client,
-) -> Response[List["Sample"]]:
+) -> Response[list["Sample"]]:
     """Get dataset samples
 
      Retrieves a list of samples associated with a dataset along with their metadata
@@ -151,7 +151,7 @@ async def asyncio(
     dataset_id: str,
     *,
     client: Client,
-) -> Optional[List["Sample"]]:
+) -> list["Sample"] | None:
     """Get dataset samples
 
      Retrieves a list of samples associated with a dataset along with their metadata

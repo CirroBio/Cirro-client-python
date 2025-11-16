@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -27,18 +27,18 @@ class DatasetAssetsManifest:
         artifacts (Union[Unset, List['Artifact']]): Artifacts associated with the dataset
     """
 
-    domain: Union[Unset, str] = UNSET
-    files: Union[Unset, List["FileEntry"]] = UNSET
-    total_files: Union[Unset, int] = UNSET
-    viz: Union[Unset, List["DatasetViz"]] = UNSET
-    tables: Union[Unset, List["Table"]] = UNSET
-    artifacts: Union[Unset, List["Artifact"]] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    domain: Unset | str = UNSET
+    files: Unset | list["FileEntry"] = UNSET
+    total_files: Unset | int = UNSET
+    viz: Unset | list["DatasetViz"] = UNSET
+    tables: Unset | list["Table"] = UNSET
+    artifacts: Unset | list["Artifact"] = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         domain = self.domain
 
-        files: Union[Unset, List[Dict[str, Any]]] = UNSET
+        files: Unset | list[dict[str, Any]] = UNSET
         if not isinstance(self.files, Unset):
             files = []
             for files_item_data in self.files:
@@ -47,28 +47,28 @@ class DatasetAssetsManifest:
 
         total_files = self.total_files
 
-        viz: Union[Unset, List[Dict[str, Any]]] = UNSET
+        viz: Unset | list[dict[str, Any]] = UNSET
         if not isinstance(self.viz, Unset):
             viz = []
             for viz_item_data in self.viz:
                 viz_item = viz_item_data.to_dict()
                 viz.append(viz_item)
 
-        tables: Union[Unset, List[Dict[str, Any]]] = UNSET
+        tables: Unset | list[dict[str, Any]] = UNSET
         if not isinstance(self.tables, Unset):
             tables = []
             for tables_item_data in self.tables:
                 tables_item = tables_item_data.to_dict()
                 tables.append(tables_item)
 
-        artifacts: Union[Unset, List[Dict[str, Any]]] = UNSET
+        artifacts: Unset | list[dict[str, Any]] = UNSET
         if not isinstance(self.artifacts, Unset):
             artifacts = []
             for artifacts_item_data in self.artifacts:
                 artifacts_item = artifacts_item_data.to_dict()
                 artifacts.append(artifacts_item)
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if domain is not UNSET:
@@ -87,7 +87,7 @@ class DatasetAssetsManifest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.artifact import Artifact
         from ..models.dataset_viz import DatasetViz
         from ..models.file_entry import FileEntry
@@ -139,5 +139,5 @@ class DatasetAssetsManifest:
         return dataset_assets_manifest
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

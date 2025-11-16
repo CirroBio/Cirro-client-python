@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -19,14 +19,14 @@ class ProjectCreateOptions:
         wizard_url (str):
     """
 
-    enabled_account_types: List[CloudAccountType]
+    enabled_account_types: list[CloudAccountType]
     portal_account_id: str
     portal_region: str
     template_url: str
     wizard_url: str
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         enabled_account_types = []
         for enabled_account_types_item_data in self.enabled_account_types:
             enabled_account_types_item = enabled_account_types_item_data.value
@@ -40,7 +40,7 @@ class ProjectCreateOptions:
 
         wizard_url = self.wizard_url
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -55,7 +55,7 @@ class ProjectCreateOptions:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         enabled_account_types = []
         _enabled_account_types = d.pop("enabledAccountTypes")
@@ -84,5 +84,5 @@ class ProjectCreateOptions:
         return project_create_options
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

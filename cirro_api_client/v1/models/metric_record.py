@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -25,22 +25,22 @@ class MetricRecord:
     """
 
     unit: str
-    date: Union[Unset, datetime.date] = UNSET
+    date: Unset | datetime.date = UNSET
     services: Union[Unset, "MetricRecordServices"] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         unit = self.unit
 
-        date: Union[Unset, str] = UNSET
+        date: Unset | str = UNSET
         if not isinstance(self.date, Unset):
             date = self.date.isoformat()
 
-        services: Union[Unset, Dict[str, Any]] = UNSET
+        services: Unset | dict[str, Any] = UNSET
         if not isinstance(self.services, Unset):
             services = self.services.to_dict()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -55,21 +55,21 @@ class MetricRecord:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.metric_record_services import MetricRecordServices
 
         d = src_dict.copy()
         unit = d.pop("unit")
 
         _date = d.pop("date", UNSET)
-        date: Union[Unset, datetime.date]
+        date: Unset | datetime.date
         if isinstance(_date, Unset):
             date = UNSET
         else:
             date = isoparse(_date).date()
 
         _services = d.pop("services", UNSET)
-        services: Union[Unset, MetricRecordServices]
+        services: Unset | MetricRecordServices
         if isinstance(_services, Unset):
             services = UNSET
         else:
@@ -85,5 +85,5 @@ class MetricRecord:
         return metric_record
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

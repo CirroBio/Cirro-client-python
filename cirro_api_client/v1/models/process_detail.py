@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -53,26 +53,26 @@ class ProcessDetail:
     description: str
     data_type: str
     executor: Executor
-    child_process_ids: List[str]
-    parent_process_ids: List[str]
-    linked_project_ids: List[str]
+    child_process_ids: list[str]
+    parent_process_ids: list[str]
+    linked_project_ids: list[str]
     is_tenant_wide: bool
     allow_multiple_sources: bool
     uses_sample_sheet: bool
     is_archived: bool
-    category: Union[Unset, str] = UNSET
-    pipeline_type: Union[Unset, str] = UNSET
-    documentation_url: Union[Unset, str] = UNSET
-    file_requirements_message: Union[Unset, str] = UNSET
+    category: Unset | str = UNSET
+    pipeline_type: Unset | str = UNSET
+    documentation_url: Unset | str = UNSET
+    file_requirements_message: Unset | str = UNSET
     pipeline_code: Union["PipelineCode", None, Unset] = UNSET
-    owner: Union[None, Unset, str] = UNSET
+    owner: None | Unset | str = UNSET
     custom_settings: Union["CustomPipelineSettings", None, Unset] = UNSET
-    file_mapping_rules: Union[List["FileMappingRule"], None, Unset] = UNSET
-    created_at: Union[Unset, datetime.datetime] = UNSET
-    updated_at: Union[Unset, datetime.datetime] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    file_mapping_rules: list["FileMappingRule"] | None | Unset = UNSET
+    created_at: Unset | datetime.datetime = UNSET
+    updated_at: Unset | datetime.datetime = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         from ..models.custom_pipeline_settings import CustomPipelineSettings
         from ..models.pipeline_code import PipelineCode
 
@@ -108,7 +108,7 @@ class ProcessDetail:
 
         file_requirements_message = self.file_requirements_message
 
-        pipeline_code: Union[Dict[str, Any], None, Unset]
+        pipeline_code: dict[str, Any] | None | Unset
         if isinstance(self.pipeline_code, Unset):
             pipeline_code = UNSET
         elif isinstance(self.pipeline_code, PipelineCode):
@@ -116,13 +116,13 @@ class ProcessDetail:
         else:
             pipeline_code = self.pipeline_code
 
-        owner: Union[None, Unset, str]
+        owner: None | Unset | str
         if isinstance(self.owner, Unset):
             owner = UNSET
         else:
             owner = self.owner
 
-        custom_settings: Union[Dict[str, Any], None, Unset]
+        custom_settings: dict[str, Any] | None | Unset
         if isinstance(self.custom_settings, Unset):
             custom_settings = UNSET
         elif isinstance(self.custom_settings, CustomPipelineSettings):
@@ -130,7 +130,7 @@ class ProcessDetail:
         else:
             custom_settings = self.custom_settings
 
-        file_mapping_rules: Union[List[Dict[str, Any]], None, Unset]
+        file_mapping_rules: list[dict[str, Any]] | None | Unset
         if isinstance(self.file_mapping_rules, Unset):
             file_mapping_rules = UNSET
         elif isinstance(self.file_mapping_rules, list):
@@ -142,15 +142,15 @@ class ProcessDetail:
         else:
             file_mapping_rules = self.file_mapping_rules
 
-        created_at: Union[Unset, str] = UNSET
+        created_at: Unset | str = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
 
-        updated_at: Union[Unset, str] = UNSET
+        updated_at: Unset | str = UNSET
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -192,7 +192,7 @@ class ProcessDetail:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.custom_pipeline_settings import CustomPipelineSettings
         from ..models.file_mapping_rule import FileMappingRule
         from ..models.pipeline_code import PipelineCode
@@ -208,11 +208,11 @@ class ProcessDetail:
 
         executor = Executor(d.pop("executor"))
 
-        child_process_ids = cast(List[str], d.pop("childProcessIds"))
+        child_process_ids = cast(list[str], d.pop("childProcessIds"))
 
-        parent_process_ids = cast(List[str], d.pop("parentProcessIds"))
+        parent_process_ids = cast(list[str], d.pop("parentProcessIds"))
 
-        linked_project_ids = cast(List[str], d.pop("linkedProjectIds"))
+        linked_project_ids = cast(list[str], d.pop("linkedProjectIds"))
 
         is_tenant_wide = d.pop("isTenantWide")
 
@@ -247,12 +247,12 @@ class ProcessDetail:
 
         pipeline_code = _parse_pipeline_code(d.pop("pipelineCode", UNSET))
 
-        def _parse_owner(data: object) -> Union[None, Unset, str]:
+        def _parse_owner(data: object) -> None | Unset | str:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, str], data)
+            return cast(None | Unset | str, data)
 
         owner = _parse_owner(d.pop("owner", UNSET))
 
@@ -273,7 +273,7 @@ class ProcessDetail:
 
         custom_settings = _parse_custom_settings(d.pop("customSettings", UNSET))
 
-        def _parse_file_mapping_rules(data: object) -> Union[List["FileMappingRule"], None, Unset]:
+        def _parse_file_mapping_rules(data: object) -> list["FileMappingRule"] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -291,19 +291,19 @@ class ProcessDetail:
                 return file_mapping_rules_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[List["FileMappingRule"], None, Unset], data)
+            return cast(list["FileMappingRule"] | None | Unset, data)
 
         file_mapping_rules = _parse_file_mapping_rules(d.pop("fileMappingRules", UNSET))
 
         _created_at = d.pop("createdAt", UNSET)
-        created_at: Union[Unset, datetime.datetime]
+        created_at: Unset | datetime.datetime
         if isinstance(_created_at, Unset):
             created_at = UNSET
         else:
             created_at = isoparse(_created_at)
 
         _updated_at = d.pop("updatedAt", UNSET)
-        updated_at: Union[Unset, datetime.datetime]
+        updated_at: Unset | datetime.datetime
         if isinstance(_updated_at, Unset):
             updated_at = UNSET
         else:
@@ -338,5 +338,5 @@ class ProcessDetail:
         return process_detail
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

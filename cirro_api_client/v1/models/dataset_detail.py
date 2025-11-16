@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -46,6 +46,7 @@ class DatasetDetail:
         originating_project_id (Union[Unset, str]): The originating project ID might be different if the dataset was
             shared from another project.
         share (Union['NamedItem', None, Unset]):
+        total_size_bytes (Union[None, Unset, int]): Total size of dataset files (in bytes)
     """
 
     id: str
@@ -54,24 +55,25 @@ class DatasetDetail:
     s3: str
     process_id: str
     project_id: str
-    source_dataset_ids: List[str]
-    source_datasets: List["NamedItem"]
-    source_sample_ids: List[str]
+    source_dataset_ids: list[str]
+    source_datasets: list["NamedItem"]
+    source_sample_ids: list[str]
     source_sample_files_map: "DatasetDetailSourceSampleFilesMap"
     status: Status
     status_message: str
-    tags: List["Tag"]
+    tags: list["Tag"]
     params: "DatasetDetailParams"
     info: "DatasetDetailInfo"
     is_view_restricted: bool
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    originating_project_id: Union[Unset, str] = UNSET
+    originating_project_id: Unset | str = UNSET
     share: Union["NamedItem", None, Unset] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    total_size_bytes: None | Unset | int = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         from ..models.named_item import NamedItem
 
         id = self.id
@@ -120,7 +122,7 @@ class DatasetDetail:
 
         originating_project_id = self.originating_project_id
 
-        share: Union[Dict[str, Any], None, Unset]
+        share: dict[str, Any] | None | Unset
         if isinstance(self.share, Unset):
             share = UNSET
         elif isinstance(self.share, NamedItem):
@@ -128,7 +130,13 @@ class DatasetDetail:
         else:
             share = self.share
 
-        field_dict: Dict[str, Any] = {}
+        total_size_bytes: None | Unset | int
+        if isinstance(self.total_size_bytes, Unset):
+            total_size_bytes = UNSET
+        else:
+            total_size_bytes = self.total_size_bytes
+
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -157,11 +165,13 @@ class DatasetDetail:
             field_dict["originatingProjectId"] = originating_project_id
         if share is not UNSET:
             field_dict["share"] = share
+        if total_size_bytes is not UNSET:
+            field_dict["totalSizeBytes"] = total_size_bytes
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.dataset_detail_info import DatasetDetailInfo
         from ..models.dataset_detail_params import DatasetDetailParams
         from ..models.dataset_detail_source_sample_files_map import DatasetDetailSourceSampleFilesMap
@@ -181,7 +191,7 @@ class DatasetDetail:
 
         project_id = d.pop("projectId")
 
-        source_dataset_ids = cast(List[str], d.pop("sourceDatasetIds"))
+        source_dataset_ids = cast(list[str], d.pop("sourceDatasetIds"))
 
         source_datasets = []
         _source_datasets = d.pop("sourceDatasets")
@@ -190,7 +200,7 @@ class DatasetDetail:
 
             source_datasets.append(source_datasets_item)
 
-        source_sample_ids = cast(List[str], d.pop("sourceSampleIds"))
+        source_sample_ids = cast(list[str], d.pop("sourceSampleIds"))
 
         source_sample_files_map = DatasetDetailSourceSampleFilesMap.from_dict(d.pop("sourceSampleFilesMap"))
 
@@ -236,6 +246,15 @@ class DatasetDetail:
 
         share = _parse_share(d.pop("share", UNSET))
 
+        def _parse_total_size_bytes(data: object) -> None | Unset | int:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | Unset | int, data)
+
+        total_size_bytes = _parse_total_size_bytes(d.pop("totalSizeBytes", UNSET))
+
         dataset_detail = cls(
             id=id,
             name=name,
@@ -258,11 +277,12 @@ class DatasetDetail:
             updated_at=updated_at,
             originating_project_id=originating_project_id,
             share=share,
+            total_size_bytes=total_size_bytes,
         )
 
         dataset_detail.additional_properties = d
         return dataset_detail
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

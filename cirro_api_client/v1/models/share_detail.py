@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, cast
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -28,7 +28,6 @@ class ShareDetail:
         conditions (List['DatasetCondition']): The conditions under which the dataset is shared
         keywords (List[str]):
         classification_ids (List[str]):
-        is_subscribed (bool):
         is_view_restricted (bool):
         created_by (str):
         created_at (datetime.datetime):
@@ -40,18 +39,17 @@ class ShareDetail:
     description: str
     originating_project: "NamedItem"
     share_type: ShareType
-    shared_projects: List["NamedItem"]
-    conditions: List["DatasetCondition"]
-    keywords: List[str]
-    classification_ids: List[str]
-    is_subscribed: bool
+    shared_projects: list["NamedItem"]
+    conditions: list["DatasetCondition"]
+    keywords: list[str]
+    classification_ids: list[str]
     is_view_restricted: bool
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         id = self.id
 
         name = self.name
@@ -76,8 +74,6 @@ class ShareDetail:
 
         classification_ids = self.classification_ids
 
-        is_subscribed = self.is_subscribed
-
         is_view_restricted = self.is_view_restricted
 
         created_by = self.created_by
@@ -86,7 +82,7 @@ class ShareDetail:
 
         updated_at = self.updated_at.isoformat()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -99,7 +95,6 @@ class ShareDetail:
                 "conditions": conditions,
                 "keywords": keywords,
                 "classificationIds": classification_ids,
-                "isSubscribed": is_subscribed,
                 "isViewRestricted": is_view_restricted,
                 "createdBy": created_by,
                 "createdAt": created_at,
@@ -110,7 +105,7 @@ class ShareDetail:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.dataset_condition import DatasetCondition
         from ..models.named_item import NamedItem
 
@@ -139,11 +134,9 @@ class ShareDetail:
 
             conditions.append(conditions_item)
 
-        keywords = cast(List[str], d.pop("keywords"))
+        keywords = cast(list[str], d.pop("keywords"))
 
-        classification_ids = cast(List[str], d.pop("classificationIds"))
-
-        is_subscribed = d.pop("isSubscribed")
+        classification_ids = cast(list[str], d.pop("classificationIds"))
 
         is_view_restricted = d.pop("isViewRestricted")
 
@@ -163,7 +156,6 @@ class ShareDetail:
             conditions=conditions,
             keywords=keywords,
             classification_ids=classification_ids,
-            is_subscribed=is_subscribed,
             is_view_restricted=is_view_restricted,
             created_by=created_by,
             created_at=created_at,
@@ -174,5 +166,5 @@ class ShareDetail:
         return share_detail
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

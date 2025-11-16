@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -31,20 +31,20 @@ class Sample:
     id: str
     name: str
     metadata: Union["SampleMetadata", None, Unset] = UNSET
-    files: Union[List["DataFile"], None, Unset] = UNSET
-    dataset_ids: Union[List[str], None, Unset] = UNSET
-    created_at: Union[None, Unset, datetime.datetime] = UNSET
-    updated_at: Union[None, Unset, datetime.datetime] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    files: list["DataFile"] | None | Unset = UNSET
+    dataset_ids: list[str] | None | Unset = UNSET
+    created_at: None | Unset | datetime.datetime = UNSET
+    updated_at: None | Unset | datetime.datetime = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         from ..models.sample_metadata import SampleMetadata
 
         id = self.id
 
         name = self.name
 
-        metadata: Union[Dict[str, Any], None, Unset]
+        metadata: dict[str, Any] | None | Unset
         if isinstance(self.metadata, Unset):
             metadata = UNSET
         elif isinstance(self.metadata, SampleMetadata):
@@ -52,7 +52,7 @@ class Sample:
         else:
             metadata = self.metadata
 
-        files: Union[List[Dict[str, Any]], None, Unset]
+        files: list[dict[str, Any]] | None | Unset
         if isinstance(self.files, Unset):
             files = UNSET
         elif isinstance(self.files, list):
@@ -64,7 +64,7 @@ class Sample:
         else:
             files = self.files
 
-        dataset_ids: Union[List[str], None, Unset]
+        dataset_ids: list[str] | None | Unset
         if isinstance(self.dataset_ids, Unset):
             dataset_ids = UNSET
         elif isinstance(self.dataset_ids, list):
@@ -73,7 +73,7 @@ class Sample:
         else:
             dataset_ids = self.dataset_ids
 
-        created_at: Union[None, Unset, str]
+        created_at: None | Unset | str
         if isinstance(self.created_at, Unset):
             created_at = UNSET
         elif isinstance(self.created_at, datetime.datetime):
@@ -81,7 +81,7 @@ class Sample:
         else:
             created_at = self.created_at
 
-        updated_at: Union[None, Unset, str]
+        updated_at: None | Unset | str
         if isinstance(self.updated_at, Unset):
             updated_at = UNSET
         elif isinstance(self.updated_at, datetime.datetime):
@@ -89,7 +89,7 @@ class Sample:
         else:
             updated_at = self.updated_at
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -111,7 +111,7 @@ class Sample:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.data_file import DataFile
         from ..models.sample_metadata import SampleMetadata
 
@@ -137,7 +137,7 @@ class Sample:
 
         metadata = _parse_metadata(d.pop("metadata", UNSET))
 
-        def _parse_files(data: object) -> Union[List["DataFile"], None, Unset]:
+        def _parse_files(data: object) -> list["DataFile"] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -155,11 +155,11 @@ class Sample:
                 return files_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[List["DataFile"], None, Unset], data)
+            return cast(list["DataFile"] | None | Unset, data)
 
         files = _parse_files(d.pop("files", UNSET))
 
-        def _parse_dataset_ids(data: object) -> Union[List[str], None, Unset]:
+        def _parse_dataset_ids(data: object) -> list[str] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -167,16 +167,16 @@ class Sample:
             try:
                 if not isinstance(data, list):
                     raise TypeError()
-                dataset_ids_type_0 = cast(List[str], data)
+                dataset_ids_type_0 = cast(list[str], data)
 
                 return dataset_ids_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[List[str], None, Unset], data)
+            return cast(list[str] | None | Unset, data)
 
         dataset_ids = _parse_dataset_ids(d.pop("datasetIds", UNSET))
 
-        def _parse_created_at(data: object) -> Union[None, Unset, datetime.datetime]:
+        def _parse_created_at(data: object) -> None | Unset | datetime.datetime:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -189,11 +189,11 @@ class Sample:
                 return created_at_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[None, Unset, datetime.datetime], data)
+            return cast(None | Unset | datetime.datetime, data)
 
         created_at = _parse_created_at(d.pop("createdAt", UNSET))
 
-        def _parse_updated_at(data: object) -> Union[None, Unset, datetime.datetime]:
+        def _parse_updated_at(data: object) -> None | Unset | datetime.datetime:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -206,7 +206,7 @@ class Sample:
                 return updated_at_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[None, Unset, datetime.datetime], data)
+            return cast(None | Unset | datetime.datetime, data)
 
         updated_at = _parse_updated_at(d.pop("updatedAt", UNSET))
 
@@ -224,5 +224,5 @@ class Sample:
         return sample
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
 
 import httpx
 
@@ -14,10 +14,10 @@ def _get_kwargs(
     project_id: str,
     *,
     body: CreateReferenceRequest,
-) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    headers: dict[str, Any] = {}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "post",
         "url": f"/projects/{project_id}/references",
     }
@@ -31,7 +31,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Reference]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Reference | None:
     if response.status_code == HTTPStatus.OK:
         response_200 = Reference.from_dict(response.json())
 
@@ -90,7 +90,7 @@ def sync(
     *,
     client: Client,
     body: CreateReferenceRequest,
-) -> Optional[Reference]:
+) -> Reference | None:
     """Create project reference
 
      Creates a reference
@@ -156,7 +156,7 @@ async def asyncio(
     *,
     client: Client,
     body: CreateReferenceRequest,
-) -> Optional[Reference]:
+) -> Reference | None:
     """Create project reference
 
      Creates a reference

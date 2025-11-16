@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
 
 import httpx
 
@@ -11,8 +11,8 @@ from ...types import Response
 
 def _get_kwargs(
     process_id: str,
-) -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "put",
         "url": f"/processes/{process_id}:sync",
     }
@@ -20,7 +20,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[CustomPipelineSettings]:
+def _parse_response(*, client: Client, response: httpx.Response) -> CustomPipelineSettings | None:
     if response.status_code == HTTPStatus.OK:
         response_200 = CustomPipelineSettings.from_dict(response.json())
 
@@ -75,7 +75,7 @@ def sync(
     process_id: str,
     *,
     client: Client,
-) -> Optional[CustomPipelineSettings]:
+) -> CustomPipelineSettings | None:
     """Sync custom process
 
      Updates the process definition from the repository
@@ -135,7 +135,7 @@ async def asyncio(
     process_id: str,
     *,
     client: Client,
-) -> Optional[CustomPipelineSettings]:
+) -> CustomPipelineSettings | None:
     """Sync custom process
 
      Updates the process definition from the repository

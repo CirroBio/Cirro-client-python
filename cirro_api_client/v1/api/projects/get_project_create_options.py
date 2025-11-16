@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
 
 import httpx
 
@@ -9,8 +9,8 @@ from ...models.project_create_options import ProjectCreateOptions
 from ...types import Response
 
 
-def _get_kwargs() -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+def _get_kwargs() -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/projects/options",
     }
@@ -18,7 +18,7 @@ def _get_kwargs() -> Dict[str, Any]:
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[ProjectCreateOptions]:
+def _parse_response(*, client: Client, response: httpx.Response) -> ProjectCreateOptions | None:
     if response.status_code == HTTPStatus.OK:
         response_200 = ProjectCreateOptions.from_dict(response.json())
 
@@ -65,7 +65,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[ProjectCreateOptions]:
+) -> ProjectCreateOptions | None:
     """Get project create options
 
      Get allowed options for creating a project
@@ -112,7 +112,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[ProjectCreateOptions]:
+) -> ProjectCreateOptions | None:
     """Get project create options
 
      Get allowed options for creating a project

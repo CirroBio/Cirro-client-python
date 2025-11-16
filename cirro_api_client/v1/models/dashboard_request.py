@@ -1,7 +1,9 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+
+from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.dashboard_request_dashboard_data import DashboardRequestDashboardData
@@ -18,15 +20,15 @@ class DashboardRequest:
         name (str):
         description (str):
         process_ids (List[str]):
-        dashboard_data (DashboardRequestDashboardData):
-        info (DashboardRequestInfo):
+        dashboard_data (Union[Unset, DashboardRequestDashboardData]):
+        info (Union[Unset, DashboardRequestInfo]):
     """
 
     name: str
     description: str
     process_ids: List[str]
-    dashboard_data: "DashboardRequestDashboardData"
-    info: "DashboardRequestInfo"
+    dashboard_data: Union[Unset, "DashboardRequestDashboardData"] = UNSET
+    info: Union[Unset, "DashboardRequestInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -36,9 +38,13 @@ class DashboardRequest:
 
         process_ids = self.process_ids
 
-        dashboard_data = self.dashboard_data.to_dict()
+        dashboard_data: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.dashboard_data, Unset):
+            dashboard_data = self.dashboard_data.to_dict()
 
-        info = self.info.to_dict()
+        info: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.info, Unset):
+            info = self.info.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -47,10 +53,12 @@ class DashboardRequest:
                 "name": name,
                 "description": description,
                 "processIds": process_ids,
-                "dashboardData": dashboard_data,
-                "info": info,
             }
         )
+        if dashboard_data is not UNSET:
+            field_dict["dashboardData"] = dashboard_data
+        if info is not UNSET:
+            field_dict["info"] = info
 
         return field_dict
 
@@ -66,9 +74,19 @@ class DashboardRequest:
 
         process_ids = cast(List[str], d.pop("processIds"))
 
-        dashboard_data = DashboardRequestDashboardData.from_dict(d.pop("dashboardData"))
+        _dashboard_data = d.pop("dashboardData", UNSET)
+        dashboard_data: Union[Unset, DashboardRequestDashboardData]
+        if isinstance(_dashboard_data, Unset):
+            dashboard_data = UNSET
+        else:
+            dashboard_data = DashboardRequestDashboardData.from_dict(_dashboard_data)
 
-        info = DashboardRequestInfo.from_dict(d.pop("info"))
+        _info = d.pop("info", UNSET)
+        info: Union[Unset, DashboardRequestInfo]
+        if isinstance(_info, Unset):
+            info = UNSET
+        else:
+            info = DashboardRequestInfo.from_dict(_info)
 
         dashboard_request = cls(
             name=name,

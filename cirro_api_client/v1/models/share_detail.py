@@ -28,7 +28,6 @@ class ShareDetail:
         conditions (List['DatasetCondition']): The conditions under which the dataset is shared
         keywords (List[str]):
         classification_ids (List[str]):
-        is_subscribed (bool):
         is_view_restricted (bool):
         created_by (str):
         created_at (datetime.datetime):
@@ -44,7 +43,6 @@ class ShareDetail:
     conditions: List["DatasetCondition"]
     keywords: List[str]
     classification_ids: List[str]
-    is_subscribed: bool
     is_view_restricted: bool
     created_by: str
     created_at: datetime.datetime
@@ -76,8 +74,6 @@ class ShareDetail:
 
         classification_ids = self.classification_ids
 
-        is_subscribed = self.is_subscribed
-
         is_view_restricted = self.is_view_restricted
 
         created_by = self.created_by
@@ -99,7 +95,6 @@ class ShareDetail:
                 "conditions": conditions,
                 "keywords": keywords,
                 "classificationIds": classification_ids,
-                "isSubscribed": is_subscribed,
                 "isViewRestricted": is_view_restricted,
                 "createdBy": created_by,
                 "createdAt": created_at,
@@ -143,8 +138,6 @@ class ShareDetail:
 
         classification_ids = cast(List[str], d.pop("classificationIds"))
 
-        is_subscribed = d.pop("isSubscribed")
-
         is_view_restricted = d.pop("isViewRestricted")
 
         created_by = d.pop("createdBy")
@@ -163,7 +156,6 @@ class ShareDetail:
             conditions=conditions,
             keywords=keywords,
             classification_ids=classification_ids,
-            is_subscribed=is_subscribed,
             is_view_restricted=is_view_restricted,
             created_by=created_by,
             created_at=created_at,

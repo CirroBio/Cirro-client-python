@@ -17,29 +17,12 @@ class ProjectMetrics:
     """
     Attributes:
         project_id (str):
-        costs (Union[Unset, List['MetricRecord']]): Costs by service by month Example: [{
-              "date": "2022-11-01",
-              "unit": "$",
-              "service": {
-                "Other": 26.47,
-                "EC2 - Other": 3.66,
-                "Amazon Elastic Compute Cloud - Compute": 140.59,
-                "Amazon Simple Storage Service": 24.91,
-                "AmazonCloudWatch": 2.09
-              }
-            }]
-            .
-        storage_metrics (Union[Unset, List['MetricRecord']]): Storage usage by tier by day Example: [{
-                "date": "2023-12-12",
-                "unit": "GB",
-                "service": {
-                    "IntelligentTieringAIAStorage": 4198.95,
-                    "IntelligentTieringFAStorage": 1516.48,
-                    "StandardStorage": 1.9,
-                    "IntelligentTieringIAStorage": 2154.6
-                }
-            }]
-            .
+        costs (Union[Unset, List['MetricRecord']]): Costs by service by month Example: [{'date': datetime.date(2022, 11,
+            1), 'unit': '$', 'service': {'Other': 26.47, 'EC2 - Other': 3.66, 'Amazon Elastic Compute Cloud - Compute':
+            140.59, 'Amazon Simple Storage Service': 24.91, 'AmazonCloudWatch': 2.09}}].
+        storage_metrics (Union[Unset, List['MetricRecord']]): Storage usage by tier by day Example: [{'date':
+            datetime.date(2023, 12, 12), 'unit': 'GB', 'service': {'IntelligentTieringAIAStorage': 4198.95,
+            'IntelligentTieringFAStorage': 1516.48, 'StandardStorage': 1.9, 'IntelligentTieringIAStorage': 2154.6}}].
     """
 
     project_id: str

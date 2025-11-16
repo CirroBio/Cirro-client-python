@@ -14,12 +14,14 @@ class User:
         username (str):
         organization (str):
         department (str):
+        job_title (str):
     """
 
     name: str
     username: str
     organization: str
     department: str
+    job_title: str
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -31,6 +33,8 @@ class User:
 
         department = self.department
 
+        job_title = self.job_title
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -39,6 +43,7 @@ class User:
                 "username": username,
                 "organization": organization,
                 "department": department,
+                "jobTitle": job_title,
             }
         )
 
@@ -55,11 +60,14 @@ class User:
 
         department = d.pop("department")
 
+        job_title = d.pop("jobTitle")
+
         user = cls(
             name=name,
             username=username,
             organization=organization,
             department=department,
+            job_title=job_title,
         )
 
         user.additional_properties = d

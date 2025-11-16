@@ -52,6 +52,8 @@ class ProjectRequirement:
         fulfillment_date (Union[None, Unset, datetime.datetime]): The date the requirement was fulfilled by the user
         fulfillment_file (Union[None, Unset, str]): The optional file uploaded to fulfill the requirement
         fulfillment_path (Union[None, Unset, str]): The path to the optional fulfillment file
+        requires_user_fulfillment (Union[Unset, bool]): Whether this requirement requires the user to fulfill (it is
+            active, requires fulfillment, and user has not fulfilled
     """
 
     id: str
@@ -78,6 +80,7 @@ class ProjectRequirement:
     fulfillment_date: Union[None, Unset, datetime.datetime] = UNSET
     fulfillment_file: Union[None, Unset, str] = UNSET
     fulfillment_path: Union[None, Unset, str] = UNSET
+    requires_user_fulfillment: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -204,6 +207,8 @@ class ProjectRequirement:
         else:
             fulfillment_path = self.fulfillment_path
 
+        requires_user_fulfillment = self.requires_user_fulfillment
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -247,6 +252,8 @@ class ProjectRequirement:
             field_dict["fulfillmentFile"] = fulfillment_file
         if fulfillment_path is not UNSET:
             field_dict["fulfillmentPath"] = fulfillment_path
+        if requires_user_fulfillment is not UNSET:
+            field_dict["requiresUserFulfillment"] = requires_user_fulfillment
 
         return field_dict
 
@@ -469,6 +476,8 @@ class ProjectRequirement:
 
         fulfillment_path = _parse_fulfillment_path(d.pop("fulfillmentPath", UNSET))
 
+        requires_user_fulfillment = d.pop("requiresUserFulfillment", UNSET)
+
         project_requirement = cls(
             id=id,
             name=name,
@@ -494,6 +503,7 @@ class ProjectRequirement:
             fulfillment_date=fulfillment_date,
             fulfillment_file=fulfillment_file,
             fulfillment_path=fulfillment_path,
+            requires_user_fulfillment=requires_user_fulfillment,
         )
 
         project_requirement.additional_properties = d

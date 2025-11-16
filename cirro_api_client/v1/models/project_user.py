@@ -17,6 +17,7 @@ class ProjectUser:
         organization (str):
         department (str):
         email (str):
+        job_title (str):
         role (ProjectRole):
     """
 
@@ -25,6 +26,7 @@ class ProjectUser:
     organization: str
     department: str
     email: str
+    job_title: str
     role: ProjectRole
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -39,6 +41,8 @@ class ProjectUser:
 
         email = self.email
 
+        job_title = self.job_title
+
         role = self.role.value
 
         field_dict: Dict[str, Any] = {}
@@ -50,6 +54,7 @@ class ProjectUser:
                 "organization": organization,
                 "department": department,
                 "email": email,
+                "jobTitle": job_title,
                 "role": role,
             }
         )
@@ -69,6 +74,8 @@ class ProjectUser:
 
         email = d.pop("email")
 
+        job_title = d.pop("jobTitle")
+
         role = ProjectRole(d.pop("role"))
 
         project_user = cls(
@@ -77,6 +84,7 @@ class ProjectUser:
             organization=organization,
             department=department,
             email=email,
+            job_title=job_title,
             role=role,
         )
 

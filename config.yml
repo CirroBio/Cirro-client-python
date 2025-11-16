@@ -27,3 +27,5 @@ class_overrides:
     class_name: GovernanceRequirementProjectFileMap
   RunAnalysisRequestSourceSampleFilesMapType0:
     class_name: RunAnalysisRequestSourceSampleFilesMap
+  WorkspaceComputeConfigEnvironmentVariablesType0:
+    class_name: WorkspaceComputeConfigEnvironmentVariables

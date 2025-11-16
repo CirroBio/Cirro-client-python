@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, List, Optional, Union
 
 import httpx
 
@@ -11,15 +11,15 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    include_archived: Unset | bool = False,
-) -> dict[str, Any]:
-    params: dict[str, Any] = {}
+    include_archived: Union[Unset, bool] = False,
+) -> Dict[str, Any]:
+    params: Dict[str, Any] = {}
 
     params["includeArchived"] = include_archived
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": "/billing",
         "params": params,
@@ -28,7 +28,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> list["BillingAccount"] | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["BillingAccount"]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
@@ -42,7 +42,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> list["Billin
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[list["BillingAccount"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[List["BillingAccount"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -54,8 +54,8 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[lis
 def sync_detailed(
     *,
     client: Client,
-    include_archived: Unset | bool = False,
-) -> Response[list["BillingAccount"]]:
+    include_archived: Union[Unset, bool] = False,
+) -> Response[List["BillingAccount"]]:
     """List billing accounts
 
      Gets a list of billing accounts the current user has access to
@@ -87,8 +87,8 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    include_archived: Unset | bool = False,
-) -> list["BillingAccount"] | None:
+    include_archived: Union[Unset, bool] = False,
+) -> Optional[List["BillingAccount"]]:
     """List billing accounts
 
      Gets a list of billing accounts the current user has access to
@@ -117,8 +117,8 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-    include_archived: Unset | bool = False,
-) -> Response[list["BillingAccount"]]:
+    include_archived: Union[Unset, bool] = False,
+) -> Response[List["BillingAccount"]]:
     """List billing accounts
 
      Gets a list of billing accounts the current user has access to
@@ -147,8 +147,8 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    include_archived: Unset | bool = False,
-) -> list["BillingAccount"] | None:
+    include_archived: Union[Unset, bool] = False,
+) -> Optional[List["BillingAccount"]]:
     """List billing accounts
 
      Gets a list of billing accounts the current user has access to

@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -12,8 +12,8 @@ from ...types import Response
 def _get_kwargs(
     project_id: str,
     notebook_instance_id: str,
-) -> dict[str, Any]:
-    _kwargs: dict[str, Any] = {
+) -> Dict[str, Any]:
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": f"/projects/{project_id}/notebook-instances/{notebook_instance_id}:status",
     }
@@ -21,7 +21,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> NotebookInstanceStatusResponse | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[NotebookInstanceStatusResponse]:
     if response.status_code == HTTPStatus.OK:
         response_200 = NotebookInstanceStatusResponse.from_dict(response.json())
 
@@ -80,7 +80,7 @@ def sync(
     notebook_instance_id: str,
     *,
     client: Client,
-) -> NotebookInstanceStatusResponse | None:
+) -> Optional[NotebookInstanceStatusResponse]:
     """Get notebook instance status
 
      Retrieves the status of the instance
@@ -146,7 +146,7 @@ async def asyncio(
     notebook_instance_id: str,
     *,
     client: Client,
-) -> NotebookInstanceStatusResponse | None:
+) -> Optional[NotebookInstanceStatusResponse]:
     """Get notebook instance status
 
      Retrieves the status of the instance

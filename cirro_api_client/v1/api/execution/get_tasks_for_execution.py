@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, List, Optional, Union
 
 import httpx
 
@@ -13,15 +13,15 @@ def _get_kwargs(
     project_id: str,
     dataset_id: str,
     *,
-    force_live: Unset | bool = False,
-) -> dict[str, Any]:
-    params: dict[str, Any] = {}
+    force_live: Union[Unset, bool] = False,
+) -> Dict[str, Any]:
+    params: Dict[str, Any] = {}
 
     params["forceLive"] = force_live
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": f"/projects/{project_id}/execution/{dataset_id}/tasks",
         "params": params,
@@ -30,7 +30,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> list["Task"] | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["Task"]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
@@ -44,7 +44,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> list["Task"]
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[list["Task"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[List["Task"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -58,8 +58,8 @@ def sync_detailed(
     dataset_id: str,
     *,
     client: Client,
-    force_live: Unset | bool = False,
-) -> Response[list["Task"]]:
+    force_live: Union[Unset, bool] = False,
+) -> Response[List["Task"]]:
     """Get execution tasks
 
      Gets the tasks submitted by the workflow execution
@@ -97,8 +97,8 @@ def sync(
     dataset_id: str,
     *,
     client: Client,
-    force_live: Unset | bool = False,
-) -> list["Task"] | None:
+    force_live: Union[Unset, bool] = False,
+) -> Optional[List["Task"]]:
     """Get execution tasks
 
      Gets the tasks submitted by the workflow execution
@@ -133,8 +133,8 @@ async def asyncio_detailed(
     dataset_id: str,
     *,
     client: Client,
-    force_live: Unset | bool = False,
-) -> Response[list["Task"]]:
+    force_live: Union[Unset, bool] = False,
+) -> Response[List["Task"]]:
     """Get execution tasks
 
      Gets the tasks submitted by the workflow execution
@@ -169,8 +169,8 @@ async def asyncio(
     dataset_id: str,
     *,
     client: Client,
-    force_live: Unset | bool = False,
-) -> list["Task"] | None:
+    force_live: Union[Unset, bool] = False,
+) -> Optional[List["Task"]]:
     """Get execution tasks
 
      Gets the tasks submitted by the workflow execution

@@ -1,5 +1,4 @@
-import builtins
-from typing import TYPE_CHECKING, Any, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -24,14 +23,14 @@ class DatasetViz:
         config (Union[Unset, DatasetVizConfig]): Config or path to config used to render viz
     """
 
-    path: Unset | str = UNSET
-    name: Unset | str = UNSET
-    desc: Unset | str = UNSET
-    type: Unset | str = UNSET
+    path: Union[Unset, str] = UNSET
+    name: Union[Unset, str] = UNSET
+    desc: Union[Unset, str] = UNSET
+    type: Union[Unset, str] = UNSET
     config: Union[Unset, "DatasetVizConfig"] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         path = self.path
 
         name = self.name
@@ -40,11 +39,11 @@ class DatasetViz:
 
         type = self.type
 
-        config: Unset | dict[str, Any] = UNSET
+        config: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.config, Unset):
             config = self.config.to_dict()
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if path is not UNSET:
@@ -61,7 +60,7 @@ class DatasetViz:
         return field_dict
 
     @classmethod
-    def from_dict(cls: builtins.type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.dataset_viz_config import DatasetVizConfig
 
         d = src_dict.copy()
@@ -74,7 +73,7 @@ class DatasetViz:
         type = d.pop("type", UNSET)
 
         _config = d.pop("config", UNSET)
-        config: Unset | DatasetVizConfig
+        config: Union[Unset, DatasetVizConfig]
         if isinstance(_config, Unset):
             config = UNSET
         else:
@@ -92,5 +91,5 @@ class DatasetViz:
         return dataset_viz
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

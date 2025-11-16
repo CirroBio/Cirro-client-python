@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, List, Optional
 
 import httpx
 
@@ -11,8 +11,8 @@ from ...types import Response
 
 def _get_kwargs(
     project_id: str,
-) -> dict[str, Any]:
-    _kwargs: dict[str, Any] = {
+) -> Dict[str, Any]:
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": f"/projects/{project_id}/compute-environments",
     }
@@ -20,7 +20,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> list["ComputeEnvironmentConfiguration"] | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["ComputeEnvironmentConfiguration"]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
@@ -34,7 +34,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> list["Comput
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[list["ComputeEnvironmentConfiguration"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[List["ComputeEnvironmentConfiguration"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -47,7 +47,7 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-) -> Response[list["ComputeEnvironmentConfiguration"]]:
+) -> Response[List["ComputeEnvironmentConfiguration"]]:
     """Get compute environments
 
      Get a list of compute environments for a project
@@ -80,7 +80,7 @@ def sync(
     project_id: str,
     *,
     client: Client,
-) -> list["ComputeEnvironmentConfiguration"] | None:
+) -> Optional[List["ComputeEnvironmentConfiguration"]]:
     """Get compute environments
 
      Get a list of compute environments for a project
@@ -110,7 +110,7 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-) -> Response[list["ComputeEnvironmentConfiguration"]]:
+) -> Response[List["ComputeEnvironmentConfiguration"]]:
     """Get compute environments
 
      Get a list of compute environments for a project
@@ -140,7 +140,7 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-) -> list["ComputeEnvironmentConfiguration"] | None:
+) -> Optional[List["ComputeEnvironmentConfiguration"]]:
     """Get compute environments
 
      Get a list of compute environments for a project

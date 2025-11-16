@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
@@ -13,10 +13,10 @@ def _get_kwargs(
     project_id: str,
     share_id: str,
     *,
-    limit: Unset | int = 5000,
-    next_token: Unset | str = UNSET,
-) -> dict[str, Any]:
-    params: dict[str, Any] = {}
+    limit: Union[Unset, int] = 5000,
+    next_token: Union[Unset, str] = UNSET,
+) -> Dict[str, Any]:
+    params: Dict[str, Any] = {}
 
     params["limit"] = limit
 
@@ -24,7 +24,7 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": f"/projects/{project_id}/shares/{share_id}/datasets",
         "params": params,
@@ -33,7 +33,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> PaginatedResponseDatasetListDto | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[PaginatedResponseDatasetListDto]:
     if response.status_code == HTTPStatus.OK:
         response_200 = PaginatedResponseDatasetListDto.from_dict(response.json())
 
@@ -56,8 +56,8 @@ def sync_detailed(
     share_id: str,
     *,
     client: Client,
-    limit: Unset | int = 5000,
-    next_token: Unset | str = UNSET,
+    limit: Union[Unset, int] = 5000,
+    next_token: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedResponseDatasetListDto]:
     """Get share datasets
 
@@ -98,9 +98,9 @@ def sync(
     share_id: str,
     *,
     client: Client,
-    limit: Unset | int = 5000,
-    next_token: Unset | str = UNSET,
-) -> PaginatedResponseDatasetListDto | None:
+    limit: Union[Unset, int] = 5000,
+    next_token: Union[Unset, str] = UNSET,
+) -> Optional[PaginatedResponseDatasetListDto]:
     """Get share datasets
 
      Get dataset listing for a share
@@ -137,8 +137,8 @@ async def asyncio_detailed(
     share_id: str,
     *,
     client: Client,
-    limit: Unset | int = 5000,
-    next_token: Unset | str = UNSET,
+    limit: Union[Unset, int] = 5000,
+    next_token: Union[Unset, str] = UNSET,
 ) -> Response[PaginatedResponseDatasetListDto]:
     """Get share datasets
 
@@ -176,9 +176,9 @@ async def asyncio(
     share_id: str,
     *,
     client: Client,
-    limit: Unset | int = 5000,
-    next_token: Unset | str = UNSET,
-) -> PaginatedResponseDatasetListDto | None:
+    limit: Union[Unset, int] = 5000,
+    next_token: Union[Unset, str] = UNSET,
+) -> Optional[PaginatedResponseDatasetListDto]:
     """Get share datasets
 
      Get dataset listing for a share

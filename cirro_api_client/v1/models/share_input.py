@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -28,14 +28,14 @@ class ShareInput:
 
     name: str
     description: str
-    classification_ids: list[str]
-    conditions: list["DatasetCondition"]
-    keywords: Unset | list[str] = UNSET
-    shared_project_ids: Unset | list[str] = UNSET
-    is_view_restricted: Unset | bool = False
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    classification_ids: List[str]
+    conditions: List["DatasetCondition"]
+    keywords: Union[Unset, List[str]] = UNSET
+    shared_project_ids: Union[Unset, List[str]] = UNSET
+    is_view_restricted: Union[Unset, bool] = False
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         name = self.name
 
         description = self.description
@@ -47,17 +47,17 @@ class ShareInput:
             conditions_item = conditions_item_data.to_dict()
             conditions.append(conditions_item)
 
-        keywords: Unset | list[str] = UNSET
+        keywords: Union[Unset, List[str]] = UNSET
         if not isinstance(self.keywords, Unset):
             keywords = self.keywords
 
-        shared_project_ids: Unset | list[str] = UNSET
+        shared_project_ids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.shared_project_ids, Unset):
             shared_project_ids = self.shared_project_ids
 
         is_view_restricted = self.is_view_restricted
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -77,7 +77,7 @@ class ShareInput:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.dataset_condition import DatasetCondition
 
         d = src_dict.copy()
@@ -85,7 +85,7 @@ class ShareInput:
 
         description = d.pop("description")
 
-        classification_ids = cast(list[str], d.pop("classificationIds"))
+        classification_ids = cast(List[str], d.pop("classificationIds"))
 
         conditions = []
         _conditions = d.pop("conditions")
@@ -94,9 +94,9 @@ class ShareInput:
 
             conditions.append(conditions_item)
 
-        keywords = cast(list[str], d.pop("keywords", UNSET))
+        keywords = cast(List[str], d.pop("keywords", UNSET))
 
-        shared_project_ids = cast(list[str], d.pop("sharedProjectIds", UNSET))
+        shared_project_ids = cast(List[str], d.pop("sharedProjectIds", UNSET))
 
         is_view_restricted = d.pop("isViewRestricted", UNSET)
 
@@ -114,5 +114,5 @@ class ShareInput:
         return share_input
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

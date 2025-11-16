@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -24,24 +24,24 @@ class ComputeEnvironmentConfigurationInput:
     """
 
     name: str
-    agent_id: None | Unset | str = UNSET
+    agent_id: Union[None, Unset, str] = UNSET
     properties: Union["ComputeEnvironmentConfigurationInputProperties", None, Unset] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         from ..models.compute_environment_configuration_input_properties import (
             ComputeEnvironmentConfigurationInputProperties,
         )
 
         name = self.name
 
-        agent_id: None | Unset | str
+        agent_id: Union[None, Unset, str]
         if isinstance(self.agent_id, Unset):
             agent_id = UNSET
         else:
             agent_id = self.agent_id
 
-        properties: dict[str, Any] | None | Unset
+        properties: Union[Dict[str, Any], None, Unset]
         if isinstance(self.properties, Unset):
             properties = UNSET
         elif isinstance(self.properties, ComputeEnvironmentConfigurationInputProperties):
@@ -49,7 +49,7 @@ class ComputeEnvironmentConfigurationInput:
         else:
             properties = self.properties
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -64,7 +64,7 @@ class ComputeEnvironmentConfigurationInput:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.compute_environment_configuration_input_properties import (
             ComputeEnvironmentConfigurationInputProperties,
         )
@@ -72,12 +72,12 @@ class ComputeEnvironmentConfigurationInput:
         d = src_dict.copy()
         name = d.pop("name")
 
-        def _parse_agent_id(data: object) -> None | Unset | str:
+        def _parse_agent_id(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(Union[None, Unset, str], data)
 
         agent_id = _parse_agent_id(d.pop("agentId", UNSET))
 
@@ -108,5 +108,5 @@ class ComputeEnvironmentConfigurationInput:
         return compute_environment_configuration_input
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

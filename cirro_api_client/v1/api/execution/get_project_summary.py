@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
@@ -12,15 +12,15 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     project_id: str,
     *,
-    number_of_days: Unset | int = 1,
-) -> dict[str, Any]:
-    params: dict[str, Any] = {}
+    number_of_days: Union[Unset, int] = 1,
+) -> Dict[str, Any]:
+    params: Dict[str, Any] = {}
 
     params["numberOfDays"] = number_of_days
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": f"/projects/{project_id}/execution",
         "params": params,
@@ -29,7 +29,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> GetProjectSummaryResponse200 | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[GetProjectSummaryResponse200]:
     if response.status_code == HTTPStatus.OK:
         response_200 = GetProjectSummaryResponse200.from_dict(response.json())
 
@@ -51,7 +51,7 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-    number_of_days: Unset | int = 1,
+    number_of_days: Union[Unset, int] = 1,
 ) -> Response[GetProjectSummaryResponse200]:
     """Get execution summary
 
@@ -87,8 +87,8 @@ def sync(
     project_id: str,
     *,
     client: Client,
-    number_of_days: Unset | int = 1,
-) -> GetProjectSummaryResponse200 | None:
+    number_of_days: Union[Unset, int] = 1,
+) -> Optional[GetProjectSummaryResponse200]:
     """Get execution summary
 
      Gets an overview of the executions currently running in the project
@@ -120,7 +120,7 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-    number_of_days: Unset | int = 1,
+    number_of_days: Union[Unset, int] = 1,
 ) -> Response[GetProjectSummaryResponse200]:
     """Get execution summary
 
@@ -153,8 +153,8 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-    number_of_days: Unset | int = 1,
-) -> GetProjectSummaryResponse200 | None:
+    number_of_days: Union[Unset, int] = 1,
+) -> Optional[GetProjectSummaryResponse200]:
     """Get execution summary
 
      Gets an overview of the executions currently running in the project

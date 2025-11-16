@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -12,8 +12,8 @@ from ...types import Response
 def _get_kwargs(
     project_id: str,
     dataset_id: str,
-) -> dict[str, Any]:
-    _kwargs: dict[str, Any] = {
+) -> Dict[str, Any]:
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": f"/projects/{project_id}/datasets/{dataset_id}/samplesheet",
     }
@@ -21,7 +21,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> SampleSheets | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[SampleSheets]:
     if response.status_code == HTTPStatus.OK:
         response_200 = SampleSheets.from_dict(response.json())
 
@@ -80,7 +80,7 @@ def sync(
     dataset_id: str,
     *,
     client: Client,
-) -> SampleSheets | None:
+) -> Optional[SampleSheets]:
     """Generate sample sheets
 
      Generates the sample sheet output for this dataset, useful for debugging the preprocess script.
@@ -146,7 +146,7 @@ async def asyncio(
     dataset_id: str,
     *,
     client: Client,
-) -> SampleSheets | None:
+) -> Optional[SampleSheets]:
     """Generate sample sheets
 
      Generates the sample sheet output for this dataset, useful for debugging the preprocess script.

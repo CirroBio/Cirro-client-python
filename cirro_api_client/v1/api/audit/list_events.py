@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, List, Optional, Union
 
 import httpx
 
@@ -12,15 +12,15 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    username: Unset | str = UNSET,
-    entity_type: Unset | ListEventsEntityType = UNSET,
-    entity_id: Unset | str = UNSET,
-) -> dict[str, Any]:
-    params: dict[str, Any] = {}
+    username: Union[Unset, str] = UNSET,
+    entity_type: Union[Unset, ListEventsEntityType] = UNSET,
+    entity_id: Union[Unset, str] = UNSET,
+) -> Dict[str, Any]:
+    params: Dict[str, Any] = {}
 
     params["username"] = username
 
-    json_entity_type: Unset | str = UNSET
+    json_entity_type: Union[Unset, str] = UNSET
     if not isinstance(entity_type, Unset):
         json_entity_type = entity_type.value
 
@@ -30,7 +30,7 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": "/audit-events",
         "params": params,
@@ -39,7 +39,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> list["AuditEvent"] | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["AuditEvent"]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
@@ -53,7 +53,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> list["AuditE
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[list["AuditEvent"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[List["AuditEvent"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -65,10 +65,10 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[lis
 def sync_detailed(
     *,
     client: Client,
-    username: Unset | str = UNSET,
-    entity_type: Unset | ListEventsEntityType = UNSET,
-    entity_id: Unset | str = UNSET,
-) -> Response[list["AuditEvent"]]:
+    username: Union[Unset, str] = UNSET,
+    entity_type: Union[Unset, ListEventsEntityType] = UNSET,
+    entity_id: Union[Unset, str] = UNSET,
+) -> Response[List["AuditEvent"]]:
     """List audit events
 
      Gets a list of audit events
@@ -104,10 +104,10 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    username: Unset | str = UNSET,
-    entity_type: Unset | ListEventsEntityType = UNSET,
-    entity_id: Unset | str = UNSET,
-) -> list["AuditEvent"] | None:
+    username: Union[Unset, str] = UNSET,
+    entity_type: Union[Unset, ListEventsEntityType] = UNSET,
+    entity_id: Union[Unset, str] = UNSET,
+) -> Optional[List["AuditEvent"]]:
     """List audit events
 
      Gets a list of audit events
@@ -140,10 +140,10 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-    username: Unset | str = UNSET,
-    entity_type: Unset | ListEventsEntityType = UNSET,
-    entity_id: Unset | str = UNSET,
-) -> Response[list["AuditEvent"]]:
+    username: Union[Unset, str] = UNSET,
+    entity_type: Union[Unset, ListEventsEntityType] = UNSET,
+    entity_id: Union[Unset, str] = UNSET,
+) -> Response[List["AuditEvent"]]:
     """List audit events
 
      Gets a list of audit events
@@ -176,10 +176,10 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    username: Unset | str = UNSET,
-    entity_type: Unset | ListEventsEntityType = UNSET,
-    entity_id: Unset | str = UNSET,
-) -> list["AuditEvent"] | None:
+    username: Union[Unset, str] = UNSET,
+    entity_type: Union[Unset, ListEventsEntityType] = UNSET,
+    entity_id: Union[Unset, str] = UNSET,
+) -> Optional[List["AuditEvent"]]:
     """List audit events
 
      Gets a list of audit events

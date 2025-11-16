@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -18,11 +18,11 @@ class PaginatedResponseDiscussion:
         next_token (str):
     """
 
-    data: list["Discussion"]
+    data: List["Discussion"]
     next_token: str
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         data = []
         for data_item_data in self.data:
             data_item = data_item_data.to_dict()
@@ -30,7 +30,7 @@ class PaginatedResponseDiscussion:
 
         next_token = self.next_token
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -42,7 +42,7 @@ class PaginatedResponseDiscussion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.discussion import Discussion
 
         d = src_dict.copy()
@@ -64,5 +64,5 @@ class PaginatedResponseDiscussion:
         return paginated_response_discussion
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

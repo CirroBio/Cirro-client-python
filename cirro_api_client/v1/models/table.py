@@ -1,5 +1,4 @@
-import builtins
-from typing import TYPE_CHECKING, Any, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -26,14 +25,14 @@ class Table:
     """
 
     desc: str
-    name: Unset | str = UNSET
-    type: Unset | str = UNSET
-    rows: Unset | int = UNSET
-    path: Unset | str = UNSET
-    cols: list["ColumnDefinition"] | None | Unset = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    name: Union[Unset, str] = UNSET
+    type: Union[Unset, str] = UNSET
+    rows: Union[Unset, int] = UNSET
+    path: Union[Unset, str] = UNSET
+    cols: Union[List["ColumnDefinition"], None, Unset] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         desc = self.desc
 
         name = self.name
@@ -44,7 +43,7 @@ class Table:
 
         path = self.path
 
-        cols: list[dict[str, Any]] | None | Unset
+        cols: Union[List[Dict[str, Any]], None, Unset]
         if isinstance(self.cols, Unset):
             cols = UNSET
         elif isinstance(self.cols, list):
@@ -56,7 +55,7 @@ class Table:
         else:
             cols = self.cols
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -77,7 +76,7 @@ class Table:
         return field_dict
 
     @classmethod
-    def from_dict(cls: builtins.type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.column_definition import ColumnDefinition
 
         d = src_dict.copy()
@@ -91,7 +90,7 @@ class Table:
 
         path = d.pop("path", UNSET)
 
-        def _parse_cols(data: object) -> list["ColumnDefinition"] | None | Unset:
+        def _parse_cols(data: object) -> Union[List["ColumnDefinition"], None, Unset]:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -109,7 +108,7 @@ class Table:
                 return cols_type_0
             except:  # noqa: E722
                 pass
-            return cast(list["ColumnDefinition"] | None | Unset, data)
+            return cast(Union[List["ColumnDefinition"], None, Unset], data)
 
         cols = _parse_cols(d.pop("cols", UNSET))
 
@@ -126,5 +125,5 @@ class Table:
         return table
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

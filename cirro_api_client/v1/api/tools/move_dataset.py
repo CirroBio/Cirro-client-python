@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -13,10 +13,10 @@ from ...types import Response
 def _get_kwargs(
     *,
     body: MoveDatasetInput,
-) -> dict[str, Any]:
-    headers: dict[str, Any] = {}
+) -> Dict[str, Any]:
+    headers: Dict[str, Any] = {}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "put",
         "url": "/tools/move-dataset",
     }
@@ -30,7 +30,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> MoveDatasetResponse | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[MoveDatasetResponse]:
     if response.status_code == HTTPStatus.OK:
         response_200 = MoveDatasetResponse.from_dict(response.json())
 
@@ -86,7 +86,7 @@ def sync(
     *,
     client: Client,
     body: MoveDatasetInput,
-) -> MoveDatasetResponse | None:
+) -> Optional[MoveDatasetResponse]:
     """Move a dataset to a different project
 
      Moves a dataset to a different project. The underlying S3 data is not transferred and will need to
@@ -148,7 +148,7 @@ async def asyncio(
     *,
     client: Client,
     body: MoveDatasetInput,
-) -> MoveDatasetResponse | None:
+) -> Optional[MoveDatasetResponse]:
     """Move a dataset to a different project
 
      Moves a dataset to a different project. The underlying S3 data is not transferred and will need to

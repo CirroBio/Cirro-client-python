@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -45,22 +45,22 @@ class CustomProcessInput:
     name: str
     description: str
     executor: Executor
-    child_process_ids: list[str]
-    parent_process_ids: list[str]
-    linked_project_ids: list[str]
-    data_type: None | Unset | str = UNSET
-    category: Unset | str = UNSET
-    documentation_url: None | Unset | str = UNSET
-    file_requirements_message: None | Unset | str = UNSET
+    child_process_ids: List[str]
+    parent_process_ids: List[str]
+    linked_project_ids: List[str]
+    data_type: Union[None, Unset, str] = UNSET
+    category: Union[Unset, str] = UNSET
+    documentation_url: Union[None, Unset, str] = UNSET
+    file_requirements_message: Union[None, Unset, str] = UNSET
     pipeline_code: Union["PipelineCode", None, Unset] = UNSET
-    is_tenant_wide: Unset | bool = UNSET
-    allow_multiple_sources: Unset | bool = UNSET
-    uses_sample_sheet: Unset | bool = UNSET
+    is_tenant_wide: Union[Unset, bool] = UNSET
+    allow_multiple_sources: Union[Unset, bool] = UNSET
+    uses_sample_sheet: Union[Unset, bool] = UNSET
     custom_settings: Union["CustomPipelineSettings", None, Unset] = UNSET
-    file_mapping_rules: list["FileMappingRule"] | None | Unset = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    file_mapping_rules: Union[List["FileMappingRule"], None, Unset] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         from ..models.custom_pipeline_settings import CustomPipelineSettings
         from ..models.pipeline_code import PipelineCode
 
@@ -78,7 +78,7 @@ class CustomProcessInput:
 
         linked_project_ids = self.linked_project_ids
 
-        data_type: None | Unset | str
+        data_type: Union[None, Unset, str]
         if isinstance(self.data_type, Unset):
             data_type = UNSET
         else:
@@ -86,19 +86,19 @@ class CustomProcessInput:
 
         category = self.category
 
-        documentation_url: None | Unset | str
+        documentation_url: Union[None, Unset, str]
         if isinstance(self.documentation_url, Unset):
             documentation_url = UNSET
         else:
             documentation_url = self.documentation_url
 
-        file_requirements_message: None | Unset | str
+        file_requirements_message: Union[None, Unset, str]
         if isinstance(self.file_requirements_message, Unset):
             file_requirements_message = UNSET
         else:
             file_requirements_message = self.file_requirements_message
 
-        pipeline_code: dict[str, Any] | None | Unset
+        pipeline_code: Union[Dict[str, Any], None, Unset]
         if isinstance(self.pipeline_code, Unset):
             pipeline_code = UNSET
         elif isinstance(self.pipeline_code, PipelineCode):
@@ -112,7 +112,7 @@ class CustomProcessInput:
 
         uses_sample_sheet = self.uses_sample_sheet
 
-        custom_settings: dict[str, Any] | None | Unset
+        custom_settings: Union[Dict[str, Any], None, Unset]
         if isinstance(self.custom_settings, Unset):
             custom_settings = UNSET
         elif isinstance(self.custom_settings, CustomPipelineSettings):
@@ -120,7 +120,7 @@ class CustomProcessInput:
         else:
             custom_settings = self.custom_settings
 
-        file_mapping_rules: list[dict[str, Any]] | None | Unset
+        file_mapping_rules: Union[List[Dict[str, Any]], None, Unset]
         if isinstance(self.file_mapping_rules, Unset):
             file_mapping_rules = UNSET
         elif isinstance(self.file_mapping_rules, list):
@@ -132,7 +132,7 @@ class CustomProcessInput:
         else:
             file_mapping_rules = self.file_mapping_rules
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -169,7 +169,7 @@ class CustomProcessInput:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.custom_pipeline_settings import CustomPipelineSettings
         from ..models.file_mapping_rule import FileMappingRule
         from ..models.pipeline_code import PipelineCode
@@ -183,38 +183,38 @@ class CustomProcessInput:
 
         executor = Executor(d.pop("executor"))
 
-        child_process_ids = cast(list[str], d.pop("childProcessIds"))
+        child_process_ids = cast(List[str], d.pop("childProcessIds"))
 
-        parent_process_ids = cast(list[str], d.pop("parentProcessIds"))
+        parent_process_ids = cast(List[str], d.pop("parentProcessIds"))
 
-        linked_project_ids = cast(list[str], d.pop("linkedProjectIds"))
+        linked_project_ids = cast(List[str], d.pop("linkedProjectIds"))
 
-        def _parse_data_type(data: object) -> None | Unset | str:
+        def _parse_data_type(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(Union[None, Unset, str], data)
 
         data_type = _parse_data_type(d.pop("dataType", UNSET))
 
         category = d.pop("category", UNSET)
 
-        def _parse_documentation_url(data: object) -> None | Unset | str:
+        def _parse_documentation_url(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(Union[None, Unset, str], data)
 
         documentation_url = _parse_documentation_url(d.pop("documentationUrl", UNSET))
 
-        def _parse_file_requirements_message(data: object) -> None | Unset | str:
+        def _parse_file_requirements_message(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(Union[None, Unset, str], data)
 
         file_requirements_message = _parse_file_requirements_message(d.pop("fileRequirementsMessage", UNSET))
 
@@ -258,7 +258,7 @@ class CustomProcessInput:
 
         custom_settings = _parse_custom_settings(d.pop("customSettings", UNSET))
 
-        def _parse_file_mapping_rules(data: object) -> list["FileMappingRule"] | None | Unset:
+        def _parse_file_mapping_rules(data: object) -> Union[List["FileMappingRule"], None, Unset]:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -276,7 +276,7 @@ class CustomProcessInput:
                 return file_mapping_rules_type_0
             except:  # noqa: E722
                 pass
-            return cast(list["FileMappingRule"] | None | Unset, data)
+            return cast(Union[List["FileMappingRule"], None, Unset], data)
 
         file_mapping_rules = _parse_file_mapping_rules(d.pop("fileMappingRules", UNSET))
 
@@ -304,5 +304,5 @@ class CustomProcessInput:
         return custom_process_input
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

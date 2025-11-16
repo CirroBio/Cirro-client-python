@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -34,14 +34,14 @@ class ComputeEnvironmentConfiguration:
     environment_type: EnvironmentType
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    id: Unset | str = UNSET
-    name: Unset | str = UNSET
+    id: Union[Unset, str] = UNSET
+    name: Union[Unset, str] = UNSET
     properties: Union[Unset, "ComputeEnvironmentConfigurationProperties"] = UNSET
     agent: Union["Agent", None, Unset] = UNSET
-    created_by: Unset | str = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    created_by: Union[Unset, str] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         from ..models.agent import Agent
 
         environment_type = self.environment_type.value
@@ -54,11 +54,11 @@ class ComputeEnvironmentConfiguration:
 
         name = self.name
 
-        properties: Unset | dict[str, Any] = UNSET
+        properties: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.properties, Unset):
             properties = self.properties.to_dict()
 
-        agent: dict[str, Any] | None | Unset
+        agent: Union[Dict[str, Any], None, Unset]
         if isinstance(self.agent, Unset):
             agent = UNSET
         elif isinstance(self.agent, Agent):
@@ -68,7 +68,7 @@ class ComputeEnvironmentConfiguration:
 
         created_by = self.created_by
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -91,7 +91,7 @@ class ComputeEnvironmentConfiguration:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.agent import Agent
         from ..models.compute_environment_configuration_properties import ComputeEnvironmentConfigurationProperties
 
@@ -107,7 +107,7 @@ class ComputeEnvironmentConfiguration:
         name = d.pop("name", UNSET)
 
         _properties = d.pop("properties", UNSET)
-        properties: Unset | ComputeEnvironmentConfigurationProperties
+        properties: Union[Unset, ComputeEnvironmentConfigurationProperties]
         if isinstance(_properties, Unset):
             properties = UNSET
         else:
@@ -147,5 +147,5 @@ class ComputeEnvironmentConfiguration:
         return compute_environment_configuration
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

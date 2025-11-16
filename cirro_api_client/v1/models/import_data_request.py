@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -23,19 +23,19 @@ class ImportDataRequest:
     """
 
     name: str
-    public_ids: list[str]
-    description: Unset | str = UNSET
-    tags: list["Tag"] | None | Unset = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    public_ids: List[str]
+    description: Union[Unset, str] = UNSET
+    tags: Union[List["Tag"], None, Unset] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         name = self.name
 
         public_ids = self.public_ids
 
         description = self.description
 
-        tags: list[dict[str, Any]] | None | Unset
+        tags: Union[List[Dict[str, Any]], None, Unset]
         if isinstance(self.tags, Unset):
             tags = UNSET
         elif isinstance(self.tags, list):
@@ -47,7 +47,7 @@ class ImportDataRequest:
         else:
             tags = self.tags
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -63,17 +63,17 @@ class ImportDataRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.tag import Tag
 
         d = src_dict.copy()
         name = d.pop("name")
 
-        public_ids = cast(list[str], d.pop("publicIds"))
+        public_ids = cast(List[str], d.pop("publicIds"))
 
         description = d.pop("description", UNSET)
 
-        def _parse_tags(data: object) -> list["Tag"] | None | Unset:
+        def _parse_tags(data: object) -> Union[List["Tag"], None, Unset]:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -91,7 +91,7 @@ class ImportDataRequest:
                 return tags_type_0
             except:  # noqa: E722
                 pass
-            return cast(list["Tag"] | None | Unset, data)
+            return cast(Union[List["Tag"], None, Unset], data)
 
         tags = _parse_tags(d.pop("tags", UNSET))
 
@@ -106,5 +106,5 @@ class ImportDataRequest:
         return import_data_request
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

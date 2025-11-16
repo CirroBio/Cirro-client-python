@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, List, Optional
 
 import httpx
 
@@ -11,8 +11,8 @@ from ...types import Response
 
 def _get_kwargs(
     project_id: str,
-) -> dict[str, Any]:
-    _kwargs: dict[str, Any] = {
+) -> Dict[str, Any]:
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": f"/projects/{project_id}/dashboards",
     }
@@ -20,7 +20,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> list["Dashboard"] | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["Dashboard"]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
@@ -34,7 +34,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> list["Dashbo
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[list["Dashboard"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[List["Dashboard"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -47,7 +47,7 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-) -> Response[list["Dashboard"]]:
+) -> Response[List["Dashboard"]]:
     """List dashboards
 
      Retrieves a list of dashboards for a given project
@@ -80,7 +80,7 @@ def sync(
     project_id: str,
     *,
     client: Client,
-) -> list["Dashboard"] | None:
+) -> Optional[List["Dashboard"]]:
     """List dashboards
 
      Retrieves a list of dashboards for a given project
@@ -110,7 +110,7 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-) -> Response[list["Dashboard"]]:
+) -> Response[List["Dashboard"]]:
     """List dashboards
 
      Retrieves a list of dashboards for a given project
@@ -140,7 +140,7 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-) -> list["Dashboard"] | None:
+) -> Optional[List["Dashboard"]]:
     """List dashboards
 
      Retrieves a list of dashboards for a given project

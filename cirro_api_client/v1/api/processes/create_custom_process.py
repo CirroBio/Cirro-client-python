@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
@@ -15,10 +15,10 @@ from ...types import Response
 def _get_kwargs(
     *,
     body: CustomProcessInput,
-) -> dict[str, Any]:
-    headers: dict[str, Any] = {}
+) -> Dict[str, Any]:
+    headers: Dict[str, Any] = {}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "post",
         "url": "/processes",
     }
@@ -34,7 +34,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Client, response: httpx.Response
-) -> CreateResponse | ErrorMessage | PortalErrorResponse | None:
+) -> Optional[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
     if response.status_code == HTTPStatus.BAD_REQUEST:
         response_400 = PortalErrorResponse.from_dict(response.json())
 
@@ -53,7 +53,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Client, response: httpx.Response
-) -> Response[CreateResponse | ErrorMessage | PortalErrorResponse]:
+) -> Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -66,7 +66,7 @@ def sync_detailed(
     *,
     client: Client,
     body: CustomProcessInput,
-) -> Response[CreateResponse | ErrorMessage | PortalErrorResponse]:
+) -> Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
     """Create custom process
 
      Creates a custom data type or pipeline which you can use in the listed projects.
@@ -99,7 +99,7 @@ def sync(
     *,
     client: Client,
     body: CustomProcessInput,
-) -> CreateResponse | ErrorMessage | PortalErrorResponse | None:
+) -> Optional[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
     """Create custom process
 
      Creates a custom data type or pipeline which you can use in the listed projects.
@@ -129,7 +129,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     body: CustomProcessInput,
-) -> Response[CreateResponse | ErrorMessage | PortalErrorResponse]:
+) -> Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
     """Create custom process
 
      Creates a custom data type or pipeline which you can use in the listed projects.
@@ -159,7 +159,7 @@ async def asyncio(
     *,
     client: Client,
     body: CustomProcessInput,
-) -> CreateResponse | ErrorMessage | PortalErrorResponse | None:
+) -> Optional[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
     """Create custom process
 
      Creates a custom data type or pipeline which you can use in the listed projects.

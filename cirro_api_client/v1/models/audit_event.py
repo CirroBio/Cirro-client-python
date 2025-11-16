@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -33,19 +33,19 @@ class AuditEvent:
         created_at (Union[Unset, datetime.datetime]): The date and time the event was created
     """
 
-    id: Unset | str = UNSET
-    event_type: Unset | str = UNSET
-    project_id: Unset | str = UNSET
-    entity_id: Unset | str = UNSET
-    entity_type: Unset | str = UNSET
+    id: Union[Unset, str] = UNSET
+    event_type: Union[Unset, str] = UNSET
+    project_id: Union[Unset, str] = UNSET
+    entity_id: Union[Unset, str] = UNSET
+    entity_type: Union[Unset, str] = UNSET
     event_detail: Union["AuditEventEventDetail", None, Unset] = UNSET
     changes: Union["AuditEventChanges", None, Unset] = UNSET
-    username: Unset | str = UNSET
-    ip_address: Unset | str = UNSET
-    created_at: Unset | datetime.datetime = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    username: Union[Unset, str] = UNSET
+    ip_address: Union[Unset, str] = UNSET
+    created_at: Union[Unset, datetime.datetime] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         from ..models.audit_event_changes import AuditEventChanges
         from ..models.audit_event_event_detail import AuditEventEventDetail
 
@@ -59,7 +59,7 @@ class AuditEvent:
 
         entity_type = self.entity_type
 
-        event_detail: dict[str, Any] | None | Unset
+        event_detail: Union[Dict[str, Any], None, Unset]
         if isinstance(self.event_detail, Unset):
             event_detail = UNSET
         elif isinstance(self.event_detail, AuditEventEventDetail):
@@ -67,7 +67,7 @@ class AuditEvent:
         else:
             event_detail = self.event_detail
 
-        changes: dict[str, Any] | None | Unset
+        changes: Union[Dict[str, Any], None, Unset]
         if isinstance(self.changes, Unset):
             changes = UNSET
         elif isinstance(self.changes, AuditEventChanges):
@@ -79,11 +79,11 @@ class AuditEvent:
 
         ip_address = self.ip_address
 
-        created_at: Unset | str = UNSET
+        created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if id is not UNSET:
@@ -110,7 +110,7 @@ class AuditEvent:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.audit_event_changes import AuditEventChanges
         from ..models.audit_event_event_detail import AuditEventEventDetail
 
@@ -164,7 +164,7 @@ class AuditEvent:
         ip_address = d.pop("ipAddress", UNSET)
 
         _created_at = d.pop("createdAt", UNSET)
-        created_at: Unset | datetime.datetime
+        created_at: Union[Unset, datetime.datetime]
         if isinstance(_created_at, Unset):
             created_at = UNSET
         else:
@@ -187,5 +187,5 @@ class AuditEvent:
         return audit_event
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

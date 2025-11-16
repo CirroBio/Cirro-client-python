@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -28,15 +28,15 @@ class UpdateUserRequest:
 
     name: str
     email: str
-    phone: Unset | str = UNSET
-    department: Unset | str = UNSET
-    job_title: Unset | str = UNSET
-    organization: Unset | str = UNSET
+    phone: Union[Unset, str] = UNSET
+    department: Union[Unset, str] = UNSET
+    job_title: Union[Unset, str] = UNSET
+    organization: Union[Unset, str] = UNSET
     settings: Union["UserSettings", None, Unset] = UNSET
-    groups: Unset | list[str] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    groups: Union[Unset, List[str]] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         from ..models.user_settings import UserSettings
 
         name = self.name
@@ -51,7 +51,7 @@ class UpdateUserRequest:
 
         organization = self.organization
 
-        settings: dict[str, Any] | None | Unset
+        settings: Union[Dict[str, Any], None, Unset]
         if isinstance(self.settings, Unset):
             settings = UNSET
         elif isinstance(self.settings, UserSettings):
@@ -59,11 +59,11 @@ class UpdateUserRequest:
         else:
             settings = self.settings
 
-        groups: Unset | list[str] = UNSET
+        groups: Union[Unset, List[str]] = UNSET
         if not isinstance(self.groups, Unset):
             groups = self.groups
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -87,7 +87,7 @@ class UpdateUserRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.user_settings import UserSettings
 
         d = src_dict.copy()
@@ -120,7 +120,7 @@ class UpdateUserRequest:
 
         settings = _parse_settings(d.pop("settings", UNSET))
 
-        groups = cast(list[str], d.pop("groups", UNSET))
+        groups = cast(List[str], d.pop("groups", UNSET))
 
         update_user_request = cls(
             name=name,
@@ -137,5 +137,5 @@ class UpdateUserRequest:
         return update_user_request
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

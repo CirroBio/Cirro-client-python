@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -14,10 +14,10 @@ def _get_kwargs(
     process_id: str,
     *,
     body: CalculatePipelineCostRequest,
-) -> dict[str, Any]:
-    headers: dict[str, Any] = {}
+) -> Dict[str, Any]:
+    headers: Dict[str, Any] = {}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "post",
         "url": f"/processes/{process_id}/cost",
     }
@@ -31,7 +31,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> PipelineCost | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[PipelineCost]:
     if response.status_code == HTTPStatus.OK:
         response_200 = PipelineCost.from_dict(response.json())
 
@@ -90,7 +90,7 @@ def sync(
     *,
     client: Client,
     body: CalculatePipelineCostRequest,
-) -> PipelineCost | None:
+) -> Optional[PipelineCost]:
     """Calculate pipeline cost
 
      Retrieves the cost of running the pipeline
@@ -156,7 +156,7 @@ async def asyncio(
     *,
     client: Client,
     body: CalculatePipelineCostRequest,
-) -> PipelineCost | None:
+) -> Optional[PipelineCost]:
     """Calculate pipeline cost
 
      Retrieves the cost of running the pipeline

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -19,12 +19,12 @@ class FileRequirements:
         allowed_data_types (List['AllowedDataType']):
     """
 
-    files: list[str]
+    files: List[str]
     error_msg: str
-    allowed_data_types: list["AllowedDataType"]
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    allowed_data_types: List["AllowedDataType"]
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         files = self.files
 
         error_msg = self.error_msg
@@ -34,7 +34,7 @@ class FileRequirements:
             allowed_data_types_item = allowed_data_types_item_data.to_dict()
             allowed_data_types.append(allowed_data_types_item)
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -47,11 +47,11 @@ class FileRequirements:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.allowed_data_type import AllowedDataType
 
         d = src_dict.copy()
-        files = cast(list[str], d.pop("files"))
+        files = cast(List[str], d.pop("files"))
 
         error_msg = d.pop("errorMsg")
 
@@ -72,5 +72,5 @@ class FileRequirements:
         return file_requirements
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

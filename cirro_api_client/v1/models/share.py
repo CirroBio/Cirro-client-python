@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -36,15 +36,15 @@ class Share:
     description: str
     originating_project_id: str
     share_type: ShareType
-    conditions: list["DatasetCondition"]
-    classification_ids: list[str]
-    keywords: list[str]
+    conditions: List["DatasetCondition"]
+    classification_ids: List[str]
+    keywords: List[str]
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         id = self.id
 
         name = self.name
@@ -70,7 +70,7 @@ class Share:
 
         updated_at = self.updated_at.isoformat()
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -91,7 +91,7 @@ class Share:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.dataset_condition import DatasetCondition
 
         d = src_dict.copy()
@@ -112,9 +112,9 @@ class Share:
 
             conditions.append(conditions_item)
 
-        classification_ids = cast(list[str], d.pop("classificationIds"))
+        classification_ids = cast(List[str], d.pop("classificationIds"))
 
-        keywords = cast(list[str], d.pop("keywords"))
+        keywords = cast(List[str], d.pop("keywords"))
 
         created_by = d.pop("createdBy")
 
@@ -140,5 +140,5 @@ class Share:
         return share
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

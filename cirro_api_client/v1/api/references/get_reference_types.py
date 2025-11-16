@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, List, Optional
 
 import httpx
 
@@ -9,8 +9,8 @@ from ...models.reference_type import ReferenceType
 from ...types import Response
 
 
-def _get_kwargs() -> dict[str, Any]:
-    _kwargs: dict[str, Any] = {
+def _get_kwargs() -> Dict[str, Any]:
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": "/reference-types",
     }
@@ -18,7 +18,7 @@ def _get_kwargs() -> dict[str, Any]:
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> list["ReferenceType"] | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["ReferenceType"]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
@@ -32,7 +32,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> list["Refere
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[list["ReferenceType"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[List["ReferenceType"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -44,7 +44,7 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[lis
 def sync_detailed(
     *,
     client: Client,
-) -> Response[list["ReferenceType"]]:
+) -> Response[List["ReferenceType"]]:
     """Get reference types
 
      List available reference types
@@ -70,7 +70,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> list["ReferenceType"] | None:
+) -> Optional[List["ReferenceType"]]:
     """Get reference types
 
      List available reference types
@@ -94,7 +94,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[list["ReferenceType"]]:
+) -> Response[List["ReferenceType"]]:
     """Get reference types
 
      List available reference types
@@ -117,7 +117,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> list["ReferenceType"] | None:
+) -> Optional[List["ReferenceType"]]:
     """Get reference types
 
      List available reference types

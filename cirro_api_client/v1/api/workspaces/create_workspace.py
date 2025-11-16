@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -14,10 +14,10 @@ def _get_kwargs(
     project_id: str,
     *,
     body: WorkspaceInput,
-) -> dict[str, Any]:
-    headers: dict[str, Any] = {}
+) -> Dict[str, Any]:
+    headers: Dict[str, Any] = {}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "post",
         "url": f"/projects/{project_id}/workspaces",
     }
@@ -31,7 +31,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> CreateResponse | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[CreateResponse]:
     if response.status_code == HTTPStatus.CREATED:
         response_201 = CreateResponse.from_dict(response.json())
 
@@ -90,7 +90,7 @@ def sync(
     *,
     client: Client,
     body: WorkspaceInput,
-) -> CreateResponse | None:
+) -> Optional[CreateResponse]:
     """Create workspace
 
      Creates a workspace within a project
@@ -156,7 +156,7 @@ async def asyncio(
     *,
     client: Client,
     body: WorkspaceInput,
-) -> CreateResponse | None:
+) -> Optional[CreateResponse]:
     """Create workspace
 
      Creates a workspace within a project

@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, List, Optional
 
 import httpx
 
@@ -12,11 +12,11 @@ from ...types import Response
 def _get_kwargs(
     project_id: str,
     *,
-    body: list["Tag"],
-) -> dict[str, Any]:
-    headers: dict[str, Any] = {}
+    body: List["Tag"],
+) -> Dict[str, Any]:
+    headers: Dict[str, Any] = {}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "put",
         "url": f"/projects/{project_id}:tags",
     }
@@ -33,7 +33,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Any | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Any]:
     if response.status_code == HTTPStatus.OK:
         return None
 
@@ -53,7 +53,7 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-    body: list["Tag"],
+    body: List["Tag"],
 ) -> Response[Any]:
     """Set project tags
 
@@ -89,7 +89,7 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-    body: list["Tag"],
+    body: List["Tag"],
 ) -> Response[Any]:
     """Set project tags
 

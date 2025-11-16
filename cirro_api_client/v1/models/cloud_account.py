@@ -1,4 +1,4 @@
-from typing import Any, TypeVar
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -21,12 +21,12 @@ class CloudAccount:
     """
 
     account_type: CloudAccountType
-    account_id: Unset | str = UNSET
-    account_name: Unset | str = UNSET
-    region_name: Unset | str = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    account_id: Union[Unset, str] = UNSET
+    account_name: Union[Unset, str] = UNSET
+    region_name: Union[Unset, str] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         account_type = self.account_type.value
 
         account_id = self.account_id
@@ -35,7 +35,7 @@ class CloudAccount:
 
         region_name = self.region_name
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -52,7 +52,7 @@ class CloudAccount:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         account_type = CloudAccountType(d.pop("accountType"))
 
@@ -73,5 +73,5 @@ class CloudAccount:
         return cloud_account
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

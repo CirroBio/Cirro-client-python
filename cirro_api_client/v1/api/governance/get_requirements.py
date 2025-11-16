@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, List, Optional, Union
 
 import httpx
 
@@ -11,15 +11,15 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    project_id: Unset | str = UNSET,
-) -> dict[str, Any]:
-    params: dict[str, Any] = {}
+    project_id: Union[Unset, str] = UNSET,
+) -> Dict[str, Any]:
+    params: Dict[str, Any] = {}
 
     params["projectId"] = project_id
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": "/governance/requirements",
         "params": params,
@@ -28,7 +28,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> list["GovernanceRequirement"] | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["GovernanceRequirement"]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
@@ -42,7 +42,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> list["Govern
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[list["GovernanceRequirement"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[List["GovernanceRequirement"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -54,8 +54,8 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[lis
 def sync_detailed(
     *,
     client: Client,
-    project_id: Unset | str = UNSET,
-) -> Response[list["GovernanceRequirement"]]:
+    project_id: Union[Unset, str] = UNSET,
+) -> Response[List["GovernanceRequirement"]]:
     """Get requirements
 
      Retrieve a list of governance requirements
@@ -87,8 +87,8 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    project_id: Unset | str = UNSET,
-) -> list["GovernanceRequirement"] | None:
+    project_id: Union[Unset, str] = UNSET,
+) -> Optional[List["GovernanceRequirement"]]:
     """Get requirements
 
      Retrieve a list of governance requirements
@@ -117,8 +117,8 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-    project_id: Unset | str = UNSET,
-) -> Response[list["GovernanceRequirement"]]:
+    project_id: Union[Unset, str] = UNSET,
+) -> Response[List["GovernanceRequirement"]]:
     """Get requirements
 
      Retrieve a list of governance requirements
@@ -147,8 +147,8 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    project_id: Unset | str = UNSET,
-) -> list["GovernanceRequirement"] | None:
+    project_id: Union[Unset, str] = UNSET,
+) -> Optional[List["GovernanceRequirement"]]:
     """Get requirements
 
      Retrieve a list of governance requirements

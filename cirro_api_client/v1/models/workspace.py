@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -45,17 +45,17 @@ class Workspace:
     status: Status
     status_message: str
     environment_id: str
-    mounted_datasets: list["MountedDataset"]
+    mounted_datasets: List["MountedDataset"]
     compute_config: "WorkspaceComputeConfig"
     sharing_type: SharingType
     created_by: str
     created_at: datetime.datetime
     started_at: datetime.datetime
     updated_at: datetime.datetime
-    sessions: list["WorkspaceSession"] | None | Unset = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    sessions: Union[List["WorkspaceSession"], None, Unset] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         id = self.id
 
         name = self.name
@@ -85,7 +85,7 @@ class Workspace:
 
         updated_at = self.updated_at.isoformat()
 
-        sessions: list[dict[str, Any]] | None | Unset
+        sessions: Union[List[Dict[str, Any]], None, Unset]
         if isinstance(self.sessions, Unset):
             sessions = UNSET
         elif isinstance(self.sessions, list):
@@ -97,7 +97,7 @@ class Workspace:
         else:
             sessions = self.sessions
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -122,7 +122,7 @@ class Workspace:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.mounted_dataset import MountedDataset
         from ..models.workspace_compute_config import WorkspaceComputeConfig
         from ..models.workspace_session import WorkspaceSession
@@ -159,7 +159,7 @@ class Workspace:
 
         updated_at = isoparse(d.pop("updatedAt"))
 
-        def _parse_sessions(data: object) -> list["WorkspaceSession"] | None | Unset:
+        def _parse_sessions(data: object) -> Union[List["WorkspaceSession"], None, Unset]:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -177,7 +177,7 @@ class Workspace:
                 return sessions_type_0
             except:  # noqa: E722
                 pass
-            return cast(list["WorkspaceSession"] | None | Unset, data)
+            return cast(Union[List["WorkspaceSession"], None, Unset], data)
 
         sessions = _parse_sessions(d.pop("sessions", UNSET))
 
@@ -202,5 +202,5 @@ class Workspace:
         return workspace
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -15,10 +15,10 @@ def _get_kwargs(
     dataset_id: str,
     *,
     body: UpdateDatasetRequest,
-) -> dict[str, Any]:
-    headers: dict[str, Any] = {}
+) -> Dict[str, Any]:
+    headers: Dict[str, Any] = {}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "put",
         "url": f"/projects/{project_id}/datasets/{dataset_id}",
     }
@@ -32,7 +32,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> DatasetDetail | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[DatasetDetail]:
     if response.status_code == HTTPStatus.OK:
         response_200 = DatasetDetail.from_dict(response.json())
 
@@ -95,7 +95,7 @@ def sync(
     *,
     client: Client,
     body: UpdateDatasetRequest,
-) -> DatasetDetail | None:
+) -> Optional[DatasetDetail]:
     """Update dataset
 
      Update info on a dataset
@@ -167,7 +167,7 @@ async def asyncio(
     *,
     client: Client,
     body: UpdateDatasetRequest,
-) -> DatasetDetail | None:
+) -> Optional[DatasetDetail]:
     """Update dataset
 
      Update info on a dataset

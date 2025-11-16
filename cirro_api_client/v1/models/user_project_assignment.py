@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, TypeVar, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -24,17 +24,17 @@ class UserProjectAssignment:
     project_id: str
     role: ProjectRole
     created_by: str
-    created_at: None | Unset | datetime.datetime = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    created_at: Union[None, Unset, datetime.datetime] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         project_id = self.project_id
 
         role = self.role.value
 
         created_by = self.created_by
 
-        created_at: None | Unset | str
+        created_at: Union[None, Unset, str]
         if isinstance(self.created_at, Unset):
             created_at = UNSET
         elif isinstance(self.created_at, datetime.datetime):
@@ -42,7 +42,7 @@ class UserProjectAssignment:
         else:
             created_at = self.created_at
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -57,7 +57,7 @@ class UserProjectAssignment:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         project_id = d.pop("projectId")
 
@@ -65,7 +65,7 @@ class UserProjectAssignment:
 
         created_by = d.pop("createdBy")
 
-        def _parse_created_at(data: object) -> None | Unset | datetime.datetime:
+        def _parse_created_at(data: object) -> Union[None, Unset, datetime.datetime]:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -78,7 +78,7 @@ class UserProjectAssignment:
                 return created_at_type_0
             except:  # noqa: E722
                 pass
-            return cast(None | Unset | datetime.datetime, data)
+            return cast(Union[None, Unset, datetime.datetime], data)
 
         created_at = _parse_created_at(d.pop("createdAt", UNSET))
 
@@ -93,5 +93,5 @@ class UserProjectAssignment:
         return user_project_assignment
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

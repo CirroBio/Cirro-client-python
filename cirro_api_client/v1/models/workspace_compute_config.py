@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -31,14 +31,14 @@ class WorkspaceComputeConfig:
     """
 
     container_image_uri: str
-    cpu: Unset | int = UNSET
-    memory_gi_b: Unset | int = UNSET
-    volume_size_gi_b: Unset | int = UNSET
+    cpu: Union[Unset, int] = UNSET
+    memory_gi_b: Union[Unset, int] = UNSET
+    volume_size_gi_b: Union[Unset, int] = UNSET
     environment_variables: Union["WorkspaceComputeConfigEnvironmentVariablesType0", None, Unset] = UNSET
-    local_port: Unset | int = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    local_port: Union[Unset, int] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         from ..models.workspace_compute_config_environment_variables_type_0 import (
             WorkspaceComputeConfigEnvironmentVariablesType0,
         )
@@ -51,7 +51,7 @@ class WorkspaceComputeConfig:
 
         volume_size_gi_b = self.volume_size_gi_b
 
-        environment_variables: dict[str, Any] | None | Unset
+        environment_variables: Union[Dict[str, Any], None, Unset]
         if isinstance(self.environment_variables, Unset):
             environment_variables = UNSET
         elif isinstance(self.environment_variables, WorkspaceComputeConfigEnvironmentVariablesType0):
@@ -61,7 +61,7 @@ class WorkspaceComputeConfig:
 
         local_port = self.local_port
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -82,7 +82,7 @@ class WorkspaceComputeConfig:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.workspace_compute_config_environment_variables_type_0 import (
             WorkspaceComputeConfigEnvironmentVariablesType0,
         )
@@ -130,5 +130,5 @@ class WorkspaceComputeConfig:
         return workspace_compute_config
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

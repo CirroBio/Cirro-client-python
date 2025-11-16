@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
@@ -14,15 +14,15 @@ def _get_kwargs(
     dataset_id: str,
     task_id: str,
     *,
-    force_live: Unset | bool = False,
-) -> dict[str, Any]:
-    params: dict[str, Any] = {}
+    force_live: Union[Unset, bool] = False,
+) -> Dict[str, Any]:
+    params: Dict[str, Any] = {}
 
     params["forceLive"] = force_live
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": f"/projects/{project_id}/execution/{dataset_id}/tasks/{task_id}/logs",
         "params": params,
@@ -31,7 +31,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> GetExecutionLogsResponse | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[GetExecutionLogsResponse]:
     if response.status_code == HTTPStatus.OK:
         response_200 = GetExecutionLogsResponse.from_dict(response.json())
 
@@ -55,7 +55,7 @@ def sync_detailed(
     task_id: str,
     *,
     client: Client,
-    force_live: Unset | bool = False,
+    force_live: Union[Unset, bool] = False,
 ) -> Response[GetExecutionLogsResponse]:
     """Get task logs
 
@@ -97,8 +97,8 @@ def sync(
     task_id: str,
     *,
     client: Client,
-    force_live: Unset | bool = False,
-) -> GetExecutionLogsResponse | None:
+    force_live: Union[Unset, bool] = False,
+) -> Optional[GetExecutionLogsResponse]:
     """Get task logs
 
      Gets the log output from an individual task
@@ -136,7 +136,7 @@ async def asyncio_detailed(
     task_id: str,
     *,
     client: Client,
-    force_live: Unset | bool = False,
+    force_live: Union[Unset, bool] = False,
 ) -> Response[GetExecutionLogsResponse]:
     """Get task logs
 
@@ -175,8 +175,8 @@ async def asyncio(
     task_id: str,
     *,
     client: Client,
-    force_live: Unset | bool = False,
-) -> GetExecutionLogsResponse | None:
+    force_live: Union[Unset, bool] = False,
+) -> Optional[GetExecutionLogsResponse]:
     """Get task logs
 
      Gets the log output from an individual task

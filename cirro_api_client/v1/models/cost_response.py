@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -23,23 +23,23 @@ class CostResponse:
         is_estimate (Union[Unset, bool]): Whether this is an estimated cost
     """
 
-    total_cost: Unset | float = UNSET
-    groups: Unset | list["GroupCost"] = UNSET
-    tasks: Unset | list["TaskCost"] = UNSET
-    is_estimate: Unset | bool = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    total_cost: Union[Unset, float] = UNSET
+    groups: Union[Unset, List["GroupCost"]] = UNSET
+    tasks: Union[Unset, List["TaskCost"]] = UNSET
+    is_estimate: Union[Unset, bool] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         total_cost = self.total_cost
 
-        groups: Unset | list[dict[str, Any]] = UNSET
+        groups: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.groups, Unset):
             groups = []
             for groups_item_data in self.groups:
                 groups_item = groups_item_data.to_dict()
                 groups.append(groups_item)
 
-        tasks: Unset | list[dict[str, Any]] = UNSET
+        tasks: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.tasks, Unset):
             tasks = []
             for tasks_item_data in self.tasks:
@@ -48,7 +48,7 @@ class CostResponse:
 
         is_estimate = self.is_estimate
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if total_cost is not UNSET:
@@ -63,7 +63,7 @@ class CostResponse:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.group_cost import GroupCost
         from ..models.task_cost import TaskCost
 
@@ -97,5 +97,5 @@ class CostResponse:
         return cost_response
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

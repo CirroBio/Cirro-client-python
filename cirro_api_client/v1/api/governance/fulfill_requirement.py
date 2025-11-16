@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -15,10 +15,10 @@ def _get_kwargs(
     requirement_id: str,
     *,
     body: RequirementFulfillmentInput,
-) -> dict[str, Any]:
-    headers: dict[str, Any] = {}
+) -> Dict[str, Any]:
+    headers: Dict[str, Any] = {}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "post",
         "url": f"/governance/projects/{project_id}/requirements/{requirement_id}:fulfill",
     }
@@ -32,7 +32,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> FulfillmentResponse | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[FulfillmentResponse]:
     if response.status_code == HTTPStatus.OK:
         response_200 = FulfillmentResponse.from_dict(response.json())
 
@@ -95,7 +95,7 @@ def sync(
     *,
     client: Client,
     body: RequirementFulfillmentInput,
-) -> FulfillmentResponse | None:
+) -> Optional[FulfillmentResponse]:
     """Fulfill a project's requirement
 
      Saves a record of the fulfillment of a governance requirement
@@ -167,7 +167,7 @@ async def asyncio(
     *,
     client: Client,
     body: RequirementFulfillmentInput,
-) -> FulfillmentResponse | None:
+) -> Optional[FulfillmentResponse]:
     """Fulfill a project's requirement
 
      Saves a record of the fulfillment of a governance requirement

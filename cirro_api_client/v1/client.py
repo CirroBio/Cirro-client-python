@@ -1,5 +1,5 @@
 import ssl
-from typing import Any
+from typing import Any, Dict, Optional, Union
 
 import httpx
 from attrs import define, evolve, field
@@ -39,19 +39,19 @@ class Client:
     raise_on_unexpected_status: bool = field(default=False, kw_only=True)
     auth_method: httpx.Auth = field(default=None, kw_only=True)
     _base_url: str
-    _cookies: dict[str, str] = field(factory=dict, kw_only=True)
-    _headers: dict[str, str] = field(factory=dict, kw_only=True)
-    _timeout: httpx.Timeout | None = field(default=None, kw_only=True)
-    _verify_ssl: str | bool | ssl.SSLContext = field(default=True, kw_only=True)
+    _cookies: Dict[str, str] = field(factory=dict, kw_only=True)
+    _headers: Dict[str, str] = field(factory=dict, kw_only=True)
+    _timeout: Optional[httpx.Timeout] = field(default=None, kw_only=True)
+    _verify_ssl: Union[str, bool, ssl.SSLContext] = field(default=True, kw_only=True)
     _follow_redirects: bool = field(default=False, kw_only=True)
-    _httpx_args: dict[str, Any] = field(factory=dict, kw_only=True)
-    _client: httpx.Client | None = field(default=None, init=False)
-    _async_client: httpx.AsyncClient | None = field(default=None, init=False)
+    _httpx_args: Dict[str, Any] = field(factory=dict, kw_only=True)
+    _client: Optional[httpx.Client] = field(default=None, init=False)
+    _async_client: Optional[httpx.AsyncClient] = field(default=None, init=False)
 
     def get_auth(self):
         return self.auth_method
 
-    def with_headers(self, headers: dict[str, str]) -> "Client":
+    def with_headers(self, headers: Dict[str, str]) -> "Client":
         """Get a new client matching this one with additional headers"""
         if self._client is not None:
             self._client.headers.update(headers)
@@ -59,7 +59,7 @@ class Client:
             self._async_client.headers.update(headers)
         return evolve(self, headers={**self._headers, **headers})
 
-    def with_cookies(self, cookies: dict[str, str]) -> "Client":
+    def with_cookies(self, cookies: Dict[str, str]) -> "Client":
         """Get a new client matching this one with additional cookies"""
         if self._client is not None:
             self._client.cookies.update(cookies)

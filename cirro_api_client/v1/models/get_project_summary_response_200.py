@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -14,10 +14,10 @@ T = TypeVar("T", bound="GetProjectSummaryResponse200")
 class GetProjectSummaryResponse200:
     """ """
 
-    additional_properties: dict[str, list["Task"]] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, List["Task"]] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
-        field_dict: dict[str, Any] = {}
+    def to_dict(self) -> Dict[str, Any]:
+        field_dict: Dict[str, Any] = {}
         for prop_name, prop in self.additional_properties.items():
             field_dict[prop_name] = []
             for additional_property_item_data in prop:
@@ -29,7 +29,7 @@ class GetProjectSummaryResponse200:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.task import Task
 
         d = src_dict.copy()
@@ -50,5 +50,5 @@ class GetProjectSummaryResponse200:
         return get_project_summary_response_200
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

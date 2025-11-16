@@ -1,6 +1,5 @@
-import builtins
 import datetime
-from typing import Any, TypeVar, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -21,23 +20,23 @@ class GovernanceExpiry:
         date (Union[None, Unset, datetime.datetime]): The date for an absolute expiration
     """
 
-    type: Unset | GovernanceExpiryType = UNSET
-    days: None | Unset | int = UNSET
-    date: None | Unset | datetime.datetime = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    type: Union[Unset, GovernanceExpiryType] = UNSET
+    days: Union[None, Unset, int] = UNSET
+    date: Union[None, Unset, datetime.datetime] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
-        type: Unset | str = UNSET
+    def to_dict(self) -> Dict[str, Any]:
+        type: Union[Unset, str] = UNSET
         if not isinstance(self.type, Unset):
             type = self.type.value
 
-        days: None | Unset | int
+        days: Union[None, Unset, int]
         if isinstance(self.days, Unset):
             days = UNSET
         else:
             days = self.days
 
-        date: None | Unset | str
+        date: Union[None, Unset, str]
         if isinstance(self.date, Unset):
             date = UNSET
         elif isinstance(self.date, datetime.datetime):
@@ -45,7 +44,7 @@ class GovernanceExpiry:
         else:
             date = self.date
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if type is not UNSET:
@@ -58,25 +57,25 @@ class GovernanceExpiry:
         return field_dict
 
     @classmethod
-    def from_dict(cls: builtins.type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         _type = d.pop("type", UNSET)
-        type: Unset | GovernanceExpiryType
+        type: Union[Unset, GovernanceExpiryType]
         if isinstance(_type, Unset):
             type = UNSET
         else:
             type = GovernanceExpiryType(_type)
 
-        def _parse_days(data: object) -> None | Unset | int:
+        def _parse_days(data: object) -> Union[None, Unset, int]:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | int, data)
+            return cast(Union[None, Unset, int], data)
 
         days = _parse_days(d.pop("days", UNSET))
 
-        def _parse_date(data: object) -> None | Unset | datetime.datetime:
+        def _parse_date(data: object) -> Union[None, Unset, datetime.datetime]:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -89,7 +88,7 @@ class GovernanceExpiry:
                 return date_type_0
             except:  # noqa: E722
                 pass
-            return cast(None | Unset | datetime.datetime, data)
+            return cast(Union[None, Unset, datetime.datetime], data)
 
         date = _parse_date(d.pop("date", UNSET))
 
@@ -103,5 +102,5 @@ class GovernanceExpiry:
         return governance_expiry
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

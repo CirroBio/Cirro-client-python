@@ -1,4 +1,4 @@
-from typing import Any, TypeVar, cast
+from typing import Any, Dict, List, Type, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -20,13 +20,13 @@ class ProjectRequest:
 
     name: str
     description: str
-    classification_ids: list[str]
+    classification_ids: List[str]
     billing_info: str
     admin_username: str
     message: str
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         name = self.name
 
         description = self.description
@@ -39,7 +39,7 @@ class ProjectRequest:
 
         message = self.message
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -55,13 +55,13 @@ class ProjectRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         name = d.pop("name")
 
         description = d.pop("description")
 
-        classification_ids = cast(list[str], d.pop("classificationIds"))
+        classification_ids = cast(List[str], d.pop("classificationIds"))
 
         billing_info = d.pop("billingInfo")
 
@@ -82,5 +82,5 @@ class ProjectRequest:
         return project_request
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

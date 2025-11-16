@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -13,10 +13,10 @@ from ...types import Response
 def _get_kwargs(
     *,
     body: DiscussionInput,
-) -> dict[str, Any]:
-    headers: dict[str, Any] = {}
+) -> Dict[str, Any]:
+    headers: Dict[str, Any] = {}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "post",
         "url": "/discussions",
     }
@@ -30,7 +30,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Discussion | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Discussion]:
     if response.status_code == HTTPStatus.OK:
         response_200 = Discussion.from_dict(response.json())
 
@@ -85,7 +85,7 @@ def sync(
     *,
     client: Client,
     body: DiscussionInput,
-) -> Discussion | None:
+) -> Optional[Discussion]:
     """Create a discussion
 
      Creates a new discussion for an entity
@@ -145,7 +145,7 @@ async def asyncio(
     *,
     client: Client,
     body: DiscussionInput,
-) -> Discussion | None:
+) -> Optional[Discussion]:
     """Create a discussion
 
      Creates a new discussion for an entity

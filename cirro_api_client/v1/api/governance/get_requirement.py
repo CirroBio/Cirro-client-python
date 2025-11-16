@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -11,8 +11,8 @@ from ...types import Response
 
 def _get_kwargs(
     requirement_id: str,
-) -> dict[str, Any]:
-    _kwargs: dict[str, Any] = {
+) -> Dict[str, Any]:
+    _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": f"/governance/requirements/{requirement_id}",
     }
@@ -20,7 +20,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> GovernanceRequirement | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[GovernanceRequirement]:
     if response.status_code == HTTPStatus.OK:
         response_200 = GovernanceRequirement.from_dict(response.json())
 
@@ -75,7 +75,7 @@ def sync(
     requirement_id: str,
     *,
     client: Client,
-) -> GovernanceRequirement | None:
+) -> Optional[GovernanceRequirement]:
     """Get a requirement
 
      Retrieve a governance requirement
@@ -135,7 +135,7 @@ async def asyncio(
     requirement_id: str,
     *,
     client: Client,
-) -> GovernanceRequirement | None:
+) -> Optional[GovernanceRequirement]:
     """Get a requirement
 
      Retrieve a governance requirement

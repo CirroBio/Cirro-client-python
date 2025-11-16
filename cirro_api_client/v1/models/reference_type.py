@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -23,10 +23,10 @@ class ReferenceType:
     name: str
     description: str
     directory: str
-    validation: list["ReferenceTypeValidationItem"]
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    validation: List["ReferenceTypeValidationItem"]
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         name = self.name
 
         description = self.description
@@ -38,7 +38,7 @@ class ReferenceType:
             validation_item = validation_item_data.to_dict()
             validation.append(validation_item)
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -52,7 +52,7 @@ class ReferenceType:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.reference_type_validation_item import ReferenceTypeValidationItem
 
         d = src_dict.copy()
@@ -80,5 +80,5 @@ class ReferenceType:
         return reference_type
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -42,14 +42,14 @@ class UserDetail:
     job_title: str
     department: str
     invited_by: str
-    project_assignments: list["UserProjectAssignment"]
-    groups: list[str]
+    project_assignments: List["UserProjectAssignment"]
+    groups: List[str]
     settings: "UserSettings"
-    sign_up_time: None | Unset | datetime.datetime = UNSET
-    last_signed_in: None | Unset | datetime.datetime = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    sign_up_time: Union[None, Unset, datetime.datetime] = UNSET
+    last_signed_in: Union[None, Unset, datetime.datetime] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         username = self.username
 
         name = self.name
@@ -75,7 +75,7 @@ class UserDetail:
 
         settings = self.settings.to_dict()
 
-        sign_up_time: None | Unset | str
+        sign_up_time: Union[None, Unset, str]
         if isinstance(self.sign_up_time, Unset):
             sign_up_time = UNSET
         elif isinstance(self.sign_up_time, datetime.datetime):
@@ -83,7 +83,7 @@ class UserDetail:
         else:
             sign_up_time = self.sign_up_time
 
-        last_signed_in: None | Unset | str
+        last_signed_in: Union[None, Unset, str]
         if isinstance(self.last_signed_in, Unset):
             last_signed_in = UNSET
         elif isinstance(self.last_signed_in, datetime.datetime):
@@ -91,7 +91,7 @@ class UserDetail:
         else:
             last_signed_in = self.last_signed_in
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -116,7 +116,7 @@ class UserDetail:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.user_project_assignment import UserProjectAssignment
         from ..models.user_settings import UserSettings
 
@@ -144,11 +144,11 @@ class UserDetail:
 
             project_assignments.append(project_assignments_item)
 
-        groups = cast(list[str], d.pop("groups"))
+        groups = cast(List[str], d.pop("groups"))
 
         settings = UserSettings.from_dict(d.pop("settings"))
 
-        def _parse_sign_up_time(data: object) -> None | Unset | datetime.datetime:
+        def _parse_sign_up_time(data: object) -> Union[None, Unset, datetime.datetime]:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -161,11 +161,11 @@ class UserDetail:
                 return sign_up_time_type_0
             except:  # noqa: E722
                 pass
-            return cast(None | Unset | datetime.datetime, data)
+            return cast(Union[None, Unset, datetime.datetime], data)
 
         sign_up_time = _parse_sign_up_time(d.pop("signUpTime", UNSET))
 
-        def _parse_last_signed_in(data: object) -> None | Unset | datetime.datetime:
+        def _parse_last_signed_in(data: object) -> Union[None, Unset, datetime.datetime]:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -178,7 +178,7 @@ class UserDetail:
                 return last_signed_in_type_0
             except:  # noqa: E722
                 pass
-            return cast(None | Unset | datetime.datetime, data)
+            return cast(Union[None, Unset, datetime.datetime], data)
 
         last_signed_in = _parse_last_signed_in(d.pop("lastSignedIn", UNSET))
 
@@ -202,5 +202,5 @@ class UserDetail:
         return user_detail
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

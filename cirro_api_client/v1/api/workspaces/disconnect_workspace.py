@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -13,14 +13,14 @@ def _get_kwargs(
     workspace_id: str,
     *,
     session_id: str,
-) -> dict[str, Any]:
-    params: dict[str, Any] = {}
+) -> Dict[str, Any]:
+    params: Dict[str, Any] = {}
 
     params["sessionId"] = session_id
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: dict[str, Any] = {
+    _kwargs: Dict[str, Any] = {
         "method": "delete",
         "url": f"/projects/{project_id}/workspaces/{workspace_id}:disconnect",
         "params": params,
@@ -29,7 +29,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Any | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Any]:
     if response.status_code == HTTPStatus.ACCEPTED:
         return None
 

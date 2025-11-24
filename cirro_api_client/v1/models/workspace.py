@@ -34,9 +34,9 @@ class Workspace:
         sharing_type (SharingType):
         created_by (str):
         created_at (datetime.datetime):
-        started_at (datetime.datetime):
         updated_at (datetime.datetime):
         sessions (Union[List['WorkspaceSession'], None, Unset]):
+        started_at (Union[None, Unset, datetime.datetime]):
     """
 
     id: str
@@ -50,9 +50,9 @@ class Workspace:
     sharing_type: SharingType
     created_by: str
     created_at: datetime.datetime
-    started_at: datetime.datetime
     updated_at: datetime.datetime
     sessions: Union[List["WorkspaceSession"], None, Unset] = UNSET
+    started_at: Union[None, Unset, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -81,8 +81,6 @@ class Workspace:
 
         created_at = self.created_at.isoformat()
 
-        started_at = self.started_at.isoformat()
-
         updated_at = self.updated_at.isoformat()
 
         sessions: Union[List[Dict[str, Any]], None, Unset]
@@ -96,6 +94,14 @@ class Workspace:
 
         else:
             sessions = self.sessions
+
+        started_at: Union[None, Unset, str]
+        if isinstance(self.started_at, Unset):
+            started_at = UNSET
+        elif isinstance(self.started_at, datetime.datetime):
+            started_at = self.started_at.isoformat()
+        else:
+            started_at = self.started_at
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -112,12 +118,13 @@ class Workspace:
                 "sharingType": sharing_type,
                 "createdBy": created_by,
                 "createdAt": created_at,
-                "startedAt": started_at,
                 "updatedAt": updated_at,
             }
         )
         if sessions is not UNSET:
             field_dict["sessions"] = sessions
+        if started_at is not UNSET:
+            field_dict["startedAt"] = started_at
 
         return field_dict
 
@@ -155,8 +162,6 @@ class Workspace:
 
         created_at = isoparse(d.pop("createdAt"))
 
-        started_at = isoparse(d.pop("startedAt"))
-
         updated_at = isoparse(d.pop("updatedAt"))
 
         def _parse_sessions(data: object) -> Union[List["WorkspaceSession"], None, Unset]:
@@ -181,6 +186,23 @@ class Workspace:
 
         sessions = _parse_sessions(d.pop("sessions", UNSET))
 
+        def _parse_started_at(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                started_at_type_0 = isoparse(data)
+
+                return started_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        started_at = _parse_started_at(d.pop("startedAt", UNSET))
+
         workspace = cls(
             id=id,
             name=name,
@@ -193,9 +215,9 @@ class Workspace:
             sharing_type=sharing_type,
             created_by=created_by,
             created_at=created_at,
-            started_at=started_at,
             updated_at=updated_at,
             sessions=sessions,
+            started_at=started_at,
         )
 
         workspace.additional_properties = d

@@ -99,6 +99,7 @@ from .governance_training_verification import GovernanceTrainingVerification
 from .governance_type import GovernanceType
 from .group_cost import GroupCost
 from .import_data_request import ImportDataRequest
+from .import_data_request_download_method import ImportDataRequestDownloadMethod
 from .invite_user_request import InviteUserRequest
 from .invite_user_response import InviteUserResponse
 from .list_events_entity_type import ListEventsEntityType
@@ -292,6 +293,7 @@ __all__ = (
     "GovernanceType",
     "GroupCost",
     "ImportDataRequest",
+    "ImportDataRequestDownloadMethod",
     "InviteUserRequest",
     "InviteUserResponse",
     "ListEventsEntityType",

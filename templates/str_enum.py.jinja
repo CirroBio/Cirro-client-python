@@ -4,8 +4,10 @@ class {{ enum.class_info.name }}(str, Enum):
     {% for key, value in enum.values|dictsort(true) %}
     {{ key }} = "{{ value }}"
     {% endfor %}
+    {% if "UNKNOWN" not in enum.values %}
     UNKNOWN = "UNKNOWN"
     """ This is a fallback value for when the value is not known, do not use this value when making requests """
+    {% endif %}
 
     def __str__(self) -> str:
         return str(self.value)

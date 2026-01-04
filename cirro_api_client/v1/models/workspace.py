@@ -25,6 +25,7 @@ class Workspace:
         id (str):
         name (str):
         description (str):
+        project_id (str):
         status (Status):
         status_message (str):
         environment_id (str):
@@ -44,6 +45,7 @@ class Workspace:
     id: str
     name: str
     description: str
+    project_id: str
     status: Status
     status_message: str
     environment_id: str
@@ -65,6 +67,8 @@ class Workspace:
         name = self.name
 
         description = self.description
+
+        project_id = self.project_id
 
         status = self.status.value
 
@@ -128,6 +132,7 @@ class Workspace:
                 "id": id,
                 "name": name,
                 "description": description,
+                "projectId": project_id,
                 "status": status,
                 "statusMessage": status_message,
                 "environmentId": environment_id,
@@ -162,6 +167,8 @@ class Workspace:
         name = d.pop("name")
 
         description = d.pop("description")
+
+        project_id = d.pop("projectId")
 
         status = Status(d.pop("status"))
 
@@ -255,6 +262,7 @@ class Workspace:
             id=id,
             name=name,
             description=description,
+            project_id=project_id,
             status=status,
             status_message=status_message,
             environment_id=environment_id,

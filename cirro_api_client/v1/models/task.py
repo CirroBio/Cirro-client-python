@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, TypeVar
+from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -15,60 +15,92 @@ class Task:
     """
     Attributes:
         name (str):
-        native_job_id (str):
         status (str):
-        requested_at (datetime.datetime):
-        started_at (Union[Unset, datetime.datetime]):
-        stopped_at (Union[Unset, datetime.datetime]):
-        container_image (Union[Unset, str]):
-        command_line (Union[Unset, str]):
-        log_location (Union[Unset, str]):
+        native_job_id (Union[None, Unset, str]):
+        requested_at (Union[None, Unset, datetime.datetime]):
+        started_at (Union[None, Unset, datetime.datetime]):
+        stopped_at (Union[None, Unset, datetime.datetime]):
+        container_image (Union[None, Unset, str]):
+        command_line (Union[None, Unset, str]):
+        log_location (Union[None, Unset, str]):
     """
 
     name: str
-    native_job_id: str
     status: str
-    requested_at: datetime.datetime
-    started_at: Unset | datetime.datetime = UNSET
-    stopped_at: Unset | datetime.datetime = UNSET
-    container_image: Unset | str = UNSET
-    command_line: Unset | str = UNSET
-    log_location: Unset | str = UNSET
+    native_job_id: None | Unset | str = UNSET
+    requested_at: None | Unset | datetime.datetime = UNSET
+    started_at: None | Unset | datetime.datetime = UNSET
+    stopped_at: None | Unset | datetime.datetime = UNSET
+    container_image: None | Unset | str = UNSET
+    command_line: None | Unset | str = UNSET
+    log_location: None | Unset | str = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         name = self.name
 
-        native_job_id = self.native_job_id
-
         status = self.status
 
-        requested_at = self.requested_at.isoformat()
+        native_job_id: None | Unset | str
+        if isinstance(self.native_job_id, Unset):
+            native_job_id = UNSET
+        else:
+            native_job_id = self.native_job_id
 
-        started_at: Unset | str = UNSET
-        if not isinstance(self.started_at, Unset):
+        requested_at: None | Unset | str
+        if isinstance(self.requested_at, Unset):
+            requested_at = UNSET
+        elif isinstance(self.requested_at, datetime.datetime):
+            requested_at = self.requested_at.isoformat()
+        else:
+            requested_at = self.requested_at
+
+        started_at: None | Unset | str
+        if isinstance(self.started_at, Unset):
+            started_at = UNSET
+        elif isinstance(self.started_at, datetime.datetime):
             started_at = self.started_at.isoformat()
+        else:
+            started_at = self.started_at
 
-        stopped_at: Unset | str = UNSET
-        if not isinstance(self.stopped_at, Unset):
+        stopped_at: None | Unset | str
+        if isinstance(self.stopped_at, Unset):
+            stopped_at = UNSET
+        elif isinstance(self.stopped_at, datetime.datetime):
             stopped_at = self.stopped_at.isoformat()
+        else:
+            stopped_at = self.stopped_at
 
-        container_image = self.container_image
+        container_image: None | Unset | str
+        if isinstance(self.container_image, Unset):
+            container_image = UNSET
+        else:
+            container_image = self.container_image
 
-        command_line = self.command_line
+        command_line: None | Unset | str
+        if isinstance(self.command_line, Unset):
+            command_line = UNSET
+        else:
+            command_line = self.command_line
 
-        log_location = self.log_location
+        log_location: None | Unset | str
+        if isinstance(self.log_location, Unset):
+            log_location = UNSET
+        else:
+            log_location = self.log_location
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "name": name,
-                "nativeJobId": native_job_id,
                 "status": status,
-                "requestedAt": requested_at,
             }
         )
+        if native_job_id is not UNSET:
+            field_dict["nativeJobId"] = native_job_id
+        if requested_at is not UNSET:
+            field_dict["requestedAt"] = requested_at
         if started_at is not UNSET:
             field_dict["startedAt"] = started_at
         if stopped_at is not UNSET:
@@ -87,36 +119,99 @@ class Task:
         d = src_dict.copy()
         name = d.pop("name")
 
-        native_job_id = d.pop("nativeJobId")
-
         status = d.pop("status")
 
-        requested_at = isoparse(d.pop("requestedAt"))
+        def _parse_native_job_id(data: object) -> None | Unset | str:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | Unset | str, data)
 
-        _started_at = d.pop("startedAt", UNSET)
-        started_at: Unset | datetime.datetime
-        if isinstance(_started_at, Unset):
-            started_at = UNSET
-        else:
-            started_at = isoparse(_started_at)
+        native_job_id = _parse_native_job_id(d.pop("nativeJobId", UNSET))
 
-        _stopped_at = d.pop("stoppedAt", UNSET)
-        stopped_at: Unset | datetime.datetime
-        if isinstance(_stopped_at, Unset):
-            stopped_at = UNSET
-        else:
-            stopped_at = isoparse(_stopped_at)
+        def _parse_requested_at(data: object) -> None | Unset | datetime.datetime:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                requested_at_type_0 = isoparse(data)
 
-        container_image = d.pop("containerImage", UNSET)
+                return requested_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(None | Unset | datetime.datetime, data)
 
-        command_line = d.pop("commandLine", UNSET)
+        requested_at = _parse_requested_at(d.pop("requestedAt", UNSET))
 
-        log_location = d.pop("logLocation", UNSET)
+        def _parse_started_at(data: object) -> None | Unset | datetime.datetime:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                started_at_type_0 = isoparse(data)
+
+                return started_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(None | Unset | datetime.datetime, data)
+
+        started_at = _parse_started_at(d.pop("startedAt", UNSET))
+
+        def _parse_stopped_at(data: object) -> None | Unset | datetime.datetime:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                stopped_at_type_0 = isoparse(data)
+
+                return stopped_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(None | Unset | datetime.datetime, data)
+
+        stopped_at = _parse_stopped_at(d.pop("stoppedAt", UNSET))
+
+        def _parse_container_image(data: object) -> None | Unset | str:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | Unset | str, data)
+
+        container_image = _parse_container_image(d.pop("containerImage", UNSET))
+
+        def _parse_command_line(data: object) -> None | Unset | str:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | Unset | str, data)
+
+        command_line = _parse_command_line(d.pop("commandLine", UNSET))
+
+        def _parse_log_location(data: object) -> None | Unset | str:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | Unset | str, data)
+
+        log_location = _parse_log_location(d.pop("logLocation", UNSET))
 
         task = cls(
             name=name,
-            native_job_id=native_job_id,
             status=status,
+            native_job_id=native_job_id,
             requested_at=requested_at,
             started_at=started_at,
             stopped_at=stopped_at,

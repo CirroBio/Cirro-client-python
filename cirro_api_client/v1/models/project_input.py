@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -33,13 +33,13 @@ class ProjectInput:
     description: str
     billing_account_id: str
     settings: "ProjectSettings"
-    contacts: List["Contact"]
+    contacts: list["Contact"]
     account: Union["CloudAccount", None, Unset] = UNSET
-    classification_ids: Union[List[str], None, Unset] = UNSET
-    tags: Union[List["Tag"], None, Unset] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    classification_ids: list[str] | None | Unset = UNSET
+    tags: list["Tag"] | None | Unset = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         from ..models.cloud_account import CloudAccount
 
         name = self.name
@@ -55,7 +55,7 @@ class ProjectInput:
             contacts_item = contacts_item_data.to_dict()
             contacts.append(contacts_item)
 
-        account: Union[Dict[str, Any], None, Unset]
+        account: dict[str, Any] | None | Unset
         if isinstance(self.account, Unset):
             account = UNSET
         elif isinstance(self.account, CloudAccount):
@@ -63,7 +63,7 @@ class ProjectInput:
         else:
             account = self.account
 
-        classification_ids: Union[List[str], None, Unset]
+        classification_ids: list[str] | None | Unset
         if isinstance(self.classification_ids, Unset):
             classification_ids = UNSET
         elif isinstance(self.classification_ids, list):
@@ -72,7 +72,7 @@ class ProjectInput:
         else:
             classification_ids = self.classification_ids
 
-        tags: Union[List[Dict[str, Any]], None, Unset]
+        tags: list[dict[str, Any]] | None | Unset
         if isinstance(self.tags, Unset):
             tags = UNSET
         elif isinstance(self.tags, list):
@@ -84,7 +84,7 @@ class ProjectInput:
         else:
             tags = self.tags
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -105,7 +105,7 @@ class ProjectInput:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.cloud_account import CloudAccount
         from ..models.contact import Contact
         from ..models.project_settings import ProjectSettings
@@ -144,7 +144,7 @@ class ProjectInput:
 
         account = _parse_account(d.pop("account", UNSET))
 
-        def _parse_classification_ids(data: object) -> Union[List[str], None, Unset]:
+        def _parse_classification_ids(data: object) -> list[str] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -152,16 +152,16 @@ class ProjectInput:
             try:
                 if not isinstance(data, list):
                     raise TypeError()
-                classification_ids_type_0 = cast(List[str], data)
+                classification_ids_type_0 = cast(list[str], data)
 
                 return classification_ids_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[List[str], None, Unset], data)
+            return cast(list[str] | None | Unset, data)
 
         classification_ids = _parse_classification_ids(d.pop("classificationIds", UNSET))
 
-        def _parse_tags(data: object) -> Union[List["Tag"], None, Unset]:
+        def _parse_tags(data: object) -> list["Tag"] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -179,7 +179,7 @@ class ProjectInput:
                 return tags_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[List["Tag"], None, Unset], data)
+            return cast(list["Tag"] | None | Unset, data)
 
         tags = _parse_tags(d.pop("tags", UNSET))
 
@@ -198,5 +198,5 @@ class ProjectInput:
         return project_input
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

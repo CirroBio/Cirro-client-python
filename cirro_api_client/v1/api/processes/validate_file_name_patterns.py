@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import httpx
 
@@ -14,10 +14,10 @@ def _get_kwargs(
     process_id: str,
     *,
     body: ValidateFileNamePatternsRequest,
-) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    headers: dict[str, Any] = {}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "post",
         "url": f"/processes/{process_id}/validate-files:test",
     }
@@ -31,7 +31,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["FileNameMatch"]]:
+def _parse_response(*, client: Client, response: httpx.Response) -> list["FileNameMatch"] | None:
     if response.status_code == HTTPStatus.OK:
         response_200 = []
         _response_200 = response.json()
@@ -45,7 +45,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Lis
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[List["FileNameMatch"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list["FileNameMatch"]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -59,7 +59,7 @@ def sync_detailed(
     *,
     client: Client,
     body: ValidateFileNamePatternsRequest,
-) -> Response[List["FileNameMatch"]]:
+) -> Response[list["FileNameMatch"]]:
     """Validate file name patterns
 
      Checks the input file names with the patterns for testing regex matching
@@ -95,7 +95,7 @@ def sync(
     *,
     client: Client,
     body: ValidateFileNamePatternsRequest,
-) -> Optional[List["FileNameMatch"]]:
+) -> list["FileNameMatch"] | None:
     """Validate file name patterns
 
      Checks the input file names with the patterns for testing regex matching
@@ -128,7 +128,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     body: ValidateFileNamePatternsRequest,
-) -> Response[List["FileNameMatch"]]:
+) -> Response[list["FileNameMatch"]]:
     """Validate file name patterns
 
      Checks the input file names with the patterns for testing regex matching
@@ -161,7 +161,7 @@ async def asyncio(
     *,
     client: Client,
     body: ValidateFileNamePatternsRequest,
-) -> Optional[List["FileNameMatch"]]:
+) -> list["FileNameMatch"] | None:
     """Validate file name patterns
 
      Checks the input file names with the patterns for testing regex matching

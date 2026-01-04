@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -35,8 +35,10 @@ class Workspace:
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
+        auto_stop_timeout (Union[None, Unset, int]):
         sessions (Union[List['WorkspaceSession'], None, Unset]):
         started_at (Union[None, Unset, datetime.datetime]):
+        auto_stop_time (Union[None, Unset, datetime.datetime]):
     """
 
     id: str
@@ -45,17 +47,19 @@ class Workspace:
     status: Status
     status_message: str
     environment_id: str
-    mounted_datasets: List["MountedDataset"]
+    mounted_datasets: list["MountedDataset"]
     compute_config: "WorkspaceComputeConfig"
     sharing_type: SharingType
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    sessions: Union[List["WorkspaceSession"], None, Unset] = UNSET
-    started_at: Union[None, Unset, datetime.datetime] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    auto_stop_timeout: None | Unset | int = UNSET
+    sessions: list["WorkspaceSession"] | None | Unset = UNSET
+    started_at: None | Unset | datetime.datetime = UNSET
+    auto_stop_time: None | Unset | datetime.datetime = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         id = self.id
 
         name = self.name
@@ -83,7 +87,13 @@ class Workspace:
 
         updated_at = self.updated_at.isoformat()
 
-        sessions: Union[List[Dict[str, Any]], None, Unset]
+        auto_stop_timeout: None | Unset | int
+        if isinstance(self.auto_stop_timeout, Unset):
+            auto_stop_timeout = UNSET
+        else:
+            auto_stop_timeout = self.auto_stop_timeout
+
+        sessions: list[dict[str, Any]] | None | Unset
         if isinstance(self.sessions, Unset):
             sessions = UNSET
         elif isinstance(self.sessions, list):
@@ -95,7 +105,7 @@ class Workspace:
         else:
             sessions = self.sessions
 
-        started_at: Union[None, Unset, str]
+        started_at: None | Unset | str
         if isinstance(self.started_at, Unset):
             started_at = UNSET
         elif isinstance(self.started_at, datetime.datetime):
@@ -103,7 +113,15 @@ class Workspace:
         else:
             started_at = self.started_at
 
-        field_dict: Dict[str, Any] = {}
+        auto_stop_time: None | Unset | str
+        if isinstance(self.auto_stop_time, Unset):
+            auto_stop_time = UNSET
+        elif isinstance(self.auto_stop_time, datetime.datetime):
+            auto_stop_time = self.auto_stop_time.isoformat()
+        else:
+            auto_stop_time = self.auto_stop_time
+
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -121,15 +139,19 @@ class Workspace:
                 "updatedAt": updated_at,
             }
         )
+        if auto_stop_timeout is not UNSET:
+            field_dict["autoStopTimeout"] = auto_stop_timeout
         if sessions is not UNSET:
             field_dict["sessions"] = sessions
         if started_at is not UNSET:
             field_dict["startedAt"] = started_at
+        if auto_stop_time is not UNSET:
+            field_dict["autoStopTime"] = auto_stop_time
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.mounted_dataset import MountedDataset
         from ..models.workspace_compute_config import WorkspaceComputeConfig
         from ..models.workspace_session import WorkspaceSession
@@ -164,7 +186,16 @@ class Workspace:
 
         updated_at = isoparse(d.pop("updatedAt"))
 
-        def _parse_sessions(data: object) -> Union[List["WorkspaceSession"], None, Unset]:
+        def _parse_auto_stop_timeout(data: object) -> None | Unset | int:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | Unset | int, data)
+
+        auto_stop_timeout = _parse_auto_stop_timeout(d.pop("autoStopTimeout", UNSET))
+
+        def _parse_sessions(data: object) -> list["WorkspaceSession"] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -182,11 +213,11 @@ class Workspace:
                 return sessions_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[List["WorkspaceSession"], None, Unset], data)
+            return cast(list["WorkspaceSession"] | None | Unset, data)
 
         sessions = _parse_sessions(d.pop("sessions", UNSET))
 
-        def _parse_started_at(data: object) -> Union[None, Unset, datetime.datetime]:
+        def _parse_started_at(data: object) -> None | Unset | datetime.datetime:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -199,9 +230,26 @@ class Workspace:
                 return started_at_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[None, Unset, datetime.datetime], data)
+            return cast(None | Unset | datetime.datetime, data)
 
         started_at = _parse_started_at(d.pop("startedAt", UNSET))
+
+        def _parse_auto_stop_time(data: object) -> None | Unset | datetime.datetime:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                auto_stop_time_type_0 = isoparse(data)
+
+                return auto_stop_time_type_0
+            except:  # noqa: E722
+                pass
+            return cast(None | Unset | datetime.datetime, data)
+
+        auto_stop_time = _parse_auto_stop_time(d.pop("autoStopTime", UNSET))
 
         workspace = cls(
             id=id,
@@ -216,13 +264,15 @@ class Workspace:
             created_by=created_by,
             created_at=created_at,
             updated_at=updated_at,
+            auto_stop_timeout=auto_stop_timeout,
             sessions=sessions,
             started_at=started_at,
+            auto_stop_time=auto_stop_time,
         )
 
         workspace.additional_properties = d
         return workspace
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

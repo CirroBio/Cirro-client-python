@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
 
 import httpx
 
@@ -14,10 +14,10 @@ def _get_kwargs(
     project_id: str,
     *,
     body: CreateProjectAccessRequest,
-) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    headers: dict[str, Any] = {}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "post",
         "url": f"/projects/{project_id}/access-requests",
     }
@@ -31,7 +31,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[CreateResponse]:
+def _parse_response(*, client: Client, response: httpx.Response) -> CreateResponse | None:
     if response.status_code == HTTPStatus.CREATED:
         response_201 = CreateResponse.from_dict(response.json())
 
@@ -90,7 +90,7 @@ def sync(
     *,
     client: Client,
     body: CreateProjectAccessRequest,
-) -> Optional[CreateResponse]:
+) -> CreateResponse | None:
     """Create access request
 
      Creates an access request for the project
@@ -156,7 +156,7 @@ async def asyncio(
     *,
     client: Client,
     body: CreateProjectAccessRequest,
-) -> Optional[CreateResponse]:
+) -> CreateResponse | None:
     """Create access request
 
      Creates an access request for the project

@@ -99,6 +99,7 @@ from .governance_training_verification import GovernanceTrainingVerification
 from .governance_type import GovernanceType
 from .group_cost import GroupCost
 from .import_data_request import ImportDataRequest
+from .import_data_request_download_method import ImportDataRequestDownloadMethod
 from .invite_user_request import InviteUserRequest
 from .invite_user_response import InviteUserResponse
 from .list_events_entity_type import ListEventsEntityType
@@ -124,6 +125,7 @@ from .paginated_response_user_dto import PaginatedResponseUserDto
 from .pipeline_code import PipelineCode
 from .pipeline_cost import PipelineCost
 from .portal_error_response import PortalErrorResponse
+from .postpone_workspace_autostop_input import PostponeWorkspaceAutostopInput
 from .process import Process
 from .process_detail import ProcessDetail
 from .project import Project
@@ -292,6 +294,7 @@ __all__ = (
     "GovernanceType",
     "GroupCost",
     "ImportDataRequest",
+    "ImportDataRequestDownloadMethod",
     "InviteUserRequest",
     "InviteUserResponse",
     "ListEventsEntityType",
@@ -317,6 +320,7 @@ __all__ = (
     "PipelineCode",
     "PipelineCost",
     "PortalErrorResponse",
+    "PostponeWorkspaceAutostopInput",
     "Process",
     "ProcessDetail",
     "Project",

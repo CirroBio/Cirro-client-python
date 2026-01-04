@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -25,17 +25,20 @@ class WorkspaceInput:
         sharing_type (SharingType):
         description (Union[Unset, str]): Description of the workspace.
         environment_id (Union[None, Unset, str]): ID of the predefined workspace environment to use.
+        auto_stop_timeout (Union[None, Unset, int]): Time period (in hours) to automatically stop the workspace if
+            running
     """
 
     name: str
-    mounted_datasets: List["MountedDataset"]
+    mounted_datasets: list["MountedDataset"]
     compute_config: "WorkspaceComputeConfig"
     sharing_type: SharingType
-    description: Union[Unset, str] = UNSET
-    environment_id: Union[None, Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    description: Unset | str = UNSET
+    environment_id: None | Unset | str = UNSET
+    auto_stop_timeout: None | Unset | int = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         name = self.name
 
         mounted_datasets = []
@@ -49,13 +52,19 @@ class WorkspaceInput:
 
         description = self.description
 
-        environment_id: Union[None, Unset, str]
+        environment_id: None | Unset | str
         if isinstance(self.environment_id, Unset):
             environment_id = UNSET
         else:
             environment_id = self.environment_id
 
-        field_dict: Dict[str, Any] = {}
+        auto_stop_timeout: None | Unset | int
+        if isinstance(self.auto_stop_timeout, Unset):
+            auto_stop_timeout = UNSET
+        else:
+            auto_stop_timeout = self.auto_stop_timeout
+
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -69,11 +78,13 @@ class WorkspaceInput:
             field_dict["description"] = description
         if environment_id is not UNSET:
             field_dict["environmentId"] = environment_id
+        if auto_stop_timeout is not UNSET:
+            field_dict["autoStopTimeout"] = auto_stop_timeout
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.mounted_dataset import MountedDataset
         from ..models.workspace_compute_config import WorkspaceComputeConfig
 
@@ -93,14 +104,23 @@ class WorkspaceInput:
 
         description = d.pop("description", UNSET)
 
-        def _parse_environment_id(data: object) -> Union[None, Unset, str]:
+        def _parse_environment_id(data: object) -> None | Unset | str:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, str], data)
+            return cast(None | Unset | str, data)
 
         environment_id = _parse_environment_id(d.pop("environmentId", UNSET))
+
+        def _parse_auto_stop_timeout(data: object) -> None | Unset | int:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | Unset | int, data)
+
+        auto_stop_timeout = _parse_auto_stop_timeout(d.pop("autoStopTimeout", UNSET))
 
         workspace_input = cls(
             name=name,
@@ -109,11 +129,12 @@ class WorkspaceInput:
             sharing_type=sharing_type,
             description=description,
             environment_id=environment_id,
+            auto_stop_timeout=auto_stop_timeout,
         )
 
         workspace_input.additional_properties = d
         return workspace_input
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

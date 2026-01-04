@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
 
 import httpx
 
@@ -11,8 +11,8 @@ from ...types import Response
 
 def _get_kwargs(
     username: str,
-) -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": f"/users/{username}",
     }
@@ -20,7 +20,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[UserDetail]:
+def _parse_response(*, client: Client, response: httpx.Response) -> UserDetail | None:
     if response.status_code == HTTPStatus.OK:
         response_200 = UserDetail.from_dict(response.json())
 
@@ -75,7 +75,7 @@ def sync(
     username: str,
     *,
     client: Client,
-) -> Optional[UserDetail]:
+) -> UserDetail | None:
     """Get user
 
      Get user information
@@ -135,7 +135,7 @@ async def asyncio(
     username: str,
     *,
     client: Client,
-) -> Optional[UserDetail]:
+) -> UserDetail | None:
     """Get user
 
      Get user information

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -25,12 +25,12 @@ class UploadDatasetRequest:
 
     name: str
     process_id: str
-    expected_files: List[str]
-    description: Union[Unset, str] = UNSET
-    tags: Union[List["Tag"], None, Unset] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    expected_files: list[str]
+    description: Unset | str = UNSET
+    tags: list["Tag"] | None | Unset = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         name = self.name
 
         process_id = self.process_id
@@ -39,7 +39,7 @@ class UploadDatasetRequest:
 
         description = self.description
 
-        tags: Union[List[Dict[str, Any]], None, Unset]
+        tags: list[dict[str, Any]] | None | Unset
         if isinstance(self.tags, Unset):
             tags = UNSET
         elif isinstance(self.tags, list):
@@ -51,7 +51,7 @@ class UploadDatasetRequest:
         else:
             tags = self.tags
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -68,7 +68,7 @@ class UploadDatasetRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.tag import Tag
 
         d = src_dict.copy()
@@ -76,11 +76,11 @@ class UploadDatasetRequest:
 
         process_id = d.pop("processId")
 
-        expected_files = cast(List[str], d.pop("expectedFiles"))
+        expected_files = cast(list[str], d.pop("expectedFiles"))
 
         description = d.pop("description", UNSET)
 
-        def _parse_tags(data: object) -> Union[List["Tag"], None, Unset]:
+        def _parse_tags(data: object) -> list["Tag"] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -98,7 +98,7 @@ class UploadDatasetRequest:
                 return tags_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[List["Tag"], None, Unset], data)
+            return cast(list["Tag"] | None | Unset, data)
 
         tags = _parse_tags(d.pop("tags", UNSET))
 
@@ -114,5 +114,5 @@ class UploadDatasetRequest:
         return upload_dataset_request
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

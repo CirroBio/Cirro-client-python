@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, cast
+from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -19,10 +19,10 @@ class CreateReferenceRequest:
     name: str
     description: str
     type: str
-    expected_files: List[str]
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    expected_files: list[str]
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         name = self.name
 
         description = self.description
@@ -31,7 +31,7 @@ class CreateReferenceRequest:
 
         expected_files = self.expected_files
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -45,7 +45,7 @@ class CreateReferenceRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         name = d.pop("name")
 
@@ -53,7 +53,7 @@ class CreateReferenceRequest:
 
         type = d.pop("type")
 
-        expected_files = cast(List[str], d.pop("expectedFiles"))
+        expected_files = cast(list[str], d.pop("expectedFiles"))
 
         create_reference_request = cls(
             name=name,
@@ -66,5 +66,5 @@ class CreateReferenceRequest:
         return create_reference_request
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

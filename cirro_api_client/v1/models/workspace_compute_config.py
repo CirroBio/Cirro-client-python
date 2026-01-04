@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -22,6 +22,7 @@ class WorkspaceComputeConfig:
         memory_gi_b (Union[Unset, int]): Memory allocated to the workspace container in GiB. Example: 8.
         volume_size_gi_b (Union[Unset, int]): Persistent storage volume size allocated to the workspace in GiB. Example:
             50.
+        gpu (Union[Unset, int]): Number of GPUs allocated to the workspace Example: 1.
         environment_variables (Union['WorkspaceComputeConfigEnvironmentVariables', None, Unset]): Map of environment
             variables injected into the container at runtime. Keys must be non-blank. Example: {'ENV_MODE': 'production',
             'LOG_LEVEL': 'debug'}.
@@ -29,14 +30,15 @@ class WorkspaceComputeConfig:
     """
 
     container_image_uri: str
-    cpu: Union[Unset, int] = UNSET
-    memory_gi_b: Union[Unset, int] = UNSET
-    volume_size_gi_b: Union[Unset, int] = UNSET
+    cpu: Unset | int = UNSET
+    memory_gi_b: Unset | int = UNSET
+    volume_size_gi_b: Unset | int = UNSET
+    gpu: Unset | int = UNSET
     environment_variables: Union["WorkspaceComputeConfigEnvironmentVariables", None, Unset] = UNSET
-    local_port: Union[Unset, int] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    local_port: Unset | int = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         from ..models.workspace_compute_config_environment_variables import WorkspaceComputeConfigEnvironmentVariables
 
         container_image_uri = self.container_image_uri
@@ -47,7 +49,9 @@ class WorkspaceComputeConfig:
 
         volume_size_gi_b = self.volume_size_gi_b
 
-        environment_variables: Union[Dict[str, Any], None, Unset]
+        gpu = self.gpu
+
+        environment_variables: dict[str, Any] | None | Unset
         if isinstance(self.environment_variables, Unset):
             environment_variables = UNSET
         elif isinstance(self.environment_variables, WorkspaceComputeConfigEnvironmentVariables):
@@ -57,7 +61,7 @@ class WorkspaceComputeConfig:
 
         local_port = self.local_port
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -70,6 +74,8 @@ class WorkspaceComputeConfig:
             field_dict["memoryGiB"] = memory_gi_b
         if volume_size_gi_b is not UNSET:
             field_dict["volumeSizeGiB"] = volume_size_gi_b
+        if gpu is not UNSET:
+            field_dict["gpu"] = gpu
         if environment_variables is not UNSET:
             field_dict["environmentVariables"] = environment_variables
         if local_port is not UNSET:
@@ -78,7 +84,7 @@ class WorkspaceComputeConfig:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.workspace_compute_config_environment_variables import WorkspaceComputeConfigEnvironmentVariables
 
         d = src_dict.copy()
@@ -89,6 +95,8 @@ class WorkspaceComputeConfig:
         memory_gi_b = d.pop("memoryGiB", UNSET)
 
         volume_size_gi_b = d.pop("volumeSizeGiB", UNSET)
+
+        gpu = d.pop("gpu", UNSET)
 
         def _parse_environment_variables(
             data: object,
@@ -116,6 +124,7 @@ class WorkspaceComputeConfig:
             cpu=cpu,
             memory_gi_b=memory_gi_b,
             volume_size_gi_b=volume_size_gi_b,
+            gpu=gpu,
             environment_variables=environment_variables,
             local_port=local_port,
         )
@@ -124,5 +133,5 @@ class WorkspaceComputeConfig:
         return workspace_compute_config
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

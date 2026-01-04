@@ -11,7 +11,9 @@ class EntityType(str, Enum):
     SAMPLE = "SAMPLE"
     SHARE = "SHARE"
     TAG = "TAG"
+    UNKNOWN = "UNKNOWN"
     USER = "USER"
+    WORKSPACE = "WORKSPACE"
     UNKNOWN = "UNKNOWN"
     """ This is a fallback value for when the value is not known, do not use this value when making requests """
 

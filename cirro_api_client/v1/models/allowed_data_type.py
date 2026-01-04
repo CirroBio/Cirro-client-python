@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -21,10 +21,10 @@ class AllowedDataType:
 
     description: str
     error_msg: str
-    allowed_patterns: List["FileNamePattern"]
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    allowed_patterns: list["FileNamePattern"]
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         description = self.description
 
         error_msg = self.error_msg
@@ -34,7 +34,7 @@ class AllowedDataType:
             allowed_patterns_item = allowed_patterns_item_data.to_dict()
             allowed_patterns.append(allowed_patterns_item)
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -47,7 +47,7 @@ class AllowedDataType:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.file_name_pattern import FileNamePattern
 
         d = src_dict.copy()
@@ -72,5 +72,5 @@ class AllowedDataType:
         return allowed_data_type
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

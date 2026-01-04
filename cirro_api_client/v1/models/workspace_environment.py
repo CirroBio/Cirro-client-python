@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -30,11 +30,11 @@ class WorkspaceEnvironment:
     description: str
     category: str
     default_compute_config: "WorkspaceComputeConfig"
-    versions: List["VersionSpecification"]
+    versions: list["VersionSpecification"]
     owner: str
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         id = self.id
 
         name = self.name
@@ -52,7 +52,7 @@ class WorkspaceEnvironment:
 
         owner = self.owner
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -69,7 +69,7 @@ class WorkspaceEnvironment:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.version_specification import VersionSpecification
         from ..models.workspace_compute_config import WorkspaceComputeConfig
 
@@ -107,5 +107,5 @@ class WorkspaceEnvironment:
         return workspace_environment
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

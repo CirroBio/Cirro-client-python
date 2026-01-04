@@ -1,4 +1,5 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+import builtins
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -19,24 +20,24 @@ class GovernanceFile:
         type (Union[Unset, GovernanceFileType]): The options for supplementals for governance requirements
     """
 
-    name: Union[Unset, str] = UNSET
-    description: Union[Unset, str] = UNSET
-    src: Union[Unset, str] = UNSET
-    type: Union[Unset, GovernanceFileType] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    name: Unset | str = UNSET
+    description: Unset | str = UNSET
+    src: Unset | str = UNSET
+    type: Unset | GovernanceFileType = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         name = self.name
 
         description = self.description
 
         src = self.src
 
-        type: Union[Unset, str] = UNSET
+        type: Unset | str = UNSET
         if not isinstance(self.type, Unset):
             type = self.type.value
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if name is not UNSET:
@@ -51,7 +52,7 @@ class GovernanceFile:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: builtins.type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         name = d.pop("name", UNSET)
 
@@ -60,7 +61,7 @@ class GovernanceFile:
         src = d.pop("src", UNSET)
 
         _type = d.pop("type", UNSET)
-        type: Union[Unset, GovernanceFileType]
+        type: Unset | GovernanceFileType
         if isinstance(_type, Unset):
             type = UNSET
         else:
@@ -77,5 +78,5 @@ class GovernanceFile:
         return governance_file
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

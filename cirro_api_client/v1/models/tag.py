@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -18,22 +18,22 @@ class Tag:
     """
 
     value: str
-    editable: Union[Unset, bool] = True
-    key: Union[None, Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    editable: Unset | bool = True
+    key: None | Unset | str = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         value = self.value
 
         editable = self.editable
 
-        key: Union[None, Unset, str]
+        key: None | Unset | str
         if isinstance(self.key, Unset):
             key = UNSET
         else:
             key = self.key
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -48,18 +48,18 @@ class Tag:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         value = d.pop("value")
 
         editable = d.pop("editable", UNSET)
 
-        def _parse_key(data: object) -> Union[None, Unset, str]:
+        def _parse_key(data: object) -> None | Unset | str:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, str], data)
+            return cast(None | Unset | str, data)
 
         key = _parse_key(d.pop("key", UNSET))
 
@@ -73,5 +73,5 @@ class Tag:
         return tag
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

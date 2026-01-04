@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -26,28 +26,28 @@ class ProjectMetrics:
     """
 
     project_id: str
-    costs: Union[Unset, List["MetricRecord"]] = UNSET
-    storage_metrics: Union[Unset, List["MetricRecord"]] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    costs: Unset | list["MetricRecord"] = UNSET
+    storage_metrics: Unset | list["MetricRecord"] = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         project_id = self.project_id
 
-        costs: Union[Unset, List[Dict[str, Any]]] = UNSET
+        costs: Unset | list[dict[str, Any]] = UNSET
         if not isinstance(self.costs, Unset):
             costs = []
             for costs_item_data in self.costs:
                 costs_item = costs_item_data.to_dict()
                 costs.append(costs_item)
 
-        storage_metrics: Union[Unset, List[Dict[str, Any]]] = UNSET
+        storage_metrics: Unset | list[dict[str, Any]] = UNSET
         if not isinstance(self.storage_metrics, Unset):
             storage_metrics = []
             for storage_metrics_item_data in self.storage_metrics:
                 storage_metrics_item = storage_metrics_item_data.to_dict()
                 storage_metrics.append(storage_metrics_item)
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -62,7 +62,7 @@ class ProjectMetrics:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.metric_record import MetricRecord
 
         d = src_dict.copy()
@@ -92,5 +92,5 @@ class ProjectMetrics:
         return project_metrics
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

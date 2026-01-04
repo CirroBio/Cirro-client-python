@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
 
 import httpx
 
@@ -12,8 +12,8 @@ from ...types import Response
 def _get_kwargs(
     project_id: str,
     dashboard_id: str,
-) -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": f"/projects/{project_id}/dashboards/{dashboard_id}",
     }
@@ -21,7 +21,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Dashboard]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Dashboard | None:
     if response.status_code == HTTPStatus.OK:
         response_200 = Dashboard.from_dict(response.json())
 
@@ -80,7 +80,7 @@ def sync(
     dashboard_id: str,
     *,
     client: Client,
-) -> Optional[Dashboard]:
+) -> Dashboard | None:
     """Get dashboard
 
      Retrieves a dashboard
@@ -146,7 +146,7 @@ async def asyncio(
     dashboard_id: str,
     *,
     client: Client,
-) -> Optional[Dashboard]:
+) -> Dashboard | None:
     """Get dashboard
 
      Retrieves a dashboard

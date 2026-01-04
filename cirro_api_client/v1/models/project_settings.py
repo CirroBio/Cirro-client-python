@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -52,31 +52,31 @@ class ProjectSettings:
 
     budget_amount: int
     budget_period: BudgetPeriod
-    enable_backup: Union[Unset, bool] = False
-    enable_sftp: Union[Unset, bool] = False
-    service_connections: Union[Unset, List[str]] = UNSET
-    kms_arn: Union[None, Unset, str] = UNSET
-    retention_policy_days: Union[Unset, int] = 7
-    temporary_storage_lifetime_days: Union[Unset, int] = 14
-    vpc_id: Union[None, Unset, str] = UNSET
-    batch_subnets: Union[List[str], None, Unset] = UNSET
-    sagemaker_subnets: Union[List[str], None, Unset] = UNSET
-    workspace_subnets: Union[List[str], None, Unset] = UNSET
-    max_spot_vcpu: Union[Unset, int] = 0
-    max_fpgavcpu: Union[Unset, int] = 0
-    max_gpuvcpu: Union[Unset, int] = 0
-    enable_dragen: Union[Unset, bool] = False
-    dragen_ami: Union[None, Unset, str] = UNSET
-    max_workspaces_vcpu: Union[Unset, int] = 0
-    max_workspaces_gpuvcpu: Union[Unset, int] = 0
-    max_workspaces_per_user: Union[Unset, int] = 0
-    is_discoverable: Union[None, Unset, bool] = False
-    is_shareable: Union[None, Unset, bool] = False
-    has_pipelines_enabled: Union[None, Unset, bool] = False
-    has_workspaces_enabled: Union[None, Unset, bool] = False
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    enable_backup: Unset | bool = False
+    enable_sftp: Unset | bool = False
+    service_connections: Unset | list[str] = UNSET
+    kms_arn: None | Unset | str = UNSET
+    retention_policy_days: Unset | int = 7
+    temporary_storage_lifetime_days: Unset | int = 14
+    vpc_id: None | Unset | str = UNSET
+    batch_subnets: list[str] | None | Unset = UNSET
+    sagemaker_subnets: list[str] | None | Unset = UNSET
+    workspace_subnets: list[str] | None | Unset = UNSET
+    max_spot_vcpu: Unset | int = 0
+    max_fpgavcpu: Unset | int = 0
+    max_gpuvcpu: Unset | int = 0
+    enable_dragen: Unset | bool = False
+    dragen_ami: None | Unset | str = UNSET
+    max_workspaces_vcpu: Unset | int = 0
+    max_workspaces_gpuvcpu: Unset | int = 0
+    max_workspaces_per_user: Unset | int = 0
+    is_discoverable: None | Unset | bool = False
+    is_shareable: None | Unset | bool = False
+    has_pipelines_enabled: None | Unset | bool = False
+    has_workspaces_enabled: None | Unset | bool = False
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         budget_amount = self.budget_amount
 
         budget_period = self.budget_period.value
@@ -85,11 +85,11 @@ class ProjectSettings:
 
         enable_sftp = self.enable_sftp
 
-        service_connections: Union[Unset, List[str]] = UNSET
+        service_connections: Unset | list[str] = UNSET
         if not isinstance(self.service_connections, Unset):
             service_connections = self.service_connections
 
-        kms_arn: Union[None, Unset, str]
+        kms_arn: None | Unset | str
         if isinstance(self.kms_arn, Unset):
             kms_arn = UNSET
         else:
@@ -99,13 +99,13 @@ class ProjectSettings:
 
         temporary_storage_lifetime_days = self.temporary_storage_lifetime_days
 
-        vpc_id: Union[None, Unset, str]
+        vpc_id: None | Unset | str
         if isinstance(self.vpc_id, Unset):
             vpc_id = UNSET
         else:
             vpc_id = self.vpc_id
 
-        batch_subnets: Union[List[str], None, Unset]
+        batch_subnets: list[str] | None | Unset
         if isinstance(self.batch_subnets, Unset):
             batch_subnets = UNSET
         elif isinstance(self.batch_subnets, list):
@@ -114,7 +114,7 @@ class ProjectSettings:
         else:
             batch_subnets = self.batch_subnets
 
-        sagemaker_subnets: Union[List[str], None, Unset]
+        sagemaker_subnets: list[str] | None | Unset
         if isinstance(self.sagemaker_subnets, Unset):
             sagemaker_subnets = UNSET
         elif isinstance(self.sagemaker_subnets, list):
@@ -123,7 +123,7 @@ class ProjectSettings:
         else:
             sagemaker_subnets = self.sagemaker_subnets
 
-        workspace_subnets: Union[List[str], None, Unset]
+        workspace_subnets: list[str] | None | Unset
         if isinstance(self.workspace_subnets, Unset):
             workspace_subnets = UNSET
         elif isinstance(self.workspace_subnets, list):
@@ -140,7 +140,7 @@ class ProjectSettings:
 
         enable_dragen = self.enable_dragen
 
-        dragen_ami: Union[None, Unset, str]
+        dragen_ami: None | Unset | str
         if isinstance(self.dragen_ami, Unset):
             dragen_ami = UNSET
         else:
@@ -152,31 +152,31 @@ class ProjectSettings:
 
         max_workspaces_per_user = self.max_workspaces_per_user
 
-        is_discoverable: Union[None, Unset, bool]
+        is_discoverable: None | Unset | bool
         if isinstance(self.is_discoverable, Unset):
             is_discoverable = UNSET
         else:
             is_discoverable = self.is_discoverable
 
-        is_shareable: Union[None, Unset, bool]
+        is_shareable: None | Unset | bool
         if isinstance(self.is_shareable, Unset):
             is_shareable = UNSET
         else:
             is_shareable = self.is_shareable
 
-        has_pipelines_enabled: Union[None, Unset, bool]
+        has_pipelines_enabled: None | Unset | bool
         if isinstance(self.has_pipelines_enabled, Unset):
             has_pipelines_enabled = UNSET
         else:
             has_pipelines_enabled = self.has_pipelines_enabled
 
-        has_workspaces_enabled: Union[None, Unset, bool]
+        has_workspaces_enabled: None | Unset | bool
         if isinstance(self.has_workspaces_enabled, Unset):
             has_workspaces_enabled = UNSET
         else:
             has_workspaces_enabled = self.has_workspaces_enabled
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -232,7 +232,7 @@ class ProjectSettings:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         budget_amount = d.pop("budgetAmount")
 
@@ -242,14 +242,14 @@ class ProjectSettings:
 
         enable_sftp = d.pop("enableSftp", UNSET)
 
-        service_connections = cast(List[str], d.pop("serviceConnections", UNSET))
+        service_connections = cast(list[str], d.pop("serviceConnections", UNSET))
 
-        def _parse_kms_arn(data: object) -> Union[None, Unset, str]:
+        def _parse_kms_arn(data: object) -> None | Unset | str:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, str], data)
+            return cast(None | Unset | str, data)
 
         kms_arn = _parse_kms_arn(d.pop("kmsArn", UNSET))
 
@@ -257,16 +257,16 @@ class ProjectSettings:
 
         temporary_storage_lifetime_days = d.pop("temporaryStorageLifetimeDays", UNSET)
 
-        def _parse_vpc_id(data: object) -> Union[None, Unset, str]:
+        def _parse_vpc_id(data: object) -> None | Unset | str:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, str], data)
+            return cast(None | Unset | str, data)
 
         vpc_id = _parse_vpc_id(d.pop("vpcId", UNSET))
 
-        def _parse_batch_subnets(data: object) -> Union[List[str], None, Unset]:
+        def _parse_batch_subnets(data: object) -> list[str] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -274,16 +274,16 @@ class ProjectSettings:
             try:
                 if not isinstance(data, list):
                     raise TypeError()
-                batch_subnets_type_0 = cast(List[str], data)
+                batch_subnets_type_0 = cast(list[str], data)
 
                 return batch_subnets_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[List[str], None, Unset], data)
+            return cast(list[str] | None | Unset, data)
 
         batch_subnets = _parse_batch_subnets(d.pop("batchSubnets", UNSET))
 
-        def _parse_sagemaker_subnets(data: object) -> Union[List[str], None, Unset]:
+        def _parse_sagemaker_subnets(data: object) -> list[str] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -291,16 +291,16 @@ class ProjectSettings:
             try:
                 if not isinstance(data, list):
                     raise TypeError()
-                sagemaker_subnets_type_0 = cast(List[str], data)
+                sagemaker_subnets_type_0 = cast(list[str], data)
 
                 return sagemaker_subnets_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[List[str], None, Unset], data)
+            return cast(list[str] | None | Unset, data)
 
         sagemaker_subnets = _parse_sagemaker_subnets(d.pop("sagemakerSubnets", UNSET))
 
-        def _parse_workspace_subnets(data: object) -> Union[List[str], None, Unset]:
+        def _parse_workspace_subnets(data: object) -> list[str] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -308,12 +308,12 @@ class ProjectSettings:
             try:
                 if not isinstance(data, list):
                     raise TypeError()
-                workspace_subnets_type_0 = cast(List[str], data)
+                workspace_subnets_type_0 = cast(list[str], data)
 
                 return workspace_subnets_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[List[str], None, Unset], data)
+            return cast(list[str] | None | Unset, data)
 
         workspace_subnets = _parse_workspace_subnets(d.pop("workspaceSubnets", UNSET))
 
@@ -325,12 +325,12 @@ class ProjectSettings:
 
         enable_dragen = d.pop("enableDragen", UNSET)
 
-        def _parse_dragen_ami(data: object) -> Union[None, Unset, str]:
+        def _parse_dragen_ami(data: object) -> None | Unset | str:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, str], data)
+            return cast(None | Unset | str, data)
 
         dragen_ami = _parse_dragen_ami(d.pop("dragenAmi", UNSET))
 
@@ -340,39 +340,39 @@ class ProjectSettings:
 
         max_workspaces_per_user = d.pop("maxWorkspacesPerUser", UNSET)
 
-        def _parse_is_discoverable(data: object) -> Union[None, Unset, bool]:
+        def _parse_is_discoverable(data: object) -> None | Unset | bool:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, bool], data)
+            return cast(None | Unset | bool, data)
 
         is_discoverable = _parse_is_discoverable(d.pop("isDiscoverable", UNSET))
 
-        def _parse_is_shareable(data: object) -> Union[None, Unset, bool]:
+        def _parse_is_shareable(data: object) -> None | Unset | bool:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, bool], data)
+            return cast(None | Unset | bool, data)
 
         is_shareable = _parse_is_shareable(d.pop("isShareable", UNSET))
 
-        def _parse_has_pipelines_enabled(data: object) -> Union[None, Unset, bool]:
+        def _parse_has_pipelines_enabled(data: object) -> None | Unset | bool:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, bool], data)
+            return cast(None | Unset | bool, data)
 
         has_pipelines_enabled = _parse_has_pipelines_enabled(d.pop("hasPipelinesEnabled", UNSET))
 
-        def _parse_has_workspaces_enabled(data: object) -> Union[None, Unset, bool]:
+        def _parse_has_workspaces_enabled(data: object) -> None | Unset | bool:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, bool], data)
+            return cast(None | Unset | bool, data)
 
         has_workspaces_enabled = _parse_has_workspaces_enabled(d.pop("hasWorkspacesEnabled", UNSET))
 
@@ -407,5 +407,5 @@ class ProjectSettings:
         return project_settings
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

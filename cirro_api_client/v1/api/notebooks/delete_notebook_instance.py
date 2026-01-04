@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
 
 import httpx
 
@@ -11,8 +11,8 @@ from ...types import Response
 def _get_kwargs(
     project_id: str,
     notebook_instance_id: str,
-) -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "delete",
         "url": f"/projects/{project_id}/notebook-instances/{notebook_instance_id}",
     }
@@ -20,7 +20,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Any]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Any | None:
     if response.status_code == HTTPStatus.ACCEPTED:
         return None
 

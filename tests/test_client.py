@@ -32,7 +32,16 @@ class TestClient(unittest.TestCase):
 
     def test_import_api_methods(self):
         from cirro_api_client.v1.api.users import list_users
-        mock_client = _generate_mock_client({'data': [Mock()], 'nextToken': None})
+        mock_client = _generate_mock_client({
+            'data': [{
+                'name': 'Test User',
+                'username': 'testuser',
+                'organization': 'test-org',
+                'department': 'test-dept',
+                'jobTitle': 'test-title'
+            }],
+            'nextToken': None
+        })
 
         response = list_users.sync(client=mock_client, limit=1)
         self.assertIsNotNone(response)

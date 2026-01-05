@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -11,17 +12,19 @@ from ...types import Response
 
 def _get_kwargs(
     project_id: str,
-) -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/projects/{project_id}/metrics",
+        "url": "/projects/{project_id}/metrics".format(
+            project_id=quote(str(project_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[ProjectMetrics]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> ProjectMetrics | None:
+    if response.status_code == 200:
         response_200 = ProjectMetrics.from_dict(response.json())
 
         return response_200
@@ -75,7 +78,7 @@ def sync(
     project_id: str,
     *,
     client: Client,
-) -> Optional[ProjectMetrics]:
+) -> ProjectMetrics | None:
     """Get project metrics
 
      Retrieves metrics about a project.
@@ -135,7 +138,7 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-) -> Optional[ProjectMetrics]:
+) -> ProjectMetrics | None:
     """Get project metrics
 
      Retrieves metrics about a project.

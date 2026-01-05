@@ -1,4 +1,7 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -17,21 +20,21 @@ class FileMappingRule:
     """
     Attributes:
         description (str): Describes the group of possible files that meet a single file type criteria.
-        file_name_patterns (List['FileNamePattern']): Describes the possible file patterns to expect for the file type
+        file_name_patterns (list[FileNamePattern]): Describes the possible file patterns to expect for the file type
             group.
-        min_ (Union[Unset, int]): Minimum number of files to expect for the file type group.
-        max_ (Union[Unset, int]): Maximum number of files to expect for the file type group.
-        is_sample (Union[Unset, bool]): Specifies if the file type will be associated with a sample.
+        min_ (int | Unset): Minimum number of files to expect for the file type group.
+        max_ (int | Unset): Maximum number of files to expect for the file type group.
+        is_sample (bool | Unset): Specifies if the file type will be associated with a sample.
     """
 
     description: str
-    file_name_patterns: List["FileNamePattern"]
-    min_: Union[Unset, int] = UNSET
-    max_: Union[Unset, int] = UNSET
-    is_sample: Union[Unset, bool] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    file_name_patterns: list[FileNamePattern]
+    min_: int | Unset = UNSET
+    max_: int | Unset = UNSET
+    is_sample: bool | Unset = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         description = self.description
 
         file_name_patterns = []
@@ -45,7 +48,7 @@ class FileMappingRule:
 
         is_sample = self.is_sample
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -63,10 +66,10 @@ class FileMappingRule:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.file_name_pattern import FileNamePattern
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         description = d.pop("description")
 
         file_name_patterns = []
@@ -94,5 +97,17 @@ class FileMappingRule:
         return file_mapping_rule
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

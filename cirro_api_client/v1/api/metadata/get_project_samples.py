@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -12,10 +13,10 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     project_id: str,
     *,
-    limit: Union[Unset, int] = 5000,
-    next_token: Union[Unset, str] = UNSET,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+    limit: int | Unset = 5000,
+    next_token: str | Unset = UNSET,
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["limit"] = limit
 
@@ -23,17 +24,19 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/projects/{project_id}/samples",
+        "url": "/projects/{project_id}/samples".format(
+            project_id=quote(str(project_id), safe=""),
+        ),
         "params": params,
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[PaginatedResponseSampleDto]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> PaginatedResponseSampleDto | None:
+    if response.status_code == 200:
         response_200 = PaginatedResponseSampleDto.from_dict(response.json())
 
         return response_200
@@ -54,8 +57,8 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-    limit: Union[Unset, int] = 5000,
-    next_token: Union[Unset, str] = UNSET,
+    limit: int | Unset = 5000,
+    next_token: str | Unset = UNSET,
 ) -> Response[PaginatedResponseSampleDto]:
     """Get project samples
 
@@ -63,8 +66,8 @@ def sync_detailed(
 
     Args:
         project_id (str):
-        limit (Union[Unset, int]):  Default: 5000.
-        next_token (Union[Unset, str]):
+        limit (int | Unset):  Default: 5000.
+        next_token (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -93,17 +96,17 @@ def sync(
     project_id: str,
     *,
     client: Client,
-    limit: Union[Unset, int] = 5000,
-    next_token: Union[Unset, str] = UNSET,
-) -> Optional[PaginatedResponseSampleDto]:
+    limit: int | Unset = 5000,
+    next_token: str | Unset = UNSET,
+) -> PaginatedResponseSampleDto | None:
     """Get project samples
 
      Retrieves a list of samples associated with a project along with their metadata
 
     Args:
         project_id (str):
-        limit (Union[Unset, int]):  Default: 5000.
-        next_token (Union[Unset, str]):
+        limit (int | Unset):  Default: 5000.
+        next_token (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -129,8 +132,8 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-    limit: Union[Unset, int] = 5000,
-    next_token: Union[Unset, str] = UNSET,
+    limit: int | Unset = 5000,
+    next_token: str | Unset = UNSET,
 ) -> Response[PaginatedResponseSampleDto]:
     """Get project samples
 
@@ -138,8 +141,8 @@ async def asyncio_detailed(
 
     Args:
         project_id (str):
-        limit (Union[Unset, int]):  Default: 5000.
-        next_token (Union[Unset, str]):
+        limit (int | Unset):  Default: 5000.
+        next_token (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -165,17 +168,17 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-    limit: Union[Unset, int] = 5000,
-    next_token: Union[Unset, str] = UNSET,
-) -> Optional[PaginatedResponseSampleDto]:
+    limit: int | Unset = 5000,
+    next_token: str | Unset = UNSET,
+) -> PaginatedResponseSampleDto | None:
     """Get project samples
 
      Retrieves a list of samples associated with a project along with their metadata
 
     Args:
         project_id (str):
-        limit (Union[Unset, int]):  Default: 5000.
-        next_token (Union[Unset, str]):
+        limit (int | Unset):  Default: 5000.
+        next_token (str | Unset):
         client (Client): instance of the API client
 
     Raises:

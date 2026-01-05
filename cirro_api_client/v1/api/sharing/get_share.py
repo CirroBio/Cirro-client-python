@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -12,17 +13,20 @@ from ...types import Response
 def _get_kwargs(
     project_id: str,
     share_id: str,
-) -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/projects/{project_id}/shares/{share_id}",
+        "url": "/projects/{project_id}/shares/{share_id}".format(
+            project_id=quote(str(project_id), safe=""),
+            share_id=quote(str(share_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[ShareDetail]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> ShareDetail | None:
+    if response.status_code == 200:
         response_200 = ShareDetail.from_dict(response.json())
 
         return response_200
@@ -80,7 +84,7 @@ def sync(
     share_id: str,
     *,
     client: Client,
-) -> Optional[ShareDetail]:
+) -> ShareDetail | None:
     """Get share
 
      Get details on a share that you've published or subscribed to
@@ -146,7 +150,7 @@ async def asyncio(
     share_id: str,
     *,
     client: Client,
-) -> Optional[ShareDetail]:
+) -> ShareDetail | None:
     """Get share
 
      Get details on a share that you've published or subscribed to

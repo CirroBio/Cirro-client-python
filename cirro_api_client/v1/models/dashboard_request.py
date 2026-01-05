@@ -1,4 +1,7 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -19,34 +22,34 @@ class DashboardRequest:
     Attributes:
         name (str):
         description (str):
-        process_ids (List[str]):
-        dashboard_data (Union[Unset, DashboardRequestDashboardData]):
-        info (Union[Unset, DashboardRequestInfo]):
+        process_ids (list[str]):
+        dashboard_data (DashboardRequestDashboardData | Unset):
+        info (DashboardRequestInfo | Unset):
     """
 
     name: str
     description: str
-    process_ids: List[str]
-    dashboard_data: Union[Unset, "DashboardRequestDashboardData"] = UNSET
-    info: Union[Unset, "DashboardRequestInfo"] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    process_ids: list[str]
+    dashboard_data: DashboardRequestDashboardData | Unset = UNSET
+    info: DashboardRequestInfo | Unset = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         name = self.name
 
         description = self.description
 
         process_ids = self.process_ids
 
-        dashboard_data: Union[Unset, Dict[str, Any]] = UNSET
+        dashboard_data: dict[str, Any] | Unset = UNSET
         if not isinstance(self.dashboard_data, Unset):
             dashboard_data = self.dashboard_data.to_dict()
 
-        info: Union[Unset, Dict[str, Any]] = UNSET
+        info: dict[str, Any] | Unset = UNSET
         if not isinstance(self.info, Unset):
             info = self.info.to_dict()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -63,26 +66,26 @@ class DashboardRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.dashboard_request_dashboard_data import DashboardRequestDashboardData
         from ..models.dashboard_request_info import DashboardRequestInfo
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         name = d.pop("name")
 
         description = d.pop("description")
 
-        process_ids = cast(List[str], d.pop("processIds"))
+        process_ids = cast(list[str], d.pop("processIds"))
 
         _dashboard_data = d.pop("dashboardData", UNSET)
-        dashboard_data: Union[Unset, DashboardRequestDashboardData]
+        dashboard_data: DashboardRequestDashboardData | Unset
         if isinstance(_dashboard_data, Unset):
             dashboard_data = UNSET
         else:
             dashboard_data = DashboardRequestDashboardData.from_dict(_dashboard_data)
 
         _info = d.pop("info", UNSET)
-        info: Union[Unset, DashboardRequestInfo]
+        info: DashboardRequestInfo | Unset
         if isinstance(_info, Unset):
             info = UNSET
         else:
@@ -100,5 +103,17 @@ class DashboardRequest:
         return dashboard_request
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

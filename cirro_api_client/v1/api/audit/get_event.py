@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -11,17 +12,19 @@ from ...types import Response
 
 def _get_kwargs(
     audit_event_id: str,
-) -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/audit-events/{audit_event_id}",
+        "url": "/audit-events/{audit_event_id}".format(
+            audit_event_id=quote(str(audit_event_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[AuditEvent]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> AuditEvent | None:
+    if response.status_code == 200:
         response_200 = AuditEvent.from_dict(response.json())
 
         return response_200
@@ -75,7 +78,7 @@ def sync(
     audit_event_id: str,
     *,
     client: Client,
-) -> Optional[AuditEvent]:
+) -> AuditEvent | None:
     """Get audit event
 
      Get audit event detailed information
@@ -135,7 +138,7 @@ async def asyncio(
     audit_event_id: str,
     *,
     client: Client,
-) -> Optional[AuditEvent]:
+) -> AuditEvent | None:
     """Get audit event
 
      Get audit event detailed information

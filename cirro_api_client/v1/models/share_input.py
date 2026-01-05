@@ -1,4 +1,7 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -18,24 +21,24 @@ class ShareInput:
     Attributes:
         name (str):
         description (str):
-        classification_ids (List[str]): Data classification IDs for the share
-        conditions (List['DatasetCondition']): The conditions under which the dataset is shared
-        keywords (Union[Unset, List[str]]): Search keywords for the share
-        shared_project_ids (Union[Unset, List[str]]): The project IDs that can access this share
-        is_view_restricted (Union[Unset, bool]): Whether files within the share are restricted from viewing or
-            downloading Default: False.
+        classification_ids (list[str]): Data classification IDs for the share
+        conditions (list[DatasetCondition]): The conditions under which the dataset is shared
+        keywords (list[str] | Unset): Search keywords for the share
+        shared_project_ids (list[str] | Unset): The project IDs that can access this share
+        is_view_restricted (bool | Unset): Whether files within the share are restricted from viewing or downloading
+            Default: False.
     """
 
     name: str
     description: str
-    classification_ids: List[str]
-    conditions: List["DatasetCondition"]
-    keywords: Union[Unset, List[str]] = UNSET
-    shared_project_ids: Union[Unset, List[str]] = UNSET
-    is_view_restricted: Union[Unset, bool] = False
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    classification_ids: list[str]
+    conditions: list[DatasetCondition]
+    keywords: list[str] | Unset = UNSET
+    shared_project_ids: list[str] | Unset = UNSET
+    is_view_restricted: bool | Unset = False
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         name = self.name
 
         description = self.description
@@ -47,17 +50,17 @@ class ShareInput:
             conditions_item = conditions_item_data.to_dict()
             conditions.append(conditions_item)
 
-        keywords: Union[Unset, List[str]] = UNSET
+        keywords: list[str] | Unset = UNSET
         if not isinstance(self.keywords, Unset):
             keywords = self.keywords
 
-        shared_project_ids: Union[Unset, List[str]] = UNSET
+        shared_project_ids: list[str] | Unset = UNSET
         if not isinstance(self.shared_project_ids, Unset):
             shared_project_ids = self.shared_project_ids
 
         is_view_restricted = self.is_view_restricted
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -77,15 +80,15 @@ class ShareInput:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.dataset_condition import DatasetCondition
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         name = d.pop("name")
 
         description = d.pop("description")
 
-        classification_ids = cast(List[str], d.pop("classificationIds"))
+        classification_ids = cast(list[str], d.pop("classificationIds"))
 
         conditions = []
         _conditions = d.pop("conditions")
@@ -94,9 +97,9 @@ class ShareInput:
 
             conditions.append(conditions_item)
 
-        keywords = cast(List[str], d.pop("keywords", UNSET))
+        keywords = cast(list[str], d.pop("keywords", UNSET))
 
-        shared_project_ids = cast(List[str], d.pop("sharedProjectIds", UNSET))
+        shared_project_ids = cast(list[str], d.pop("sharedProjectIds", UNSET))
 
         is_view_restricted = d.pop("isViewRestricted", UNSET)
 
@@ -114,5 +117,17 @@ class ShareInput:
         return share_input
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

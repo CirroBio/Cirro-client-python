@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -24,10 +27,10 @@ class ShareDetail:
         description (str):
         originating_project (NamedItem):
         share_type (ShareType):
-        shared_projects (List['NamedItem']):
-        conditions (List['DatasetCondition']): The conditions under which the dataset is shared
-        keywords (List[str]):
-        classification_ids (List[str]):
+        shared_projects (list[NamedItem]):
+        conditions (list[DatasetCondition]): The conditions under which the dataset is shared
+        keywords (list[str]):
+        classification_ids (list[str]):
         is_view_restricted (bool):
         created_by (str):
         created_at (datetime.datetime):
@@ -37,19 +40,19 @@ class ShareDetail:
     id: str
     name: str
     description: str
-    originating_project: "NamedItem"
+    originating_project: NamedItem
     share_type: ShareType
-    shared_projects: List["NamedItem"]
-    conditions: List["DatasetCondition"]
-    keywords: List[str]
-    classification_ids: List[str]
+    shared_projects: list[NamedItem]
+    conditions: list[DatasetCondition]
+    keywords: list[str]
+    classification_ids: list[str]
     is_view_restricted: bool
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         id = self.id
 
         name = self.name
@@ -82,7 +85,7 @@ class ShareDetail:
 
         updated_at = self.updated_at.isoformat()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -105,11 +108,11 @@ class ShareDetail:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.dataset_condition import DatasetCondition
         from ..models.named_item import NamedItem
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
@@ -134,9 +137,9 @@ class ShareDetail:
 
             conditions.append(conditions_item)
 
-        keywords = cast(List[str], d.pop("keywords"))
+        keywords = cast(list[str], d.pop("keywords"))
 
-        classification_ids = cast(List[str], d.pop("classificationIds"))
+        classification_ids = cast(list[str], d.pop("classificationIds"))
 
         is_view_restricted = d.pop("isViewRestricted")
 
@@ -166,5 +169,17 @@ class ShareDetail:
         return share_detail
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

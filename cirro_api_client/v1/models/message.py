@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -22,26 +25,26 @@ class Message:
         message_type (MessageType):
         id (str):
         message (str):
-        links (List['Entity']):
+        links (list[Entity]):
         has_replies (bool):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
-        parent_message_id (Union[None, Unset, str]):
+        parent_message_id (None | str | Unset):
     """
 
     message_type: MessageType
     id: str
     message: str
-    links: List["Entity"]
+    links: list[Entity]
     has_replies: bool
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    parent_message_id: Union[None, Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    parent_message_id: None | str | Unset = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         message_type = self.message_type.value
 
         id = self.id
@@ -61,13 +64,13 @@ class Message:
 
         updated_at = self.updated_at.isoformat()
 
-        parent_message_id: Union[None, Unset, str]
+        parent_message_id: None | str | Unset
         if isinstance(self.parent_message_id, Unset):
             parent_message_id = UNSET
         else:
             parent_message_id = self.parent_message_id
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -87,10 +90,10 @@ class Message:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.entity import Entity
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         message_type = MessageType(d.pop("messageType"))
 
         id = d.pop("id")
@@ -112,12 +115,12 @@ class Message:
 
         updated_at = isoparse(d.pop("updatedAt"))
 
-        def _parse_parent_message_id(data: object) -> Union[None, Unset, str]:
+        def _parse_parent_message_id(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, str], data)
+            return cast(None | str | Unset, data)
 
         parent_message_id = _parse_parent_message_id(d.pop("parentMessageId", UNSET))
 
@@ -137,5 +140,17 @@ class Message:
         return message
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

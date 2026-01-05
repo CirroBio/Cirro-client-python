@@ -1,4 +1,7 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -19,29 +22,29 @@ class Agent:
 
     Attributes:
         status (AgentStatus): The status of the agent
-        id (Union[Unset, str]): The unique ID of the agent
-        name (Union[Unset, str]): The display name of the agent
-        tags (Union[Unset, AgentTags]): Tags associated with the agent
+        id (str | Unset): The unique ID of the agent
+        name (str | Unset): The display name of the agent
+        tags (AgentTags | Unset): Tags associated with the agent
     """
 
     status: AgentStatus
-    id: Union[Unset, str] = UNSET
-    name: Union[Unset, str] = UNSET
-    tags: Union[Unset, "AgentTags"] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    id: str | Unset = UNSET
+    name: str | Unset = UNSET
+    tags: AgentTags | Unset = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         status = self.status.value
 
         id = self.id
 
         name = self.name
 
-        tags: Union[Unset, Dict[str, Any]] = UNSET
+        tags: dict[str, Any] | Unset = UNSET
         if not isinstance(self.tags, Unset):
             tags = self.tags.to_dict()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -58,10 +61,10 @@ class Agent:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.agent_tags import AgentTags
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         status = AgentStatus(d.pop("status"))
 
         id = d.pop("id", UNSET)
@@ -69,7 +72,7 @@ class Agent:
         name = d.pop("name", UNSET)
 
         _tags = d.pop("tags", UNSET)
-        tags: Union[Unset, AgentTags]
+        tags: AgentTags | Unset
         if isinstance(_tags, Unset):
             tags = UNSET
         else:
@@ -86,5 +89,17 @@ class Agent:
         return agent
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

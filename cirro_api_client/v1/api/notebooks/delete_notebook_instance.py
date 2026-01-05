@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -11,17 +12,20 @@ from ...types import Response
 def _get_kwargs(
     project_id: str,
     notebook_instance_id: str,
-) -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "delete",
-        "url": f"/projects/{project_id}/notebook-instances/{notebook_instance_id}",
+        "url": "/projects/{project_id}/notebook-instances/{notebook_instance_id}".format(
+            project_id=quote(str(project_id), safe=""),
+            notebook_instance_id=quote(str(notebook_instance_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Any]:
-    if response.status_code == HTTPStatus.ACCEPTED:
+def _parse_response(*, client: Client, response: httpx.Response) -> Any | None:
+    if response.status_code == 202:
         return None
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)

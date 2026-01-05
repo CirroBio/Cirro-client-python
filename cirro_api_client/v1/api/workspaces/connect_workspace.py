@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -12,17 +13,20 @@ from ...types import Response
 def _get_kwargs(
     project_id: str,
     workspace_id: str,
-) -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "post",
-        "url": f"/projects/{project_id}/workspaces/{workspace_id}:connect",
+        "url": "/projects/{project_id}/workspaces/{workspace_id}:connect".format(
+            project_id=quote(str(project_id), safe=""),
+            workspace_id=quote(str(workspace_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[WorkspaceConnectionResponse]:
-    if response.status_code == HTTPStatus.ACCEPTED:
+def _parse_response(*, client: Client, response: httpx.Response) -> WorkspaceConnectionResponse | None:
+    if response.status_code == 202:
         response_202 = WorkspaceConnectionResponse.from_dict(response.json())
 
         return response_202
@@ -80,7 +84,7 @@ def sync(
     workspace_id: str,
     *,
     client: Client,
-) -> Optional[WorkspaceConnectionResponse]:
+) -> WorkspaceConnectionResponse | None:
     """Connect to workspace
 
      Generates a URL to connect to the given workspace
@@ -146,7 +150,7 @@ async def asyncio(
     workspace_id: str,
     *,
     client: Client,
-) -> Optional[WorkspaceConnectionResponse]:
+) -> WorkspaceConnectionResponse | None:
     """Connect to workspace
 
      Generates a URL to connect to the given workspace

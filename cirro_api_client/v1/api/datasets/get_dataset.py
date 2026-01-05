@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -12,17 +13,20 @@ from ...types import Response
 def _get_kwargs(
     project_id: str,
     dataset_id: str,
-) -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/projects/{project_id}/datasets/{dataset_id}",
+        "url": "/projects/{project_id}/datasets/{dataset_id}".format(
+            project_id=quote(str(project_id), safe=""),
+            dataset_id=quote(str(dataset_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[DatasetDetail]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> DatasetDetail | None:
+    if response.status_code == 200:
         response_200 = DatasetDetail.from_dict(response.json())
 
         return response_200
@@ -80,7 +84,7 @@ def sync(
     dataset_id: str,
     *,
     client: Client,
-) -> Optional[DatasetDetail]:
+) -> DatasetDetail | None:
     """Get dataset
 
      Gets detailed information about a dataset
@@ -146,7 +150,7 @@ async def asyncio(
     dataset_id: str,
     *,
     client: Client,
-) -> Optional[DatasetDetail]:
+) -> DatasetDetail | None:
     """Get dataset
 
      Gets detailed information about a dataset

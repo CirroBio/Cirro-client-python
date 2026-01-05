@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -11,17 +12,19 @@ from ...types import Response
 
 def _get_kwargs(
     contact_id: str,
-) -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/governance/contacts/{contact_id}",
+        "url": "/governance/contacts/{contact_id}".format(
+            contact_id=quote(str(contact_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[GovernanceContact]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> GovernanceContact | None:
+    if response.status_code == 200:
         response_200 = GovernanceContact.from_dict(response.json())
 
         return response_200
@@ -75,7 +78,7 @@ def sync(
     contact_id: str,
     *,
     client: Client,
-) -> Optional[GovernanceContact]:
+) -> GovernanceContact | None:
     """Get a contact
 
      Retrieve a governance contact
@@ -135,7 +138,7 @@ async def asyncio(
     contact_id: str,
     *,
     client: Client,
-) -> Optional[GovernanceContact]:
+) -> GovernanceContact | None:
     """Get a contact
 
      Retrieve a governance contact

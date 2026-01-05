@@ -1,4 +1,7 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -13,30 +16,30 @@ T = TypeVar("T", bound="GovernanceFile")
 class GovernanceFile:
     """
     Attributes:
-        name (Union[Unset, str]): The title of the resource visible to users
-        description (Union[Unset, str]): A description of the resource visible to users
-        src (Union[Unset, str]): The file name without path or the full link path
-        type (Union[Unset, GovernanceFileType]): The options for supplementals for governance requirements
+        name (str | Unset): The title of the resource visible to users
+        description (str | Unset): A description of the resource visible to users
+        src (str | Unset): The file name without path or the full link path
+        type_ (GovernanceFileType | Unset): The options for supplementals for governance requirements
     """
 
-    name: Union[Unset, str] = UNSET
-    description: Union[Unset, str] = UNSET
-    src: Union[Unset, str] = UNSET
-    type: Union[Unset, GovernanceFileType] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    name: str | Unset = UNSET
+    description: str | Unset = UNSET
+    src: str | Unset = UNSET
+    type_: GovernanceFileType | Unset = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         name = self.name
 
         description = self.description
 
         src = self.src
 
-        type: Union[Unset, str] = UNSET
-        if not isinstance(self.type, Unset):
-            type = self.type.value
+        type_: str | Unset = UNSET
+        if not isinstance(self.type_, Unset):
+            type_ = self.type_.value
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if name is not UNSET:
@@ -45,37 +48,49 @@ class GovernanceFile:
             field_dict["description"] = description
         if src is not UNSET:
             field_dict["src"] = src
-        if type is not UNSET:
-            field_dict["type"] = type
+        if type_ is not UNSET:
+            field_dict["type"] = type_
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         name = d.pop("name", UNSET)
 
         description = d.pop("description", UNSET)
 
         src = d.pop("src", UNSET)
 
-        _type = d.pop("type", UNSET)
-        type: Union[Unset, GovernanceFileType]
-        if isinstance(_type, Unset):
-            type = UNSET
+        _type_ = d.pop("type", UNSET)
+        type_: GovernanceFileType | Unset
+        if isinstance(_type_, Unset):
+            type_ = UNSET
         else:
-            type = GovernanceFileType(_type)
+            type_ = GovernanceFileType(_type_)
 
         governance_file = cls(
             name=name,
             description=description,
             src=src,
-            type=type,
+            type_=type_,
         )
 
         governance_file.additional_properties = d
         return governance_file
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

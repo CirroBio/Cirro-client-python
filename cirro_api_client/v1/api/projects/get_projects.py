@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import httpx
 
@@ -9,8 +9,8 @@ from ...models.project import Project
 from ...types import Response
 
 
-def _get_kwargs() -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+def _get_kwargs() -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/projects",
     }
@@ -18,8 +18,8 @@ def _get_kwargs() -> Dict[str, Any]:
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["Project"]]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> list[Project] | None:
+    if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
         for response_200_item_data in _response_200:
@@ -32,7 +32,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Lis
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[List["Project"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list[Project]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -44,7 +44,7 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Lis
 def sync_detailed(
     *,
     client: Client,
-) -> Response[List["Project"]]:
+) -> Response[list[Project]]:
     """Get projects
 
      Retrieve a list of projects
@@ -54,7 +54,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['Project']]
+        Response[list[Project]]
     """
 
     kwargs = _get_kwargs()
@@ -70,7 +70,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[List["Project"]]:
+) -> list[Project] | None:
     """Get projects
 
      Retrieve a list of projects
@@ -80,7 +80,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['Project']
+        list[Project]
     """
 
     try:
@@ -94,7 +94,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[List["Project"]]:
+) -> Response[list[Project]]:
     """Get projects
 
      Retrieve a list of projects
@@ -104,7 +104,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['Project']]
+        Response[list[Project]]
     """
 
     kwargs = _get_kwargs()
@@ -117,7 +117,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[List["Project"]]:
+) -> list[Project] | None:
     """Get projects
 
      Retrieve a list of projects
@@ -127,7 +127,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['Project']
+        list[Project]
     """
 
     try:

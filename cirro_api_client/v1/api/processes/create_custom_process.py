@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -15,17 +15,16 @@ from ...types import Response
 def _get_kwargs(
     *,
     body: CustomProcessInput,
-) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    headers: dict[str, Any] = {}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "post",
         "url": "/processes",
     }
 
-    _body = body.to_dict()
+    _kwargs["json"] = body.to_dict()
 
-    _kwargs["json"] = _body
     headers["Content-Type"] = "application/json"
 
     _kwargs["headers"] = headers
@@ -34,26 +33,28 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Client, response: httpx.Response
-) -> Optional[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
-    if response.status_code == HTTPStatus.BAD_REQUEST:
-        response_400 = PortalErrorResponse.from_dict(response.json())
-
-        return response_400
-    if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = ErrorMessage.from_dict(response.json())
-
-        return response_401
-    if response.status_code == HTTPStatus.CREATED:
+) -> CreateResponse | ErrorMessage | PortalErrorResponse | None:
+    if response.status_code == 201:
         response_201 = CreateResponse.from_dict(response.json())
 
         return response_201
+
+    if response.status_code == 400:
+        response_400 = PortalErrorResponse.from_dict(response.json())
+
+        return response_400
+
+    if response.status_code == 401:
+        response_401 = ErrorMessage.from_dict(response.json())
+
+        return response_401
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
 def _build_response(
     *, client: Client, response: httpx.Response
-) -> Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
+) -> Response[CreateResponse | ErrorMessage | PortalErrorResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -66,7 +67,7 @@ def sync_detailed(
     *,
     client: Client,
     body: CustomProcessInput,
-) -> Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
+) -> Response[CreateResponse | ErrorMessage | PortalErrorResponse]:
     """Create custom process
 
      Creates a custom data type or pipeline which you can use in the listed projects.
@@ -80,7 +81,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]
+        Response[CreateResponse | ErrorMessage | PortalErrorResponse]
     """
 
     kwargs = _get_kwargs(
@@ -99,7 +100,7 @@ def sync(
     *,
     client: Client,
     body: CustomProcessInput,
-) -> Optional[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
+) -> CreateResponse | ErrorMessage | PortalErrorResponse | None:
     """Create custom process
 
      Creates a custom data type or pipeline which you can use in the listed projects.
@@ -113,7 +114,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[CreateResponse, ErrorMessage, PortalErrorResponse]
+        CreateResponse | ErrorMessage | PortalErrorResponse
     """
 
     try:
@@ -129,7 +130,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     body: CustomProcessInput,
-) -> Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
+) -> Response[CreateResponse | ErrorMessage | PortalErrorResponse]:
     """Create custom process
 
      Creates a custom data type or pipeline which you can use in the listed projects.
@@ -143,7 +144,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]
+        Response[CreateResponse | ErrorMessage | PortalErrorResponse]
     """
 
     kwargs = _get_kwargs(
@@ -159,7 +160,7 @@ async def asyncio(
     *,
     client: Client,
     body: CustomProcessInput,
-) -> Optional[Union[CreateResponse, ErrorMessage, PortalErrorResponse]]:
+) -> CreateResponse | ErrorMessage | PortalErrorResponse | None:
     """Create custom process
 
      Creates a custom data type or pipeline which you can use in the listed projects.
@@ -173,7 +174,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[CreateResponse, ErrorMessage, PortalErrorResponse]
+        CreateResponse | ErrorMessage | PortalErrorResponse
     """
 
     try:

@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -14,25 +15,26 @@ def _get_kwargs(
     process_id: str,
     *,
     body: ValidateFileRequirementsRequest,
-) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    headers: dict[str, Any] = {}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "post",
-        "url": f"/processes/{process_id}/validate-files",
+        "url": "/processes/{process_id}/validate-files".format(
+            process_id=quote(str(process_id), safe=""),
+        ),
     }
 
-    _body = body.to_dict()
+    _kwargs["json"] = body.to_dict()
 
-    _kwargs["json"] = _body
     headers["Content-Type"] = "application/json"
 
     _kwargs["headers"] = headers
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[FileRequirements]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> FileRequirements | None:
+    if response.status_code == 200:
         response_200 = FileRequirements.from_dict(response.json())
 
         return response_200
@@ -90,7 +92,7 @@ def sync(
     *,
     client: Client,
     body: ValidateFileRequirementsRequest,
-) -> Optional[FileRequirements]:
+) -> FileRequirements | None:
     """Validate file requirements
 
      Checks the input file names with the expected files for a data type (ingest processes only)
@@ -156,7 +158,7 @@ async def asyncio(
     *,
     client: Client,
     body: ValidateFileRequirementsRequest,
-) -> Optional[FileRequirements]:
+) -> FileRequirements | None:
     """Validate file requirements
 
      Checks the input file names with the expected files for a data type (ingest processes only)

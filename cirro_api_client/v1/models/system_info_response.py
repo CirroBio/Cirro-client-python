@@ -1,4 +1,7 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -39,12 +42,12 @@ class SystemInfoResponse:
     maintenance_mode_enabled: bool
     commit_hash: str
     version: str
-    resources_info: "ResourcesInfo"
-    tenant_info: "TenantInfo"
-    auth: "AuthInfo"
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    resources_info: ResourcesInfo
+    tenant_info: TenantInfo
+    auth: AuthInfo
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         resources_bucket = self.resources_bucket
 
         references_bucket = self.references_bucket
@@ -69,7 +72,7 @@ class SystemInfoResponse:
 
         auth = self.auth.to_dict()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -91,12 +94,12 @@ class SystemInfoResponse:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.auth_info import AuthInfo
         from ..models.resources_info import ResourcesInfo
         from ..models.tenant_info import TenantInfo
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         resources_bucket = d.pop("resourcesBucket")
 
         references_bucket = d.pop("referencesBucket")
@@ -140,5 +143,17 @@ class SystemInfoResponse:
         return system_info_response
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

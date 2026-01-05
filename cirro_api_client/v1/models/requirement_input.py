@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -24,42 +27,42 @@ class RequirementInput:
     Attributes:
         name (str):
         description (str):
-        type (GovernanceType): The types of governance requirements that can be enforced
+        type_ (GovernanceType): The types of governance requirements that can be enforced
         scope (GovernanceScope): The levels at which governance requirements can be enforced
-        contact_ids (List[str]):
+        contact_ids (list[str]):
         expiration (GovernanceExpiry):
-        project_id (Union[None, Unset, str]):
-        acceptance (Union[GovernanceScope, None, Unset]):
-        enactment_date (Union[None, Unset, datetime.datetime]):
-        supplemental_docs (Union[List['GovernanceFile'], None, Unset]):
-        file (Union['GovernanceFile', None, Unset]):
-        authorship (Union[GovernanceScope, None, Unset]):
-        verification_method (Union[GovernanceTrainingVerification, None, Unset]):
+        project_id (None | str | Unset):
+        acceptance (GovernanceScope | None | Unset):
+        enactment_date (datetime.datetime | None | Unset):
+        supplemental_docs (list[GovernanceFile] | None | Unset):
+        file (GovernanceFile | None | Unset):
+        authorship (GovernanceScope | None | Unset):
+        verification_method (GovernanceTrainingVerification | None | Unset):
     """
 
     name: str
     description: str
-    type: GovernanceType
+    type_: GovernanceType
     scope: GovernanceScope
-    contact_ids: List[str]
-    expiration: "GovernanceExpiry"
-    project_id: Union[None, Unset, str] = UNSET
-    acceptance: Union[GovernanceScope, None, Unset] = UNSET
-    enactment_date: Union[None, Unset, datetime.datetime] = UNSET
-    supplemental_docs: Union[List["GovernanceFile"], None, Unset] = UNSET
-    file: Union["GovernanceFile", None, Unset] = UNSET
-    authorship: Union[GovernanceScope, None, Unset] = UNSET
-    verification_method: Union[GovernanceTrainingVerification, None, Unset] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    contact_ids: list[str]
+    expiration: GovernanceExpiry
+    project_id: None | str | Unset = UNSET
+    acceptance: GovernanceScope | None | Unset = UNSET
+    enactment_date: datetime.datetime | None | Unset = UNSET
+    supplemental_docs: list[GovernanceFile] | None | Unset = UNSET
+    file: GovernanceFile | None | Unset = UNSET
+    authorship: GovernanceScope | None | Unset = UNSET
+    verification_method: GovernanceTrainingVerification | None | Unset = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         from ..models.governance_file import GovernanceFile
 
         name = self.name
 
         description = self.description
 
-        type = self.type.value
+        type_ = self.type_.value
 
         scope = self.scope.value
 
@@ -67,13 +70,13 @@ class RequirementInput:
 
         expiration = self.expiration.to_dict()
 
-        project_id: Union[None, Unset, str]
+        project_id: None | str | Unset
         if isinstance(self.project_id, Unset):
             project_id = UNSET
         else:
             project_id = self.project_id
 
-        acceptance: Union[None, Unset, str]
+        acceptance: None | str | Unset
         if isinstance(self.acceptance, Unset):
             acceptance = UNSET
         elif isinstance(self.acceptance, GovernanceScope):
@@ -81,7 +84,7 @@ class RequirementInput:
         else:
             acceptance = self.acceptance
 
-        enactment_date: Union[None, Unset, str]
+        enactment_date: None | str | Unset
         if isinstance(self.enactment_date, Unset):
             enactment_date = UNSET
         elif isinstance(self.enactment_date, datetime.datetime):
@@ -89,7 +92,7 @@ class RequirementInput:
         else:
             enactment_date = self.enactment_date
 
-        supplemental_docs: Union[List[Dict[str, Any]], None, Unset]
+        supplemental_docs: list[dict[str, Any]] | None | Unset
         if isinstance(self.supplemental_docs, Unset):
             supplemental_docs = UNSET
         elif isinstance(self.supplemental_docs, list):
@@ -101,7 +104,7 @@ class RequirementInput:
         else:
             supplemental_docs = self.supplemental_docs
 
-        file: Union[Dict[str, Any], None, Unset]
+        file: dict[str, Any] | None | Unset
         if isinstance(self.file, Unset):
             file = UNSET
         elif isinstance(self.file, GovernanceFile):
@@ -109,7 +112,7 @@ class RequirementInput:
         else:
             file = self.file
 
-        authorship: Union[None, Unset, str]
+        authorship: None | str | Unset
         if isinstance(self.authorship, Unset):
             authorship = UNSET
         elif isinstance(self.authorship, GovernanceScope):
@@ -117,7 +120,7 @@ class RequirementInput:
         else:
             authorship = self.authorship
 
-        verification_method: Union[None, Unset, str]
+        verification_method: None | str | Unset
         if isinstance(self.verification_method, Unset):
             verification_method = UNSET
         elif isinstance(self.verification_method, GovernanceTrainingVerification):
@@ -125,13 +128,13 @@ class RequirementInput:
         else:
             verification_method = self.verification_method
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "name": name,
                 "description": description,
-                "type": type,
+                "type": type_,
                 "scope": scope,
                 "contactIds": contact_ids,
                 "expiration": expiration,
@@ -155,33 +158,33 @@ class RequirementInput:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.governance_expiry import GovernanceExpiry
         from ..models.governance_file import GovernanceFile
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         name = d.pop("name")
 
         description = d.pop("description")
 
-        type = GovernanceType(d.pop("type"))
+        type_ = GovernanceType(d.pop("type"))
 
         scope = GovernanceScope(d.pop("scope"))
 
-        contact_ids = cast(List[str], d.pop("contactIds"))
+        contact_ids = cast(list[str], d.pop("contactIds"))
 
         expiration = GovernanceExpiry.from_dict(d.pop("expiration"))
 
-        def _parse_project_id(data: object) -> Union[None, Unset, str]:
+        def _parse_project_id(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, str], data)
+            return cast(None | str | Unset, data)
 
         project_id = _parse_project_id(d.pop("projectId", UNSET))
 
-        def _parse_acceptance(data: object) -> Union[GovernanceScope, None, Unset]:
+        def _parse_acceptance(data: object) -> GovernanceScope | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -192,13 +195,13 @@ class RequirementInput:
                 acceptance_type_1 = GovernanceScope(data)
 
                 return acceptance_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union[GovernanceScope, None, Unset], data)
+            return cast(GovernanceScope | None | Unset, data)
 
         acceptance = _parse_acceptance(d.pop("acceptance", UNSET))
 
-        def _parse_enactment_date(data: object) -> Union[None, Unset, datetime.datetime]:
+        def _parse_enactment_date(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -209,13 +212,13 @@ class RequirementInput:
                 enactment_date_type_0 = isoparse(data)
 
                 return enactment_date_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union[None, Unset, datetime.datetime], data)
+            return cast(datetime.datetime | None | Unset, data)
 
         enactment_date = _parse_enactment_date(d.pop("enactmentDate", UNSET))
 
-        def _parse_supplemental_docs(data: object) -> Union[List["GovernanceFile"], None, Unset]:
+        def _parse_supplemental_docs(data: object) -> list[GovernanceFile] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -231,13 +234,13 @@ class RequirementInput:
                     supplemental_docs_type_0.append(supplemental_docs_type_0_item)
 
                 return supplemental_docs_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union[List["GovernanceFile"], None, Unset], data)
+            return cast(list[GovernanceFile] | None | Unset, data)
 
         supplemental_docs = _parse_supplemental_docs(d.pop("supplementalDocs", UNSET))
 
-        def _parse_file(data: object) -> Union["GovernanceFile", None, Unset]:
+        def _parse_file(data: object) -> GovernanceFile | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -248,13 +251,13 @@ class RequirementInput:
                 file_type_1 = GovernanceFile.from_dict(data)
 
                 return file_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["GovernanceFile", None, Unset], data)
+            return cast(GovernanceFile | None | Unset, data)
 
         file = _parse_file(d.pop("file", UNSET))
 
-        def _parse_authorship(data: object) -> Union[GovernanceScope, None, Unset]:
+        def _parse_authorship(data: object) -> GovernanceScope | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -265,13 +268,13 @@ class RequirementInput:
                 authorship_type_1 = GovernanceScope(data)
 
                 return authorship_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union[GovernanceScope, None, Unset], data)
+            return cast(GovernanceScope | None | Unset, data)
 
         authorship = _parse_authorship(d.pop("authorship", UNSET))
 
-        def _parse_verification_method(data: object) -> Union[GovernanceTrainingVerification, None, Unset]:
+        def _parse_verification_method(data: object) -> GovernanceTrainingVerification | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -282,16 +285,16 @@ class RequirementInput:
                 verification_method_type_1 = GovernanceTrainingVerification(data)
 
                 return verification_method_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union[GovernanceTrainingVerification, None, Unset], data)
+            return cast(GovernanceTrainingVerification | None | Unset, data)
 
         verification_method = _parse_verification_method(d.pop("verificationMethod", UNSET))
 
         requirement_input = cls(
             name=name,
             description=description,
-            type=type,
+            type_=type_,
             scope=scope,
             contact_ids=contact_ids,
             expiration=expiration,
@@ -308,5 +311,17 @@ class RequirementInput:
         return requirement_input
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

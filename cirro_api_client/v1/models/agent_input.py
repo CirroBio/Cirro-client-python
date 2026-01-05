@@ -1,4 +1,7 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -20,24 +23,24 @@ class AgentInput:
     Attributes:
         name (str): The display name of the agent
         agent_role_arn (str): Arn of the AWS IAM role or user that the agent will use (JSONSchema format)
-        id (Union[None, Unset, str]): The unique ID of the agent (required on create)
-        configuration_options_schema (Union['AgentInputConfigurationOptionsSchema', None, Unset]): The configuration
-            options available for the agent
-        environment_configuration (Union['AgentInputEnvironmentConfiguration', None, Unset]): The environment
-            configuration for the agent Example: {'PARTITION': 'restart'}.
-        tags (Union['AgentInputTags', None, Unset]): The tags associated with the agent displayed to the user Example:
+        id (None | str | Unset): The unique ID of the agent (required on create)
+        configuration_options_schema (AgentInputConfigurationOptionsSchema | None | Unset): The configuration options
+            available for the agent
+        environment_configuration (AgentInputEnvironmentConfiguration | None | Unset): The environment configuration for
+            the agent Example: {'PARTITION': 'restart'}.
+        tags (AgentInputTags | None | Unset): The tags associated with the agent displayed to the user Example:
             {'Support Email': 'it@company.com'}.
     """
 
     name: str
     agent_role_arn: str
-    id: Union[None, Unset, str] = UNSET
-    configuration_options_schema: Union["AgentInputConfigurationOptionsSchema", None, Unset] = UNSET
-    environment_configuration: Union["AgentInputEnvironmentConfiguration", None, Unset] = UNSET
-    tags: Union["AgentInputTags", None, Unset] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    id: None | str | Unset = UNSET
+    configuration_options_schema: AgentInputConfigurationOptionsSchema | None | Unset = UNSET
+    environment_configuration: AgentInputEnvironmentConfiguration | None | Unset = UNSET
+    tags: AgentInputTags | None | Unset = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         from ..models.agent_input_configuration_options_schema import AgentInputConfigurationOptionsSchema
         from ..models.agent_input_environment_configuration import AgentInputEnvironmentConfiguration
         from ..models.agent_input_tags import AgentInputTags
@@ -46,13 +49,13 @@ class AgentInput:
 
         agent_role_arn = self.agent_role_arn
 
-        id: Union[None, Unset, str]
+        id: None | str | Unset
         if isinstance(self.id, Unset):
             id = UNSET
         else:
             id = self.id
 
-        configuration_options_schema: Union[Dict[str, Any], None, Unset]
+        configuration_options_schema: dict[str, Any] | None | Unset
         if isinstance(self.configuration_options_schema, Unset):
             configuration_options_schema = UNSET
         elif isinstance(self.configuration_options_schema, AgentInputConfigurationOptionsSchema):
@@ -60,7 +63,7 @@ class AgentInput:
         else:
             configuration_options_schema = self.configuration_options_schema
 
-        environment_configuration: Union[Dict[str, Any], None, Unset]
+        environment_configuration: dict[str, Any] | None | Unset
         if isinstance(self.environment_configuration, Unset):
             environment_configuration = UNSET
         elif isinstance(self.environment_configuration, AgentInputEnvironmentConfiguration):
@@ -68,7 +71,7 @@ class AgentInput:
         else:
             environment_configuration = self.environment_configuration
 
-        tags: Union[Dict[str, Any], None, Unset]
+        tags: dict[str, Any] | None | Unset
         if isinstance(self.tags, Unset):
             tags = UNSET
         elif isinstance(self.tags, AgentInputTags):
@@ -76,7 +79,7 @@ class AgentInput:
         else:
             tags = self.tags
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -96,28 +99,26 @@ class AgentInput:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.agent_input_configuration_options_schema import AgentInputConfigurationOptionsSchema
         from ..models.agent_input_environment_configuration import AgentInputEnvironmentConfiguration
         from ..models.agent_input_tags import AgentInputTags
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         name = d.pop("name")
 
         agent_role_arn = d.pop("agentRoleArn")
 
-        def _parse_id(data: object) -> Union[None, Unset, str]:
+        def _parse_id(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, str], data)
+            return cast(None | str | Unset, data)
 
         id = _parse_id(d.pop("id", UNSET))
 
-        def _parse_configuration_options_schema(
-            data: object,
-        ) -> Union["AgentInputConfigurationOptionsSchema", None, Unset]:
+        def _parse_configuration_options_schema(data: object) -> AgentInputConfigurationOptionsSchema | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -128,13 +129,13 @@ class AgentInput:
                 configuration_options_schema_type_0 = AgentInputConfigurationOptionsSchema.from_dict(data)
 
                 return configuration_options_schema_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["AgentInputConfigurationOptionsSchema", None, Unset], data)
+            return cast(AgentInputConfigurationOptionsSchema | None | Unset, data)
 
         configuration_options_schema = _parse_configuration_options_schema(d.pop("configurationOptionsSchema", UNSET))
 
-        def _parse_environment_configuration(data: object) -> Union["AgentInputEnvironmentConfiguration", None, Unset]:
+        def _parse_environment_configuration(data: object) -> AgentInputEnvironmentConfiguration | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -145,13 +146,13 @@ class AgentInput:
                 environment_configuration_type_0 = AgentInputEnvironmentConfiguration.from_dict(data)
 
                 return environment_configuration_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["AgentInputEnvironmentConfiguration", None, Unset], data)
+            return cast(AgentInputEnvironmentConfiguration | None | Unset, data)
 
         environment_configuration = _parse_environment_configuration(d.pop("environmentConfiguration", UNSET))
 
-        def _parse_tags(data: object) -> Union["AgentInputTags", None, Unset]:
+        def _parse_tags(data: object) -> AgentInputTags | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -162,9 +163,9 @@ class AgentInput:
                 tags_type_0 = AgentInputTags.from_dict(data)
 
                 return tags_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["AgentInputTags", None, Unset], data)
+            return cast(AgentInputTags | None | Unset, data)
 
         tags = _parse_tags(d.pop("tags", UNSET))
 
@@ -181,5 +182,17 @@ class AgentInput:
         return agent_input
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

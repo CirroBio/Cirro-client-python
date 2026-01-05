@@ -1,4 +1,7 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -18,25 +21,25 @@ class UpdateUserRequest:
     Attributes:
         name (str): Display name of the user
         email (str): Email address of the user
-        phone (Union[Unset, str]): Phone number of the user
-        department (Union[Unset, str]): Department or lab the user belongs to
-        job_title (Union[Unset, str]): Job title or role of the user
-        organization (Union[Unset, str]): The organization the user belongs to, only editable by administrators
-        settings (Union['UserSettings', None, Unset]):
-        groups (Union[Unset, List[str]]): Groups the user belongs to, only editable by administrators
+        phone (str | Unset): Phone number of the user
+        department (str | Unset): Department or lab the user belongs to
+        job_title (str | Unset): Job title or role of the user
+        organization (str | Unset): The organization the user belongs to, only editable by administrators
+        settings (None | Unset | UserSettings):
+        groups (list[str] | Unset): Groups the user belongs to, only editable by administrators
     """
 
     name: str
     email: str
-    phone: Union[Unset, str] = UNSET
-    department: Union[Unset, str] = UNSET
-    job_title: Union[Unset, str] = UNSET
-    organization: Union[Unset, str] = UNSET
-    settings: Union["UserSettings", None, Unset] = UNSET
-    groups: Union[Unset, List[str]] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    phone: str | Unset = UNSET
+    department: str | Unset = UNSET
+    job_title: str | Unset = UNSET
+    organization: str | Unset = UNSET
+    settings: None | Unset | UserSettings = UNSET
+    groups: list[str] | Unset = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         from ..models.user_settings import UserSettings
 
         name = self.name
@@ -51,7 +54,7 @@ class UpdateUserRequest:
 
         organization = self.organization
 
-        settings: Union[Dict[str, Any], None, Unset]
+        settings: dict[str, Any] | None | Unset
         if isinstance(self.settings, Unset):
             settings = UNSET
         elif isinstance(self.settings, UserSettings):
@@ -59,11 +62,11 @@ class UpdateUserRequest:
         else:
             settings = self.settings
 
-        groups: Union[Unset, List[str]] = UNSET
+        groups: list[str] | Unset = UNSET
         if not isinstance(self.groups, Unset):
             groups = self.groups
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -87,10 +90,10 @@ class UpdateUserRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.user_settings import UserSettings
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         name = d.pop("name")
 
         email = d.pop("email")
@@ -103,7 +106,7 @@ class UpdateUserRequest:
 
         organization = d.pop("organization", UNSET)
 
-        def _parse_settings(data: object) -> Union["UserSettings", None, Unset]:
+        def _parse_settings(data: object) -> None | Unset | UserSettings:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -114,13 +117,13 @@ class UpdateUserRequest:
                 settings_type_1 = UserSettings.from_dict(data)
 
                 return settings_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["UserSettings", None, Unset], data)
+            return cast(None | Unset | UserSettings, data)
 
         settings = _parse_settings(d.pop("settings", UNSET))
 
-        groups = cast(List[str], d.pop("groups", UNSET))
+        groups = cast(list[str], d.pop("groups", UNSET))
 
         update_user_request = cls(
             name=name,
@@ -137,5 +140,17 @@ class UpdateUserRequest:
         return update_user_request
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

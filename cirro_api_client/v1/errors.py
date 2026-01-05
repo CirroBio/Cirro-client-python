@@ -1,7 +1,6 @@
 """Contains shared errors types that can be raised from API functions"""
 
 from http import HTTPStatus
-from typing import Dict
 
 import httpx
 
@@ -38,7 +37,7 @@ class UnexpectedStatus(Exception):
 class CirroException(Exception):
     """Raised when the server returns a known error response"""
 
-    def __init__(self, error_response_data: Dict):
+    def __init__(self, error_response_data: dict):
         self.error_response = PortalErrorResponse.from_dict(error_response_data)
 
         super().__init__(self.error_response.error_detail)

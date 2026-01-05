@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -11,15 +11,15 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    project_id: Union[Unset, str] = UNSET,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+    project_id: str | Unset = UNSET,
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["projectId"] = project_id
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/governance/requirements",
         "params": params,
@@ -28,8 +28,8 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[List["GovernanceRequirement"]]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> list[GovernanceRequirement] | None:
+    if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
         for response_200_item_data in _response_200:
@@ -42,7 +42,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Lis
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[List["GovernanceRequirement"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list[GovernanceRequirement]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -54,14 +54,14 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Lis
 def sync_detailed(
     *,
     client: Client,
-    project_id: Union[Unset, str] = UNSET,
-) -> Response[List["GovernanceRequirement"]]:
+    project_id: str | Unset = UNSET,
+) -> Response[list[GovernanceRequirement]]:
     """Get requirements
 
      Retrieve a list of governance requirements
 
     Args:
-        project_id (Union[Unset, str]):
+        project_id (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -69,7 +69,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['GovernanceRequirement']]
+        Response[list[GovernanceRequirement]]
     """
 
     kwargs = _get_kwargs(
@@ -87,14 +87,14 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    project_id: Union[Unset, str] = UNSET,
-) -> Optional[List["GovernanceRequirement"]]:
+    project_id: str | Unset = UNSET,
+) -> list[GovernanceRequirement] | None:
     """Get requirements
 
      Retrieve a list of governance requirements
 
     Args:
-        project_id (Union[Unset, str]):
+        project_id (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -102,7 +102,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['GovernanceRequirement']
+        list[GovernanceRequirement]
     """
 
     try:
@@ -117,14 +117,14 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-    project_id: Union[Unset, str] = UNSET,
-) -> Response[List["GovernanceRequirement"]]:
+    project_id: str | Unset = UNSET,
+) -> Response[list[GovernanceRequirement]]:
     """Get requirements
 
      Retrieve a list of governance requirements
 
     Args:
-        project_id (Union[Unset, str]):
+        project_id (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -132,7 +132,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['GovernanceRequirement']]
+        Response[list[GovernanceRequirement]]
     """
 
     kwargs = _get_kwargs(
@@ -147,14 +147,14 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    project_id: Union[Unset, str] = UNSET,
-) -> Optional[List["GovernanceRequirement"]]:
+    project_id: str | Unset = UNSET,
+) -> list[GovernanceRequirement] | None:
     """Get requirements
 
      Retrieve a list of governance requirements
 
     Args:
-        project_id (Union[Unset, str]):
+        project_id (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -162,7 +162,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['GovernanceRequirement']
+        list[GovernanceRequirement]
     """
 
     try:

@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -28,9 +31,9 @@ class AgentDetail:
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
-        registration (Union['AgentRegistration', None, Unset]):
-        tags (Union['AgentDetailTags', None, Unset]):
-        environment_configuration (Union['AgentDetailEnvironmentConfiguration', None, Unset]):
+        registration (AgentRegistration | None | Unset):
+        tags (AgentDetailTags | None | Unset):
+        environment_configuration (AgentDetailEnvironmentConfiguration | None | Unset):
     """
 
     id: str
@@ -40,12 +43,12 @@ class AgentDetail:
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    registration: Union["AgentRegistration", None, Unset] = UNSET
-    tags: Union["AgentDetailTags", None, Unset] = UNSET
-    environment_configuration: Union["AgentDetailEnvironmentConfiguration", None, Unset] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    registration: AgentRegistration | None | Unset = UNSET
+    tags: AgentDetailTags | None | Unset = UNSET
+    environment_configuration: AgentDetailEnvironmentConfiguration | None | Unset = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         from ..models.agent_detail_environment_configuration import AgentDetailEnvironmentConfiguration
         from ..models.agent_detail_tags import AgentDetailTags
         from ..models.agent_registration import AgentRegistration
@@ -64,7 +67,7 @@ class AgentDetail:
 
         updated_at = self.updated_at.isoformat()
 
-        registration: Union[Dict[str, Any], None, Unset]
+        registration: dict[str, Any] | None | Unset
         if isinstance(self.registration, Unset):
             registration = UNSET
         elif isinstance(self.registration, AgentRegistration):
@@ -72,7 +75,7 @@ class AgentDetail:
         else:
             registration = self.registration
 
-        tags: Union[Dict[str, Any], None, Unset]
+        tags: dict[str, Any] | None | Unset
         if isinstance(self.tags, Unset):
             tags = UNSET
         elif isinstance(self.tags, AgentDetailTags):
@@ -80,7 +83,7 @@ class AgentDetail:
         else:
             tags = self.tags
 
-        environment_configuration: Union[Dict[str, Any], None, Unset]
+        environment_configuration: dict[str, Any] | None | Unset
         if isinstance(self.environment_configuration, Unset):
             environment_configuration = UNSET
         elif isinstance(self.environment_configuration, AgentDetailEnvironmentConfiguration):
@@ -88,7 +91,7 @@ class AgentDetail:
         else:
             environment_configuration = self.environment_configuration
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -111,12 +114,12 @@ class AgentDetail:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.agent_detail_environment_configuration import AgentDetailEnvironmentConfiguration
         from ..models.agent_detail_tags import AgentDetailTags
         from ..models.agent_registration import AgentRegistration
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
@@ -131,7 +134,7 @@ class AgentDetail:
 
         updated_at = isoparse(d.pop("updatedAt"))
 
-        def _parse_registration(data: object) -> Union["AgentRegistration", None, Unset]:
+        def _parse_registration(data: object) -> AgentRegistration | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -142,13 +145,13 @@ class AgentDetail:
                 registration_type_1 = AgentRegistration.from_dict(data)
 
                 return registration_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["AgentRegistration", None, Unset], data)
+            return cast(AgentRegistration | None | Unset, data)
 
         registration = _parse_registration(d.pop("registration", UNSET))
 
-        def _parse_tags(data: object) -> Union["AgentDetailTags", None, Unset]:
+        def _parse_tags(data: object) -> AgentDetailTags | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -159,13 +162,13 @@ class AgentDetail:
                 tags_type_0 = AgentDetailTags.from_dict(data)
 
                 return tags_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["AgentDetailTags", None, Unset], data)
+            return cast(AgentDetailTags | None | Unset, data)
 
         tags = _parse_tags(d.pop("tags", UNSET))
 
-        def _parse_environment_configuration(data: object) -> Union["AgentDetailEnvironmentConfiguration", None, Unset]:
+        def _parse_environment_configuration(data: object) -> AgentDetailEnvironmentConfiguration | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -176,9 +179,9 @@ class AgentDetail:
                 environment_configuration_type_0 = AgentDetailEnvironmentConfiguration.from_dict(data)
 
                 return environment_configuration_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["AgentDetailEnvironmentConfiguration", None, Unset], data)
+            return cast(AgentDetailEnvironmentConfiguration | None | Unset, data)
 
         environment_configuration = _parse_environment_configuration(d.pop("environmentConfiguration", UNSET))
 
@@ -199,5 +202,17 @@ class AgentDetail:
         return agent_detail
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

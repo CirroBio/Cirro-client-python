@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -26,39 +29,39 @@ class ProjectDetail:
         name (str):
         description (str):
         billing_account_id (str):
-        contacts (List['Contact']):
+        contacts (list[Contact]):
         organization (str):
         status (Status):
         settings (ProjectSettings):
         account (CloudAccount):
         status_message (str):
-        tags (List['Tag']):
-        classification_ids (List[str]):
+        tags (list[Tag]):
+        classification_ids (list[str]):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
-        deployed_at (Union[None, Unset, datetime.datetime]):
+        deployed_at (datetime.datetime | None | Unset):
     """
 
     id: str
     name: str
     description: str
     billing_account_id: str
-    contacts: List["Contact"]
+    contacts: list[Contact]
     organization: str
     status: Status
-    settings: "ProjectSettings"
-    account: "CloudAccount"
+    settings: ProjectSettings
+    account: CloudAccount
     status_message: str
-    tags: List["Tag"]
-    classification_ids: List[str]
+    tags: list[Tag]
+    classification_ids: list[str]
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    deployed_at: Union[None, Unset, datetime.datetime] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    deployed_at: datetime.datetime | None | Unset = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         id = self.id
 
         name = self.name
@@ -95,7 +98,7 @@ class ProjectDetail:
 
         updated_at = self.updated_at.isoformat()
 
-        deployed_at: Union[None, Unset, str]
+        deployed_at: None | str | Unset
         if isinstance(self.deployed_at, Unset):
             deployed_at = UNSET
         elif isinstance(self.deployed_at, datetime.datetime):
@@ -103,7 +106,7 @@ class ProjectDetail:
         else:
             deployed_at = self.deployed_at
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -130,13 +133,13 @@ class ProjectDetail:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.cloud_account import CloudAccount
         from ..models.contact import Contact
         from ..models.project_settings import ProjectSettings
         from ..models.tag import Tag
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
@@ -169,7 +172,7 @@ class ProjectDetail:
 
             tags.append(tags_item)
 
-        classification_ids = cast(List[str], d.pop("classificationIds"))
+        classification_ids = cast(list[str], d.pop("classificationIds"))
 
         created_by = d.pop("createdBy")
 
@@ -177,7 +180,7 @@ class ProjectDetail:
 
         updated_at = isoparse(d.pop("updatedAt"))
 
-        def _parse_deployed_at(data: object) -> Union[None, Unset, datetime.datetime]:
+        def _parse_deployed_at(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -188,9 +191,9 @@ class ProjectDetail:
                 deployed_at_type_0 = isoparse(data)
 
                 return deployed_at_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union[None, Unset, datetime.datetime], data)
+            return cast(datetime.datetime | None | Unset, data)
 
         deployed_at = _parse_deployed_at(d.pop("deployedAt", UNSET))
 
@@ -217,5 +220,17 @@ class ProjectDetail:
         return project_detail
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

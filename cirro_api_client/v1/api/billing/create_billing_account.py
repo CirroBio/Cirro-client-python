@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
 
 import httpx
 
@@ -13,25 +13,24 @@ from ...types import Response
 def _get_kwargs(
     *,
     body: BillingAccountRequest,
-) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    headers: dict[str, Any] = {}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "post",
         "url": "/billing",
     }
 
-    _body = body.to_dict()
+    _kwargs["json"] = body.to_dict()
 
-    _kwargs["json"] = _body
     headers["Content-Type"] = "application/json"
 
     _kwargs["headers"] = headers
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[CreateResponse]:
-    if response.status_code == HTTPStatus.CREATED:
+def _parse_response(*, client: Client, response: httpx.Response) -> CreateResponse | None:
+    if response.status_code == 201:
         response_201 = CreateResponse.from_dict(response.json())
 
         return response_201
@@ -85,7 +84,7 @@ def sync(
     *,
     client: Client,
     body: BillingAccountRequest,
-) -> Optional[CreateResponse]:
+) -> CreateResponse | None:
     """Create billing account
 
      Creates a billing account
@@ -145,7 +144,7 @@ async def asyncio(
     *,
     client: Client,
     body: BillingAccountRequest,
-) -> Optional[CreateResponse]:
+) -> CreateResponse | None:
     """Create billing account
 
      Creates a billing account

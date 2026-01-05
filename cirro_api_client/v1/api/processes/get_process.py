@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -11,17 +12,19 @@ from ...types import Response
 
 def _get_kwargs(
     process_id: str,
-) -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/processes/{process_id}",
+        "url": "/processes/{process_id}".format(
+            process_id=quote(str(process_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[ProcessDetail]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> ProcessDetail | None:
+    if response.status_code == 200:
         response_200 = ProcessDetail.from_dict(response.json())
 
         return response_200
@@ -75,7 +78,7 @@ def sync(
     process_id: str,
     *,
     client: Client,
-) -> Optional[ProcessDetail]:
+) -> ProcessDetail | None:
     """Get process
 
      Retrieves detailed information on a process
@@ -135,7 +138,7 @@ async def asyncio(
     process_id: str,
     *,
     client: Client,
-) -> Optional[ProcessDetail]:
+) -> ProcessDetail | None:
     """Get process
 
      Retrieves detailed information on a process

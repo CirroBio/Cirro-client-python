@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
 
 import httpx
 
@@ -9,8 +9,8 @@ from ...models.system_info_response import SystemInfoResponse
 from ...types import Response
 
 
-def _get_kwargs() -> Dict[str, Any]:
-    _kwargs: Dict[str, Any] = {
+def _get_kwargs() -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/info",
     }
@@ -18,8 +18,8 @@ def _get_kwargs() -> Dict[str, Any]:
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[SystemInfoResponse]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> SystemInfoResponse | None:
+    if response.status_code == 200:
         response_200 = SystemInfoResponse.from_dict(response.json())
 
         return response_200
@@ -63,7 +63,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[SystemInfoResponse]:
+) -> SystemInfoResponse | None:
     """Get system info
 
     Raises:
@@ -106,7 +106,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[SystemInfoResponse]:
+) -> SystemInfoResponse | None:
     """Get system info
 
     Raises:

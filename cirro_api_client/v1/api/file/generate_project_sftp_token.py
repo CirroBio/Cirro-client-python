@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -14,25 +15,26 @@ def _get_kwargs(
     project_id: str,
     *,
     body: GenerateSftpCredentialsRequest,
-) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    headers: dict[str, Any] = {}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "post",
-        "url": f"/projects/{project_id}/sftp-token",
+        "url": "/projects/{project_id}/sftp-token".format(
+            project_id=quote(str(project_id), safe=""),
+        ),
     }
 
-    _body = body.to_dict()
+    _kwargs["json"] = body.to_dict()
 
-    _kwargs["json"] = _body
     headers["Content-Type"] = "application/json"
 
     _kwargs["headers"] = headers
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[SftpCredentials]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> SftpCredentials | None:
+    if response.status_code == 200:
         response_200 = SftpCredentials.from_dict(response.json())
 
         return response_200
@@ -90,7 +92,7 @@ def sync(
     *,
     client: Client,
     body: GenerateSftpCredentialsRequest,
-) -> Optional[SftpCredentials]:
+) -> SftpCredentials | None:
     """Create project SFTP Token
 
      Generates credentials used for connecting via SFTP
@@ -156,7 +158,7 @@ async def asyncio(
     *,
     client: Client,
     body: GenerateSftpCredentialsRequest,
-) -> Optional[SftpCredentials]:
+) -> SftpCredentials | None:
     """Create project SFTP Token
 
      Generates credentials used for connecting via SFTP

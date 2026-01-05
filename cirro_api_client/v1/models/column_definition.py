@@ -1,4 +1,7 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -12,24 +15,24 @@ T = TypeVar("T", bound="ColumnDefinition")
 class ColumnDefinition:
     """
     Attributes:
-        col (Union[Unset, str]): Column name in asset file
-        name (Union[Unset, str]): User-friendly column name
-        desc (Union[Unset, str]): Description of the column
+        col (str | Unset): Column name in asset file
+        name (str | Unset): User-friendly column name
+        desc (str | Unset): Description of the column
     """
 
-    col: Union[Unset, str] = UNSET
-    name: Union[Unset, str] = UNSET
-    desc: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    col: str | Unset = UNSET
+    name: str | Unset = UNSET
+    desc: str | Unset = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         col = self.col
 
         name = self.name
 
         desc = self.desc
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if col is not UNSET:
@@ -42,8 +45,8 @@ class ColumnDefinition:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         col = d.pop("col", UNSET)
 
         name = d.pop("name", UNSET)
@@ -60,5 +63,17 @@ class ColumnDefinition:
         return column_definition
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

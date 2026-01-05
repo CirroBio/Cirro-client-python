@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -12,25 +13,27 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     project_id: str,
     *,
-    number_of_days: Union[Unset, int] = 1,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+    number_of_days: int | Unset = 1,
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["numberOfDays"] = number_of_days
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/projects/{project_id}/execution",
+        "url": "/projects/{project_id}/execution".format(
+            project_id=quote(str(project_id), safe=""),
+        ),
         "params": params,
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[GetProjectSummaryResponse200]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> GetProjectSummaryResponse200 | None:
+    if response.status_code == 200:
         response_200 = GetProjectSummaryResponse200.from_dict(response.json())
 
         return response_200
@@ -51,7 +54,7 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-    number_of_days: Union[Unset, int] = 1,
+    number_of_days: int | Unset = 1,
 ) -> Response[GetProjectSummaryResponse200]:
     """Get execution summary
 
@@ -59,7 +62,7 @@ def sync_detailed(
 
     Args:
         project_id (str):
-        number_of_days (Union[Unset, int]):  Default: 1.
+        number_of_days (int | Unset):  Default: 1.
         client (Client): instance of the API client
 
     Raises:
@@ -87,15 +90,15 @@ def sync(
     project_id: str,
     *,
     client: Client,
-    number_of_days: Union[Unset, int] = 1,
-) -> Optional[GetProjectSummaryResponse200]:
+    number_of_days: int | Unset = 1,
+) -> GetProjectSummaryResponse200 | None:
     """Get execution summary
 
      Gets an overview of the executions currently running in the project
 
     Args:
         project_id (str):
-        number_of_days (Union[Unset, int]):  Default: 1.
+        number_of_days (int | Unset):  Default: 1.
         client (Client): instance of the API client
 
     Raises:
@@ -120,7 +123,7 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-    number_of_days: Union[Unset, int] = 1,
+    number_of_days: int | Unset = 1,
 ) -> Response[GetProjectSummaryResponse200]:
     """Get execution summary
 
@@ -128,7 +131,7 @@ async def asyncio_detailed(
 
     Args:
         project_id (str):
-        number_of_days (Union[Unset, int]):  Default: 1.
+        number_of_days (int | Unset):  Default: 1.
         client (Client): instance of the API client
 
     Raises:
@@ -153,15 +156,15 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-    number_of_days: Union[Unset, int] = 1,
-) -> Optional[GetProjectSummaryResponse200]:
+    number_of_days: int | Unset = 1,
+) -> GetProjectSummaryResponse200 | None:
     """Get execution summary
 
      Gets an overview of the executions currently running in the project
 
     Args:
         project_id (str):
-        number_of_days (Union[Unset, int]):  Default: 1.
+        number_of_days (int | Unset):  Default: 1.
         client (Client): instance of the API client
 
     Raises:

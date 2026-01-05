@@ -1,4 +1,7 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -12,20 +15,20 @@ T = TypeVar("T", bound="SampleSheets")
 class SampleSheets:
     """
     Attributes:
-        samples (Union[Unset, str]): Written to samplesheet.csv, available as ds.samplesheet in preprocess
-        files (Union[Unset, str]): Written to files.csv, available as ds.files in preprocess
+        samples (str | Unset): Written to samplesheet.csv, available as ds.samplesheet in preprocess
+        files (str | Unset): Written to files.csv, available as ds.files in preprocess
     """
 
-    samples: Union[Unset, str] = UNSET
-    files: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    samples: str | Unset = UNSET
+    files: str | Unset = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         samples = self.samples
 
         files = self.files
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if samples is not UNSET:
@@ -36,8 +39,8 @@ class SampleSheets:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         samples = d.pop("samples", UNSET)
 
         files = d.pop("files", UNSET)
@@ -51,5 +54,17 @@ class SampleSheets:
         return sample_sheets
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -11,13 +11,13 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    username: Union[None, Unset, str] = UNSET,
-    limit: Union[Unset, int] = 5000,
-    next_token: Union[Unset, str] = UNSET,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+    username: None | str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    next_token: str | Unset = UNSET,
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
-    json_username: Union[None, Unset, str]
+    json_username: None | str | Unset
     if isinstance(username, Unset):
         json_username = UNSET
     else:
@@ -30,7 +30,7 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/users",
         "params": params,
@@ -39,8 +39,8 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[PaginatedResponseUserDto]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> PaginatedResponseUserDto | None:
+    if response.status_code == 200:
         response_200 = PaginatedResponseUserDto.from_dict(response.json())
 
         return response_200
@@ -60,18 +60,18 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Pag
 def sync_detailed(
     *,
     client: Client,
-    username: Union[None, Unset, str] = UNSET,
-    limit: Union[Unset, int] = 5000,
-    next_token: Union[Unset, str] = UNSET,
+    username: None | str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    next_token: str | Unset = UNSET,
 ) -> Response[PaginatedResponseUserDto]:
     """List users
 
      Gets a list of users, matching an optional username pattern
 
     Args:
-        username (Union[None, Unset, str]):
-        limit (Union[Unset, int]):  Default: 5000.
-        next_token (Union[Unset, str]):
+        username (None | str | Unset):
+        limit (int | Unset):  Default: 5000.
+        next_token (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -99,18 +99,18 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    username: Union[None, Unset, str] = UNSET,
-    limit: Union[Unset, int] = 5000,
-    next_token: Union[Unset, str] = UNSET,
-) -> Optional[PaginatedResponseUserDto]:
+    username: None | str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    next_token: str | Unset = UNSET,
+) -> PaginatedResponseUserDto | None:
     """List users
 
      Gets a list of users, matching an optional username pattern
 
     Args:
-        username (Union[None, Unset, str]):
-        limit (Union[Unset, int]):  Default: 5000.
-        next_token (Union[Unset, str]):
+        username (None | str | Unset):
+        limit (int | Unset):  Default: 5000.
+        next_token (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -135,18 +135,18 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-    username: Union[None, Unset, str] = UNSET,
-    limit: Union[Unset, int] = 5000,
-    next_token: Union[Unset, str] = UNSET,
+    username: None | str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    next_token: str | Unset = UNSET,
 ) -> Response[PaginatedResponseUserDto]:
     """List users
 
      Gets a list of users, matching an optional username pattern
 
     Args:
-        username (Union[None, Unset, str]):
-        limit (Union[Unset, int]):  Default: 5000.
-        next_token (Union[Unset, str]):
+        username (None | str | Unset):
+        limit (int | Unset):  Default: 5000.
+        next_token (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -171,18 +171,18 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    username: Union[None, Unset, str] = UNSET,
-    limit: Union[Unset, int] = 5000,
-    next_token: Union[Unset, str] = UNSET,
-) -> Optional[PaginatedResponseUserDto]:
+    username: None | str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    next_token: str | Unset = UNSET,
+) -> PaginatedResponseUserDto | None:
     """List users
 
      Gets a list of users, matching an optional username pattern
 
     Args:
-        username (Union[None, Unset, str]):
-        limit (Union[Unset, int]):  Default: 5000.
-        next_token (Union[Unset, str]):
+        username (None | str | Unset):
+        limit (int | Unset):  Default: 5000.
+        next_token (str | Unset):
         client (Client): instance of the API client
 
     Raises:

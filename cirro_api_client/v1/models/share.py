@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -23,9 +26,9 @@ class Share:
         description (str):
         originating_project_id (str): The ID of the project that owns the share
         share_type (ShareType):
-        conditions (List['DatasetCondition']):
-        classification_ids (List[str]):
-        keywords (List[str]):
+        conditions (list[DatasetCondition]):
+        classification_ids (list[str]):
+        keywords (list[str]):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
@@ -36,15 +39,15 @@ class Share:
     description: str
     originating_project_id: str
     share_type: ShareType
-    conditions: List["DatasetCondition"]
-    classification_ids: List[str]
-    keywords: List[str]
+    conditions: list[DatasetCondition]
+    classification_ids: list[str]
+    keywords: list[str]
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         id = self.id
 
         name = self.name
@@ -70,7 +73,7 @@ class Share:
 
         updated_at = self.updated_at.isoformat()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -91,10 +94,10 @@ class Share:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.dataset_condition import DatasetCondition
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
@@ -112,9 +115,9 @@ class Share:
 
             conditions.append(conditions_item)
 
-        classification_ids = cast(List[str], d.pop("classificationIds"))
+        classification_ids = cast(list[str], d.pop("classificationIds"))
 
-        keywords = cast(List[str], d.pop("keywords"))
+        keywords = cast(list[str], d.pop("keywords"))
 
         created_by = d.pop("createdBy")
 
@@ -140,5 +143,17 @@ class Share:
         return share
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

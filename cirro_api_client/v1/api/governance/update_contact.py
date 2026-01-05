@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -14,25 +15,26 @@ def _get_kwargs(
     contact_id: str,
     *,
     body: ContactInput,
-) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    headers: dict[str, Any] = {}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "put",
-        "url": f"/governance/contacts/{contact_id}",
+        "url": "/governance/contacts/{contact_id}".format(
+            contact_id=quote(str(contact_id), safe=""),
+        ),
     }
 
-    _body = body.to_dict()
+    _kwargs["json"] = body.to_dict()
 
-    _kwargs["json"] = _body
     headers["Content-Type"] = "application/json"
 
     _kwargs["headers"] = headers
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[GovernanceContact]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> GovernanceContact | None:
+    if response.status_code == 200:
         response_200 = GovernanceContact.from_dict(response.json())
 
         return response_200
@@ -90,7 +92,7 @@ def sync(
     *,
     client: Client,
     body: ContactInput,
-) -> Optional[GovernanceContact]:
+) -> GovernanceContact | None:
     """Update contact
 
      Updates a contact
@@ -156,7 +158,7 @@ async def asyncio(
     *,
     client: Client,
     body: ContactInput,
-) -> Optional[GovernanceContact]:
+) -> GovernanceContact | None:
     """Update contact
 
      Updates a contact

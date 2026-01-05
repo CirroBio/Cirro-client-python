@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -14,25 +15,26 @@ def _get_kwargs(
     project_id: str,
     *,
     body: ProjectInput,
-) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    headers: dict[str, Any] = {}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "put",
-        "url": f"/projects/{project_id}",
+        "url": "/projects/{project_id}".format(
+            project_id=quote(str(project_id), safe=""),
+        ),
     }
 
-    _body = body.to_dict()
+    _kwargs["json"] = body.to_dict()
 
-    _kwargs["json"] = _body
     headers["Content-Type"] = "application/json"
 
     _kwargs["headers"] = headers
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[ProjectDetail]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> ProjectDetail | None:
+    if response.status_code == 200:
         response_200 = ProjectDetail.from_dict(response.json())
 
         return response_200
@@ -90,7 +92,7 @@ def sync(
     *,
     client: Client,
     body: ProjectInput,
-) -> Optional[ProjectDetail]:
+) -> ProjectDetail | None:
     """Update project
 
      Updates a project
@@ -156,7 +158,7 @@ async def asyncio(
     *,
     client: Client,
     body: ProjectInput,
-) -> Optional[ProjectDetail]:
+) -> ProjectDetail | None:
     """Update project
 
      Updates a project

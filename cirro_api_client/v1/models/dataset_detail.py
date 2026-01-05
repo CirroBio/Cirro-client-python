@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -29,24 +32,24 @@ class DatasetDetail:
         s3 (str):
         process_id (str):
         project_id (str):
-        source_dataset_ids (List[str]):
-        source_datasets (List['NamedItem']):
-        source_sample_ids (List[str]):
+        source_dataset_ids (list[str]):
+        source_datasets (list[NamedItem]):
+        source_sample_ids (list[str]):
         source_sample_files_map (DatasetDetailSourceSampleFilesMap): Keys are sampleIds, and the lists are file paths to
             include.
         status (Status):
         status_message (str):
-        tags (List['Tag']):
+        tags (list[Tag]):
         params (DatasetDetailParams):
         info (DatasetDetailInfo):
         is_view_restricted (bool):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
-        originating_project_id (Union[Unset, str]): The originating project ID might be different if the dataset was
-            shared from another project.
-        share (Union['NamedItem', None, Unset]):
-        total_size_bytes (Union[None, Unset, int]): Total size of dataset files (in bytes)
+        originating_project_id (str | Unset): The originating project ID might be different if the dataset was shared
+            from another project.
+        share (NamedItem | None | Unset):
+        total_size_bytes (int | None | Unset): Total size of dataset files (in bytes)
     """
 
     id: str
@@ -55,25 +58,25 @@ class DatasetDetail:
     s3: str
     process_id: str
     project_id: str
-    source_dataset_ids: List[str]
-    source_datasets: List["NamedItem"]
-    source_sample_ids: List[str]
-    source_sample_files_map: "DatasetDetailSourceSampleFilesMap"
+    source_dataset_ids: list[str]
+    source_datasets: list[NamedItem]
+    source_sample_ids: list[str]
+    source_sample_files_map: DatasetDetailSourceSampleFilesMap
     status: Status
     status_message: str
-    tags: List["Tag"]
-    params: "DatasetDetailParams"
-    info: "DatasetDetailInfo"
+    tags: list[Tag]
+    params: DatasetDetailParams
+    info: DatasetDetailInfo
     is_view_restricted: bool
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    originating_project_id: Union[Unset, str] = UNSET
-    share: Union["NamedItem", None, Unset] = UNSET
-    total_size_bytes: Union[None, Unset, int] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    originating_project_id: str | Unset = UNSET
+    share: NamedItem | None | Unset = UNSET
+    total_size_bytes: int | None | Unset = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         from ..models.named_item import NamedItem
 
         id = self.id
@@ -122,7 +125,7 @@ class DatasetDetail:
 
         originating_project_id = self.originating_project_id
 
-        share: Union[Dict[str, Any], None, Unset]
+        share: dict[str, Any] | None | Unset
         if isinstance(self.share, Unset):
             share = UNSET
         elif isinstance(self.share, NamedItem):
@@ -130,13 +133,13 @@ class DatasetDetail:
         else:
             share = self.share
 
-        total_size_bytes: Union[None, Unset, int]
+        total_size_bytes: int | None | Unset
         if isinstance(self.total_size_bytes, Unset):
             total_size_bytes = UNSET
         else:
             total_size_bytes = self.total_size_bytes
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -171,14 +174,14 @@ class DatasetDetail:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.dataset_detail_info import DatasetDetailInfo
         from ..models.dataset_detail_params import DatasetDetailParams
         from ..models.dataset_detail_source_sample_files_map import DatasetDetailSourceSampleFilesMap
         from ..models.named_item import NamedItem
         from ..models.tag import Tag
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
@@ -191,7 +194,7 @@ class DatasetDetail:
 
         project_id = d.pop("projectId")
 
-        source_dataset_ids = cast(List[str], d.pop("sourceDatasetIds"))
+        source_dataset_ids = cast(list[str], d.pop("sourceDatasetIds"))
 
         source_datasets = []
         _source_datasets = d.pop("sourceDatasets")
@@ -200,7 +203,7 @@ class DatasetDetail:
 
             source_datasets.append(source_datasets_item)
 
-        source_sample_ids = cast(List[str], d.pop("sourceSampleIds"))
+        source_sample_ids = cast(list[str], d.pop("sourceSampleIds"))
 
         source_sample_files_map = DatasetDetailSourceSampleFilesMap.from_dict(d.pop("sourceSampleFilesMap"))
 
@@ -229,7 +232,7 @@ class DatasetDetail:
 
         originating_project_id = d.pop("originatingProjectId", UNSET)
 
-        def _parse_share(data: object) -> Union["NamedItem", None, Unset]:
+        def _parse_share(data: object) -> NamedItem | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -240,18 +243,18 @@ class DatasetDetail:
                 share_type_1 = NamedItem.from_dict(data)
 
                 return share_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["NamedItem", None, Unset], data)
+            return cast(NamedItem | None | Unset, data)
 
         share = _parse_share(d.pop("share", UNSET))
 
-        def _parse_total_size_bytes(data: object) -> Union[None, Unset, int]:
+        def _parse_total_size_bytes(data: object) -> int | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(Union[None, Unset, int], data)
+            return cast(int | None | Unset, data)
 
         total_size_bytes = _parse_total_size_bytes(d.pop("totalSizeBytes", UNSET))
 
@@ -284,5 +287,17 @@ class DatasetDetail:
         return dataset_detail
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

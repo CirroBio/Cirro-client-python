@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -15,18 +15,18 @@ def _get_kwargs(
     *,
     entity_type: EntityType,
     entity_id: str,
-    next_token: Union[None, Unset, str] = UNSET,
-    limit: Union[Unset, int] = 5000,
-    order: Union[None, SortOrder, Unset] = UNSET,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+    next_token: None | str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    order: None | SortOrder | Unset = UNSET,
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     json_entity_type = entity_type.value
     params["entityType"] = json_entity_type
 
     params["entityId"] = entity_id
 
-    json_next_token: Union[None, Unset, str]
+    json_next_token: None | str | Unset
     if isinstance(next_token, Unset):
         json_next_token = UNSET
     else:
@@ -35,7 +35,7 @@ def _get_kwargs(
 
     params["limit"] = limit
 
-    json_order: Union[None, Unset, str]
+    json_order: None | str | Unset
     if isinstance(order, Unset):
         json_order = UNSET
     elif isinstance(order, SortOrder):
@@ -46,7 +46,7 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/discussions",
         "params": params,
@@ -55,8 +55,8 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[PaginatedResponseDiscussion]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> PaginatedResponseDiscussion | None:
+    if response.status_code == 200:
         response_200 = PaginatedResponseDiscussion.from_dict(response.json())
 
         return response_200
@@ -78,9 +78,9 @@ def sync_detailed(
     client: Client,
     entity_type: EntityType,
     entity_id: str,
-    next_token: Union[None, Unset, str] = UNSET,
-    limit: Union[Unset, int] = 5000,
-    order: Union[None, SortOrder, Unset] = UNSET,
+    next_token: None | str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    order: None | SortOrder | Unset = UNSET,
 ) -> Response[PaginatedResponseDiscussion]:
     """Get discussions for an entity
 
@@ -89,9 +89,9 @@ def sync_detailed(
     Args:
         entity_type (EntityType):
         entity_id (str):
-        next_token (Union[None, Unset, str]):
-        limit (Union[Unset, int]):  Default: 5000.
-        order (Union[None, SortOrder, Unset]):
+        next_token (None | str | Unset):
+        limit (int | Unset):  Default: 5000.
+        order (None | SortOrder | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -123,10 +123,10 @@ def sync(
     client: Client,
     entity_type: EntityType,
     entity_id: str,
-    next_token: Union[None, Unset, str] = UNSET,
-    limit: Union[Unset, int] = 5000,
-    order: Union[None, SortOrder, Unset] = UNSET,
-) -> Optional[PaginatedResponseDiscussion]:
+    next_token: None | str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    order: None | SortOrder | Unset = UNSET,
+) -> PaginatedResponseDiscussion | None:
     """Get discussions for an entity
 
      Retrieves a paginated list of discussions for a specific entity type and ID
@@ -134,9 +134,9 @@ def sync(
     Args:
         entity_type (EntityType):
         entity_id (str):
-        next_token (Union[None, Unset, str]):
-        limit (Union[Unset, int]):  Default: 5000.
-        order (Union[None, SortOrder, Unset]):
+        next_token (None | str | Unset):
+        limit (int | Unset):  Default: 5000.
+        order (None | SortOrder | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -165,9 +165,9 @@ async def asyncio_detailed(
     client: Client,
     entity_type: EntityType,
     entity_id: str,
-    next_token: Union[None, Unset, str] = UNSET,
-    limit: Union[Unset, int] = 5000,
-    order: Union[None, SortOrder, Unset] = UNSET,
+    next_token: None | str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    order: None | SortOrder | Unset = UNSET,
 ) -> Response[PaginatedResponseDiscussion]:
     """Get discussions for an entity
 
@@ -176,9 +176,9 @@ async def asyncio_detailed(
     Args:
         entity_type (EntityType):
         entity_id (str):
-        next_token (Union[None, Unset, str]):
-        limit (Union[Unset, int]):  Default: 5000.
-        order (Union[None, SortOrder, Unset]):
+        next_token (None | str | Unset):
+        limit (int | Unset):  Default: 5000.
+        order (None | SortOrder | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -207,10 +207,10 @@ async def asyncio(
     client: Client,
     entity_type: EntityType,
     entity_id: str,
-    next_token: Union[None, Unset, str] = UNSET,
-    limit: Union[Unset, int] = 5000,
-    order: Union[None, SortOrder, Unset] = UNSET,
-) -> Optional[PaginatedResponseDiscussion]:
+    next_token: None | str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    order: None | SortOrder | Unset = UNSET,
+) -> PaginatedResponseDiscussion | None:
     """Get discussions for an entity
 
      Retrieves a paginated list of discussions for a specific entity type and ID
@@ -218,9 +218,9 @@ async def asyncio(
     Args:
         entity_type (EntityType):
         entity_id (str):
-        next_token (Union[None, Unset, str]):
-        limit (Union[Unset, int]):  Default: 5000.
-        order (Union[None, SortOrder, Unset]):
+        next_token (None | str | Unset):
+        limit (int | Unset):  Default: 5000.
+        order (None | SortOrder | Unset):
         client (Client): instance of the API client
 
     Raises:

@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -13,10 +14,10 @@ def _get_kwargs(
     project_id: str,
     dataset_id: str,
     *,
-    file_offset: Union[Unset, int] = 0,
-    file_limit: Union[Unset, int] = 20000,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+    file_offset: int | Unset = 0,
+    file_limit: int | Unset = 20000,
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["fileOffset"] = file_offset
 
@@ -24,17 +25,20 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/projects/{project_id}/datasets/{dataset_id}/files",
+        "url": "/projects/{project_id}/datasets/{dataset_id}/files".format(
+            project_id=quote(str(project_id), safe=""),
+            dataset_id=quote(str(dataset_id), safe=""),
+        ),
         "params": params,
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[DatasetAssetsManifest]:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> DatasetAssetsManifest | None:
+    if response.status_code == 200:
         response_200 = DatasetAssetsManifest.from_dict(response.json())
 
         return response_200
@@ -56,8 +60,8 @@ def sync_detailed(
     dataset_id: str,
     *,
     client: Client,
-    file_offset: Union[Unset, int] = 0,
-    file_limit: Union[Unset, int] = 20000,
+    file_offset: int | Unset = 0,
+    file_limit: int | Unset = 20000,
 ) -> Response[DatasetAssetsManifest]:
     """Get dataset manifest
 
@@ -66,8 +70,8 @@ def sync_detailed(
     Args:
         project_id (str):
         dataset_id (str):
-        file_offset (Union[Unset, int]):  Default: 0.
-        file_limit (Union[Unset, int]):  Default: 20000.
+        file_offset (int | Unset):  Default: 0.
+        file_limit (int | Unset):  Default: 20000.
         client (Client): instance of the API client
 
     Raises:
@@ -98,9 +102,9 @@ def sync(
     dataset_id: str,
     *,
     client: Client,
-    file_offset: Union[Unset, int] = 0,
-    file_limit: Union[Unset, int] = 20000,
-) -> Optional[DatasetAssetsManifest]:
+    file_offset: int | Unset = 0,
+    file_limit: int | Unset = 20000,
+) -> DatasetAssetsManifest | None:
     """Get dataset manifest
 
      Gets a listing of files, charts, and other assets available for the dataset
@@ -108,8 +112,8 @@ def sync(
     Args:
         project_id (str):
         dataset_id (str):
-        file_offset (Union[Unset, int]):  Default: 0.
-        file_limit (Union[Unset, int]):  Default: 20000.
+        file_offset (int | Unset):  Default: 0.
+        file_limit (int | Unset):  Default: 20000.
         client (Client): instance of the API client
 
     Raises:
@@ -137,8 +141,8 @@ async def asyncio_detailed(
     dataset_id: str,
     *,
     client: Client,
-    file_offset: Union[Unset, int] = 0,
-    file_limit: Union[Unset, int] = 20000,
+    file_offset: int | Unset = 0,
+    file_limit: int | Unset = 20000,
 ) -> Response[DatasetAssetsManifest]:
     """Get dataset manifest
 
@@ -147,8 +151,8 @@ async def asyncio_detailed(
     Args:
         project_id (str):
         dataset_id (str):
-        file_offset (Union[Unset, int]):  Default: 0.
-        file_limit (Union[Unset, int]):  Default: 20000.
+        file_offset (int | Unset):  Default: 0.
+        file_limit (int | Unset):  Default: 20000.
         client (Client): instance of the API client
 
     Raises:
@@ -176,9 +180,9 @@ async def asyncio(
     dataset_id: str,
     *,
     client: Client,
-    file_offset: Union[Unset, int] = 0,
-    file_limit: Union[Unset, int] = 20000,
-) -> Optional[DatasetAssetsManifest]:
+    file_offset: int | Unset = 0,
+    file_limit: int | Unset = 20000,
+) -> DatasetAssetsManifest | None:
     """Get dataset manifest
 
      Gets a listing of files, charts, and other assets available for the dataset
@@ -186,8 +190,8 @@ async def asyncio(
     Args:
         project_id (str):
         dataset_id (str):
-        file_offset (Union[Unset, int]):  Default: 0.
-        file_limit (Union[Unset, int]):  Default: 20000.
+        file_offset (int | Unset):  Default: 0.
+        file_limit (int | Unset):  Default: 20000.
         client (Client): instance of the API client
 
     Raises:

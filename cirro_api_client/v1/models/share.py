@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import datetime
+from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -23,9 +26,9 @@ class Share:
         description (str):
         originating_project_id (str): The ID of the project that owns the share
         share_type (ShareType):
-        conditions (List['DatasetCondition']):
-        classification_ids (List[str]):
-        keywords (List[str]):
+        conditions (list[DatasetCondition]):
+        classification_ids (list[str]):
+        keywords (list[str]):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
@@ -36,7 +39,7 @@ class Share:
     description: str
     originating_project_id: str
     share_type: ShareType
-    conditions: list["DatasetCondition"]
+    conditions: list[DatasetCondition]
     classification_ids: list[str]
     keywords: list[str]
     created_by: str
@@ -91,10 +94,10 @@ class Share:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.dataset_condition import DatasetCondition
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
@@ -142,3 +145,15 @@ class Share:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -13,7 +14,7 @@ def _get_kwargs(
     project_id: str,
     dataset_id: str,
     *,
-    force_live: Unset | bool = False,
+    force_live: bool | Unset = False,
 ) -> dict[str, Any]:
     params: dict[str, Any] = {}
 
@@ -23,7 +24,10 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/projects/{project_id}/execution/{dataset_id}/logs",
+        "url": "/projects/{project_id}/execution/{dataset_id}/logs".format(
+            project_id=quote(str(project_id), safe=""),
+            dataset_id=quote(str(dataset_id), safe=""),
+        ),
         "params": params,
     }
 
@@ -31,7 +35,7 @@ def _get_kwargs(
 
 
 def _parse_response(*, client: Client, response: httpx.Response) -> GetExecutionLogsResponse | None:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
         response_200 = GetExecutionLogsResponse.from_dict(response.json())
 
         return response_200
@@ -53,7 +57,7 @@ def sync_detailed(
     dataset_id: str,
     *,
     client: Client,
-    force_live: Unset | bool = False,
+    force_live: bool | Unset = False,
 ) -> Response[GetExecutionLogsResponse]:
     """Get execution logs
 
@@ -62,7 +66,7 @@ def sync_detailed(
     Args:
         project_id (str):
         dataset_id (str):
-        force_live (Union[Unset, bool]):  Default: False.
+        force_live (bool | Unset):  Default: False.
         client (Client): instance of the API client
 
     Raises:
@@ -92,7 +96,7 @@ def sync(
     dataset_id: str,
     *,
     client: Client,
-    force_live: Unset | bool = False,
+    force_live: bool | Unset = False,
 ) -> GetExecutionLogsResponse | None:
     """Get execution logs
 
@@ -101,7 +105,7 @@ def sync(
     Args:
         project_id (str):
         dataset_id (str):
-        force_live (Union[Unset, bool]):  Default: False.
+        force_live (bool | Unset):  Default: False.
         client (Client): instance of the API client
 
     Raises:
@@ -128,7 +132,7 @@ async def asyncio_detailed(
     dataset_id: str,
     *,
     client: Client,
-    force_live: Unset | bool = False,
+    force_live: bool | Unset = False,
 ) -> Response[GetExecutionLogsResponse]:
     """Get execution logs
 
@@ -137,7 +141,7 @@ async def asyncio_detailed(
     Args:
         project_id (str):
         dataset_id (str):
-        force_live (Union[Unset, bool]):  Default: False.
+        force_live (bool | Unset):  Default: False.
         client (Client): instance of the API client
 
     Raises:
@@ -164,7 +168,7 @@ async def asyncio(
     dataset_id: str,
     *,
     client: Client,
-    force_live: Unset | bool = False,
+    force_live: bool | Unset = False,
 ) -> GetExecutionLogsResponse | None:
     """Get execution logs
 
@@ -173,7 +177,7 @@ async def asyncio(
     Args:
         project_id (str):
         dataset_id (str):
-        force_live (Union[Unset, bool]):  Default: False.
+        force_live (bool | Unset):  Default: False.
         client (Client): instance of the API client
 
     Raises:

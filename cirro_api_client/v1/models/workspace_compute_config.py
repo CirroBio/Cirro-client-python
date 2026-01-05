@@ -1,4 +1,7 @@
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -18,24 +21,23 @@ class WorkspaceComputeConfig:
 
     Attributes:
         container_image_uri (str): Fully qualified container image URI (including registry, repository, and tag).
-        cpu (Union[Unset, int]): Number of vCPU cores allocated to the workspace. Example: 4.
-        memory_gi_b (Union[Unset, int]): Memory allocated to the workspace container in GiB. Example: 8.
-        volume_size_gi_b (Union[Unset, int]): Persistent storage volume size allocated to the workspace in GiB. Example:
-            50.
-        gpu (Union[Unset, int]): Number of GPUs allocated to the workspace Example: 1.
-        environment_variables (Union['WorkspaceComputeConfigEnvironmentVariables', None, Unset]): Map of environment
-            variables injected into the container at runtime. Keys must be non-blank. Example: {'ENV_MODE': 'production',
-            'LOG_LEVEL': 'debug'}.
-        local_port (Union[Unset, int]): User-facing web server port (http). Example: 8080.
+        cpu (int | Unset): Number of vCPU cores allocated to the workspace. Example: 4.
+        memory_gi_b (int | Unset): Memory allocated to the workspace container in GiB. Example: 8.
+        volume_size_gi_b (int | Unset): Persistent storage volume size allocated to the workspace in GiB. Example: 50.
+        gpu (int | Unset): Number of GPUs allocated to the workspace Example: 1.
+        environment_variables (None | Unset | WorkspaceComputeConfigEnvironmentVariables): Map of environment variables
+            injected into the container at runtime. Keys must be non-blank. Example: {'ENV_MODE': 'production', 'LOG_LEVEL':
+            'debug'}.
+        local_port (int | Unset): User-facing web server port (http). Example: 8080.
     """
 
     container_image_uri: str
-    cpu: Unset | int = UNSET
-    memory_gi_b: Unset | int = UNSET
-    volume_size_gi_b: Unset | int = UNSET
-    gpu: Unset | int = UNSET
-    environment_variables: Union["WorkspaceComputeConfigEnvironmentVariables", None, Unset] = UNSET
-    local_port: Unset | int = UNSET
+    cpu: int | Unset = UNSET
+    memory_gi_b: int | Unset = UNSET
+    volume_size_gi_b: int | Unset = UNSET
+    gpu: int | Unset = UNSET
+    environment_variables: None | Unset | WorkspaceComputeConfigEnvironmentVariables = UNSET
+    local_port: int | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -84,10 +86,10 @@ class WorkspaceComputeConfig:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.workspace_compute_config_environment_variables import WorkspaceComputeConfigEnvironmentVariables
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         container_image_uri = d.pop("containerImageUri")
 
         cpu = d.pop("cpu", UNSET)
@@ -98,9 +100,7 @@ class WorkspaceComputeConfig:
 
         gpu = d.pop("gpu", UNSET)
 
-        def _parse_environment_variables(
-            data: object,
-        ) -> Union["WorkspaceComputeConfigEnvironmentVariables", None, Unset]:
+        def _parse_environment_variables(data: object) -> None | Unset | WorkspaceComputeConfigEnvironmentVariables:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -111,9 +111,9 @@ class WorkspaceComputeConfig:
                 environment_variables_type_0 = WorkspaceComputeConfigEnvironmentVariables.from_dict(data)
 
                 return environment_variables_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["WorkspaceComputeConfigEnvironmentVariables", None, Unset], data)
+            return cast(None | Unset | WorkspaceComputeConfigEnvironmentVariables, data)
 
         environment_variables = _parse_environment_variables(d.pop("environmentVariables", UNSET))
 
@@ -135,3 +135,15 @@ class WorkspaceComputeConfig:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

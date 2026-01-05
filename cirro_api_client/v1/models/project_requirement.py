@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -26,61 +29,61 @@ class ProjectRequirement:
         id (str): The unique identifier for the requirement
         name (str): The name of the requirement
         description (str): A brief description of the requirement
-        type (GovernanceType): The types of governance requirements that can be enforced
+        type_ (GovernanceType): The types of governance requirements that can be enforced
         path (str): S3 prefix where the main file for the requirement is saved
         supplemental_path (str): S3 prefix where supplemental files for the requirement are saved
         scope (GovernanceScope): The levels at which governance requirements can be enforced
-        contacts (List['GovernanceContact']): The governance contacts assigned to the requirement.
+        contacts (list[GovernanceContact]): The governance contacts assigned to the requirement.
         is_enacted (bool): Whether the requirement is past the enactment date
         is_project_configured (bool): A requirement is project configured if it was created by the tenant but needs a
             file uploaded by the project
         is_fulfilled (bool): Whether the current user has fulfilled the requirement for this project
-        acceptance (Union[GovernanceScope, None, Unset]): Specifies the level at which it is satisfied
-        enactment_date (Union[None, Unset, datetime.datetime]): The date of enactment for the requirement
-        expiration_type (Union[Unset, GovernanceExpiryType]): The expiry conditions that can be applied to governance
+        acceptance (GovernanceScope | None | Unset): Specifies the level at which it is satisfied
+        enactment_date (datetime.datetime | None | Unset): The date of enactment for the requirement
+        expiration_type (GovernanceExpiryType | Unset): The expiry conditions that can be applied to governance
             requirements.
-        expiration_days_after_completion (Union[None, Unset, int]): The number of days for a relative to completion
+        expiration_days_after_completion (int | None | Unset): The number of days for a relative to completion
             expiration
-        expiration_date (Union[None, Unset, datetime.datetime]): The date of expiration for the requirement
-        supplemental_docs (Union[List['GovernanceFile'], None, Unset]): Optional files with extra information, e.g.
-            templates for documents, links, etc
-        file (Union['GovernanceFile', None, Unset]):
-        authorship (Union[GovernanceScope, None, Unset]): Who needs to supply the agreement document
-        verification_method (Union[GovernanceTrainingVerification, None, Unset]): The value indicating how the
-            completion of the training is verified.
-        fulfillment_id (Union[None, Unset, str]): The id for the requirement fulfillment
-        fulfillment_date (Union[None, Unset, datetime.datetime]): The date the requirement was fulfilled by the user
-        fulfillment_file (Union[None, Unset, str]): The optional file uploaded to fulfill the requirement
-        fulfillment_path (Union[None, Unset, str]): The path to the optional fulfillment file
-        requires_user_fulfillment (Union[Unset, bool]): Whether this requirement requires the user to fulfill (it is
-            active, requires fulfillment, and user has not fulfilled
+        expiration_date (datetime.datetime | None | Unset): The date of expiration for the requirement
+        supplemental_docs (list[GovernanceFile] | None | Unset): Optional files with extra information, e.g. templates
+            for documents, links, etc
+        file (GovernanceFile | None | Unset):
+        authorship (GovernanceScope | None | Unset): Who needs to supply the agreement document
+        verification_method (GovernanceTrainingVerification | None | Unset): The value indicating how the completion of
+            the training is verified.
+        fulfillment_id (None | str | Unset): The id for the requirement fulfillment
+        fulfillment_date (datetime.datetime | None | Unset): The date the requirement was fulfilled by the user
+        fulfillment_file (None | str | Unset): The optional file uploaded to fulfill the requirement
+        fulfillment_path (None | str | Unset): The path to the optional fulfillment file
+        requires_user_fulfillment (bool | Unset): Whether this requirement requires the user to fulfill (it is active,
+            requires fulfillment, and user has not fulfilled
     """
 
     id: str
     name: str
     description: str
-    type: GovernanceType
+    type_: GovernanceType
     path: str
     supplemental_path: str
     scope: GovernanceScope
-    contacts: list["GovernanceContact"]
+    contacts: list[GovernanceContact]
     is_enacted: bool
     is_project_configured: bool
     is_fulfilled: bool
     acceptance: GovernanceScope | None | Unset = UNSET
-    enactment_date: None | Unset | datetime.datetime = UNSET
-    expiration_type: Unset | GovernanceExpiryType = UNSET
-    expiration_days_after_completion: None | Unset | int = UNSET
-    expiration_date: None | Unset | datetime.datetime = UNSET
-    supplemental_docs: list["GovernanceFile"] | None | Unset = UNSET
-    file: Union["GovernanceFile", None, Unset] = UNSET
+    enactment_date: datetime.datetime | None | Unset = UNSET
+    expiration_type: GovernanceExpiryType | Unset = UNSET
+    expiration_days_after_completion: int | None | Unset = UNSET
+    expiration_date: datetime.datetime | None | Unset = UNSET
+    supplemental_docs: list[GovernanceFile] | None | Unset = UNSET
+    file: GovernanceFile | None | Unset = UNSET
     authorship: GovernanceScope | None | Unset = UNSET
     verification_method: GovernanceTrainingVerification | None | Unset = UNSET
-    fulfillment_id: None | Unset | str = UNSET
-    fulfillment_date: None | Unset | datetime.datetime = UNSET
-    fulfillment_file: None | Unset | str = UNSET
-    fulfillment_path: None | Unset | str = UNSET
-    requires_user_fulfillment: Unset | bool = UNSET
+    fulfillment_id: None | str | Unset = UNSET
+    fulfillment_date: datetime.datetime | None | Unset = UNSET
+    fulfillment_file: None | str | Unset = UNSET
+    fulfillment_path: None | str | Unset = UNSET
+    requires_user_fulfillment: bool | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -92,7 +95,7 @@ class ProjectRequirement:
 
         description = self.description
 
-        type = self.type.value
+        type_ = self.type_.value
 
         path = self.path
 
@@ -111,7 +114,7 @@ class ProjectRequirement:
 
         is_fulfilled = self.is_fulfilled
 
-        acceptance: None | Unset | str
+        acceptance: None | str | Unset
         if isinstance(self.acceptance, Unset):
             acceptance = UNSET
         elif isinstance(self.acceptance, GovernanceScope):
@@ -119,7 +122,7 @@ class ProjectRequirement:
         else:
             acceptance = self.acceptance
 
-        enactment_date: None | Unset | str
+        enactment_date: None | str | Unset
         if isinstance(self.enactment_date, Unset):
             enactment_date = UNSET
         elif isinstance(self.enactment_date, datetime.datetime):
@@ -127,17 +130,17 @@ class ProjectRequirement:
         else:
             enactment_date = self.enactment_date
 
-        expiration_type: Unset | str = UNSET
+        expiration_type: str | Unset = UNSET
         if not isinstance(self.expiration_type, Unset):
             expiration_type = self.expiration_type.value
 
-        expiration_days_after_completion: None | Unset | int
+        expiration_days_after_completion: int | None | Unset
         if isinstance(self.expiration_days_after_completion, Unset):
             expiration_days_after_completion = UNSET
         else:
             expiration_days_after_completion = self.expiration_days_after_completion
 
-        expiration_date: None | Unset | str
+        expiration_date: None | str | Unset
         if isinstance(self.expiration_date, Unset):
             expiration_date = UNSET
         elif isinstance(self.expiration_date, datetime.datetime):
@@ -165,7 +168,7 @@ class ProjectRequirement:
         else:
             file = self.file
 
-        authorship: None | Unset | str
+        authorship: None | str | Unset
         if isinstance(self.authorship, Unset):
             authorship = UNSET
         elif isinstance(self.authorship, GovernanceScope):
@@ -173,7 +176,7 @@ class ProjectRequirement:
         else:
             authorship = self.authorship
 
-        verification_method: None | Unset | str
+        verification_method: None | str | Unset
         if isinstance(self.verification_method, Unset):
             verification_method = UNSET
         elif isinstance(self.verification_method, GovernanceTrainingVerification):
@@ -181,13 +184,13 @@ class ProjectRequirement:
         else:
             verification_method = self.verification_method
 
-        fulfillment_id: None | Unset | str
+        fulfillment_id: None | str | Unset
         if isinstance(self.fulfillment_id, Unset):
             fulfillment_id = UNSET
         else:
             fulfillment_id = self.fulfillment_id
 
-        fulfillment_date: None | Unset | str
+        fulfillment_date: None | str | Unset
         if isinstance(self.fulfillment_date, Unset):
             fulfillment_date = UNSET
         elif isinstance(self.fulfillment_date, datetime.datetime):
@@ -195,13 +198,13 @@ class ProjectRequirement:
         else:
             fulfillment_date = self.fulfillment_date
 
-        fulfillment_file: None | Unset | str
+        fulfillment_file: None | str | Unset
         if isinstance(self.fulfillment_file, Unset):
             fulfillment_file = UNSET
         else:
             fulfillment_file = self.fulfillment_file
 
-        fulfillment_path: None | Unset | str
+        fulfillment_path: None | str | Unset
         if isinstance(self.fulfillment_path, Unset):
             fulfillment_path = UNSET
         else:
@@ -216,7 +219,7 @@ class ProjectRequirement:
                 "id": id,
                 "name": name,
                 "description": description,
-                "type": type,
+                "type": type_,
                 "path": path,
                 "supplementalPath": supplemental_path,
                 "scope": scope,
@@ -258,18 +261,18 @@ class ProjectRequirement:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.governance_contact import GovernanceContact
         from ..models.governance_file import GovernanceFile
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
 
         description = d.pop("description")
 
-        type = GovernanceType(d.pop("type"))
+        type_ = GovernanceType(d.pop("type"))
 
         path = d.pop("path")
 
@@ -301,13 +304,13 @@ class ProjectRequirement:
                 acceptance_type_1 = GovernanceScope(data)
 
                 return acceptance_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             return cast(GovernanceScope | None | Unset, data)
 
         acceptance = _parse_acceptance(d.pop("acceptance", UNSET))
 
-        def _parse_enactment_date(data: object) -> None | Unset | datetime.datetime:
+        def _parse_enactment_date(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -318,31 +321,31 @@ class ProjectRequirement:
                 enactment_date_type_0 = isoparse(data)
 
                 return enactment_date_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(None | Unset | datetime.datetime, data)
+            return cast(datetime.datetime | None | Unset, data)
 
         enactment_date = _parse_enactment_date(d.pop("enactmentDate", UNSET))
 
         _expiration_type = d.pop("expirationType", UNSET)
-        expiration_type: Unset | GovernanceExpiryType
+        expiration_type: GovernanceExpiryType | Unset
         if isinstance(_expiration_type, Unset):
             expiration_type = UNSET
         else:
             expiration_type = GovernanceExpiryType(_expiration_type)
 
-        def _parse_expiration_days_after_completion(data: object) -> None | Unset | int:
+        def _parse_expiration_days_after_completion(data: object) -> int | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | int, data)
+            return cast(int | None | Unset, data)
 
         expiration_days_after_completion = _parse_expiration_days_after_completion(
             d.pop("expirationDaysAfterCompletion", UNSET)
         )
 
-        def _parse_expiration_date(data: object) -> None | Unset | datetime.datetime:
+        def _parse_expiration_date(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -353,13 +356,13 @@ class ProjectRequirement:
                 expiration_date_type_0 = isoparse(data)
 
                 return expiration_date_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(None | Unset | datetime.datetime, data)
+            return cast(datetime.datetime | None | Unset, data)
 
         expiration_date = _parse_expiration_date(d.pop("expirationDate", UNSET))
 
-        def _parse_supplemental_docs(data: object) -> list["GovernanceFile"] | None | Unset:
+        def _parse_supplemental_docs(data: object) -> list[GovernanceFile] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -375,13 +378,13 @@ class ProjectRequirement:
                     supplemental_docs_type_0.append(supplemental_docs_type_0_item)
 
                 return supplemental_docs_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(list["GovernanceFile"] | None | Unset, data)
+            return cast(list[GovernanceFile] | None | Unset, data)
 
         supplemental_docs = _parse_supplemental_docs(d.pop("supplementalDocs", UNSET))
 
-        def _parse_file(data: object) -> Union["GovernanceFile", None, Unset]:
+        def _parse_file(data: object) -> GovernanceFile | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -392,9 +395,9 @@ class ProjectRequirement:
                 file_type_1 = GovernanceFile.from_dict(data)
 
                 return file_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["GovernanceFile", None, Unset], data)
+            return cast(GovernanceFile | None | Unset, data)
 
         file = _parse_file(d.pop("file", UNSET))
 
@@ -409,7 +412,7 @@ class ProjectRequirement:
                 authorship_type_1 = GovernanceScope(data)
 
                 return authorship_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             return cast(GovernanceScope | None | Unset, data)
 
@@ -426,22 +429,22 @@ class ProjectRequirement:
                 verification_method_type_1 = GovernanceTrainingVerification(data)
 
                 return verification_method_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             return cast(GovernanceTrainingVerification | None | Unset, data)
 
         verification_method = _parse_verification_method(d.pop("verificationMethod", UNSET))
 
-        def _parse_fulfillment_id(data: object) -> None | Unset | str:
+        def _parse_fulfillment_id(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         fulfillment_id = _parse_fulfillment_id(d.pop("fulfillmentId", UNSET))
 
-        def _parse_fulfillment_date(data: object) -> None | Unset | datetime.datetime:
+        def _parse_fulfillment_date(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -452,27 +455,27 @@ class ProjectRequirement:
                 fulfillment_date_type_0 = isoparse(data)
 
                 return fulfillment_date_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(None | Unset | datetime.datetime, data)
+            return cast(datetime.datetime | None | Unset, data)
 
         fulfillment_date = _parse_fulfillment_date(d.pop("fulfillmentDate", UNSET))
 
-        def _parse_fulfillment_file(data: object) -> None | Unset | str:
+        def _parse_fulfillment_file(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         fulfillment_file = _parse_fulfillment_file(d.pop("fulfillmentFile", UNSET))
 
-        def _parse_fulfillment_path(data: object) -> None | Unset | str:
+        def _parse_fulfillment_path(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         fulfillment_path = _parse_fulfillment_path(d.pop("fulfillmentPath", UNSET))
 
@@ -482,7 +485,7 @@ class ProjectRequirement:
             id=id,
             name=name,
             description=description,
-            type=type,
+            type_=type_,
             path=path,
             supplemental_path=supplemental_path,
             scope=scope,
@@ -512,3 +515,15 @@ class ProjectRequirement:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

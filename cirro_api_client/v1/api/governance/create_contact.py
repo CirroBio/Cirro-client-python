@@ -21,9 +21,8 @@ def _get_kwargs(
         "url": "/governance/contacts",
     }
 
-    _body = body.to_dict()
+    _kwargs["json"] = body.to_dict()
 
-    _kwargs["json"] = _body
     headers["Content-Type"] = "application/json"
 
     _kwargs["headers"] = headers
@@ -31,7 +30,7 @@ def _get_kwargs(
 
 
 def _parse_response(*, client: Client, response: httpx.Response) -> GovernanceContact | None:
-    if response.status_code == HTTPStatus.CREATED:
+    if response.status_code == 201:
         response_201 = GovernanceContact.from_dict(response.json())
 
         return response_201

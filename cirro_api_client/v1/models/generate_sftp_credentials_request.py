@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
@@ -12,10 +15,10 @@ T = TypeVar("T", bound="GenerateSftpCredentialsRequest")
 class GenerateSftpCredentialsRequest:
     """
     Attributes:
-        lifetime_days (Union[Unset, int]): Number of days the credentials are valid for Default: 1.
+        lifetime_days (int | Unset): Number of days the credentials are valid for Default: 1.
     """
 
-    lifetime_days: Unset | int = 1
+    lifetime_days: int | Unset = 1
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -30,8 +33,8 @@ class GenerateSftpCredentialsRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         lifetime_days = d.pop("lifetimeDays", UNSET)
 
         generate_sftp_credentials_request = cls(
@@ -44,3 +47,15 @@ class GenerateSftpCredentialsRequest:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

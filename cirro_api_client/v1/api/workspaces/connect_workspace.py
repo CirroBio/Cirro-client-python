@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -15,14 +16,17 @@ def _get_kwargs(
 ) -> dict[str, Any]:
     _kwargs: dict[str, Any] = {
         "method": "post",
-        "url": f"/projects/{project_id}/workspaces/{workspace_id}:connect",
+        "url": "/projects/{project_id}/workspaces/{workspace_id}:connect".format(
+            project_id=quote(str(project_id), safe=""),
+            workspace_id=quote(str(workspace_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(*, client: Client, response: httpx.Response) -> WorkspaceConnectionResponse | None:
-    if response.status_code == HTTPStatus.ACCEPTED:
+    if response.status_code == 202:
         response_202 = WorkspaceConnectionResponse.from_dict(response.json())
 
         return response_202

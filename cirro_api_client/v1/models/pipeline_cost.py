@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -12,18 +15,18 @@ T = TypeVar("T", bound="PipelineCost")
 class PipelineCost:
     """
     Attributes:
-        total_cost (Union[None, Unset, float]): The total cost of running the pipeline
-        is_estimate (Union[Unset, bool]): Is this an estimate of the cost?
-        description (Union[Unset, str]): Description of the cost calculation
+        total_cost (float | None | Unset): The total cost of running the pipeline
+        is_estimate (bool | Unset): Is this an estimate of the cost?
+        description (str | Unset): Description of the cost calculation
     """
 
-    total_cost: None | Unset | float = UNSET
-    is_estimate: Unset | bool = UNSET
-    description: Unset | str = UNSET
+    total_cost: float | None | Unset = UNSET
+    is_estimate: bool | Unset = UNSET
+    description: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        total_cost: None | Unset | float
+        total_cost: float | None | Unset
         if isinstance(self.total_cost, Unset):
             total_cost = UNSET
         else:
@@ -46,15 +49,15 @@ class PipelineCost:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
 
-        def _parse_total_cost(data: object) -> None | Unset | float:
+        def _parse_total_cost(data: object) -> float | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | float, data)
+            return cast(float | None | Unset, data)
 
         total_cost = _parse_total_cost(d.pop("totalCost", UNSET))
 
@@ -74,3 +77,15 @@ class PipelineCost:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

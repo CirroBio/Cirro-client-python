@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -13,14 +14,14 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     discussion_id: str,
     *,
-    next_token: None | Unset | str = UNSET,
-    limit: Unset | int = 5000,
-    thread_id: None | Unset | str = UNSET,
+    next_token: None | str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    thread_id: None | str | Unset = UNSET,
     order: None | SortOrder | Unset = UNSET,
 ) -> dict[str, Any]:
     params: dict[str, Any] = {}
 
-    json_next_token: None | Unset | str
+    json_next_token: None | str | Unset
     if isinstance(next_token, Unset):
         json_next_token = UNSET
     else:
@@ -29,14 +30,14 @@ def _get_kwargs(
 
     params["limit"] = limit
 
-    json_thread_id: None | Unset | str
+    json_thread_id: None | str | Unset
     if isinstance(thread_id, Unset):
         json_thread_id = UNSET
     else:
         json_thread_id = thread_id
     params["threadId"] = json_thread_id
 
-    json_order: None | Unset | str
+    json_order: None | str | Unset
     if isinstance(order, Unset):
         json_order = UNSET
     elif isinstance(order, SortOrder):
@@ -49,7 +50,9 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/discussions/{discussion_id}/messages",
+        "url": "/discussions/{discussion_id}/messages".format(
+            discussion_id=quote(str(discussion_id), safe=""),
+        ),
         "params": params,
     }
 
@@ -57,7 +60,7 @@ def _get_kwargs(
 
 
 def _parse_response(*, client: Client, response: httpx.Response) -> PaginatedResponseMessage | None:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
         response_200 = PaginatedResponseMessage.from_dict(response.json())
 
         return response_200
@@ -78,9 +81,9 @@ def sync_detailed(
     discussion_id: str,
     *,
     client: Client,
-    next_token: None | Unset | str = UNSET,
-    limit: Unset | int = 5000,
-    thread_id: None | Unset | str = UNSET,
+    next_token: None | str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    thread_id: None | str | Unset = UNSET,
     order: None | SortOrder | Unset = UNSET,
 ) -> Response[PaginatedResponseMessage]:
     """Get messages for a discussion
@@ -89,10 +92,10 @@ def sync_detailed(
 
     Args:
         discussion_id (str):
-        next_token (Union[None, Unset, str]):
-        limit (Union[Unset, int]):  Default: 5000.
-        thread_id (Union[None, Unset, str]):
-        order (Union[None, SortOrder, Unset]):
+        next_token (None | str | Unset):
+        limit (int | Unset):  Default: 5000.
+        thread_id (None | str | Unset):
+        order (None | SortOrder | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -123,9 +126,9 @@ def sync(
     discussion_id: str,
     *,
     client: Client,
-    next_token: None | Unset | str = UNSET,
-    limit: Unset | int = 5000,
-    thread_id: None | Unset | str = UNSET,
+    next_token: None | str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    thread_id: None | str | Unset = UNSET,
     order: None | SortOrder | Unset = UNSET,
 ) -> PaginatedResponseMessage | None:
     """Get messages for a discussion
@@ -134,10 +137,10 @@ def sync(
 
     Args:
         discussion_id (str):
-        next_token (Union[None, Unset, str]):
-        limit (Union[Unset, int]):  Default: 5000.
-        thread_id (Union[None, Unset, str]):
-        order (Union[None, SortOrder, Unset]):
+        next_token (None | str | Unset):
+        limit (int | Unset):  Default: 5000.
+        thread_id (None | str | Unset):
+        order (None | SortOrder | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -165,9 +168,9 @@ async def asyncio_detailed(
     discussion_id: str,
     *,
     client: Client,
-    next_token: None | Unset | str = UNSET,
-    limit: Unset | int = 5000,
-    thread_id: None | Unset | str = UNSET,
+    next_token: None | str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    thread_id: None | str | Unset = UNSET,
     order: None | SortOrder | Unset = UNSET,
 ) -> Response[PaginatedResponseMessage]:
     """Get messages for a discussion
@@ -176,10 +179,10 @@ async def asyncio_detailed(
 
     Args:
         discussion_id (str):
-        next_token (Union[None, Unset, str]):
-        limit (Union[Unset, int]):  Default: 5000.
-        thread_id (Union[None, Unset, str]):
-        order (Union[None, SortOrder, Unset]):
+        next_token (None | str | Unset):
+        limit (int | Unset):  Default: 5000.
+        thread_id (None | str | Unset):
+        order (None | SortOrder | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -207,9 +210,9 @@ async def asyncio(
     discussion_id: str,
     *,
     client: Client,
-    next_token: None | Unset | str = UNSET,
-    limit: Unset | int = 5000,
-    thread_id: None | Unset | str = UNSET,
+    next_token: None | str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    thread_id: None | str | Unset = UNSET,
     order: None | SortOrder | Unset = UNSET,
 ) -> PaginatedResponseMessage | None:
     """Get messages for a discussion
@@ -218,10 +221,10 @@ async def asyncio(
 
     Args:
         discussion_id (str):
-        next_token (Union[None, Unset, str]):
-        limit (Union[Unset, int]):  Default: 5000.
-        thread_id (Union[None, Unset, str]):
-        order (Union[None, SortOrder, Unset]):
+        next_token (None | str | Unset):
+        limit (int | Unset):  Default: 5000.
+        thread_id (None | str | Unset):
+        order (None | SortOrder | Unset):
         client (Client): instance of the API client
 
     Raises:

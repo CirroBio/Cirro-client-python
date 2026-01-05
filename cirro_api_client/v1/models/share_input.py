@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -18,21 +21,21 @@ class ShareInput:
     Attributes:
         name (str):
         description (str):
-        classification_ids (List[str]): Data classification IDs for the share
-        conditions (List['DatasetCondition']): The conditions under which the dataset is shared
-        keywords (Union[Unset, List[str]]): Search keywords for the share
-        shared_project_ids (Union[Unset, List[str]]): The project IDs that can access this share
-        is_view_restricted (Union[Unset, bool]): Whether files within the share are restricted from viewing or
-            downloading Default: False.
+        classification_ids (list[str]): Data classification IDs for the share
+        conditions (list[DatasetCondition]): The conditions under which the dataset is shared
+        keywords (list[str] | Unset): Search keywords for the share
+        shared_project_ids (list[str] | Unset): The project IDs that can access this share
+        is_view_restricted (bool | Unset): Whether files within the share are restricted from viewing or downloading
+            Default: False.
     """
 
     name: str
     description: str
     classification_ids: list[str]
-    conditions: list["DatasetCondition"]
-    keywords: Unset | list[str] = UNSET
-    shared_project_ids: Unset | list[str] = UNSET
-    is_view_restricted: Unset | bool = False
+    conditions: list[DatasetCondition]
+    keywords: list[str] | Unset = UNSET
+    shared_project_ids: list[str] | Unset = UNSET
+    is_view_restricted: bool | Unset = False
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -47,11 +50,11 @@ class ShareInput:
             conditions_item = conditions_item_data.to_dict()
             conditions.append(conditions_item)
 
-        keywords: Unset | list[str] = UNSET
+        keywords: list[str] | Unset = UNSET
         if not isinstance(self.keywords, Unset):
             keywords = self.keywords
 
-        shared_project_ids: Unset | list[str] = UNSET
+        shared_project_ids: list[str] | Unset = UNSET
         if not isinstance(self.shared_project_ids, Unset):
             shared_project_ids = self.shared_project_ids
 
@@ -77,10 +80,10 @@ class ShareInput:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.dataset_condition import DatasetCondition
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         name = d.pop("name")
 
         description = d.pop("description")
@@ -116,3 +119,15 @@ class ShareInput:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

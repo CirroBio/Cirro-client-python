@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import datetime
+from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -24,10 +27,10 @@ class ShareDetail:
         description (str):
         originating_project (NamedItem):
         share_type (ShareType):
-        shared_projects (List['NamedItem']):
-        conditions (List['DatasetCondition']): The conditions under which the dataset is shared
-        keywords (List[str]):
-        classification_ids (List[str]):
+        shared_projects (list[NamedItem]):
+        conditions (list[DatasetCondition]): The conditions under which the dataset is shared
+        keywords (list[str]):
+        classification_ids (list[str]):
         is_view_restricted (bool):
         created_by (str):
         created_at (datetime.datetime):
@@ -37,10 +40,10 @@ class ShareDetail:
     id: str
     name: str
     description: str
-    originating_project: "NamedItem"
+    originating_project: NamedItem
     share_type: ShareType
-    shared_projects: list["NamedItem"]
-    conditions: list["DatasetCondition"]
+    shared_projects: list[NamedItem]
+    conditions: list[DatasetCondition]
     keywords: list[str]
     classification_ids: list[str]
     is_view_restricted: bool
@@ -105,11 +108,11 @@ class ShareDetail:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.dataset_condition import DatasetCondition
         from ..models.named_item import NamedItem
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
@@ -168,3 +171,15 @@ class ShareDetail:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

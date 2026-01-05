@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import datetime
+from collections.abc import Mapping
 from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -19,8 +22,8 @@ class NotebookInstance:
         status (Status):
         status_message (str):
         instance_type (str):
-        accelerator_types (List[str]):
-        git_repositories (List[str]):
+        accelerator_types (list[str]):
+        git_repositories (list[str]):
         volume_size_gb (int):
         is_shared_with_project (bool):
         created_by (str):
@@ -89,8 +92,8 @@ class NotebookInstance:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
@@ -136,3 +139,15 @@ class NotebookInstance:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

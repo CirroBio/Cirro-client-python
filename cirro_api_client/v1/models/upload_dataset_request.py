@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -18,16 +21,16 @@ class UploadDatasetRequest:
     Attributes:
         name (str): Name of the dataset
         process_id (str): ID of the ingest process Example: paired_dnaseq.
-        expected_files (List[str]):
-        description (Union[Unset, str]): Description of the dataset
-        tags (Union[List['Tag'], None, Unset]): List of tags to apply to the dataset
+        expected_files (list[str]):
+        description (str | Unset): Description of the dataset
+        tags (list[Tag] | None | Unset): List of tags to apply to the dataset
     """
 
     name: str
     process_id: str
     expected_files: list[str]
-    description: Unset | str = UNSET
-    tags: list["Tag"] | None | Unset = UNSET
+    description: str | Unset = UNSET
+    tags: list[Tag] | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -68,10 +71,10 @@ class UploadDatasetRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.tag import Tag
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         name = d.pop("name")
 
         process_id = d.pop("processId")
@@ -80,7 +83,7 @@ class UploadDatasetRequest:
 
         description = d.pop("description", UNSET)
 
-        def _parse_tags(data: object) -> list["Tag"] | None | Unset:
+        def _parse_tags(data: object) -> list[Tag] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -96,9 +99,9 @@ class UploadDatasetRequest:
                     tags_type_0.append(tags_type_0_item)
 
                 return tags_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(list["Tag"] | None | Unset, data)
+            return cast(list[Tag] | None | Unset, data)
 
         tags = _parse_tags(d.pop("tags", UNSET))
 
@@ -116,3 +119,15 @@ class UploadDatasetRequest:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

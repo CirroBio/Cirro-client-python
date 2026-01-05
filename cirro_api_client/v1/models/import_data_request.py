@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -18,20 +21,20 @@ class ImportDataRequest:
     """
     Attributes:
         name (str): Name of the dataset
-        public_ids (List[str]):
-        description (Union[Unset, str]): Description of the dataset
-        tags (Union[List['Tag'], None, Unset]): List of tags to apply to the dataset
-        download_method (Union[Unset, ImportDataRequestDownloadMethod]): Method to download FastQ files Default:
+        public_ids (list[str]):
+        description (str | Unset): Description of the dataset
+        tags (list[Tag] | None | Unset): List of tags to apply to the dataset
+        download_method (ImportDataRequestDownloadMethod | Unset): Method to download FastQ files Default:
             ImportDataRequestDownloadMethod.SRATOOLS.
-        dbgap_key (Union[None, Unset, str]): dbGaP repository key (used to access protected data on SRA)
+        dbgap_key (None | str | Unset): dbGaP repository key (used to access protected data on SRA)
     """
 
     name: str
     public_ids: list[str]
-    description: Unset | str = UNSET
-    tags: list["Tag"] | None | Unset = UNSET
-    download_method: Unset | ImportDataRequestDownloadMethod = ImportDataRequestDownloadMethod.SRATOOLS
-    dbgap_key: None | Unset | str = UNSET
+    description: str | Unset = UNSET
+    tags: list[Tag] | None | Unset = UNSET
+    download_method: ImportDataRequestDownloadMethod | Unset = ImportDataRequestDownloadMethod.SRATOOLS
+    dbgap_key: None | str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -53,11 +56,11 @@ class ImportDataRequest:
         else:
             tags = self.tags
 
-        download_method: Unset | str = UNSET
+        download_method: str | Unset = UNSET
         if not isinstance(self.download_method, Unset):
             download_method = self.download_method.value
 
-        dbgap_key: None | Unset | str
+        dbgap_key: None | str | Unset
         if isinstance(self.dbgap_key, Unset):
             dbgap_key = UNSET
         else:
@@ -83,17 +86,17 @@ class ImportDataRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.tag import Tag
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         name = d.pop("name")
 
         public_ids = cast(list[str], d.pop("publicIds"))
 
         description = d.pop("description", UNSET)
 
-        def _parse_tags(data: object) -> list["Tag"] | None | Unset:
+        def _parse_tags(data: object) -> list[Tag] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -109,25 +112,25 @@ class ImportDataRequest:
                     tags_type_0.append(tags_type_0_item)
 
                 return tags_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(list["Tag"] | None | Unset, data)
+            return cast(list[Tag] | None | Unset, data)
 
         tags = _parse_tags(d.pop("tags", UNSET))
 
         _download_method = d.pop("downloadMethod", UNSET)
-        download_method: Unset | ImportDataRequestDownloadMethod
+        download_method: ImportDataRequestDownloadMethod | Unset
         if isinstance(_download_method, Unset):
             download_method = UNSET
         else:
             download_method = ImportDataRequestDownloadMethod(_download_method)
 
-        def _parse_dbgap_key(data: object) -> None | Unset | str:
+        def _parse_dbgap_key(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         dbgap_key = _parse_dbgap_key(d.pop("dbgapKey", UNSET))
 
@@ -146,3 +149,15 @@ class ImportDataRequest:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

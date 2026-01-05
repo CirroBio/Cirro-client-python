@@ -12,15 +12,15 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    username: Unset | str = UNSET,
-    entity_type: Unset | ListEventsEntityType = UNSET,
-    entity_id: Unset | str = UNSET,
+    username: str | Unset = UNSET,
+    entity_type: ListEventsEntityType | Unset = UNSET,
+    entity_id: str | Unset = UNSET,
 ) -> dict[str, Any]:
     params: dict[str, Any] = {}
 
     params["username"] = username
 
-    json_entity_type: Unset | str = UNSET
+    json_entity_type: str | Unset = UNSET
     if not isinstance(entity_type, Unset):
         json_entity_type = entity_type.value
 
@@ -39,8 +39,8 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> list["AuditEvent"] | None:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> list[AuditEvent] | None:
+    if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
         for response_200_item_data in _response_200:
@@ -53,7 +53,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> list["AuditE
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[list["AuditEvent"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list[AuditEvent]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -65,18 +65,18 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[lis
 def sync_detailed(
     *,
     client: Client,
-    username: Unset | str = UNSET,
-    entity_type: Unset | ListEventsEntityType = UNSET,
-    entity_id: Unset | str = UNSET,
-) -> Response[list["AuditEvent"]]:
+    username: str | Unset = UNSET,
+    entity_type: ListEventsEntityType | Unset = UNSET,
+    entity_id: str | Unset = UNSET,
+) -> Response[list[AuditEvent]]:
     """List audit events
 
      Gets a list of audit events
 
     Args:
-        username (Union[Unset, str]):
-        entity_type (Union[Unset, ListEventsEntityType]):
-        entity_id (Union[Unset, str]):
+        username (str | Unset):
+        entity_type (ListEventsEntityType | Unset):
+        entity_id (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -84,7 +84,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['AuditEvent']]
+        Response[list[AuditEvent]]
     """
 
     kwargs = _get_kwargs(
@@ -104,18 +104,18 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    username: Unset | str = UNSET,
-    entity_type: Unset | ListEventsEntityType = UNSET,
-    entity_id: Unset | str = UNSET,
-) -> list["AuditEvent"] | None:
+    username: str | Unset = UNSET,
+    entity_type: ListEventsEntityType | Unset = UNSET,
+    entity_id: str | Unset = UNSET,
+) -> list[AuditEvent] | None:
     """List audit events
 
      Gets a list of audit events
 
     Args:
-        username (Union[Unset, str]):
-        entity_type (Union[Unset, ListEventsEntityType]):
-        entity_id (Union[Unset, str]):
+        username (str | Unset):
+        entity_type (ListEventsEntityType | Unset):
+        entity_id (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -123,7 +123,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['AuditEvent']
+        list[AuditEvent]
     """
 
     try:
@@ -140,18 +140,18 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-    username: Unset | str = UNSET,
-    entity_type: Unset | ListEventsEntityType = UNSET,
-    entity_id: Unset | str = UNSET,
-) -> Response[list["AuditEvent"]]:
+    username: str | Unset = UNSET,
+    entity_type: ListEventsEntityType | Unset = UNSET,
+    entity_id: str | Unset = UNSET,
+) -> Response[list[AuditEvent]]:
     """List audit events
 
      Gets a list of audit events
 
     Args:
-        username (Union[Unset, str]):
-        entity_type (Union[Unset, ListEventsEntityType]):
-        entity_id (Union[Unset, str]):
+        username (str | Unset):
+        entity_type (ListEventsEntityType | Unset):
+        entity_id (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -159,7 +159,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['AuditEvent']]
+        Response[list[AuditEvent]]
     """
 
     kwargs = _get_kwargs(
@@ -176,18 +176,18 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    username: Unset | str = UNSET,
-    entity_type: Unset | ListEventsEntityType = UNSET,
-    entity_id: Unset | str = UNSET,
-) -> list["AuditEvent"] | None:
+    username: str | Unset = UNSET,
+    entity_type: ListEventsEntityType | Unset = UNSET,
+    entity_id: str | Unset = UNSET,
+) -> list[AuditEvent] | None:
     """List audit events
 
      Gets a list of audit events
 
     Args:
-        username (Union[Unset, str]):
-        entity_type (Union[Unset, ListEventsEntityType]):
-        entity_id (Union[Unset, str]):
+        username (str | Unset):
+        entity_type (ListEventsEntityType | Unset):
+        entity_id (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -195,7 +195,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['AuditEvent']
+        list[AuditEvent]
     """
 
     try:

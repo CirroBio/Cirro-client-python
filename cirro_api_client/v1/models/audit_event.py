@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -19,30 +22,30 @@ T = TypeVar("T", bound="AuditEvent")
 class AuditEvent:
     """
     Attributes:
-        id (Union[Unset, str]): The unique identifier for the audit event
-        event_type (Union[Unset, str]): The type of event Example: CREATE.
-        project_id (Union[Unset, str]): The project ID associated with the event (if applicable)
-        entity_id (Union[Unset, str]): The entity ID associated with the event
-        entity_type (Union[Unset, str]): The entity type associated with the event Example: Project.
-        event_detail (Union['AuditEventEventDetail', None, Unset]): The details of the event, such as the request
-            details sent from the client
-        changes (Union['AuditEventChanges', None, Unset]): The changes made to the entity (if applicable) Example:
+        id (str | Unset): The unique identifier for the audit event
+        event_type (str | Unset): The type of event Example: CREATE.
+        project_id (str | Unset): The project ID associated with the event (if applicable)
+        entity_id (str | Unset): The entity ID associated with the event
+        entity_type (str | Unset): The entity type associated with the event Example: Project.
+        event_detail (AuditEventEventDetail | None | Unset): The details of the event, such as the request details sent
+            from the client
+        changes (AuditEventChanges | None | Unset): The changes made to the entity (if applicable) Example:
             {'.settings.retentionPolicyDays': '1 -> 2'}.
-        username (Union[Unset, str]): The username of the user who performed the action Example: admin@cirro.bio.
-        ip_address (Union[Unset, str]): The IP address of the user who performed the action Example: 0.0.0.0.
-        created_at (Union[Unset, datetime.datetime]): The date and time the event was created
+        username (str | Unset): The username of the user who performed the action Example: admin@cirro.bio.
+        ip_address (str | Unset): The IP address of the user who performed the action Example: 0.0.0.0.
+        created_at (datetime.datetime | Unset): The date and time the event was created
     """
 
-    id: Unset | str = UNSET
-    event_type: Unset | str = UNSET
-    project_id: Unset | str = UNSET
-    entity_id: Unset | str = UNSET
-    entity_type: Unset | str = UNSET
-    event_detail: Union["AuditEventEventDetail", None, Unset] = UNSET
-    changes: Union["AuditEventChanges", None, Unset] = UNSET
-    username: Unset | str = UNSET
-    ip_address: Unset | str = UNSET
-    created_at: Unset | datetime.datetime = UNSET
+    id: str | Unset = UNSET
+    event_type: str | Unset = UNSET
+    project_id: str | Unset = UNSET
+    entity_id: str | Unset = UNSET
+    entity_type: str | Unset = UNSET
+    event_detail: AuditEventEventDetail | None | Unset = UNSET
+    changes: AuditEventChanges | None | Unset = UNSET
+    username: str | Unset = UNSET
+    ip_address: str | Unset = UNSET
+    created_at: datetime.datetime | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -79,7 +82,7 @@ class AuditEvent:
 
         ip_address = self.ip_address
 
-        created_at: Unset | str = UNSET
+        created_at: str | Unset = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
 
@@ -110,11 +113,11 @@ class AuditEvent:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.audit_event_changes import AuditEventChanges
         from ..models.audit_event_event_detail import AuditEventEventDetail
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         id = d.pop("id", UNSET)
 
         event_type = d.pop("eventType", UNSET)
@@ -125,7 +128,7 @@ class AuditEvent:
 
         entity_type = d.pop("entityType", UNSET)
 
-        def _parse_event_detail(data: object) -> Union["AuditEventEventDetail", None, Unset]:
+        def _parse_event_detail(data: object) -> AuditEventEventDetail | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -136,13 +139,13 @@ class AuditEvent:
                 event_detail_type_0 = AuditEventEventDetail.from_dict(data)
 
                 return event_detail_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["AuditEventEventDetail", None, Unset], data)
+            return cast(AuditEventEventDetail | None | Unset, data)
 
         event_detail = _parse_event_detail(d.pop("eventDetail", UNSET))
 
-        def _parse_changes(data: object) -> Union["AuditEventChanges", None, Unset]:
+        def _parse_changes(data: object) -> AuditEventChanges | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -153,9 +156,9 @@ class AuditEvent:
                 changes_type_0 = AuditEventChanges.from_dict(data)
 
                 return changes_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["AuditEventChanges", None, Unset], data)
+            return cast(AuditEventChanges | None | Unset, data)
 
         changes = _parse_changes(d.pop("changes", UNSET))
 
@@ -164,7 +167,7 @@ class AuditEvent:
         ip_address = d.pop("ipAddress", UNSET)
 
         _created_at = d.pop("createdAt", UNSET)
-        created_at: Unset | datetime.datetime
+        created_at: datetime.datetime | Unset
         if isinstance(_created_at, Unset):
             created_at = UNSET
         else:
@@ -189,3 +192,15 @@ class AuditEvent:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

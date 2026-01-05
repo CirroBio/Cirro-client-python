@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -13,14 +14,16 @@ def _get_kwargs(
 ) -> dict[str, Any]:
     _kwargs: dict[str, Any] = {
         "method": "put",
-        "url": f"/users/{username}:signOut",
+        "url": "/users/{username}:signOut".format(
+            username=quote(str(username), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(*, client: Client, response: httpx.Response) -> Any | None:
-    if response.status_code == HTTPStatus.ACCEPTED:
+    if response.status_code == 202:
         return None
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)

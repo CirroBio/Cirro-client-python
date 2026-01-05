@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
@@ -15,12 +18,12 @@ class SetUserProjectRoleRequest:
     Attributes:
         username (str):
         role (ProjectRole):
-        suppress_notification (Union[Unset, bool]):  Default: False.
+        suppress_notification (bool | Unset):  Default: False.
     """
 
     username: str
     role: ProjectRole
-    suppress_notification: Unset | bool = False
+    suppress_notification: bool | Unset = False
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -44,8 +47,8 @@ class SetUserProjectRoleRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         username = d.pop("username")
 
         role = ProjectRole(d.pop("role"))
@@ -64,3 +67,15 @@ class SetUserProjectRoleRequest:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

@@ -18,8 +18,8 @@ def _get_kwargs() -> dict[str, Any]:
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> list["ReferenceType"] | None:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> list[ReferenceType] | None:
+    if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
         for response_200_item_data in _response_200:
@@ -32,7 +32,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> list["Refere
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[list["ReferenceType"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list[ReferenceType]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -44,7 +44,7 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[lis
 def sync_detailed(
     *,
     client: Client,
-) -> Response[list["ReferenceType"]]:
+) -> Response[list[ReferenceType]]:
     """Get reference types
 
      List available reference types
@@ -54,7 +54,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['ReferenceType']]
+        Response[list[ReferenceType]]
     """
 
     kwargs = _get_kwargs()
@@ -70,7 +70,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> list["ReferenceType"] | None:
+) -> list[ReferenceType] | None:
     """Get reference types
 
      List available reference types
@@ -80,7 +80,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['ReferenceType']
+        list[ReferenceType]
     """
 
     try:
@@ -94,7 +94,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[list["ReferenceType"]]:
+) -> Response[list[ReferenceType]]:
     """Get reference types
 
      List available reference types
@@ -104,7 +104,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['ReferenceType']]
+        Response[list[ReferenceType]]
     """
 
     kwargs = _get_kwargs()
@@ -117,7 +117,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> list["ReferenceType"] | None:
+) -> list[ReferenceType] | None:
     """Get reference types
 
      List available reference types
@@ -127,7 +127,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['ReferenceType']
+        list[ReferenceType]
     """
 
     try:

@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -22,12 +25,12 @@ class Dashboard:
         id (str):
         name (str):
         description (str):
-        process_ids (List[str]):
+        process_ids (list[str]):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
-        dashboard_data (Union[Unset, DashboardDashboardData]):
-        info (Union[Unset, DashboardInfo]):
+        dashboard_data (DashboardDashboardData | Unset):
+        info (DashboardInfo | Unset):
     """
 
     id: str
@@ -37,8 +40,8 @@ class Dashboard:
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    dashboard_data: Union[Unset, "DashboardDashboardData"] = UNSET
-    info: Union[Unset, "DashboardInfo"] = UNSET
+    dashboard_data: DashboardDashboardData | Unset = UNSET
+    info: DashboardInfo | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -56,11 +59,11 @@ class Dashboard:
 
         updated_at = self.updated_at.isoformat()
 
-        dashboard_data: Unset | dict[str, Any] = UNSET
+        dashboard_data: dict[str, Any] | Unset = UNSET
         if not isinstance(self.dashboard_data, Unset):
             dashboard_data = self.dashboard_data.to_dict()
 
-        info: Unset | dict[str, Any] = UNSET
+        info: dict[str, Any] | Unset = UNSET
         if not isinstance(self.info, Unset):
             info = self.info.to_dict()
 
@@ -85,11 +88,11 @@ class Dashboard:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.dashboard_dashboard_data import DashboardDashboardData
         from ..models.dashboard_info import DashboardInfo
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
@@ -105,14 +108,14 @@ class Dashboard:
         updated_at = isoparse(d.pop("updatedAt"))
 
         _dashboard_data = d.pop("dashboardData", UNSET)
-        dashboard_data: Unset | DashboardDashboardData
+        dashboard_data: DashboardDashboardData | Unset
         if isinstance(_dashboard_data, Unset):
             dashboard_data = UNSET
         else:
             dashboard_data = DashboardDashboardData.from_dict(_dashboard_data)
 
         _info = d.pop("info", UNSET)
-        info: Unset | DashboardInfo
+        info: DashboardInfo | Unset
         if isinstance(_info, Unset):
             info = UNSET
         else:
@@ -136,3 +139,15 @@ class Dashboard:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

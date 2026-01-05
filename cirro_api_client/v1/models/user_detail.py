@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import datetime
+from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -27,11 +30,11 @@ class UserDetail:
         job_title (str):
         department (str):
         invited_by (str):
-        project_assignments (List['UserProjectAssignment']):
-        groups (List[str]):
+        project_assignments (list[UserProjectAssignment]):
+        groups (list[str]):
         settings (UserSettings): Additional settings for the user
-        sign_up_time (Union[None, Unset, datetime.datetime]):
-        last_signed_in (Union[None, Unset, datetime.datetime]):
+        sign_up_time (datetime.datetime | None | Unset):
+        last_signed_in (datetime.datetime | None | Unset):
     """
 
     username: str
@@ -42,11 +45,11 @@ class UserDetail:
     job_title: str
     department: str
     invited_by: str
-    project_assignments: list["UserProjectAssignment"]
+    project_assignments: list[UserProjectAssignment]
     groups: list[str]
-    settings: "UserSettings"
-    sign_up_time: None | Unset | datetime.datetime = UNSET
-    last_signed_in: None | Unset | datetime.datetime = UNSET
+    settings: UserSettings
+    sign_up_time: datetime.datetime | None | Unset = UNSET
+    last_signed_in: datetime.datetime | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -75,7 +78,7 @@ class UserDetail:
 
         settings = self.settings.to_dict()
 
-        sign_up_time: None | Unset | str
+        sign_up_time: None | str | Unset
         if isinstance(self.sign_up_time, Unset):
             sign_up_time = UNSET
         elif isinstance(self.sign_up_time, datetime.datetime):
@@ -83,7 +86,7 @@ class UserDetail:
         else:
             sign_up_time = self.sign_up_time
 
-        last_signed_in: None | Unset | str
+        last_signed_in: None | str | Unset
         if isinstance(self.last_signed_in, Unset):
             last_signed_in = UNSET
         elif isinstance(self.last_signed_in, datetime.datetime):
@@ -116,11 +119,11 @@ class UserDetail:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.user_project_assignment import UserProjectAssignment
         from ..models.user_settings import UserSettings
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         username = d.pop("username")
 
         name = d.pop("name")
@@ -148,7 +151,7 @@ class UserDetail:
 
         settings = UserSettings.from_dict(d.pop("settings"))
 
-        def _parse_sign_up_time(data: object) -> None | Unset | datetime.datetime:
+        def _parse_sign_up_time(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -159,13 +162,13 @@ class UserDetail:
                 sign_up_time_type_0 = isoparse(data)
 
                 return sign_up_time_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(None | Unset | datetime.datetime, data)
+            return cast(datetime.datetime | None | Unset, data)
 
         sign_up_time = _parse_sign_up_time(d.pop("signUpTime", UNSET))
 
-        def _parse_last_signed_in(data: object) -> None | Unset | datetime.datetime:
+        def _parse_last_signed_in(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -176,9 +179,9 @@ class UserDetail:
                 last_signed_in_type_0 = isoparse(data)
 
                 return last_signed_in_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(None | Unset | datetime.datetime, data)
+            return cast(datetime.datetime | None | Unset, data)
 
         last_signed_in = _parse_last_signed_in(d.pop("lastSignedIn", UNSET))
 
@@ -204,3 +207,15 @@ class UserDetail:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

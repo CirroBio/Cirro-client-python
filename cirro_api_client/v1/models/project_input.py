@@ -1,4 +1,7 @@
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -23,20 +26,20 @@ class ProjectInput:
         description (str):
         billing_account_id (str):
         settings (ProjectSettings):
-        contacts (List['Contact']):
-        account (Union['CloudAccount', None, Unset]):
-        classification_ids (Union[List[str], None, Unset]):
-        tags (Union[List['Tag'], None, Unset]):
+        contacts (list[Contact]):
+        account (CloudAccount | None | Unset):
+        classification_ids (list[str] | None | Unset):
+        tags (list[Tag] | None | Unset):
     """
 
     name: str
     description: str
     billing_account_id: str
-    settings: "ProjectSettings"
-    contacts: list["Contact"]
-    account: Union["CloudAccount", None, Unset] = UNSET
+    settings: ProjectSettings
+    contacts: list[Contact]
+    account: CloudAccount | None | Unset = UNSET
     classification_ids: list[str] | None | Unset = UNSET
-    tags: list["Tag"] | None | Unset = UNSET
+    tags: list[Tag] | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -105,13 +108,13 @@ class ProjectInput:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.cloud_account import CloudAccount
         from ..models.contact import Contact
         from ..models.project_settings import ProjectSettings
         from ..models.tag import Tag
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         name = d.pop("name")
 
         description = d.pop("description")
@@ -127,7 +130,7 @@ class ProjectInput:
 
             contacts.append(contacts_item)
 
-        def _parse_account(data: object) -> Union["CloudAccount", None, Unset]:
+        def _parse_account(data: object) -> CloudAccount | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -138,9 +141,9 @@ class ProjectInput:
                 account_type_1 = CloudAccount.from_dict(data)
 
                 return account_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["CloudAccount", None, Unset], data)
+            return cast(CloudAccount | None | Unset, data)
 
         account = _parse_account(d.pop("account", UNSET))
 
@@ -155,13 +158,13 @@ class ProjectInput:
                 classification_ids_type_0 = cast(list[str], data)
 
                 return classification_ids_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             return cast(list[str] | None | Unset, data)
 
         classification_ids = _parse_classification_ids(d.pop("classificationIds", UNSET))
 
-        def _parse_tags(data: object) -> list["Tag"] | None | Unset:
+        def _parse_tags(data: object) -> list[Tag] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -177,9 +180,9 @@ class ProjectInput:
                     tags_type_0.append(tags_type_0_item)
 
                 return tags_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(list["Tag"] | None | Unset, data)
+            return cast(list[Tag] | None | Unset, data)
 
         tags = _parse_tags(d.pop("tags", UNSET))
 
@@ -200,3 +203,15 @@ class ProjectInput:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

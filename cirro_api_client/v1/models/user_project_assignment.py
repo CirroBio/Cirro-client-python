@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import datetime
+from collections.abc import Mapping
 from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -18,13 +21,13 @@ class UserProjectAssignment:
         project_id (str):
         role (ProjectRole):
         created_by (str):
-        created_at (Union[None, Unset, datetime.datetime]):
+        created_at (datetime.datetime | None | Unset):
     """
 
     project_id: str
     role: ProjectRole
     created_by: str
-    created_at: None | Unset | datetime.datetime = UNSET
+    created_at: datetime.datetime | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -34,7 +37,7 @@ class UserProjectAssignment:
 
         created_by = self.created_by
 
-        created_at: None | Unset | str
+        created_at: None | str | Unset
         if isinstance(self.created_at, Unset):
             created_at = UNSET
         elif isinstance(self.created_at, datetime.datetime):
@@ -57,15 +60,15 @@ class UserProjectAssignment:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         project_id = d.pop("projectId")
 
         role = ProjectRole(d.pop("role"))
 
         created_by = d.pop("createdBy")
 
-        def _parse_created_at(data: object) -> None | Unset | datetime.datetime:
+        def _parse_created_at(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -76,9 +79,9 @@ class UserProjectAssignment:
                 created_at_type_0 = isoparse(data)
 
                 return created_at_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(None | Unset | datetime.datetime, data)
+            return cast(datetime.datetime | None | Unset, data)
 
         created_at = _parse_created_at(d.pop("createdAt", UNSET))
 
@@ -95,3 +98,15 @@ class UserProjectAssignment:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

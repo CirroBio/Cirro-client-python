@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -14,14 +15,16 @@ def _get_kwargs(
 ) -> dict[str, Any]:
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/projects/{project_id}/notebook-instances",
+        "url": "/projects/{project_id}/notebook-instances".format(
+            project_id=quote(str(project_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> list["NotebookInstance"] | None:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> list[NotebookInstance] | None:
+    if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
         for response_200_item_data in _response_200:
@@ -34,7 +37,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> list["Notebo
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[list["NotebookInstance"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list[NotebookInstance]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -47,7 +50,7 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-) -> Response[list["NotebookInstance"]]:
+) -> Response[list[NotebookInstance]]:
     """Get notebook instances
 
      Retrieves a list of notebook instances that the user has access to
@@ -61,7 +64,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['NotebookInstance']]
+        Response[list[NotebookInstance]]
     """
 
     kwargs = _get_kwargs(
@@ -80,7 +83,7 @@ def sync(
     project_id: str,
     *,
     client: Client,
-) -> list["NotebookInstance"] | None:
+) -> list[NotebookInstance] | None:
     """Get notebook instances
 
      Retrieves a list of notebook instances that the user has access to
@@ -94,7 +97,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['NotebookInstance']
+        list[NotebookInstance]
     """
 
     try:
@@ -110,7 +113,7 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-) -> Response[list["NotebookInstance"]]:
+) -> Response[list[NotebookInstance]]:
     """Get notebook instances
 
      Retrieves a list of notebook instances that the user has access to
@@ -124,7 +127,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['NotebookInstance']]
+        Response[list[NotebookInstance]]
     """
 
     kwargs = _get_kwargs(
@@ -140,7 +143,7 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-) -> list["NotebookInstance"] | None:
+) -> list[NotebookInstance] | None:
     """Get notebook instances
 
      Retrieves a list of notebook instances that the user has access to
@@ -154,7 +157,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['NotebookInstance']
+        list[NotebookInstance]
     """
 
     try:

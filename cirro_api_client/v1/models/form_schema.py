@@ -1,4 +1,7 @@
-from typing import TYPE_CHECKING, Any, TypeVar, Union
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -17,20 +20,20 @@ T = TypeVar("T", bound="FormSchema")
 class FormSchema:
     """
     Attributes:
-        form (Union[Unset, FormSchemaForm]): JSONSchema representation of the parameters
-        ui (Union[Unset, FormSchemaUi]): Describes how the form should be rendered, see rjsf
+        form (FormSchemaForm | Unset): JSONSchema representation of the parameters
+        ui (FormSchemaUi | Unset): Describes how the form should be rendered, see rjsf
     """
 
-    form: Union[Unset, "FormSchemaForm"] = UNSET
-    ui: Union[Unset, "FormSchemaUi"] = UNSET
+    form: FormSchemaForm | Unset = UNSET
+    ui: FormSchemaUi | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        form: Unset | dict[str, Any] = UNSET
+        form: dict[str, Any] | Unset = UNSET
         if not isinstance(self.form, Unset):
             form = self.form.to_dict()
 
-        ui: Unset | dict[str, Any] = UNSET
+        ui: dict[str, Any] | Unset = UNSET
         if not isinstance(self.ui, Unset):
             ui = self.ui.to_dict()
 
@@ -45,20 +48,20 @@ class FormSchema:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.form_schema_form import FormSchemaForm
         from ..models.form_schema_ui import FormSchemaUi
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         _form = d.pop("form", UNSET)
-        form: Unset | FormSchemaForm
+        form: FormSchemaForm | Unset
         if isinstance(_form, Unset):
             form = UNSET
         else:
             form = FormSchemaForm.from_dict(_form)
 
         _ui = d.pop("ui", UNSET)
-        ui: Unset | FormSchemaUi
+        ui: FormSchemaUi | Unset
         if isinstance(_ui, Unset):
             ui = UNSET
         else:
@@ -75,3 +78,15 @@ class FormSchema:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

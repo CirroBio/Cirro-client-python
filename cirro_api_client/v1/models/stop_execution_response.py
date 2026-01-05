@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -12,20 +15,20 @@ T = TypeVar("T", bound="StopExecutionResponse")
 class StopExecutionResponse:
     """
     Attributes:
-        success (Union[Unset, List[str]]): List of job IDs that were successful in termination
-        failed (Union[Unset, List[str]]): List of job IDs that were not successful in termination
+        success (list[str] | Unset): List of job IDs that were successful in termination
+        failed (list[str] | Unset): List of job IDs that were not successful in termination
     """
 
-    success: Unset | list[str] = UNSET
-    failed: Unset | list[str] = UNSET
+    success: list[str] | Unset = UNSET
+    failed: list[str] | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        success: Unset | list[str] = UNSET
+        success: list[str] | Unset = UNSET
         if not isinstance(self.success, Unset):
             success = self.success
 
-        failed: Unset | list[str] = UNSET
+        failed: list[str] | Unset = UNSET
         if not isinstance(self.failed, Unset):
             failed = self.failed
 
@@ -40,8 +43,8 @@ class StopExecutionResponse:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         success = cast(list[str], d.pop("success", UNSET))
 
         failed = cast(list[str], d.pop("failed", UNSET))
@@ -57,3 +60,15 @@ class StopExecutionResponse:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

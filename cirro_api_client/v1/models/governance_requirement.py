@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -26,45 +29,45 @@ class GovernanceRequirement:
         id (str): The unique identifier for the requirement
         name (str):  The name of the requirement
         description (str): A brief description of the requirement
-        type (GovernanceType): The types of governance requirements that can be enforced
+        type_ (GovernanceType): The types of governance requirements that can be enforced
         path (str): S3 prefix where files for the requirement are saved
         scope (GovernanceScope): The levels at which governance requirements can be enforced
-        contact_ids (List[str]): The IDs of governance contacts assigned to the requirement.
+        contact_ids (list[str]): The IDs of governance contacts assigned to the requirement.
         expiration (GovernanceExpiry):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
-        project_id (Union[Unset, str]): The project ID if the requirement is project scope
-        acceptance (Union[GovernanceScope, None, Unset]): Specifies the level at which it is satisfied
-        enactment_date (Union[None, Unset, datetime.datetime]): The date of enactment for a requirement
-        supplemental_docs (Union[List['GovernanceFile'], None, Unset]): Optional files with extra information, e.g.
-            templates for documents, links, etc
-        file (Union['GovernanceFile', None, Unset]):
-        authorship (Union[GovernanceScope, None, Unset]): Who needs to supply the agreement document
-        project_file_map (Union['GovernanceRequirementProjectFileMap', None, Unset]): Files supplied by each project
-            when authorship is project
-        verification_method (Union[GovernanceTrainingVerification, None, Unset]): The value indicating how the
-            completion of the training is verified.
+        project_id (str | Unset): The project ID if the requirement is project scope
+        acceptance (GovernanceScope | None | Unset): Specifies the level at which it is satisfied
+        enactment_date (datetime.datetime | None | Unset): The date of enactment for a requirement
+        supplemental_docs (list[GovernanceFile] | None | Unset): Optional files with extra information, e.g. templates
+            for documents, links, etc
+        file (GovernanceFile | None | Unset):
+        authorship (GovernanceScope | None | Unset): Who needs to supply the agreement document
+        project_file_map (GovernanceRequirementProjectFileMap | None | Unset): Files supplied by each project when
+            authorship is project
+        verification_method (GovernanceTrainingVerification | None | Unset): The value indicating how the completion of
+            the training is verified.
     """
 
     id: str
     name: str
     description: str
-    type: GovernanceType
+    type_: GovernanceType
     path: str
     scope: GovernanceScope
     contact_ids: list[str]
-    expiration: "GovernanceExpiry"
+    expiration: GovernanceExpiry
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    project_id: Unset | str = UNSET
+    project_id: str | Unset = UNSET
     acceptance: GovernanceScope | None | Unset = UNSET
-    enactment_date: None | Unset | datetime.datetime = UNSET
-    supplemental_docs: list["GovernanceFile"] | None | Unset = UNSET
-    file: Union["GovernanceFile", None, Unset] = UNSET
+    enactment_date: datetime.datetime | None | Unset = UNSET
+    supplemental_docs: list[GovernanceFile] | None | Unset = UNSET
+    file: GovernanceFile | None | Unset = UNSET
     authorship: GovernanceScope | None | Unset = UNSET
-    project_file_map: Union["GovernanceRequirementProjectFileMap", None, Unset] = UNSET
+    project_file_map: GovernanceRequirementProjectFileMap | None | Unset = UNSET
     verification_method: GovernanceTrainingVerification | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -78,7 +81,7 @@ class GovernanceRequirement:
 
         description = self.description
 
-        type = self.type.value
+        type_ = self.type_.value
 
         path = self.path
 
@@ -96,7 +99,7 @@ class GovernanceRequirement:
 
         project_id = self.project_id
 
-        acceptance: None | Unset | str
+        acceptance: None | str | Unset
         if isinstance(self.acceptance, Unset):
             acceptance = UNSET
         elif isinstance(self.acceptance, GovernanceScope):
@@ -104,7 +107,7 @@ class GovernanceRequirement:
         else:
             acceptance = self.acceptance
 
-        enactment_date: None | Unset | str
+        enactment_date: None | str | Unset
         if isinstance(self.enactment_date, Unset):
             enactment_date = UNSET
         elif isinstance(self.enactment_date, datetime.datetime):
@@ -132,7 +135,7 @@ class GovernanceRequirement:
         else:
             file = self.file
 
-        authorship: None | Unset | str
+        authorship: None | str | Unset
         if isinstance(self.authorship, Unset):
             authorship = UNSET
         elif isinstance(self.authorship, GovernanceScope):
@@ -148,7 +151,7 @@ class GovernanceRequirement:
         else:
             project_file_map = self.project_file_map
 
-        verification_method: None | Unset | str
+        verification_method: None | str | Unset
         if isinstance(self.verification_method, Unset):
             verification_method = UNSET
         elif isinstance(self.verification_method, GovernanceTrainingVerification):
@@ -163,7 +166,7 @@ class GovernanceRequirement:
                 "id": id,
                 "name": name,
                 "description": description,
-                "type": type,
+                "type": type_,
                 "path": path,
                 "scope": scope,
                 "contactIds": contact_ids,
@@ -193,19 +196,19 @@ class GovernanceRequirement:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.governance_expiry import GovernanceExpiry
         from ..models.governance_file import GovernanceFile
         from ..models.governance_requirement_project_file_map import GovernanceRequirementProjectFileMap
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
 
         description = d.pop("description")
 
-        type = GovernanceType(d.pop("type"))
+        type_ = GovernanceType(d.pop("type"))
 
         path = d.pop("path")
 
@@ -234,13 +237,13 @@ class GovernanceRequirement:
                 acceptance_type_1 = GovernanceScope(data)
 
                 return acceptance_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             return cast(GovernanceScope | None | Unset, data)
 
         acceptance = _parse_acceptance(d.pop("acceptance", UNSET))
 
-        def _parse_enactment_date(data: object) -> None | Unset | datetime.datetime:
+        def _parse_enactment_date(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -251,13 +254,13 @@ class GovernanceRequirement:
                 enactment_date_type_0 = isoparse(data)
 
                 return enactment_date_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(None | Unset | datetime.datetime, data)
+            return cast(datetime.datetime | None | Unset, data)
 
         enactment_date = _parse_enactment_date(d.pop("enactmentDate", UNSET))
 
-        def _parse_supplemental_docs(data: object) -> list["GovernanceFile"] | None | Unset:
+        def _parse_supplemental_docs(data: object) -> list[GovernanceFile] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -273,13 +276,13 @@ class GovernanceRequirement:
                     supplemental_docs_type_0.append(supplemental_docs_type_0_item)
 
                 return supplemental_docs_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(list["GovernanceFile"] | None | Unset, data)
+            return cast(list[GovernanceFile] | None | Unset, data)
 
         supplemental_docs = _parse_supplemental_docs(d.pop("supplementalDocs", UNSET))
 
-        def _parse_file(data: object) -> Union["GovernanceFile", None, Unset]:
+        def _parse_file(data: object) -> GovernanceFile | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -290,9 +293,9 @@ class GovernanceRequirement:
                 file_type_1 = GovernanceFile.from_dict(data)
 
                 return file_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["GovernanceFile", None, Unset], data)
+            return cast(GovernanceFile | None | Unset, data)
 
         file = _parse_file(d.pop("file", UNSET))
 
@@ -307,13 +310,13 @@ class GovernanceRequirement:
                 authorship_type_1 = GovernanceScope(data)
 
                 return authorship_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             return cast(GovernanceScope | None | Unset, data)
 
         authorship = _parse_authorship(d.pop("authorship", UNSET))
 
-        def _parse_project_file_map(data: object) -> Union["GovernanceRequirementProjectFileMap", None, Unset]:
+        def _parse_project_file_map(data: object) -> GovernanceRequirementProjectFileMap | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -324,9 +327,9 @@ class GovernanceRequirement:
                 project_file_map_type_0 = GovernanceRequirementProjectFileMap.from_dict(data)
 
                 return project_file_map_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["GovernanceRequirementProjectFileMap", None, Unset], data)
+            return cast(GovernanceRequirementProjectFileMap | None | Unset, data)
 
         project_file_map = _parse_project_file_map(d.pop("projectFileMap", UNSET))
 
@@ -341,7 +344,7 @@ class GovernanceRequirement:
                 verification_method_type_1 = GovernanceTrainingVerification(data)
 
                 return verification_method_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             return cast(GovernanceTrainingVerification | None | Unset, data)
 
@@ -351,7 +354,7 @@ class GovernanceRequirement:
             id=id,
             name=name,
             description=description,
-            type=type,
+            type_=type_,
             path=path,
             scope=scope,
             contact_ids=contact_ids,
@@ -375,3 +378,15 @@ class GovernanceRequirement:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

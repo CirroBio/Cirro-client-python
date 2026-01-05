@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import datetime
+from collections.abc import Mapping
 from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -22,21 +25,21 @@ class Process:
             genes with their related biological functions.
         data_type (str): Name of the data type this pipeline produces (if it is not defined, use the name)
         executor (Executor): How the workflow is executed
-        child_process_ids (List[str]): IDs of pipelines that can be run downstream
-        parent_process_ids (List[str]): IDs of processes that can run this pipeline
-        linked_project_ids (List[str]): Projects that can run this process
+        child_process_ids (list[str]): IDs of pipelines that can be run downstream
+        parent_process_ids (list[str]): IDs of processes that can run this pipeline
+        linked_project_ids (list[str]): Projects that can run this process
         is_tenant_wide (bool): Whether the process is shared with the tenant
         allow_multiple_sources (bool): Whether the pipeline is allowed to have multiple dataset sources
         uses_sample_sheet (bool): Whether the pipeline uses the Cirro-provided sample sheet
         is_archived (bool): Whether the process is marked as archived
-        category (Union[Unset, str]): Category of the process Example: Microbial Analysis.
-        pipeline_type (Union[Unset, str]): Type of pipeline Example: nf-core.
-        documentation_url (Union[Unset, str]): Link to process documentation Example:
+        category (str | Unset): Category of the process Example: Microbial Analysis.
+        pipeline_type (str | Unset): Type of pipeline Example: nf-core.
+        documentation_url (str | Unset): Link to process documentation Example:
             https://docs.cirro.bio/pipelines/catalog_targeted_sequencing/#crispr-screen-analysis.
-        file_requirements_message (Union[Unset, str]): Description of the files to be uploaded (optional)
-        owner (Union[None, Unset, str]): Username of the pipeline creator (blank if Cirro curated)
-        created_at (Union[Unset, datetime.datetime]): When the process was created (does not reflect the pipeline code)
-        updated_at (Union[Unset, datetime.datetime]): When the process was updated (does not reflect the pipeline code)
+        file_requirements_message (str | Unset): Description of the files to be uploaded (optional)
+        owner (None | str | Unset): Username of the pipeline creator (blank if Cirro curated)
+        created_at (datetime.datetime | Unset): When the process was created (does not reflect the pipeline code)
+        updated_at (datetime.datetime | Unset): When the process was updated (does not reflect the pipeline code)
     """
 
     id: str
@@ -51,13 +54,13 @@ class Process:
     allow_multiple_sources: bool
     uses_sample_sheet: bool
     is_archived: bool
-    category: Unset | str = UNSET
-    pipeline_type: Unset | str = UNSET
-    documentation_url: Unset | str = UNSET
-    file_requirements_message: Unset | str = UNSET
-    owner: None | Unset | str = UNSET
-    created_at: Unset | datetime.datetime = UNSET
-    updated_at: Unset | datetime.datetime = UNSET
+    category: str | Unset = UNSET
+    pipeline_type: str | Unset = UNSET
+    documentation_url: str | Unset = UNSET
+    file_requirements_message: str | Unset = UNSET
+    owner: None | str | Unset = UNSET
+    created_at: datetime.datetime | Unset = UNSET
+    updated_at: datetime.datetime | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -93,17 +96,17 @@ class Process:
 
         file_requirements_message = self.file_requirements_message
 
-        owner: None | Unset | str
+        owner: None | str | Unset
         if isinstance(self.owner, Unset):
             owner = UNSET
         else:
             owner = self.owner
 
-        created_at: Unset | str = UNSET
+        created_at: str | Unset = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
 
-        updated_at: Unset | str = UNSET
+        updated_at: str | Unset = UNSET
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
 
@@ -143,8 +146,8 @@ class Process:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
@@ -177,24 +180,24 @@ class Process:
 
         file_requirements_message = d.pop("fileRequirementsMessage", UNSET)
 
-        def _parse_owner(data: object) -> None | Unset | str:
+        def _parse_owner(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         owner = _parse_owner(d.pop("owner", UNSET))
 
         _created_at = d.pop("createdAt", UNSET)
-        created_at: Unset | datetime.datetime
+        created_at: datetime.datetime | Unset
         if isinstance(_created_at, Unset):
             created_at = UNSET
         else:
             created_at = isoparse(_created_at)
 
         _updated_at = d.pop("updatedAt", UNSET)
-        updated_at: Unset | datetime.datetime
+        updated_at: datetime.datetime | Unset
         if isinstance(_updated_at, Unset):
             updated_at = UNSET
         else:
@@ -228,3 +231,15 @@ class Process:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

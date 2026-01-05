@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -15,65 +18,62 @@ class ProjectSettings:
     Attributes:
         budget_amount (int): Total allowed cost for the budget period
         budget_period (BudgetPeriod): Time period associated with the budget amount
-        enable_backup (Union[Unset, bool]): Enables the AWS Backup service for S3 Default: False.
-        enable_sftp (Union[Unset, bool]): Enables access to files over SFTP Default: False.
-        service_connections (Union[Unset, List[str]]): List of service connections to enable
-        kms_arn (Union[None, Unset, str]): KMS Key ARN to encrypt S3 objects, if not provided, default bucket encryption
-            will be used
-        retention_policy_days (Union[Unset, int]): Days to keep deleted datasets before being permanently erased
-            Default: 7.
-        temporary_storage_lifetime_days (Union[Unset, int]): Days to keep temporary storage space (workflow executor
-            cache) Default: 14.
-        vpc_id (Union[None, Unset, str]): VPC that the compute environment will use Example: vpc-00000000000000000.
-        batch_subnets (Union[List[str], None, Unset]): List of subnets that the pipeline compute environment will use
+        enable_backup (bool | Unset): Enables the AWS Backup service for S3 Default: False.
+        enable_sftp (bool | Unset): Enables access to files over SFTP Default: False.
+        service_connections (list[str] | Unset): List of service connections to enable
+        kms_arn (None | str | Unset): KMS Key ARN to encrypt S3 objects, if not provided, default bucket encryption will
+            be used
+        retention_policy_days (int | Unset): Days to keep deleted datasets before being permanently erased Default: 7.
+        temporary_storage_lifetime_days (int | Unset): Days to keep temporary storage space (workflow executor cache)
+            Default: 14.
+        vpc_id (None | str | Unset): VPC that the compute environment will use Example: vpc-00000000000000000.
+        batch_subnets (list[str] | None | Unset): List of subnets that the pipeline compute environment will use
             Example: ['subnet-00000000000000000'].
-        sagemaker_subnets (Union[List[str], None, Unset]): List of subnets that the sagemaker instances will use
-            Example: ['subnet-00000000000000000'].
-        workspace_subnets (Union[List[str], None, Unset]): List of subnets that workspace instances will use Example:
+        sagemaker_subnets (list[str] | None | Unset): List of subnets that the sagemaker instances will use Example:
             ['subnet-00000000000000000'].
-        max_spot_vcpu (Union[Unset, int]): vCPU service quota limit for standard spot instances (pipelines) Default: 0.
-        max_fpgavcpu (Union[Unset, int]): vCPU service quota limit for FPGA-enabled instances (pipelines) Default: 0.
-        max_gpuvcpu (Union[Unset, int]): vCPU service quota limit for GPU-enabled spot instances (pipelines) Default: 0.
-        enable_dragen (Union[Unset, bool]): Enables the DRAGEN compute environment (pipelines) Default: False.
-        dragen_ami (Union[None, Unset, str]): AMI ID for the DRAGEN compute environment, if enabled (pipelines)
-        max_workspaces_vcpu (Union[Unset, int]): vCPU service quota limit for standard instances (workspaces) Default:
+        workspace_subnets (list[str] | None | Unset): List of subnets that workspace instances will use Example:
+            ['subnet-00000000000000000'].
+        max_spot_vcpu (int | Unset): vCPU service quota limit for standard spot instances (pipelines) Default: 0.
+        max_fpgavcpu (int | Unset): vCPU service quota limit for FPGA-enabled instances (pipelines) Default: 0.
+        max_gpuvcpu (int | Unset): vCPU service quota limit for GPU-enabled spot instances (pipelines) Default: 0.
+        enable_dragen (bool | Unset): Enables the DRAGEN compute environment (pipelines) Default: False.
+        dragen_ami (None | str | Unset): AMI ID for the DRAGEN compute environment, if enabled (pipelines)
+        max_workspaces_vcpu (int | Unset): vCPU service quota limit for standard instances (workspaces) Default: 0.
+        max_workspaces_gpuvcpu (int | Unset): vCPU service quota limit for GPU-enabled instances (workspaces) Default:
             0.
-        max_workspaces_gpuvcpu (Union[Unset, int]): vCPU service quota limit for GPU-enabled instances (workspaces)
-            Default: 0.
-        max_workspaces_per_user (Union[Unset, int]): Maximum number of workspaces per user (workspaces) Default: 0.
-        is_discoverable (Union[None, Unset, bool]): Enables the project to be discoverable by other users Default:
+        max_workspaces_per_user (int | Unset): Maximum number of workspaces per user (workspaces) Default: 0.
+        is_discoverable (bool | None | Unset): Enables the project to be discoverable by other users Default: False.
+        is_shareable (bool | None | Unset): Enables the project to be shared with other projects Default: False.
+        has_pipelines_enabled (bool | None | Unset): (Read-only) Whether this project has pipelines enabled Default:
             False.
-        is_shareable (Union[None, Unset, bool]): Enables the project to be shared with other projects Default: False.
-        has_pipelines_enabled (Union[None, Unset, bool]): (Read-only) Whether this project has pipelines enabled
-            Default: False.
-        has_workspaces_enabled (Union[None, Unset, bool]): (Read-only) Whether this project has workspaces enabled
-            Default: False.
+        has_workspaces_enabled (bool | None | Unset): (Read-only) Whether this project has workspaces enabled Default:
+            False.
     """
 
     budget_amount: int
     budget_period: BudgetPeriod
-    enable_backup: Unset | bool = False
-    enable_sftp: Unset | bool = False
-    service_connections: Unset | list[str] = UNSET
-    kms_arn: None | Unset | str = UNSET
-    retention_policy_days: Unset | int = 7
-    temporary_storage_lifetime_days: Unset | int = 14
-    vpc_id: None | Unset | str = UNSET
+    enable_backup: bool | Unset = False
+    enable_sftp: bool | Unset = False
+    service_connections: list[str] | Unset = UNSET
+    kms_arn: None | str | Unset = UNSET
+    retention_policy_days: int | Unset = 7
+    temporary_storage_lifetime_days: int | Unset = 14
+    vpc_id: None | str | Unset = UNSET
     batch_subnets: list[str] | None | Unset = UNSET
     sagemaker_subnets: list[str] | None | Unset = UNSET
     workspace_subnets: list[str] | None | Unset = UNSET
-    max_spot_vcpu: Unset | int = 0
-    max_fpgavcpu: Unset | int = 0
-    max_gpuvcpu: Unset | int = 0
-    enable_dragen: Unset | bool = False
-    dragen_ami: None | Unset | str = UNSET
-    max_workspaces_vcpu: Unset | int = 0
-    max_workspaces_gpuvcpu: Unset | int = 0
-    max_workspaces_per_user: Unset | int = 0
-    is_discoverable: None | Unset | bool = False
-    is_shareable: None | Unset | bool = False
-    has_pipelines_enabled: None | Unset | bool = False
-    has_workspaces_enabled: None | Unset | bool = False
+    max_spot_vcpu: int | Unset = 0
+    max_fpgavcpu: int | Unset = 0
+    max_gpuvcpu: int | Unset = 0
+    enable_dragen: bool | Unset = False
+    dragen_ami: None | str | Unset = UNSET
+    max_workspaces_vcpu: int | Unset = 0
+    max_workspaces_gpuvcpu: int | Unset = 0
+    max_workspaces_per_user: int | Unset = 0
+    is_discoverable: bool | None | Unset = False
+    is_shareable: bool | None | Unset = False
+    has_pipelines_enabled: bool | None | Unset = False
+    has_workspaces_enabled: bool | None | Unset = False
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -85,11 +85,11 @@ class ProjectSettings:
 
         enable_sftp = self.enable_sftp
 
-        service_connections: Unset | list[str] = UNSET
+        service_connections: list[str] | Unset = UNSET
         if not isinstance(self.service_connections, Unset):
             service_connections = self.service_connections
 
-        kms_arn: None | Unset | str
+        kms_arn: None | str | Unset
         if isinstance(self.kms_arn, Unset):
             kms_arn = UNSET
         else:
@@ -99,7 +99,7 @@ class ProjectSettings:
 
         temporary_storage_lifetime_days = self.temporary_storage_lifetime_days
 
-        vpc_id: None | Unset | str
+        vpc_id: None | str | Unset
         if isinstance(self.vpc_id, Unset):
             vpc_id = UNSET
         else:
@@ -140,7 +140,7 @@ class ProjectSettings:
 
         enable_dragen = self.enable_dragen
 
-        dragen_ami: None | Unset | str
+        dragen_ami: None | str | Unset
         if isinstance(self.dragen_ami, Unset):
             dragen_ami = UNSET
         else:
@@ -152,25 +152,25 @@ class ProjectSettings:
 
         max_workspaces_per_user = self.max_workspaces_per_user
 
-        is_discoverable: None | Unset | bool
+        is_discoverable: bool | None | Unset
         if isinstance(self.is_discoverable, Unset):
             is_discoverable = UNSET
         else:
             is_discoverable = self.is_discoverable
 
-        is_shareable: None | Unset | bool
+        is_shareable: bool | None | Unset
         if isinstance(self.is_shareable, Unset):
             is_shareable = UNSET
         else:
             is_shareable = self.is_shareable
 
-        has_pipelines_enabled: None | Unset | bool
+        has_pipelines_enabled: bool | None | Unset
         if isinstance(self.has_pipelines_enabled, Unset):
             has_pipelines_enabled = UNSET
         else:
             has_pipelines_enabled = self.has_pipelines_enabled
 
-        has_workspaces_enabled: None | Unset | bool
+        has_workspaces_enabled: bool | None | Unset
         if isinstance(self.has_workspaces_enabled, Unset):
             has_workspaces_enabled = UNSET
         else:
@@ -232,8 +232,8 @@ class ProjectSettings:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         budget_amount = d.pop("budgetAmount")
 
         budget_period = BudgetPeriod(d.pop("budgetPeriod"))
@@ -244,12 +244,12 @@ class ProjectSettings:
 
         service_connections = cast(list[str], d.pop("serviceConnections", UNSET))
 
-        def _parse_kms_arn(data: object) -> None | Unset | str:
+        def _parse_kms_arn(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         kms_arn = _parse_kms_arn(d.pop("kmsArn", UNSET))
 
@@ -257,12 +257,12 @@ class ProjectSettings:
 
         temporary_storage_lifetime_days = d.pop("temporaryStorageLifetimeDays", UNSET)
 
-        def _parse_vpc_id(data: object) -> None | Unset | str:
+        def _parse_vpc_id(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         vpc_id = _parse_vpc_id(d.pop("vpcId", UNSET))
 
@@ -277,7 +277,7 @@ class ProjectSettings:
                 batch_subnets_type_0 = cast(list[str], data)
 
                 return batch_subnets_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             return cast(list[str] | None | Unset, data)
 
@@ -294,7 +294,7 @@ class ProjectSettings:
                 sagemaker_subnets_type_0 = cast(list[str], data)
 
                 return sagemaker_subnets_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             return cast(list[str] | None | Unset, data)
 
@@ -311,7 +311,7 @@ class ProjectSettings:
                 workspace_subnets_type_0 = cast(list[str], data)
 
                 return workspace_subnets_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             return cast(list[str] | None | Unset, data)
 
@@ -325,12 +325,12 @@ class ProjectSettings:
 
         enable_dragen = d.pop("enableDragen", UNSET)
 
-        def _parse_dragen_ami(data: object) -> None | Unset | str:
+        def _parse_dragen_ami(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         dragen_ami = _parse_dragen_ami(d.pop("dragenAmi", UNSET))
 
@@ -340,39 +340,39 @@ class ProjectSettings:
 
         max_workspaces_per_user = d.pop("maxWorkspacesPerUser", UNSET)
 
-        def _parse_is_discoverable(data: object) -> None | Unset | bool:
+        def _parse_is_discoverable(data: object) -> bool | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | bool, data)
+            return cast(bool | None | Unset, data)
 
         is_discoverable = _parse_is_discoverable(d.pop("isDiscoverable", UNSET))
 
-        def _parse_is_shareable(data: object) -> None | Unset | bool:
+        def _parse_is_shareable(data: object) -> bool | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | bool, data)
+            return cast(bool | None | Unset, data)
 
         is_shareable = _parse_is_shareable(d.pop("isShareable", UNSET))
 
-        def _parse_has_pipelines_enabled(data: object) -> None | Unset | bool:
+        def _parse_has_pipelines_enabled(data: object) -> bool | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | bool, data)
+            return cast(bool | None | Unset, data)
 
         has_pipelines_enabled = _parse_has_pipelines_enabled(d.pop("hasPipelinesEnabled", UNSET))
 
-        def _parse_has_workspaces_enabled(data: object) -> None | Unset | bool:
+        def _parse_has_workspaces_enabled(data: object) -> bool | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | bool, data)
+            return cast(bool | None | Unset, data)
 
         has_workspaces_enabled = _parse_has_workspaces_enabled(d.pop("hasWorkspacesEnabled", UNSET))
 
@@ -409,3 +409,15 @@ class ProjectSettings:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

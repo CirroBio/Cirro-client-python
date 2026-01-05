@@ -1,5 +1,7 @@
-import builtins
-from typing import TYPE_CHECKING, Any, TypeVar, Union
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -17,18 +19,18 @@ T = TypeVar("T", bound="DatasetViz")
 class DatasetViz:
     """
     Attributes:
-        path (Union[Unset, str]): Path to viz configuration, if applicable
-        name (Union[Unset, str]): Name of viz
-        desc (Union[Unset, str]): Description of viz
-        type (Union[Unset, str]): Type of viz Example: vitescce.
-        config (Union[Unset, DatasetVizConfig]): Config or path to config used to render viz
+        path (str | Unset): Path to viz configuration, if applicable
+        name (str | Unset): Name of viz
+        desc (str | Unset): Description of viz
+        type_ (str | Unset): Type of viz Example: vitescce.
+        config (DatasetVizConfig | Unset): Config or path to config used to render viz
     """
 
-    path: Unset | str = UNSET
-    name: Unset | str = UNSET
-    desc: Unset | str = UNSET
-    type: Unset | str = UNSET
-    config: Union[Unset, "DatasetVizConfig"] = UNSET
+    path: str | Unset = UNSET
+    name: str | Unset = UNSET
+    desc: str | Unset = UNSET
+    type_: str | Unset = UNSET
+    config: DatasetVizConfig | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -38,9 +40,9 @@ class DatasetViz:
 
         desc = self.desc
 
-        type = self.type
+        type_ = self.type_
 
-        config: Unset | dict[str, Any] = UNSET
+        config: dict[str, Any] | Unset = UNSET
         if not isinstance(self.config, Unset):
             config = self.config.to_dict()
 
@@ -53,28 +55,28 @@ class DatasetViz:
             field_dict["name"] = name
         if desc is not UNSET:
             field_dict["desc"] = desc
-        if type is not UNSET:
-            field_dict["type"] = type
+        if type_ is not UNSET:
+            field_dict["type"] = type_
         if config is not UNSET:
             field_dict["config"] = config
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: builtins.type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.dataset_viz_config import DatasetVizConfig
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         path = d.pop("path", UNSET)
 
         name = d.pop("name", UNSET)
 
         desc = d.pop("desc", UNSET)
 
-        type = d.pop("type", UNSET)
+        type_ = d.pop("type", UNSET)
 
         _config = d.pop("config", UNSET)
-        config: Unset | DatasetVizConfig
+        config: DatasetVizConfig | Unset
         if isinstance(_config, Unset):
             config = UNSET
         else:
@@ -84,7 +86,7 @@ class DatasetViz:
             path=path,
             name=name,
             desc=desc,
-            type=type,
+            type_=type_,
             config=config,
         )
 
@@ -94,3 +96,15 @@ class DatasetViz:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

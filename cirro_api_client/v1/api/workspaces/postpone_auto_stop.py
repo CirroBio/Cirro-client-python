@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -20,12 +21,14 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "post",
-        "url": f"/projects/{project_id}/workspaces/{workspace_id}:postpone-auto-stop",
+        "url": "/projects/{project_id}/workspaces/{workspace_id}:postpone-auto-stop".format(
+            project_id=quote(str(project_id), safe=""),
+            workspace_id=quote(str(workspace_id), safe=""),
+        ),
     }
 
-    _body = body.to_dict()
+    _kwargs["json"] = body.to_dict()
 
-    _kwargs["json"] = _body
     headers["Content-Type"] = "application/json"
 
     _kwargs["headers"] = headers
@@ -33,7 +36,7 @@ def _get_kwargs(
 
 
 def _parse_response(*, client: Client, response: httpx.Response) -> Workspace | None:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
         response_200 = Workspace.from_dict(response.json())
 
         return response_200

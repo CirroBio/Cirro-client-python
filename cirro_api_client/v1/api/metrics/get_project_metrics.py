@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -14,14 +15,16 @@ def _get_kwargs(
 ) -> dict[str, Any]:
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/projects/{project_id}/metrics",
+        "url": "/projects/{project_id}/metrics".format(
+            project_id=quote(str(project_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(*, client: Client, response: httpx.Response) -> ProjectMetrics | None:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
         response_200 = ProjectMetrics.from_dict(response.json())
 
         return response_200

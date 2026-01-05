@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import datetime
+from collections.abc import Mapping
 from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -18,24 +21,24 @@ class CustomPipelineSettings:
 
     Attributes:
         repository (str): GitHub repository that contains the process definition Example: CirroBio/my-pipeline.
-        branch (Union[Unset, str]): Branch, tag, or commit hash of the repo that contains the process definition
-            Default: 'main'.
-        folder (Union[Unset, str]): Folder within the repo that contains the process definition Default: '.cirro'.
-        repository_type (Union[None, RepositoryType, Unset]):
-        last_sync (Union[None, Unset, datetime.datetime]): Time of last sync
-        sync_status (Union[None, SyncStatus, Unset]):
-        commit_hash (Union[None, Unset, str]): Commit hash of the last successful sync
-        is_authorized (Union[Unset, bool]): Whether we are authorized to access the repository Default: False.
+        branch (str | Unset): Branch, tag, or commit hash of the repo that contains the process definition Default:
+            'main'.
+        folder (str | Unset): Folder within the repo that contains the process definition Default: '.cirro'.
+        repository_type (None | RepositoryType | Unset):
+        last_sync (datetime.datetime | None | Unset): Time of last sync
+        sync_status (None | SyncStatus | Unset):
+        commit_hash (None | str | Unset): Commit hash of the last successful sync
+        is_authorized (bool | Unset): Whether we are authorized to access the repository Default: False.
     """
 
     repository: str
-    branch: Unset | str = "main"
-    folder: Unset | str = ".cirro"
+    branch: str | Unset = "main"
+    folder: str | Unset = ".cirro"
     repository_type: None | RepositoryType | Unset = UNSET
-    last_sync: None | Unset | datetime.datetime = UNSET
+    last_sync: datetime.datetime | None | Unset = UNSET
     sync_status: None | SyncStatus | Unset = UNSET
-    commit_hash: None | Unset | str = UNSET
-    is_authorized: Unset | bool = False
+    commit_hash: None | str | Unset = UNSET
+    is_authorized: bool | Unset = False
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -45,7 +48,7 @@ class CustomPipelineSettings:
 
         folder = self.folder
 
-        repository_type: None | Unset | str
+        repository_type: None | str | Unset
         if isinstance(self.repository_type, Unset):
             repository_type = UNSET
         elif isinstance(self.repository_type, RepositoryType):
@@ -53,7 +56,7 @@ class CustomPipelineSettings:
         else:
             repository_type = self.repository_type
 
-        last_sync: None | Unset | str
+        last_sync: None | str | Unset
         if isinstance(self.last_sync, Unset):
             last_sync = UNSET
         elif isinstance(self.last_sync, datetime.datetime):
@@ -61,7 +64,7 @@ class CustomPipelineSettings:
         else:
             last_sync = self.last_sync
 
-        sync_status: None | Unset | str
+        sync_status: None | str | Unset
         if isinstance(self.sync_status, Unset):
             sync_status = UNSET
         elif isinstance(self.sync_status, SyncStatus):
@@ -69,7 +72,7 @@ class CustomPipelineSettings:
         else:
             sync_status = self.sync_status
 
-        commit_hash: None | Unset | str
+        commit_hash: None | str | Unset
         if isinstance(self.commit_hash, Unset):
             commit_hash = UNSET
         else:
@@ -102,8 +105,8 @@ class CustomPipelineSettings:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         repository = d.pop("repository")
 
         branch = d.pop("branch", UNSET)
@@ -121,13 +124,13 @@ class CustomPipelineSettings:
                 repository_type_type_1 = RepositoryType(data)
 
                 return repository_type_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             return cast(None | RepositoryType | Unset, data)
 
         repository_type = _parse_repository_type(d.pop("repositoryType", UNSET))
 
-        def _parse_last_sync(data: object) -> None | Unset | datetime.datetime:
+        def _parse_last_sync(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -138,9 +141,9 @@ class CustomPipelineSettings:
                 last_sync_type_0 = isoparse(data)
 
                 return last_sync_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(None | Unset | datetime.datetime, data)
+            return cast(datetime.datetime | None | Unset, data)
 
         last_sync = _parse_last_sync(d.pop("lastSync", UNSET))
 
@@ -155,18 +158,18 @@ class CustomPipelineSettings:
                 sync_status_type_1 = SyncStatus(data)
 
                 return sync_status_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             return cast(None | SyncStatus | Unset, data)
 
         sync_status = _parse_sync_status(d.pop("syncStatus", UNSET))
 
-        def _parse_commit_hash(data: object) -> None | Unset | str:
+        def _parse_commit_hash(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         commit_hash = _parse_commit_hash(d.pop("commitHash", UNSET))
 
@@ -189,3 +192,15 @@ class CustomPipelineSettings:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
@@ -13,16 +16,16 @@ class Artifact:
     """A secondary file or resource associated with a dataset
 
     Attributes:
-        type (ArtifactType):
+        type_ (ArtifactType):
         path (str):
     """
 
-    type: ArtifactType
+    type_: ArtifactType
     path: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        type = self.type.value
+        type_ = self.type_.value
 
         path = self.path
 
@@ -30,7 +33,7 @@ class Artifact:
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "type": type,
+                "type": type_,
                 "path": path,
             }
         )
@@ -38,14 +41,14 @@ class Artifact:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        d = src_dict.copy()
-        type = ArtifactType(d.pop("type"))
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
+        type_ = ArtifactType(d.pop("type"))
 
         path = d.pop("path")
 
         artifact = cls(
-            type=type,
+            type_=type_,
             path=path,
         )
 
@@ -55,3 +58,15 @@ class Artifact:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

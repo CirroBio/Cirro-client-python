@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
@@ -21,7 +24,7 @@ class WorkspaceEnvironment:
         category (str):
         default_compute_config (WorkspaceComputeConfig): Configuration parameters for a containerized workspace compute
             environment.
-        versions (List['VersionSpecification']):
+        versions (list[VersionSpecification]):
         owner (str):
     """
 
@@ -29,8 +32,8 @@ class WorkspaceEnvironment:
     name: str
     description: str
     category: str
-    default_compute_config: "WorkspaceComputeConfig"
-    versions: list["VersionSpecification"]
+    default_compute_config: WorkspaceComputeConfig
+    versions: list[VersionSpecification]
     owner: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -69,11 +72,11 @@ class WorkspaceEnvironment:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.version_specification import VersionSpecification
         from ..models.workspace_compute_config import WorkspaceComputeConfig
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
@@ -109,3 +112,15 @@ class WorkspaceEnvironment:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

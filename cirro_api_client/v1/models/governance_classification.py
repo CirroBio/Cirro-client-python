@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import datetime
+from collections.abc import Mapping
 from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -15,7 +18,7 @@ class GovernanceClassification:
         id (str):
         name (str):
         description (str):
-        requirement_ids (List[str]):
+        requirement_ids (list[str]):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
@@ -62,8 +65,8 @@ class GovernanceClassification:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
@@ -94,3 +97,15 @@ class GovernanceClassification:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

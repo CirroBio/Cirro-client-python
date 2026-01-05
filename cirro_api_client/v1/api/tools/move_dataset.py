@@ -21,9 +21,8 @@ def _get_kwargs(
         "url": "/tools/move-dataset",
     }
 
-    _body = body.to_dict()
+    _kwargs["json"] = body.to_dict()
 
-    _kwargs["json"] = _body
     headers["Content-Type"] = "application/json"
 
     _kwargs["headers"] = headers
@@ -31,7 +30,7 @@ def _get_kwargs(
 
 
 def _parse_response(*, client: Client, response: httpx.Response) -> MoveDatasetResponse | None:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
         response_200 = MoveDatasetResponse.from_dict(response.json())
 
         return response_200

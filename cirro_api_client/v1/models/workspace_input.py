@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -19,23 +22,22 @@ class WorkspaceInput:
     """
     Attributes:
         name (str): Name of the workspace. Example: my-workspace.
-        mounted_datasets (List['MountedDataset']): List of datasets to mount into the workspace.
+        mounted_datasets (list[MountedDataset]): List of datasets to mount into the workspace.
         compute_config (WorkspaceComputeConfig): Configuration parameters for a containerized workspace compute
             environment.
         sharing_type (SharingType):
-        description (Union[Unset, str]): Description of the workspace.
-        environment_id (Union[None, Unset, str]): ID of the predefined workspace environment to use.
-        auto_stop_timeout (Union[None, Unset, int]): Time period (in hours) to automatically stop the workspace if
-            running
+        description (str | Unset): Description of the workspace.
+        environment_id (None | str | Unset): ID of the predefined workspace environment to use.
+        auto_stop_timeout (int | None | Unset): Time period (in hours) to automatically stop the workspace if running
     """
 
     name: str
-    mounted_datasets: list["MountedDataset"]
-    compute_config: "WorkspaceComputeConfig"
+    mounted_datasets: list[MountedDataset]
+    compute_config: WorkspaceComputeConfig
     sharing_type: SharingType
-    description: Unset | str = UNSET
-    environment_id: None | Unset | str = UNSET
-    auto_stop_timeout: None | Unset | int = UNSET
+    description: str | Unset = UNSET
+    environment_id: None | str | Unset = UNSET
+    auto_stop_timeout: int | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -52,13 +54,13 @@ class WorkspaceInput:
 
         description = self.description
 
-        environment_id: None | Unset | str
+        environment_id: None | str | Unset
         if isinstance(self.environment_id, Unset):
             environment_id = UNSET
         else:
             environment_id = self.environment_id
 
-        auto_stop_timeout: None | Unset | int
+        auto_stop_timeout: int | None | Unset
         if isinstance(self.auto_stop_timeout, Unset):
             auto_stop_timeout = UNSET
         else:
@@ -84,11 +86,11 @@ class WorkspaceInput:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.mounted_dataset import MountedDataset
         from ..models.workspace_compute_config import WorkspaceComputeConfig
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         name = d.pop("name")
 
         mounted_datasets = []
@@ -104,21 +106,21 @@ class WorkspaceInput:
 
         description = d.pop("description", UNSET)
 
-        def _parse_environment_id(data: object) -> None | Unset | str:
+        def _parse_environment_id(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         environment_id = _parse_environment_id(d.pop("environmentId", UNSET))
 
-        def _parse_auto_stop_timeout(data: object) -> None | Unset | int:
+        def _parse_auto_stop_timeout(data: object) -> int | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | int, data)
+            return cast(int | None | Unset, data)
 
         auto_stop_timeout = _parse_auto_stop_timeout(d.pop("autoStopTimeout", UNSET))
 
@@ -138,3 +140,15 @@ class WorkspaceInput:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

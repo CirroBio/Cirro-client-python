@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -28,24 +31,24 @@ class ProcessDetail:
             genes with their related biological functions.
         data_type (str): Name of the data type this pipeline produces (if it is not defined, use the name)
         executor (Executor): How the workflow is executed
-        child_process_ids (List[str]): IDs of pipelines that can be run downstream
-        parent_process_ids (List[str]): IDs of processes that can run this pipeline
-        linked_project_ids (List[str]): Projects that can run this process
+        child_process_ids (list[str]): IDs of pipelines that can be run downstream
+        parent_process_ids (list[str]): IDs of processes that can run this pipeline
+        linked_project_ids (list[str]): Projects that can run this process
         is_tenant_wide (bool): Whether the process is shared with the tenant
         allow_multiple_sources (bool): Whether the pipeline is allowed to have multiple dataset sources
         uses_sample_sheet (bool): Whether the pipeline uses the Cirro-provided sample sheet
         is_archived (bool): Whether the process is marked as archived
-        category (Union[Unset, str]): Category of the process Example: Microbial Analysis.
-        pipeline_type (Union[Unset, str]): Type of pipeline Example: nf-core.
-        documentation_url (Union[Unset, str]): Link to process documentation Example:
+        category (str | Unset): Category of the process Example: Microbial Analysis.
+        pipeline_type (str | Unset): Type of pipeline Example: nf-core.
+        documentation_url (str | Unset): Link to process documentation Example:
             https://docs.cirro.bio/pipelines/catalog_targeted_sequencing/#crispr-screen-analysis.
-        file_requirements_message (Union[Unset, str]): Description of the files to be uploaded (optional)
-        pipeline_code (Union['PipelineCode', None, Unset]):
-        owner (Union[None, Unset, str]): Username of the pipeline creator (blank if Cirro curated)
-        custom_settings (Union['CustomPipelineSettings', None, Unset]):
-        file_mapping_rules (Union[List['FileMappingRule'], None, Unset]):
-        created_at (Union[Unset, datetime.datetime]): When the process was created (does not reflect the pipeline code)
-        updated_at (Union[Unset, datetime.datetime]): When the process was updated (does not reflect the pipeline code)
+        file_requirements_message (str | Unset): Description of the files to be uploaded (optional)
+        pipeline_code (None | PipelineCode | Unset):
+        owner (None | str | Unset): Username of the pipeline creator (blank if Cirro curated)
+        custom_settings (CustomPipelineSettings | None | Unset):
+        file_mapping_rules (list[FileMappingRule] | None | Unset):
+        created_at (datetime.datetime | Unset): When the process was created (does not reflect the pipeline code)
+        updated_at (datetime.datetime | Unset): When the process was updated (does not reflect the pipeline code)
     """
 
     id: str
@@ -60,16 +63,16 @@ class ProcessDetail:
     allow_multiple_sources: bool
     uses_sample_sheet: bool
     is_archived: bool
-    category: Unset | str = UNSET
-    pipeline_type: Unset | str = UNSET
-    documentation_url: Unset | str = UNSET
-    file_requirements_message: Unset | str = UNSET
-    pipeline_code: Union["PipelineCode", None, Unset] = UNSET
-    owner: None | Unset | str = UNSET
-    custom_settings: Union["CustomPipelineSettings", None, Unset] = UNSET
-    file_mapping_rules: list["FileMappingRule"] | None | Unset = UNSET
-    created_at: Unset | datetime.datetime = UNSET
-    updated_at: Unset | datetime.datetime = UNSET
+    category: str | Unset = UNSET
+    pipeline_type: str | Unset = UNSET
+    documentation_url: str | Unset = UNSET
+    file_requirements_message: str | Unset = UNSET
+    pipeline_code: None | PipelineCode | Unset = UNSET
+    owner: None | str | Unset = UNSET
+    custom_settings: CustomPipelineSettings | None | Unset = UNSET
+    file_mapping_rules: list[FileMappingRule] | None | Unset = UNSET
+    created_at: datetime.datetime | Unset = UNSET
+    updated_at: datetime.datetime | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -116,7 +119,7 @@ class ProcessDetail:
         else:
             pipeline_code = self.pipeline_code
 
-        owner: None | Unset | str
+        owner: None | str | Unset
         if isinstance(self.owner, Unset):
             owner = UNSET
         else:
@@ -142,11 +145,11 @@ class ProcessDetail:
         else:
             file_mapping_rules = self.file_mapping_rules
 
-        created_at: Unset | str = UNSET
+        created_at: str | Unset = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
 
-        updated_at: Unset | str = UNSET
+        updated_at: str | Unset = UNSET
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
 
@@ -192,12 +195,12 @@ class ProcessDetail:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.custom_pipeline_settings import CustomPipelineSettings
         from ..models.file_mapping_rule import FileMappingRule
         from ..models.pipeline_code import PipelineCode
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
@@ -230,7 +233,7 @@ class ProcessDetail:
 
         file_requirements_message = d.pop("fileRequirementsMessage", UNSET)
 
-        def _parse_pipeline_code(data: object) -> Union["PipelineCode", None, Unset]:
+        def _parse_pipeline_code(data: object) -> None | PipelineCode | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -241,22 +244,22 @@ class ProcessDetail:
                 pipeline_code_type_1 = PipelineCode.from_dict(data)
 
                 return pipeline_code_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["PipelineCode", None, Unset], data)
+            return cast(None | PipelineCode | Unset, data)
 
         pipeline_code = _parse_pipeline_code(d.pop("pipelineCode", UNSET))
 
-        def _parse_owner(data: object) -> None | Unset | str:
+        def _parse_owner(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         owner = _parse_owner(d.pop("owner", UNSET))
 
-        def _parse_custom_settings(data: object) -> Union["CustomPipelineSettings", None, Unset]:
+        def _parse_custom_settings(data: object) -> CustomPipelineSettings | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -267,13 +270,13 @@ class ProcessDetail:
                 custom_settings_type_1 = CustomPipelineSettings.from_dict(data)
 
                 return custom_settings_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["CustomPipelineSettings", None, Unset], data)
+            return cast(CustomPipelineSettings | None | Unset, data)
 
         custom_settings = _parse_custom_settings(d.pop("customSettings", UNSET))
 
-        def _parse_file_mapping_rules(data: object) -> list["FileMappingRule"] | None | Unset:
+        def _parse_file_mapping_rules(data: object) -> list[FileMappingRule] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -289,21 +292,21 @@ class ProcessDetail:
                     file_mapping_rules_type_0.append(file_mapping_rules_type_0_item)
 
                 return file_mapping_rules_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(list["FileMappingRule"] | None | Unset, data)
+            return cast(list[FileMappingRule] | None | Unset, data)
 
         file_mapping_rules = _parse_file_mapping_rules(d.pop("fileMappingRules", UNSET))
 
         _created_at = d.pop("createdAt", UNSET)
-        created_at: Unset | datetime.datetime
+        created_at: datetime.datetime | Unset
         if isinstance(_created_at, Unset):
             created_at = UNSET
         else:
             created_at = isoparse(_created_at)
 
         _updated_at = d.pop("updatedAt", UNSET)
-        updated_at: Unset | datetime.datetime
+        updated_at: datetime.datetime | Unset
         if isinstance(_updated_at, Unset):
             updated_at = UNSET
         else:
@@ -340,3 +343,15 @@ class ProcessDetail:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

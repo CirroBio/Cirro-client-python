@@ -1,4 +1,6 @@
-import builtins
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -18,19 +20,19 @@ class Table:
     """
     Attributes:
         desc (str):
-        name (Union[Unset, str]): User-friendly name of asset
-        type (Union[Unset, str]): Type of file Example: parquet.
-        rows (Union[Unset, int]): Number of rows in table
-        path (Union[Unset, str]): Relative path to asset
-        cols (Union[List['ColumnDefinition'], None, Unset]):
+        name (str | Unset): User-friendly name of asset
+        type_ (str | Unset): Type of file Example: parquet.
+        rows (int | Unset): Number of rows in table
+        path (str | Unset): Relative path to asset
+        cols (list[ColumnDefinition] | None | Unset):
     """
 
     desc: str
-    name: Unset | str = UNSET
-    type: Unset | str = UNSET
-    rows: Unset | int = UNSET
-    path: Unset | str = UNSET
-    cols: list["ColumnDefinition"] | None | Unset = UNSET
+    name: str | Unset = UNSET
+    type_: str | Unset = UNSET
+    rows: int | Unset = UNSET
+    path: str | Unset = UNSET
+    cols: list[ColumnDefinition] | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -38,7 +40,7 @@ class Table:
 
         name = self.name
 
-        type = self.type
+        type_ = self.type_
 
         rows = self.rows
 
@@ -65,8 +67,8 @@ class Table:
         )
         if name is not UNSET:
             field_dict["name"] = name
-        if type is not UNSET:
-            field_dict["type"] = type
+        if type_ is not UNSET:
+            field_dict["type"] = type_
         if rows is not UNSET:
             field_dict["rows"] = rows
         if path is not UNSET:
@@ -77,21 +79,21 @@ class Table:
         return field_dict
 
     @classmethod
-    def from_dict(cls: builtins.type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.column_definition import ColumnDefinition
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         desc = d.pop("desc")
 
         name = d.pop("name", UNSET)
 
-        type = d.pop("type", UNSET)
+        type_ = d.pop("type", UNSET)
 
         rows = d.pop("rows", UNSET)
 
         path = d.pop("path", UNSET)
 
-        def _parse_cols(data: object) -> list["ColumnDefinition"] | None | Unset:
+        def _parse_cols(data: object) -> list[ColumnDefinition] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -107,16 +109,16 @@ class Table:
                     cols_type_0.append(cols_type_0_item)
 
                 return cols_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(list["ColumnDefinition"] | None | Unset, data)
+            return cast(list[ColumnDefinition] | None | Unset, data)
 
         cols = _parse_cols(d.pop("cols", UNSET))
 
         table = cls(
             desc=desc,
             name=name,
-            type=type,
+            type_=type_,
             rows=rows,
             path=path,
             cols=cols,
@@ -128,3 +130,15 @@ class Table:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

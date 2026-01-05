@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -18,16 +21,16 @@ class BillingAccountRequest:
     """
     Attributes:
         name (str):
-        contacts (List['Contact']):
+        contacts (list[Contact]):
         customer_type (CustomerType):
         billing_method (BillingMethod):
         primary_budget_number (str):
         owner (str):
-        shared_with (List[str]):
+        shared_with (list[str]):
     """
 
     name: str
-    contacts: list["Contact"]
+    contacts: list[Contact]
     customer_type: CustomerType
     billing_method: BillingMethod
     primary_budget_number: str
@@ -70,10 +73,10 @@ class BillingAccountRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.contact import Contact
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         name = d.pop("name")
 
         contacts = []
@@ -109,3 +112,15 @@ class BillingAccountRequest:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

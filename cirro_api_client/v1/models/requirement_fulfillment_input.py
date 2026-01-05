@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import datetime
+from collections.abc import Mapping
 from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -14,22 +17,22 @@ T = TypeVar("T", bound="RequirementFulfillmentInput")
 class RequirementFulfillmentInput:
     """
     Attributes:
-        file (Union[None, Unset, str]):
-        completed_on (Union[None, Unset, datetime.datetime]): If not provided, defaults to the current instant
+        file (None | str | Unset):
+        completed_on (datetime.datetime | None | Unset): If not provided, defaults to the current instant
     """
 
-    file: None | Unset | str = UNSET
-    completed_on: None | Unset | datetime.datetime = UNSET
+    file: None | str | Unset = UNSET
+    completed_on: datetime.datetime | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        file: None | Unset | str
+        file: None | str | Unset
         if isinstance(self.file, Unset):
             file = UNSET
         else:
             file = self.file
 
-        completed_on: None | Unset | str
+        completed_on: None | str | Unset
         if isinstance(self.completed_on, Unset):
             completed_on = UNSET
         elif isinstance(self.completed_on, datetime.datetime):
@@ -48,19 +51,19 @@ class RequirementFulfillmentInput:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
 
-        def _parse_file(data: object) -> None | Unset | str:
+        def _parse_file(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         file = _parse_file(d.pop("file", UNSET))
 
-        def _parse_completed_on(data: object) -> None | Unset | datetime.datetime:
+        def _parse_completed_on(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -71,9 +74,9 @@ class RequirementFulfillmentInput:
                 completed_on_type_0 = isoparse(data)
 
                 return completed_on_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(None | Unset | datetime.datetime, data)
+            return cast(datetime.datetime | None | Unset, data)
 
         completed_on = _parse_completed_on(d.pop("completedOn", UNSET))
 
@@ -88,3 +91,15 @@ class RequirementFulfillmentInput:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

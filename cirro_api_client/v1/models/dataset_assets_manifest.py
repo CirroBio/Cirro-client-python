@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
@@ -19,26 +22,26 @@ T = TypeVar("T", bound="DatasetAssetsManifest")
 class DatasetAssetsManifest:
     """
     Attributes:
-        domain (Union[Unset, str]): Base URL for files Example: s3://project-1a1a/datasets/1a1a.
-        files (Union[Unset, List['FileEntry']]): List of files in the dataset, including metadata
-        total_files (Union[Unset, int]): Total number of files in the dataset, used for pagination
-        viz (Union[Unset, List['DatasetViz']]): List of viz to render for the dataset
-        tables (Union[Unset, List['Table']]): List of web optimized tables for the dataset
-        artifacts (Union[Unset, List['Artifact']]): Artifacts associated with the dataset
+        domain (str | Unset): Base URL for files Example: s3://project-1a1a/datasets/1a1a.
+        files (list[FileEntry] | Unset): List of files in the dataset, including metadata
+        total_files (int | Unset): Total number of files in the dataset, used for pagination
+        viz (list[DatasetViz] | Unset): List of viz to render for the dataset
+        tables (list[Table] | Unset): List of web optimized tables for the dataset
+        artifacts (list[Artifact] | Unset): Artifacts associated with the dataset
     """
 
-    domain: Unset | str = UNSET
-    files: Unset | list["FileEntry"] = UNSET
-    total_files: Unset | int = UNSET
-    viz: Unset | list["DatasetViz"] = UNSET
-    tables: Unset | list["Table"] = UNSET
-    artifacts: Unset | list["Artifact"] = UNSET
+    domain: str | Unset = UNSET
+    files: list[FileEntry] | Unset = UNSET
+    total_files: int | Unset = UNSET
+    viz: list[DatasetViz] | Unset = UNSET
+    tables: list[Table] | Unset = UNSET
+    artifacts: list[Artifact] | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         domain = self.domain
 
-        files: Unset | list[dict[str, Any]] = UNSET
+        files: list[dict[str, Any]] | Unset = UNSET
         if not isinstance(self.files, Unset):
             files = []
             for files_item_data in self.files:
@@ -47,21 +50,21 @@ class DatasetAssetsManifest:
 
         total_files = self.total_files
 
-        viz: Unset | list[dict[str, Any]] = UNSET
+        viz: list[dict[str, Any]] | Unset = UNSET
         if not isinstance(self.viz, Unset):
             viz = []
             for viz_item_data in self.viz:
                 viz_item = viz_item_data.to_dict()
                 viz.append(viz_item)
 
-        tables: Unset | list[dict[str, Any]] = UNSET
+        tables: list[dict[str, Any]] | Unset = UNSET
         if not isinstance(self.tables, Unset):
             tables = []
             for tables_item_data in self.tables:
                 tables_item = tables_item_data.to_dict()
                 tables.append(tables_item)
 
-        artifacts: Unset | list[dict[str, Any]] = UNSET
+        artifacts: list[dict[str, Any]] | Unset = UNSET
         if not isinstance(self.artifacts, Unset):
             artifacts = []
             for artifacts_item_data in self.artifacts:
@@ -87,44 +90,52 @@ class DatasetAssetsManifest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.artifact import Artifact
         from ..models.dataset_viz import DatasetViz
         from ..models.file_entry import FileEntry
         from ..models.table import Table
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         domain = d.pop("domain", UNSET)
 
-        files = []
         _files = d.pop("files", UNSET)
-        for files_item_data in _files or []:
-            files_item = FileEntry.from_dict(files_item_data)
+        files: list[FileEntry] | Unset = UNSET
+        if _files is not UNSET:
+            files = []
+            for files_item_data in _files:
+                files_item = FileEntry.from_dict(files_item_data)
 
-            files.append(files_item)
+                files.append(files_item)
 
         total_files = d.pop("totalFiles", UNSET)
 
-        viz = []
         _viz = d.pop("viz", UNSET)
-        for viz_item_data in _viz or []:
-            viz_item = DatasetViz.from_dict(viz_item_data)
+        viz: list[DatasetViz] | Unset = UNSET
+        if _viz is not UNSET:
+            viz = []
+            for viz_item_data in _viz:
+                viz_item = DatasetViz.from_dict(viz_item_data)
 
-            viz.append(viz_item)
+                viz.append(viz_item)
 
-        tables = []
         _tables = d.pop("tables", UNSET)
-        for tables_item_data in _tables or []:
-            tables_item = Table.from_dict(tables_item_data)
+        tables: list[Table] | Unset = UNSET
+        if _tables is not UNSET:
+            tables = []
+            for tables_item_data in _tables:
+                tables_item = Table.from_dict(tables_item_data)
 
-            tables.append(tables_item)
+                tables.append(tables_item)
 
-        artifacts = []
         _artifacts = d.pop("artifacts", UNSET)
-        for artifacts_item_data in _artifacts or []:
-            artifacts_item = Artifact.from_dict(artifacts_item_data)
+        artifacts: list[Artifact] | Unset = UNSET
+        if _artifacts is not UNSET:
+            artifacts = []
+            for artifacts_item_data in _artifacts:
+                artifacts_item = Artifact.from_dict(artifacts_item_data)
 
-            artifacts.append(artifacts_item)
+                artifacts.append(artifacts_item)
 
         dataset_assets_manifest = cls(
             domain=domain,
@@ -141,3 +152,15 @@ class DatasetAssetsManifest:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

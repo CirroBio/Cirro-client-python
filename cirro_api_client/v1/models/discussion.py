@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import datetime
+from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -23,24 +26,24 @@ class Discussion:
         name (str):
         description (str):
         entity (Entity):
-        type (DiscussionType):
+        type_ (DiscussionType):
         project_id (str):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
-        last_message_time (Union[None, Unset, datetime.datetime]):
+        last_message_time (datetime.datetime | None | Unset):
     """
 
     id: str
     name: str
     description: str
-    entity: "Entity"
-    type: DiscussionType
+    entity: Entity
+    type_: DiscussionType
     project_id: str
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    last_message_time: None | Unset | datetime.datetime = UNSET
+    last_message_time: datetime.datetime | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -52,7 +55,7 @@ class Discussion:
 
         entity = self.entity.to_dict()
 
-        type = self.type.value
+        type_ = self.type_.value
 
         project_id = self.project_id
 
@@ -62,7 +65,7 @@ class Discussion:
 
         updated_at = self.updated_at.isoformat()
 
-        last_message_time: None | Unset | str
+        last_message_time: None | str | Unset
         if isinstance(self.last_message_time, Unset):
             last_message_time = UNSET
         elif isinstance(self.last_message_time, datetime.datetime):
@@ -78,7 +81,7 @@ class Discussion:
                 "name": name,
                 "description": description,
                 "entity": entity,
-                "type": type,
+                "type": type_,
                 "projectId": project_id,
                 "createdBy": created_by,
                 "createdAt": created_at,
@@ -91,10 +94,10 @@ class Discussion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.entity import Entity
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
@@ -103,7 +106,7 @@ class Discussion:
 
         entity = Entity.from_dict(d.pop("entity"))
 
-        type = DiscussionType(d.pop("type"))
+        type_ = DiscussionType(d.pop("type"))
 
         project_id = d.pop("projectId")
 
@@ -113,7 +116,7 @@ class Discussion:
 
         updated_at = isoparse(d.pop("updatedAt"))
 
-        def _parse_last_message_time(data: object) -> None | Unset | datetime.datetime:
+        def _parse_last_message_time(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -124,9 +127,9 @@ class Discussion:
                 last_message_time_type_0 = isoparse(data)
 
                 return last_message_time_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(None | Unset | datetime.datetime, data)
+            return cast(datetime.datetime | None | Unset, data)
 
         last_message_time = _parse_last_message_time(d.pop("lastMessageTime", UNSET))
 
@@ -135,7 +138,7 @@ class Discussion:
             name=name,
             description=description,
             entity=entity,
-            type=type,
+            type_=type_,
             project_id=project_id,
             created_by=created_by,
             created_at=created_at,
@@ -149,3 +152,15 @@ class Discussion:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
@@ -13,11 +16,11 @@ class LogEntry:
     """
     Attributes:
         message (str):
-        timestamp (Union[Unset, int]): UNIX timestamp in milliseconds, might be blank if we don't have this info
+        timestamp (int | Unset): UNIX timestamp in milliseconds, might be blank if we don't have this info
     """
 
     message: str
-    timestamp: Unset | int = UNSET
+    timestamp: int | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -38,8 +41,8 @@ class LogEntry:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         message = d.pop("message")
 
         timestamp = d.pop("timestamp", UNSET)
@@ -55,3 +58,15 @@ class LogEntry:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

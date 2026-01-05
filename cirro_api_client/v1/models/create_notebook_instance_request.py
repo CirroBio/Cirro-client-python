@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
@@ -14,11 +17,11 @@ class CreateNotebookInstanceRequest:
     Attributes:
         name (str):
         instance_type (str): AWS EC2 Instance Type (see list of available options) Example: ml.t3.medium.
-        accelerator_types (List[str]):
+        accelerator_types (list[str]):
         volume_size_gb (int):
-        git_repositories (Union[List[str], None, Unset]): List of public git repositories to clone into the notebook
+        git_repositories (list[str] | None | Unset): List of public git repositories to clone into the notebook
             instance.
-        is_shared_with_project (Union[Unset, bool]): Whether the notebook is shared with the project Default: False.
+        is_shared_with_project (bool | Unset): Whether the notebook is shared with the project Default: False.
     """
 
     name: str
@@ -26,7 +29,7 @@ class CreateNotebookInstanceRequest:
     accelerator_types: list[str]
     volume_size_gb: int
     git_repositories: list[str] | None | Unset = UNSET
-    is_shared_with_project: Unset | bool = False
+    is_shared_with_project: bool | Unset = False
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -67,8 +70,8 @@ class CreateNotebookInstanceRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         name = d.pop("name")
 
         instance_type = d.pop("instanceType")
@@ -88,7 +91,7 @@ class CreateNotebookInstanceRequest:
                 git_repositories_type_0 = cast(list[str], data)
 
                 return git_repositories_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             return cast(list[str] | None | Unset, data)
 
@@ -111,3 +114,15 @@ class CreateNotebookInstanceRequest:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

@@ -115,5 +115,5 @@ client.set_httpx_client(httpx.Client(base_url="https://api.cirro.bio", proxies="
 Re-generate the API client by running:
 
 ```sh
-openapi-python-client update --url https://dev.cirro.bio/openapi/cirro-data-latest.yml --config config.yml --custom-template-path=templates/
+openapi-python-client generate --overwrite --url http://localhost:8080/openapi/cirro-data-latest.yml --config config.yml --custom-template-path=templates/
  ```

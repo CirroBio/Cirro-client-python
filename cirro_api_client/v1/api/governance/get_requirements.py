@@ -11,7 +11,7 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    project_id: Unset | str = UNSET,
+    project_id: str | Unset = UNSET,
 ) -> dict[str, Any]:
     params: dict[str, Any] = {}
 
@@ -28,8 +28,8 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> list["GovernanceRequirement"] | None:
-    if response.status_code == HTTPStatus.OK:
+def _parse_response(*, client: Client, response: httpx.Response) -> list[GovernanceRequirement] | None:
+    if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
         for response_200_item_data in _response_200:
@@ -42,7 +42,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> list["Govern
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[list["GovernanceRequirement"]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list[GovernanceRequirement]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -54,14 +54,14 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[lis
 def sync_detailed(
     *,
     client: Client,
-    project_id: Unset | str = UNSET,
-) -> Response[list["GovernanceRequirement"]]:
+    project_id: str | Unset = UNSET,
+) -> Response[list[GovernanceRequirement]]:
     """Get requirements
 
      Retrieve a list of governance requirements
 
     Args:
-        project_id (Union[Unset, str]):
+        project_id (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -69,7 +69,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['GovernanceRequirement']]
+        Response[list[GovernanceRequirement]]
     """
 
     kwargs = _get_kwargs(
@@ -87,14 +87,14 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    project_id: Unset | str = UNSET,
-) -> list["GovernanceRequirement"] | None:
+    project_id: str | Unset = UNSET,
+) -> list[GovernanceRequirement] | None:
     """Get requirements
 
      Retrieve a list of governance requirements
 
     Args:
-        project_id (Union[Unset, str]):
+        project_id (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -102,7 +102,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['GovernanceRequirement']
+        list[GovernanceRequirement]
     """
 
     try:
@@ -117,14 +117,14 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-    project_id: Unset | str = UNSET,
-) -> Response[list["GovernanceRequirement"]]:
+    project_id: str | Unset = UNSET,
+) -> Response[list[GovernanceRequirement]]:
     """Get requirements
 
      Retrieve a list of governance requirements
 
     Args:
-        project_id (Union[Unset, str]):
+        project_id (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -132,7 +132,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[List['GovernanceRequirement']]
+        Response[list[GovernanceRequirement]]
     """
 
     kwargs = _get_kwargs(
@@ -147,14 +147,14 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    project_id: Unset | str = UNSET,
-) -> list["GovernanceRequirement"] | None:
+    project_id: str | Unset = UNSET,
+) -> list[GovernanceRequirement] | None:
     """Get requirements
 
      Retrieve a list of governance requirements
 
     Args:
-        project_id (Union[Unset, str]):
+        project_id (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -162,7 +162,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        List['GovernanceRequirement']
+        list[GovernanceRequirement]
     """
 
     try:

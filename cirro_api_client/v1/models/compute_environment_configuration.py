@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -23,22 +26,22 @@ class ComputeEnvironmentConfiguration:
         environment_type (EnvironmentType): The type of compute environment
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
-        id (Union[Unset, str]): The unique ID of the environment
-        name (Union[Unset, str]): The display name of the environment
-        properties (Union[Unset, ComputeEnvironmentConfigurationProperties]): Configuration properties passed to the
+        id (str | Unset): The unique ID of the environment
+        name (str | Unset): The display name of the environment
+        properties (ComputeEnvironmentConfigurationProperties | Unset): Configuration properties passed to the
             environment
-        agent (Union['Agent', None, Unset]):
-        created_by (Union[Unset, str]): The user who created the environment
+        agent (Agent | None | Unset):
+        created_by (str | Unset): The user who created the environment
     """
 
     environment_type: EnvironmentType
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    id: Unset | str = UNSET
-    name: Unset | str = UNSET
-    properties: Union[Unset, "ComputeEnvironmentConfigurationProperties"] = UNSET
-    agent: Union["Agent", None, Unset] = UNSET
-    created_by: Unset | str = UNSET
+    id: str | Unset = UNSET
+    name: str | Unset = UNSET
+    properties: ComputeEnvironmentConfigurationProperties | Unset = UNSET
+    agent: Agent | None | Unset = UNSET
+    created_by: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -54,7 +57,7 @@ class ComputeEnvironmentConfiguration:
 
         name = self.name
 
-        properties: Unset | dict[str, Any] = UNSET
+        properties: dict[str, Any] | Unset = UNSET
         if not isinstance(self.properties, Unset):
             properties = self.properties.to_dict()
 
@@ -91,11 +94,11 @@ class ComputeEnvironmentConfiguration:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.agent import Agent
         from ..models.compute_environment_configuration_properties import ComputeEnvironmentConfigurationProperties
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         environment_type = EnvironmentType(d.pop("environmentType"))
 
         created_at = isoparse(d.pop("createdAt"))
@@ -107,13 +110,13 @@ class ComputeEnvironmentConfiguration:
         name = d.pop("name", UNSET)
 
         _properties = d.pop("properties", UNSET)
-        properties: Unset | ComputeEnvironmentConfigurationProperties
+        properties: ComputeEnvironmentConfigurationProperties | Unset
         if isinstance(_properties, Unset):
             properties = UNSET
         else:
             properties = ComputeEnvironmentConfigurationProperties.from_dict(_properties)
 
-        def _parse_agent(data: object) -> Union["Agent", None, Unset]:
+        def _parse_agent(data: object) -> Agent | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -124,9 +127,9 @@ class ComputeEnvironmentConfiguration:
                 agent_type_1 = Agent.from_dict(data)
 
                 return agent_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["Agent", None, Unset], data)
+            return cast(Agent | None | Unset, data)
 
         agent = _parse_agent(d.pop("agent", UNSET))
 
@@ -149,3 +152,15 @@ class ComputeEnvironmentConfiguration:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

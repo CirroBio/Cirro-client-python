@@ -19,7 +19,7 @@ def _get_kwargs() -> dict[str, Any]:
 
 
 def _parse_response(*, client: Client, response: httpx.Response) -> SystemInfoResponse | None:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
         response_200 = SystemInfoResponse.from_dict(response.json())
 
         return response_200

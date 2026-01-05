@@ -1,4 +1,7 @@
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -19,13 +22,13 @@ class ComputeEnvironmentConfigurationInput:
     """
     Attributes:
         name (str):
-        agent_id (Union[None, Unset, str]):
-        properties (Union['ComputeEnvironmentConfigurationInputProperties', None, Unset]):
+        agent_id (None | str | Unset):
+        properties (ComputeEnvironmentConfigurationInputProperties | None | Unset):
     """
 
     name: str
-    agent_id: None | Unset | str = UNSET
-    properties: Union["ComputeEnvironmentConfigurationInputProperties", None, Unset] = UNSET
+    agent_id: None | str | Unset = UNSET
+    properties: ComputeEnvironmentConfigurationInputProperties | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -35,7 +38,7 @@ class ComputeEnvironmentConfigurationInput:
 
         name = self.name
 
-        agent_id: None | Unset | str
+        agent_id: None | str | Unset
         if isinstance(self.agent_id, Unset):
             agent_id = UNSET
         else:
@@ -64,24 +67,24 @@ class ComputeEnvironmentConfigurationInput:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.compute_environment_configuration_input_properties import (
             ComputeEnvironmentConfigurationInputProperties,
         )
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         name = d.pop("name")
 
-        def _parse_agent_id(data: object) -> None | Unset | str:
+        def _parse_agent_id(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         agent_id = _parse_agent_id(d.pop("agentId", UNSET))
 
-        def _parse_properties(data: object) -> Union["ComputeEnvironmentConfigurationInputProperties", None, Unset]:
+        def _parse_properties(data: object) -> ComputeEnvironmentConfigurationInputProperties | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -92,9 +95,9 @@ class ComputeEnvironmentConfigurationInput:
                 properties_type_0 = ComputeEnvironmentConfigurationInputProperties.from_dict(data)
 
                 return properties_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["ComputeEnvironmentConfigurationInputProperties", None, Unset], data)
+            return cast(ComputeEnvironmentConfigurationInputProperties | None | Unset, data)
 
         properties = _parse_properties(d.pop("properties", UNSET))
 
@@ -110,3 +113,15 @@ class ComputeEnvironmentConfigurationInput:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

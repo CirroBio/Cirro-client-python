@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -14,14 +15,17 @@ def _get_kwargs(
 ) -> dict[str, Any]:
     _kwargs: dict[str, Any] = {
         "method": "delete",
-        "url": f"/projects/{project_id}/compute-environments/{compute_environment_id}",
+        "url": "/projects/{project_id}/compute-environments/{compute_environment_id}".format(
+            project_id=quote(str(project_id), safe=""),
+            compute_environment_id=quote(str(compute_environment_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(*, client: Client, response: httpx.Response) -> Any | None:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
         return None
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)

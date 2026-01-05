@@ -1,4 +1,7 @@
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -24,21 +27,21 @@ class CustomProcessInput:
         description (str): Description of the process Example: MAGeCK Flute enables accurate identification of essential
             genes with their related biological functions.
         executor (Executor): How the workflow is executed
-        child_process_ids (List[str]): IDs of pipelines that can be run downstream
-        parent_process_ids (List[str]): IDs of processes that can run this pipeline
-        linked_project_ids (List[str]): Projects that can run this process
-        data_type (Union[None, Unset, str]): Name of the data type this pipeline produces (if it is not defined, use the
+        child_process_ids (list[str]): IDs of pipelines that can be run downstream
+        parent_process_ids (list[str]): IDs of processes that can run this pipeline
+        linked_project_ids (list[str]): Projects that can run this process
+        data_type (None | str | Unset): Name of the data type this pipeline produces (if it is not defined, use the
             name)
-        category (Union[Unset, str]): Category of the process Example: Microbial Analysis.
-        documentation_url (Union[None, Unset, str]): Link to process documentation Example:
+        category (str | Unset): Category of the process Example: Microbial Analysis.
+        documentation_url (None | str | Unset): Link to process documentation Example:
             https://docs.cirro.bio/pipelines/catalog_targeted_sequencing/#crispr-screen-analysis.
-        file_requirements_message (Union[None, Unset, str]): Description of the files to be uploaded (optional)
-        pipeline_code (Union['PipelineCode', None, Unset]):
-        is_tenant_wide (Union[Unset, bool]): Whether the process is shared with the tenant
-        allow_multiple_sources (Union[Unset, bool]): Whether the pipeline is allowed to have multiple dataset sources
-        uses_sample_sheet (Union[Unset, bool]): Whether the pipeline uses the Cirro-provided sample sheet
-        custom_settings (Union['CustomPipelineSettings', None, Unset]):
-        file_mapping_rules (Union[List['FileMappingRule'], None, Unset]):
+        file_requirements_message (None | str | Unset): Description of the files to be uploaded (optional)
+        pipeline_code (None | PipelineCode | Unset):
+        is_tenant_wide (bool | Unset): Whether the process is shared with the tenant
+        allow_multiple_sources (bool | Unset): Whether the pipeline is allowed to have multiple dataset sources
+        uses_sample_sheet (bool | Unset): Whether the pipeline uses the Cirro-provided sample sheet
+        custom_settings (CustomPipelineSettings | None | Unset):
+        file_mapping_rules (list[FileMappingRule] | None | Unset):
     """
 
     id: str
@@ -48,16 +51,16 @@ class CustomProcessInput:
     child_process_ids: list[str]
     parent_process_ids: list[str]
     linked_project_ids: list[str]
-    data_type: None | Unset | str = UNSET
-    category: Unset | str = UNSET
-    documentation_url: None | Unset | str = UNSET
-    file_requirements_message: None | Unset | str = UNSET
-    pipeline_code: Union["PipelineCode", None, Unset] = UNSET
-    is_tenant_wide: Unset | bool = UNSET
-    allow_multiple_sources: Unset | bool = UNSET
-    uses_sample_sheet: Unset | bool = UNSET
-    custom_settings: Union["CustomPipelineSettings", None, Unset] = UNSET
-    file_mapping_rules: list["FileMappingRule"] | None | Unset = UNSET
+    data_type: None | str | Unset = UNSET
+    category: str | Unset = UNSET
+    documentation_url: None | str | Unset = UNSET
+    file_requirements_message: None | str | Unset = UNSET
+    pipeline_code: None | PipelineCode | Unset = UNSET
+    is_tenant_wide: bool | Unset = UNSET
+    allow_multiple_sources: bool | Unset = UNSET
+    uses_sample_sheet: bool | Unset = UNSET
+    custom_settings: CustomPipelineSettings | None | Unset = UNSET
+    file_mapping_rules: list[FileMappingRule] | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -78,7 +81,7 @@ class CustomProcessInput:
 
         linked_project_ids = self.linked_project_ids
 
-        data_type: None | Unset | str
+        data_type: None | str | Unset
         if isinstance(self.data_type, Unset):
             data_type = UNSET
         else:
@@ -86,13 +89,13 @@ class CustomProcessInput:
 
         category = self.category
 
-        documentation_url: None | Unset | str
+        documentation_url: None | str | Unset
         if isinstance(self.documentation_url, Unset):
             documentation_url = UNSET
         else:
             documentation_url = self.documentation_url
 
-        file_requirements_message: None | Unset | str
+        file_requirements_message: None | str | Unset
         if isinstance(self.file_requirements_message, Unset):
             file_requirements_message = UNSET
         else:
@@ -169,12 +172,12 @@ class CustomProcessInput:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.custom_pipeline_settings import CustomPipelineSettings
         from ..models.file_mapping_rule import FileMappingRule
         from ..models.pipeline_code import PipelineCode
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
@@ -189,36 +192,36 @@ class CustomProcessInput:
 
         linked_project_ids = cast(list[str], d.pop("linkedProjectIds"))
 
-        def _parse_data_type(data: object) -> None | Unset | str:
+        def _parse_data_type(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         data_type = _parse_data_type(d.pop("dataType", UNSET))
 
         category = d.pop("category", UNSET)
 
-        def _parse_documentation_url(data: object) -> None | Unset | str:
+        def _parse_documentation_url(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         documentation_url = _parse_documentation_url(d.pop("documentationUrl", UNSET))
 
-        def _parse_file_requirements_message(data: object) -> None | Unset | str:
+        def _parse_file_requirements_message(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         file_requirements_message = _parse_file_requirements_message(d.pop("fileRequirementsMessage", UNSET))
 
-        def _parse_pipeline_code(data: object) -> Union["PipelineCode", None, Unset]:
+        def _parse_pipeline_code(data: object) -> None | PipelineCode | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -229,9 +232,9 @@ class CustomProcessInput:
                 pipeline_code_type_1 = PipelineCode.from_dict(data)
 
                 return pipeline_code_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["PipelineCode", None, Unset], data)
+            return cast(None | PipelineCode | Unset, data)
 
         pipeline_code = _parse_pipeline_code(d.pop("pipelineCode", UNSET))
 
@@ -241,7 +244,7 @@ class CustomProcessInput:
 
         uses_sample_sheet = d.pop("usesSampleSheet", UNSET)
 
-        def _parse_custom_settings(data: object) -> Union["CustomPipelineSettings", None, Unset]:
+        def _parse_custom_settings(data: object) -> CustomPipelineSettings | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -252,13 +255,13 @@ class CustomProcessInput:
                 custom_settings_type_1 = CustomPipelineSettings.from_dict(data)
 
                 return custom_settings_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["CustomPipelineSettings", None, Unset], data)
+            return cast(CustomPipelineSettings | None | Unset, data)
 
         custom_settings = _parse_custom_settings(d.pop("customSettings", UNSET))
 
-        def _parse_file_mapping_rules(data: object) -> list["FileMappingRule"] | None | Unset:
+        def _parse_file_mapping_rules(data: object) -> list[FileMappingRule] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -274,9 +277,9 @@ class CustomProcessInput:
                     file_mapping_rules_type_0.append(file_mapping_rules_type_0_item)
 
                 return file_mapping_rules_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(list["FileMappingRule"] | None | Unset, data)
+            return cast(list[FileMappingRule] | None | Unset, data)
 
         file_mapping_rules = _parse_file_mapping_rules(d.pop("fileMappingRules", UNSET))
 
@@ -306,3 +309,15 @@ class CustomProcessInput:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

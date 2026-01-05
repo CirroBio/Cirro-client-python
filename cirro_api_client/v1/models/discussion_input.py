@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
@@ -19,14 +22,14 @@ class DiscussionInput:
         name (str):
         description (str):
         entity (Entity):
-        type (DiscussionType):
+        type_ (DiscussionType):
         project_id (str):
     """
 
     name: str
     description: str
-    entity: "Entity"
-    type: DiscussionType
+    entity: Entity
+    type_: DiscussionType
     project_id: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -37,7 +40,7 @@ class DiscussionInput:
 
         entity = self.entity.to_dict()
 
-        type = self.type.value
+        type_ = self.type_.value
 
         project_id = self.project_id
 
@@ -48,7 +51,7 @@ class DiscussionInput:
                 "name": name,
                 "description": description,
                 "entity": entity,
-                "type": type,
+                "type": type_,
                 "projectId": project_id,
             }
         )
@@ -56,17 +59,17 @@ class DiscussionInput:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.entity import Entity
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         name = d.pop("name")
 
         description = d.pop("description")
 
         entity = Entity.from_dict(d.pop("entity"))
 
-        type = DiscussionType(d.pop("type"))
+        type_ = DiscussionType(d.pop("type"))
 
         project_id = d.pop("projectId")
 
@@ -74,7 +77,7 @@ class DiscussionInput:
             name=name,
             description=description,
             entity=entity,
-            type=type,
+            type_=type_,
             project_id=project_id,
         )
 
@@ -84,3 +87,15 @@ class DiscussionInput:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

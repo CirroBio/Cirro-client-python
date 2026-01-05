@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
 from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
@@ -12,14 +15,14 @@ T = TypeVar("T", bound="ColumnDefinition")
 class ColumnDefinition:
     """
     Attributes:
-        col (Union[Unset, str]): Column name in asset file
-        name (Union[Unset, str]): User-friendly column name
-        desc (Union[Unset, str]): Description of the column
+        col (str | Unset): Column name in asset file
+        name (str | Unset): User-friendly column name
+        desc (str | Unset): Description of the column
     """
 
-    col: Unset | str = UNSET
-    name: Unset | str = UNSET
-    desc: Unset | str = UNSET
+    col: str | Unset = UNSET
+    name: str | Unset = UNSET
+    desc: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -42,8 +45,8 @@ class ColumnDefinition:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        d = src_dict.copy()
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
         col = d.pop("col", UNSET)
 
         name = d.pop("name", UNSET)
@@ -62,3 +65,15 @@ class ColumnDefinition:
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

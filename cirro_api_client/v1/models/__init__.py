@@ -128,6 +128,7 @@ from .portal_error_response import PortalErrorResponse
 from .postpone_workspace_autostop_input import PostponeWorkspaceAutostopInput
 from .process import Process
 from .process_detail import ProcessDetail
+from .process_documentation import ProcessDocumentation
 from .project import Project
 from .project_access_request import ProjectAccessRequest
 from .project_access_type import ProjectAccessType
@@ -323,6 +324,7 @@ __all__ = (
     "PostponeWorkspaceAutostopInput",
     "Process",
     "ProcessDetail",
+    "ProcessDocumentation",
     "Project",
     "ProjectAccessRequest",
     "ProjectAccessType",

@@ -4,6 +4,7 @@ from enum import Enum
 class SharingType(str, Enum):
     PRIVATE = "PRIVATE"
     READ_WRITE = "READ_WRITE"
+    READ_WRITE_CONTROL = "READ_WRITE_CONTROL"
     UNKNOWN = "UNKNOWN"
     """ This is a fallback value for when the value is not known, do not use this value when making requests """
 

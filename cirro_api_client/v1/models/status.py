@@ -10,6 +10,8 @@ class Status(str, Enum):
     FAILED = "FAILED"
     PENDING = "PENDING"
     RUNNING = "RUNNING"
+    STARTING = "STARTING"
+    STOPPING = "STOPPING"
     SUSPENDED = "SUSPENDED"
     UNKNOWN = "UNKNOWN"
 

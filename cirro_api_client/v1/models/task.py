@@ -19,7 +19,7 @@ class Task:
     Attributes:
         name (str):
         status (str):
-        native_job_id (None | str | Unset):
+        native_job_id (None | str | Unset): Job ID on the underlying execution environment (i.e. AWS Batch ID)
         requested_at (datetime.datetime | None | Unset):
         started_at (datetime.datetime | None | Unset):
         stopped_at (datetime.datetime | None | Unset):

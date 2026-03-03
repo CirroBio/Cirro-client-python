@@ -12,6 +12,12 @@ from .agent_registration import AgentRegistration
 from .agent_status import AgentStatus
 from .agent_tags import AgentTags
 from .allowed_data_type import AllowedDataType
+from .app_client_type import AppClientType
+from .app_registration import AppRegistration
+from .app_registration_detail import AppRegistrationDetail
+from .app_registration_input import AppRegistrationInput
+from .app_registration_secret_response import AppRegistrationSecretResponse
+from .app_type import AppType
 from .approve_project_access_request import ApproveProjectAccessRequest
 from .artifact import Artifact
 from .artifact_type import ArtifactType
@@ -117,15 +123,18 @@ from .named_item import NamedItem
 from .notebook_instance import NotebookInstance
 from .notebook_instance_status_response import NotebookInstanceStatusResponse
 from .open_notebook_instance_response import OpenNotebookInstanceResponse
+from .paginated_response_app_registration_dto import PaginatedResponseAppRegistrationDto
 from .paginated_response_dataset_list_dto import PaginatedResponseDatasetListDto
 from .paginated_response_discussion import PaginatedResponseDiscussion
 from .paginated_response_message import PaginatedResponseMessage
 from .paginated_response_sample_dto import PaginatedResponseSampleDto
 from .paginated_response_user_dto import PaginatedResponseUserDto
+from .permission import Permission
 from .pipeline_code import PipelineCode
 from .pipeline_cost import PipelineCost
 from .portal_error_response import PortalErrorResponse
 from .postpone_workspace_autostop_input import PostponeWorkspaceAutostopInput
+from .principal_type import PrincipalType
 from .process import Process
 from .process_detail import ProcessDetail
 from .process_documentation import ProcessDocumentation
@@ -137,6 +146,7 @@ from .project_detail import ProjectDetail
 from .project_file_access_request import ProjectFileAccessRequest
 from .project_input import ProjectInput
 from .project_metrics import ProjectMetrics
+from .project_permission_set import ProjectPermissionSet
 from .project_request import ProjectRequest
 from .project_requirement import ProjectRequirement
 from .project_role import ProjectRole
@@ -208,7 +218,13 @@ __all__ = (
     "AgentStatus",
     "AgentTags",
     "AllowedDataType",
+    "AppClientType",
+    "AppRegistration",
+    "AppRegistrationDetail",
+    "AppRegistrationInput",
+    "AppRegistrationSecretResponse",
     "ApproveProjectAccessRequest",
+    "AppType",
     "Artifact",
     "ArtifactType",
     "AuditEvent",
@@ -313,15 +329,18 @@ __all__ = (
     "NotebookInstance",
     "NotebookInstanceStatusResponse",
     "OpenNotebookInstanceResponse",
+    "PaginatedResponseAppRegistrationDto",
     "PaginatedResponseDatasetListDto",
     "PaginatedResponseDiscussion",
     "PaginatedResponseMessage",
     "PaginatedResponseSampleDto",
     "PaginatedResponseUserDto",
+    "Permission",
     "PipelineCode",
     "PipelineCost",
     "PortalErrorResponse",
     "PostponeWorkspaceAutostopInput",
+    "PrincipalType",
     "Process",
     "ProcessDetail",
     "ProcessDocumentation",
@@ -333,6 +352,7 @@ __all__ = (
     "ProjectFileAccessRequest",
     "ProjectInput",
     "ProjectMetrics",
+    "ProjectPermissionSet",
     "ProjectRequest",
     "ProjectRequirement",
     "ProjectRole",

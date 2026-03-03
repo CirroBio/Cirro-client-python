@@ -20,6 +20,7 @@ class Task:
         name (str):
         status (str):
         native_job_id (None | str | Unset): Job ID on the underlying execution environment (i.e. AWS Batch ID)
+        status_message (None | str | Unset):
         requested_at (datetime.datetime | None | Unset):
         started_at (datetime.datetime | None | Unset):
         stopped_at (datetime.datetime | None | Unset):
@@ -31,6 +32,7 @@ class Task:
     name: str
     status: str
     native_job_id: None | str | Unset = UNSET
+    status_message: None | str | Unset = UNSET
     requested_at: datetime.datetime | None | Unset = UNSET
     started_at: datetime.datetime | None | Unset = UNSET
     stopped_at: datetime.datetime | None | Unset = UNSET
@@ -49,6 +51,12 @@ class Task:
             native_job_id = UNSET
         else:
             native_job_id = self.native_job_id
+
+        status_message: None | str | Unset
+        if isinstance(self.status_message, Unset):
+            status_message = UNSET
+        else:
+            status_message = self.status_message
 
         requested_at: None | str | Unset
         if isinstance(self.requested_at, Unset):
@@ -102,6 +110,8 @@ class Task:
         )
         if native_job_id is not UNSET:
             field_dict["nativeJobId"] = native_job_id
+        if status_message is not UNSET:
+            field_dict["statusMessage"] = status_message
         if requested_at is not UNSET:
             field_dict["requestedAt"] = requested_at
         if started_at is not UNSET:
@@ -132,6 +142,15 @@ class Task:
             return cast(None | str | Unset, data)
 
         native_job_id = _parse_native_job_id(d.pop("nativeJobId", UNSET))
+
+        def _parse_status_message(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        status_message = _parse_status_message(d.pop("statusMessage", UNSET))
 
         def _parse_requested_at(data: object) -> datetime.datetime | None | Unset:
             if data is None:
@@ -215,6 +234,7 @@ class Task:
             name=name,
             status=status,
             native_job_id=native_job_id,
+            status_message=status_message,
             requested_at=requested_at,
             started_at=started_at,
             stopped_at=stopped_at,

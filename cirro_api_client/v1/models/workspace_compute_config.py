@@ -25,6 +25,8 @@ class WorkspaceComputeConfig:
         memory_gi_b (int | Unset): Memory allocated to the workspace container in GiB. Example: 8.
         volume_size_gi_b (int | Unset): Persistent storage volume size allocated to the workspace in GiB. Example: 50.
         gpu (int | Unset): Number of GPUs allocated to the workspace Example: 1.
+        gpu_model (None | str | Unset): NVIDIA GPU model. When null, AWS selects from any available GPU instance family.
+            Example: T4.
         environment_variables (None | Unset | WorkspaceComputeConfigEnvironmentVariables): Map of environment variables
             injected into the container at runtime. Keys must be non-blank. Example: {'ENV_MODE': 'production', 'LOG_LEVEL':
             'debug'}.
@@ -36,6 +38,7 @@ class WorkspaceComputeConfig:
     memory_gi_b: int | Unset = UNSET
     volume_size_gi_b: int | Unset = UNSET
     gpu: int | Unset = UNSET
+    gpu_model: None | str | Unset = UNSET
     environment_variables: None | Unset | WorkspaceComputeConfigEnvironmentVariables = UNSET
     local_port: int | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -52,6 +55,12 @@ class WorkspaceComputeConfig:
         volume_size_gi_b = self.volume_size_gi_b
 
         gpu = self.gpu
+
+        gpu_model: None | str | Unset
+        if isinstance(self.gpu_model, Unset):
+            gpu_model = UNSET
+        else:
+            gpu_model = self.gpu_model
 
         environment_variables: dict[str, Any] | None | Unset
         if isinstance(self.environment_variables, Unset):
@@ -78,6 +87,8 @@ class WorkspaceComputeConfig:
             field_dict["volumeSizeGiB"] = volume_size_gi_b
         if gpu is not UNSET:
             field_dict["gpu"] = gpu
+        if gpu_model is not UNSET:
+            field_dict["gpuModel"] = gpu_model
         if environment_variables is not UNSET:
             field_dict["environmentVariables"] = environment_variables
         if local_port is not UNSET:
@@ -99,6 +110,15 @@ class WorkspaceComputeConfig:
         volume_size_gi_b = d.pop("volumeSizeGiB", UNSET)
 
         gpu = d.pop("gpu", UNSET)
+
+        def _parse_gpu_model(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        gpu_model = _parse_gpu_model(d.pop("gpuModel", UNSET))
 
         def _parse_environment_variables(data: object) -> None | Unset | WorkspaceComputeConfigEnvironmentVariables:
             if data is None:
@@ -125,6 +145,7 @@ class WorkspaceComputeConfig:
             memory_gi_b=memory_gi_b,
             volume_size_gi_b=volume_size_gi_b,
             gpu=gpu,
+            gpu_model=gpu_model,
             environment_variables=environment_variables,
             local_port=local_port,
         )

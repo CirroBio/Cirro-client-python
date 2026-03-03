@@ -31,10 +31,11 @@ class UserDetail:
         department (str):
         invited_by (str):
         project_assignments (list[UserProjectAssignment]):
-        groups (list[str]):
+        global_roles (list[str]):
         settings (UserSettings): Additional settings for the user
         sign_up_time (datetime.datetime | None | Unset):
         last_signed_in (datetime.datetime | None | Unset):
+        groups (list[str] | None | Unset): Replaced by globalRoles.
     """
 
     username: str
@@ -46,10 +47,11 @@ class UserDetail:
     department: str
     invited_by: str
     project_assignments: list[UserProjectAssignment]
-    groups: list[str]
+    global_roles: list[str]
     settings: UserSettings
     sign_up_time: datetime.datetime | None | Unset = UNSET
     last_signed_in: datetime.datetime | None | Unset = UNSET
+    groups: list[str] | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -74,7 +76,7 @@ class UserDetail:
             project_assignments_item = project_assignments_item_data.to_dict()
             project_assignments.append(project_assignments_item)
 
-        groups = self.groups
+        global_roles = self.global_roles
 
         settings = self.settings.to_dict()
 
@@ -94,6 +96,15 @@ class UserDetail:
         else:
             last_signed_in = self.last_signed_in
 
+        groups: list[str] | None | Unset
+        if isinstance(self.groups, Unset):
+            groups = UNSET
+        elif isinstance(self.groups, list):
+            groups = self.groups
+
+        else:
+            groups = self.groups
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -107,7 +118,7 @@ class UserDetail:
                 "department": department,
                 "invitedBy": invited_by,
                 "projectAssignments": project_assignments,
-                "groups": groups,
+                "globalRoles": global_roles,
                 "settings": settings,
             }
         )
@@ -115,6 +126,8 @@ class UserDetail:
             field_dict["signUpTime"] = sign_up_time
         if last_signed_in is not UNSET:
             field_dict["lastSignedIn"] = last_signed_in
+        if groups is not UNSET:
+            field_dict["groups"] = groups
 
         return field_dict
 
@@ -147,7 +160,7 @@ class UserDetail:
 
             project_assignments.append(project_assignments_item)
 
-        groups = cast(list[str], d.pop("groups"))
+        global_roles = cast(list[str], d.pop("globalRoles"))
 
         settings = UserSettings.from_dict(d.pop("settings"))
 
@@ -185,6 +198,23 @@ class UserDetail:
 
         last_signed_in = _parse_last_signed_in(d.pop("lastSignedIn", UNSET))
 
+        def _parse_groups(data: object) -> list[str] | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, list):
+                    raise TypeError()
+                groups_type_0 = cast(list[str], data)
+
+                return groups_type_0
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(list[str] | None | Unset, data)
+
+        groups = _parse_groups(d.pop("groups", UNSET))
+
         user_detail = cls(
             username=username,
             name=name,
@@ -195,10 +225,11 @@ class UserDetail:
             department=department,
             invited_by=invited_by,
             project_assignments=project_assignments,
-            groups=groups,
+            global_roles=global_roles,
             settings=settings,
             sign_up_time=sign_up_time,
             last_signed_in=last_signed_in,
+            groups=groups,
         )
 
         user_detail.additional_properties = d

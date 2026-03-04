@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -18,6 +18,7 @@ class User:
         organization (str):
         department (str):
         job_title (str):
+        global_roles (list[str]):
     """
 
     name: str
@@ -25,6 +26,7 @@ class User:
     organization: str
     department: str
     job_title: str
+    global_roles: list[str]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -38,6 +40,8 @@ class User:
 
         job_title = self.job_title
 
+        global_roles = self.global_roles
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -47,6 +51,7 @@ class User:
                 "organization": organization,
                 "department": department,
                 "jobTitle": job_title,
+                "globalRoles": global_roles,
             }
         )
 
@@ -65,12 +70,15 @@ class User:
 
         job_title = d.pop("jobTitle")
 
+        global_roles = cast(list[str], d.pop("globalRoles"))
+
         user = cls(
             name=name,
             username=username,
             organization=organization,
             department=department,
             job_title=job_title,
+            global_roles=global_roles,
         )
 
         user.additional_properties = d

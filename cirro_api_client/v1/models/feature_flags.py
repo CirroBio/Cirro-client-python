@@ -18,6 +18,7 @@ class FeatureFlags:
         project_requests_enabled (bool):
         workspaces_enabled (bool):
         drive_enabled (bool):
+        app_registrations_enabled (bool):
     """
 
     sftp_enabled: bool
@@ -25,6 +26,7 @@ class FeatureFlags:
     project_requests_enabled: bool
     workspaces_enabled: bool
     drive_enabled: bool
+    app_registrations_enabled: bool
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -38,6 +40,8 @@ class FeatureFlags:
 
         drive_enabled = self.drive_enabled
 
+        app_registrations_enabled = self.app_registrations_enabled
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -47,6 +51,7 @@ class FeatureFlags:
                 "projectRequestsEnabled": project_requests_enabled,
                 "workspacesEnabled": workspaces_enabled,
                 "driveEnabled": drive_enabled,
+                "appRegistrationsEnabled": app_registrations_enabled,
             }
         )
 
@@ -65,12 +70,15 @@ class FeatureFlags:
 
         drive_enabled = d.pop("driveEnabled")
 
+        app_registrations_enabled = d.pop("appRegistrationsEnabled")
+
         feature_flags = cls(
             sftp_enabled=sftp_enabled,
             governance_enabled=governance_enabled,
             project_requests_enabled=project_requests_enabled,
             workspaces_enabled=workspaces_enabled,
             drive_enabled=drive_enabled,
+            app_registrations_enabled=app_registrations_enabled,
         )
 
         feature_flags.additional_properties = d

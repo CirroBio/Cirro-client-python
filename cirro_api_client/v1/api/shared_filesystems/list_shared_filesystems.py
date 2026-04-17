@@ -6,7 +6,7 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.notebook_instance import NotebookInstance
+from ...models.shared_filesystem import SharedFilesystem
 from ...types import Response
 
 
@@ -15,7 +15,7 @@ def _get_kwargs(
 ) -> dict[str, Any]:
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": "/projects/{project_id}/notebook-instances".format(
+        "url": "/projects/{project_id}/shared-filesystems".format(
             project_id=quote(str(project_id), safe=""),
         ),
     }
@@ -23,12 +23,12 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> list[NotebookInstance] | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> list[SharedFilesystem] | None:
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
         for response_200_item_data in _response_200:
-            response_200_item = NotebookInstance.from_dict(response_200_item_data)
+            response_200_item = SharedFilesystem.from_dict(response_200_item_data)
 
             response_200.append(response_200_item)
 
@@ -37,7 +37,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> list[Noteboo
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[list[NotebookInstance]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list[SharedFilesystem]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -50,10 +50,8 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-) -> Response[list[NotebookInstance]]:
-    """Get notebook instances
-
-     Retrieves a list of notebook instances that the user has access to
+) -> Response[list[SharedFilesystem]]:
+    """List shared filesystems in a project
 
     Args:
         project_id (str):
@@ -64,7 +62,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[list[NotebookInstance]]
+        Response[list[SharedFilesystem]]
     """
 
     kwargs = _get_kwargs(
@@ -83,10 +81,8 @@ def sync(
     project_id: str,
     *,
     client: Client,
-) -> list[NotebookInstance] | None:
-    """Get notebook instances
-
-     Retrieves a list of notebook instances that the user has access to
+) -> list[SharedFilesystem] | None:
+    """List shared filesystems in a project
 
     Args:
         project_id (str):
@@ -97,7 +93,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        list[NotebookInstance]
+        list[SharedFilesystem]
     """
 
     try:
@@ -113,10 +109,8 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-) -> Response[list[NotebookInstance]]:
-    """Get notebook instances
-
-     Retrieves a list of notebook instances that the user has access to
+) -> Response[list[SharedFilesystem]]:
+    """List shared filesystems in a project
 
     Args:
         project_id (str):
@@ -127,7 +121,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[list[NotebookInstance]]
+        Response[list[SharedFilesystem]]
     """
 
     kwargs = _get_kwargs(
@@ -143,10 +137,8 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-) -> list[NotebookInstance] | None:
-    """Get notebook instances
-
-     Retrieves a list of notebook instances that the user has access to
+) -> list[SharedFilesystem] | None:
+    """List shared filesystems in a project
 
     Args:
         project_id (str):
@@ -157,7 +149,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        list[NotebookInstance]
+        list[SharedFilesystem]
     """
 
     try:

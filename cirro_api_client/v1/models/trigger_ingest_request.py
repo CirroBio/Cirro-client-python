@@ -1,37 +1,36 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="OpenNotebookInstanceResponse")
+if TYPE_CHECKING:
+    from ..models.file_def import FileDef
+
+
+T = TypeVar("T", bound="TriggerIngestRequest")
 
 
 @_attrs_define
-class OpenNotebookInstanceResponse:
+class TriggerIngestRequest:
     """
     Attributes:
-        url (str):
-        message (str):
+        file_def (FileDef): If provided, an ingest job is triggered immediately after table creation (TABLE only)
     """
 
-    url: str
-    message: str
+    file_def: FileDef
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        url = self.url
-
-        message = self.message
+        file_def = self.file_def.to_dict()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "url": url,
-                "message": message,
+                "fileDef": file_def,
             }
         )
 
@@ -39,18 +38,17 @@ class OpenNotebookInstanceResponse:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.file_def import FileDef
+
         d = dict(src_dict)
-        url = d.pop("url")
+        file_def = FileDef.from_dict(d.pop("fileDef"))
 
-        message = d.pop("message")
-
-        open_notebook_instance_response = cls(
-            url=url,
-            message=message,
+        trigger_ingest_request = cls(
+            file_def=file_def,
         )
 
-        open_notebook_instance_response.additional_properties = d
-        return open_notebook_instance_response
+        trigger_ingest_request.additional_properties = d
+        return trigger_ingest_request
 
     @property
     def additional_keys(self) -> list[str]:

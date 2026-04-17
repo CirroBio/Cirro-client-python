@@ -17,7 +17,7 @@ class Artifact:
 
     Attributes:
         type_ (ArtifactType):
-        path (str):
+        path (str): A secondary file or resource associated with a dataset
     """
 
     type_: ArtifactType

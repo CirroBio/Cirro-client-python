@@ -15,6 +15,7 @@ if TYPE_CHECKING:
     from ..models.custom_pipeline_settings import CustomPipelineSettings
     from ..models.file_mapping_rule import FileMappingRule
     from ..models.pipeline_code import PipelineCode
+    from ..models.tag import Tag
 
 
 T = TypeVar("T", bound="ProcessDetail")
@@ -38,6 +39,7 @@ class ProcessDetail:
         allow_multiple_sources (bool): Whether the pipeline is allowed to have multiple dataset sources
         uses_sample_sheet (bool): Whether the pipeline uses the Cirro-provided sample sheet
         is_archived (bool): Whether the process is marked as archived
+        tags (list[Tag]):
         category (str | Unset): Category of the process Example: Microbial Analysis.
         pipeline_type (str | Unset): Type of pipeline Example: nf-core.
         documentation_url (str | Unset): Link to process documentation Example:
@@ -63,6 +65,7 @@ class ProcessDetail:
     allow_multiple_sources: bool
     uses_sample_sheet: bool
     is_archived: bool
+    tags: list[Tag]
     category: str | Unset = UNSET
     pipeline_type: str | Unset = UNSET
     documentation_url: str | Unset = UNSET
@@ -102,6 +105,11 @@ class ProcessDetail:
         uses_sample_sheet = self.uses_sample_sheet
 
         is_archived = self.is_archived
+
+        tags = []
+        for tags_item_data in self.tags:
+            tags_item = tags_item_data.to_dict()
+            tags.append(tags_item)
 
         category = self.category
 
@@ -169,6 +177,7 @@ class ProcessDetail:
                 "allowMultipleSources": allow_multiple_sources,
                 "usesSampleSheet": uses_sample_sheet,
                 "isArchived": is_archived,
+                "tags": tags,
             }
         )
         if category is not UNSET:
@@ -199,6 +208,7 @@ class ProcessDetail:
         from ..models.custom_pipeline_settings import CustomPipelineSettings
         from ..models.file_mapping_rule import FileMappingRule
         from ..models.pipeline_code import PipelineCode
+        from ..models.tag import Tag
 
         d = dict(src_dict)
         id = d.pop("id")
@@ -224,6 +234,13 @@ class ProcessDetail:
         uses_sample_sheet = d.pop("usesSampleSheet")
 
         is_archived = d.pop("isArchived")
+
+        tags = []
+        _tags = d.pop("tags")
+        for tags_item_data in _tags:
+            tags_item = Tag.from_dict(tags_item_data)
+
+            tags.append(tags_item)
 
         category = d.pop("category", UNSET)
 
@@ -325,6 +342,7 @@ class ProcessDetail:
             allow_multiple_sources=allow_multiple_sources,
             uses_sample_sheet=uses_sample_sheet,
             is_archived=is_archived,
+            tags=tags,
             category=category,
             pipeline_type=pipeline_type,
             documentation_url=documentation_url,

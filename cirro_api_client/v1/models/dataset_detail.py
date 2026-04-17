@@ -50,6 +50,7 @@ class DatasetDetail:
             from another project.
         share (NamedItem | None | Unset):
         total_size_bytes (int | None | Unset): Total size of dataset files (in bytes)
+        file_count (int | None | Unset): Total number of dataset files
     """
 
     id: str
@@ -74,6 +75,7 @@ class DatasetDetail:
     originating_project_id: str | Unset = UNSET
     share: NamedItem | None | Unset = UNSET
     total_size_bytes: int | None | Unset = UNSET
+    file_count: int | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -139,6 +141,12 @@ class DatasetDetail:
         else:
             total_size_bytes = self.total_size_bytes
 
+        file_count: int | None | Unset
+        if isinstance(self.file_count, Unset):
+            file_count = UNSET
+        else:
+            file_count = self.file_count
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -170,6 +178,8 @@ class DatasetDetail:
             field_dict["share"] = share
         if total_size_bytes is not UNSET:
             field_dict["totalSizeBytes"] = total_size_bytes
+        if file_count is not UNSET:
+            field_dict["fileCount"] = file_count
 
         return field_dict
 
@@ -258,6 +268,15 @@ class DatasetDetail:
 
         total_size_bytes = _parse_total_size_bytes(d.pop("totalSizeBytes", UNSET))
 
+        def _parse_file_count(data: object) -> int | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(int | None | Unset, data)
+
+        file_count = _parse_file_count(d.pop("fileCount", UNSET))
+
         dataset_detail = cls(
             id=id,
             name=name,
@@ -281,6 +300,7 @@ class DatasetDetail:
             originating_project_id=originating_project_id,
             share=share,
             total_size_bytes=total_size_bytes,
+            file_count=file_count,
         )
 
         dataset_detail.additional_properties = d

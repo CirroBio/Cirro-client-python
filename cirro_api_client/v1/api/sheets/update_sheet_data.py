@@ -6,26 +6,36 @@ import httpx
 
 from ... import errors
 from ...client import Client
+from ...models.update_rows_request import UpdateRowsRequest
 from ...types import Response
 
 
 def _get_kwargs(
     project_id: str,
-    notebook_instance_id: str,
+    sheet_id: str,
+    *,
+    body: UpdateRowsRequest,
 ) -> dict[str, Any]:
+    headers: dict[str, Any] = {}
+
     _kwargs: dict[str, Any] = {
-        "method": "delete",
-        "url": "/projects/{project_id}/notebook-instances/{notebook_instance_id}".format(
+        "method": "put",
+        "url": "/projects/{project_id}/sheets/{sheet_id}/data".format(
             project_id=quote(str(project_id), safe=""),
-            notebook_instance_id=quote(str(notebook_instance_id), safe=""),
+            sheet_id=quote(str(sheet_id), safe=""),
         ),
     }
 
+    _kwargs["json"] = body.to_dict()
+
+    headers["Content-Type"] = "application/json"
+
+    _kwargs["headers"] = headers
     return _kwargs
 
 
 def _parse_response(*, client: Client, response: httpx.Response) -> Any | None:
-    if response.status_code == 202:
+    if response.status_code == 200:
         return None
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
@@ -42,17 +52,20 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Any
 
 def sync_detailed(
     project_id: str,
-    notebook_instance_id: str,
+    sheet_id: str,
     *,
     client: Client,
+    body: UpdateRowsRequest,
 ) -> Response[Any]:
-    """Delete notebook instance
+    """Update sheet rows
 
-     Triggers a deletion of the notebook instance
+     Updates specific rows in a TABLE sheet by _row_id. This is a partial update: only the columns
+    included in each entry are modified, all other columns are left unchanged.
 
     Args:
         project_id (str):
-        notebook_instance_id (str):
+        sheet_id (str):
+        body (UpdateRowsRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -65,7 +78,8 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        notebook_instance_id=notebook_instance_id,
+        sheet_id=sheet_id,
+        body=body,
     )
 
     response = client.get_httpx_client().request(
@@ -78,17 +92,20 @@ def sync_detailed(
 
 async def asyncio_detailed(
     project_id: str,
-    notebook_instance_id: str,
+    sheet_id: str,
     *,
     client: Client,
+    body: UpdateRowsRequest,
 ) -> Response[Any]:
-    """Delete notebook instance
+    """Update sheet rows
 
-     Triggers a deletion of the notebook instance
+     Updates specific rows in a TABLE sheet by _row_id. This is a partial update: only the columns
+    included in each entry are modified, all other columns are left unchanged.
 
     Args:
         project_id (str):
-        notebook_instance_id (str):
+        sheet_id (str):
+        body (UpdateRowsRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -101,7 +118,8 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        notebook_instance_id=notebook_instance_id,
+        sheet_id=sheet_id,
+        body=body,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)

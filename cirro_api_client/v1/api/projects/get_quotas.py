@@ -6,43 +6,38 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.create_notebook_instance_request import CreateNotebookInstanceRequest
-from ...models.create_response import CreateResponse
+from ...models.cloud_quota import CloudQuota
 from ...types import Response
 
 
 def _get_kwargs(
     project_id: str,
-    *,
-    body: CreateNotebookInstanceRequest,
 ) -> dict[str, Any]:
-    headers: dict[str, Any] = {}
-
     _kwargs: dict[str, Any] = {
-        "method": "post",
-        "url": "/projects/{project_id}/notebook-instances".format(
+        "method": "get",
+        "url": "/projects/{project_id}/cloud-quotas".format(
             project_id=quote(str(project_id), safe=""),
         ),
     }
 
-    _kwargs["json"] = body.to_dict()
-
-    headers["Content-Type"] = "application/json"
-
-    _kwargs["headers"] = headers
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> CreateResponse | None:
-    if response.status_code == 201:
-        response_201 = CreateResponse.from_dict(response.json())
+def _parse_response(*, client: Client, response: httpx.Response) -> list[CloudQuota] | None:
+    if response.status_code == 200:
+        response_200 = []
+        _response_200 = response.json()
+        for response_200_item_data in _response_200:
+            response_200_item = CloudQuota.from_dict(response_200_item_data)
 
-        return response_201
+            response_200.append(response_200_item)
+
+        return response_200
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[CreateResponse]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list[CloudQuota]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -55,15 +50,13 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-    body: CreateNotebookInstanceRequest,
-) -> Response[CreateResponse]:
-    """Create notebook instance
+) -> Response[list[CloudQuota]]:
+    """Get cloud quotas
 
-     Creates a notebook instance within the project
+     Retrieves a list of relevant cloud service quotas for project
 
     Args:
         project_id (str):
-        body (CreateNotebookInstanceRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -71,12 +64,11 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[CreateResponse]
+        Response[list[CloudQuota]]
     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        body=body,
     )
 
     response = client.get_httpx_client().request(
@@ -91,15 +83,13 @@ def sync(
     project_id: str,
     *,
     client: Client,
-    body: CreateNotebookInstanceRequest,
-) -> CreateResponse | None:
-    """Create notebook instance
+) -> list[CloudQuota] | None:
+    """Get cloud quotas
 
-     Creates a notebook instance within the project
+     Retrieves a list of relevant cloud service quotas for project
 
     Args:
         project_id (str):
-        body (CreateNotebookInstanceRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -107,14 +97,13 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        CreateResponse
+        list[CloudQuota]
     """
 
     try:
         return sync_detailed(
             project_id=project_id,
             client=client,
-            body=body,
         ).parsed
     except errors.NotFoundException:
         return None
@@ -124,15 +113,13 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-    body: CreateNotebookInstanceRequest,
-) -> Response[CreateResponse]:
-    """Create notebook instance
+) -> Response[list[CloudQuota]]:
+    """Get cloud quotas
 
-     Creates a notebook instance within the project
+     Retrieves a list of relevant cloud service quotas for project
 
     Args:
         project_id (str):
-        body (CreateNotebookInstanceRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -140,12 +127,11 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[CreateResponse]
+        Response[list[CloudQuota]]
     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        body=body,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
@@ -157,15 +143,13 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-    body: CreateNotebookInstanceRequest,
-) -> CreateResponse | None:
-    """Create notebook instance
+) -> list[CloudQuota] | None:
+    """Get cloud quotas
 
-     Creates a notebook instance within the project
+     Retrieves a list of relevant cloud service quotas for project
 
     Args:
         project_id (str):
-        body (CreateNotebookInstanceRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -173,7 +157,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        CreateResponse
+        list[CloudQuota]
     """
 
     try:
@@ -181,7 +165,6 @@ async def asyncio(
             await asyncio_detailed(
                 project_id=project_id,
                 client=client,
-                body=body,
             )
         ).parsed
     except errors.NotFoundException:

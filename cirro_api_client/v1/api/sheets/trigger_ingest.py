@@ -6,35 +6,45 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.notebook_instance_status_response import NotebookInstanceStatusResponse
+from ...models.create_response import CreateResponse
+from ...models.trigger_ingest_request import TriggerIngestRequest
 from ...types import Response
 
 
 def _get_kwargs(
     project_id: str,
-    notebook_instance_id: str,
+    sheet_id: str,
+    *,
+    body: TriggerIngestRequest,
 ) -> dict[str, Any]:
+    headers: dict[str, Any] = {}
+
     _kwargs: dict[str, Any] = {
-        "method": "get",
-        "url": "/projects/{project_id}/notebook-instances/{notebook_instance_id}:status".format(
+        "method": "post",
+        "url": "/projects/{project_id}/sheets/{sheet_id}/ingest".format(
             project_id=quote(str(project_id), safe=""),
-            notebook_instance_id=quote(str(notebook_instance_id), safe=""),
+            sheet_id=quote(str(sheet_id), safe=""),
         ),
     }
 
+    _kwargs["json"] = body.to_dict()
+
+    headers["Content-Type"] = "application/json"
+
+    _kwargs["headers"] = headers
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> NotebookInstanceStatusResponse | None:
-    if response.status_code == 200:
-        response_200 = NotebookInstanceStatusResponse.from_dict(response.json())
+def _parse_response(*, client: Client, response: httpx.Response) -> CreateResponse | None:
+    if response.status_code == 201:
+        response_201 = CreateResponse.from_dict(response.json())
 
-        return response_200
+        return response_201
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[NotebookInstanceStatusResponse]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[CreateResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -45,17 +55,19 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Not
 
 def sync_detailed(
     project_id: str,
-    notebook_instance_id: str,
+    sheet_id: str,
     *,
     client: Client,
-) -> Response[NotebookInstanceStatusResponse]:
-    """Get notebook instance status
+    body: TriggerIngestRequest,
+) -> Response[CreateResponse]:
+    """Trigger ingest
 
-     Retrieves the status of the instance
+     Triggers an async file ingest into the sheet
 
     Args:
         project_id (str):
-        notebook_instance_id (str):
+        sheet_id (str):
+        body (TriggerIngestRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -63,12 +75,13 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[NotebookInstanceStatusResponse]
+        Response[CreateResponse]
     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        notebook_instance_id=notebook_instance_id,
+        sheet_id=sheet_id,
+        body=body,
     )
 
     response = client.get_httpx_client().request(
@@ -81,17 +94,19 @@ def sync_detailed(
 
 def sync(
     project_id: str,
-    notebook_instance_id: str,
+    sheet_id: str,
     *,
     client: Client,
-) -> NotebookInstanceStatusResponse | None:
-    """Get notebook instance status
+    body: TriggerIngestRequest,
+) -> CreateResponse | None:
+    """Trigger ingest
 
-     Retrieves the status of the instance
+     Triggers an async file ingest into the sheet
 
     Args:
         project_id (str):
-        notebook_instance_id (str):
+        sheet_id (str):
+        body (TriggerIngestRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -99,14 +114,15 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        NotebookInstanceStatusResponse
+        CreateResponse
     """
 
     try:
         return sync_detailed(
             project_id=project_id,
-            notebook_instance_id=notebook_instance_id,
+            sheet_id=sheet_id,
             client=client,
+            body=body,
         ).parsed
     except errors.NotFoundException:
         return None
@@ -114,17 +130,19 @@ def sync(
 
 async def asyncio_detailed(
     project_id: str,
-    notebook_instance_id: str,
+    sheet_id: str,
     *,
     client: Client,
-) -> Response[NotebookInstanceStatusResponse]:
-    """Get notebook instance status
+    body: TriggerIngestRequest,
+) -> Response[CreateResponse]:
+    """Trigger ingest
 
-     Retrieves the status of the instance
+     Triggers an async file ingest into the sheet
 
     Args:
         project_id (str):
-        notebook_instance_id (str):
+        sheet_id (str):
+        body (TriggerIngestRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -132,12 +150,13 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[NotebookInstanceStatusResponse]
+        Response[CreateResponse]
     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        notebook_instance_id=notebook_instance_id,
+        sheet_id=sheet_id,
+        body=body,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
@@ -147,17 +166,19 @@ async def asyncio_detailed(
 
 async def asyncio(
     project_id: str,
-    notebook_instance_id: str,
+    sheet_id: str,
     *,
     client: Client,
-) -> NotebookInstanceStatusResponse | None:
-    """Get notebook instance status
+    body: TriggerIngestRequest,
+) -> CreateResponse | None:
+    """Trigger ingest
 
-     Retrieves the status of the instance
+     Triggers an async file ingest into the sheet
 
     Args:
         project_id (str):
-        notebook_instance_id (str):
+        sheet_id (str):
+        body (TriggerIngestRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -165,15 +186,16 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        NotebookInstanceStatusResponse
+        CreateResponse
     """
 
     try:
         return (
             await asyncio_detailed(
                 project_id=project_id,
-                notebook_instance_id=notebook_instance_id,
+                sheet_id=sheet_id,
                 client=client,
+                body=body,
             )
         ).parsed
     except errors.NotFoundException:

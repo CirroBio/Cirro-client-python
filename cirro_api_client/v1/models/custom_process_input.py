@@ -13,6 +13,7 @@ if TYPE_CHECKING:
     from ..models.custom_pipeline_settings import CustomPipelineSettings
     from ..models.file_mapping_rule import FileMappingRule
     from ..models.pipeline_code import PipelineCode
+    from ..models.tag import Tag
 
 
 T = TypeVar("T", bound="CustomProcessInput")
@@ -42,6 +43,7 @@ class CustomProcessInput:
         uses_sample_sheet (bool | Unset): Whether the pipeline uses the Cirro-provided sample sheet
         custom_settings (CustomPipelineSettings | None | Unset):
         file_mapping_rules (list[FileMappingRule] | None | Unset):
+        tags (list[Tag] | None | Unset):
     """
 
     id: str
@@ -61,6 +63,7 @@ class CustomProcessInput:
     uses_sample_sheet: bool | Unset = UNSET
     custom_settings: CustomPipelineSettings | None | Unset = UNSET
     file_mapping_rules: list[FileMappingRule] | None | Unset = UNSET
+    tags: list[Tag] | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -135,6 +138,18 @@ class CustomProcessInput:
         else:
             file_mapping_rules = self.file_mapping_rules
 
+        tags: list[dict[str, Any]] | None | Unset
+        if isinstance(self.tags, Unset):
+            tags = UNSET
+        elif isinstance(self.tags, list):
+            tags = []
+            for tags_type_0_item_data in self.tags:
+                tags_type_0_item = tags_type_0_item_data.to_dict()
+                tags.append(tags_type_0_item)
+
+        else:
+            tags = self.tags
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -168,6 +183,8 @@ class CustomProcessInput:
             field_dict["customSettings"] = custom_settings
         if file_mapping_rules is not UNSET:
             field_dict["fileMappingRules"] = file_mapping_rules
+        if tags is not UNSET:
+            field_dict["tags"] = tags
 
         return field_dict
 
@@ -176,6 +193,7 @@ class CustomProcessInput:
         from ..models.custom_pipeline_settings import CustomPipelineSettings
         from ..models.file_mapping_rule import FileMappingRule
         from ..models.pipeline_code import PipelineCode
+        from ..models.tag import Tag
 
         d = dict(src_dict)
         id = d.pop("id")
@@ -283,6 +301,28 @@ class CustomProcessInput:
 
         file_mapping_rules = _parse_file_mapping_rules(d.pop("fileMappingRules", UNSET))
 
+        def _parse_tags(data: object) -> list[Tag] | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, list):
+                    raise TypeError()
+                tags_type_0 = []
+                _tags_type_0 = data
+                for tags_type_0_item_data in _tags_type_0:
+                    tags_type_0_item = Tag.from_dict(tags_type_0_item_data)
+
+                    tags_type_0.append(tags_type_0_item)
+
+                return tags_type_0
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(list[Tag] | None | Unset, data)
+
+        tags = _parse_tags(d.pop("tags", UNSET))
+
         custom_process_input = cls(
             id=id,
             name=name,
@@ -301,6 +341,7 @@ class CustomProcessInput:
             uses_sample_sheet=uses_sample_sheet,
             custom_settings=custom_settings,
             file_mapping_rules=file_mapping_rules,
+            tags=tags,
         )
 
         custom_process_input.additional_properties = d

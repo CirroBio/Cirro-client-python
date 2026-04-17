@@ -11,13 +11,13 @@ from ...types import Response
 
 def _get_kwargs(
     project_id: str,
-    notebook_instance_id: str,
+    filesystem_id: str,
 ) -> dict[str, Any]:
     _kwargs: dict[str, Any] = {
-        "method": "post",
-        "url": "/projects/{project_id}/notebook-instances/{notebook_instance_id}:stop".format(
+        "method": "delete",
+        "url": "/projects/{project_id}/shared-filesystems/{filesystem_id}".format(
             project_id=quote(str(project_id), safe=""),
-            notebook_instance_id=quote(str(notebook_instance_id), safe=""),
+            filesystem_id=quote(str(filesystem_id), safe=""),
         ),
     }
 
@@ -42,17 +42,15 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Any
 
 def sync_detailed(
     project_id: str,
-    notebook_instance_id: str,
+    filesystem_id: str,
     *,
     client: Client,
 ) -> Response[Any]:
-    """Stop notebook instance
-
-     Shuts down a running notebook instance
+    """Delete a shared filesystem
 
     Args:
         project_id (str):
-        notebook_instance_id (str):
+        filesystem_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -65,7 +63,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        notebook_instance_id=notebook_instance_id,
+        filesystem_id=filesystem_id,
     )
 
     response = client.get_httpx_client().request(
@@ -78,17 +76,15 @@ def sync_detailed(
 
 async def asyncio_detailed(
     project_id: str,
-    notebook_instance_id: str,
+    filesystem_id: str,
     *,
     client: Client,
 ) -> Response[Any]:
-    """Stop notebook instance
-
-     Shuts down a running notebook instance
+    """Delete a shared filesystem
 
     Args:
         project_id (str):
-        notebook_instance_id (str):
+        filesystem_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -101,7 +97,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        notebook_instance_id=notebook_instance_id,
+        filesystem_id=filesystem_id,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)

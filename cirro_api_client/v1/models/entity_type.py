@@ -4,7 +4,6 @@ from enum import Enum
 class EntityType(str, Enum):
     DATASET = "DATASET"
     DISCUSSION = "DISCUSSION"
-    NOTEBOOK = "NOTEBOOK"
     PROCESS = "PROCESS"
     PROJECT = "PROJECT"
     REFERENCE = "REFERENCE"

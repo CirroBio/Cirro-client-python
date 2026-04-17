@@ -6,35 +6,40 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.open_notebook_instance_response import OpenNotebookInstanceResponse
+from ...models.sheet_job import SheetJob
 from ...types import Response
 
 
 def _get_kwargs(
     project_id: str,
-    notebook_instance_id: str,
+    sheet_id: str,
 ) -> dict[str, Any]:
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": "/projects/{project_id}/notebook-instances/{notebook_instance_id}:generate-url".format(
+        "url": "/projects/{project_id}/sheets/{sheet_id}/jobs".format(
             project_id=quote(str(project_id), safe=""),
-            notebook_instance_id=quote(str(notebook_instance_id), safe=""),
+            sheet_id=quote(str(sheet_id), safe=""),
         ),
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> OpenNotebookInstanceResponse | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> list[SheetJob] | None:
     if response.status_code == 200:
-        response_200 = OpenNotebookInstanceResponse.from_dict(response.json())
+        response_200 = []
+        _response_200 = response.json()
+        for response_200_item_data in _response_200:
+            response_200_item = SheetJob.from_dict(response_200_item_data)
+
+            response_200.append(response_200_item)
 
         return response_200
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[OpenNotebookInstanceResponse]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list[SheetJob]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -45,17 +50,17 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Ope
 
 def sync_detailed(
     project_id: str,
-    notebook_instance_id: str,
+    sheet_id: str,
     *,
     client: Client,
-) -> Response[OpenNotebookInstanceResponse]:
-    """Generate notebook instance URL
+) -> Response[list[SheetJob]]:
+    """List jobs
 
-     Creates an authenticated URL to open up the notebook instance in your browser
+     Retrieves ingest jobs for a sheet
 
     Args:
         project_id (str):
-        notebook_instance_id (str):
+        sheet_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -63,12 +68,12 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OpenNotebookInstanceResponse]
+        Response[list[SheetJob]]
     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        notebook_instance_id=notebook_instance_id,
+        sheet_id=sheet_id,
     )
 
     response = client.get_httpx_client().request(
@@ -81,17 +86,17 @@ def sync_detailed(
 
 def sync(
     project_id: str,
-    notebook_instance_id: str,
+    sheet_id: str,
     *,
     client: Client,
-) -> OpenNotebookInstanceResponse | None:
-    """Generate notebook instance URL
+) -> list[SheetJob] | None:
+    """List jobs
 
-     Creates an authenticated URL to open up the notebook instance in your browser
+     Retrieves ingest jobs for a sheet
 
     Args:
         project_id (str):
-        notebook_instance_id (str):
+        sheet_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -99,13 +104,13 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OpenNotebookInstanceResponse
+        list[SheetJob]
     """
 
     try:
         return sync_detailed(
             project_id=project_id,
-            notebook_instance_id=notebook_instance_id,
+            sheet_id=sheet_id,
             client=client,
         ).parsed
     except errors.NotFoundException:
@@ -114,17 +119,17 @@ def sync(
 
 async def asyncio_detailed(
     project_id: str,
-    notebook_instance_id: str,
+    sheet_id: str,
     *,
     client: Client,
-) -> Response[OpenNotebookInstanceResponse]:
-    """Generate notebook instance URL
+) -> Response[list[SheetJob]]:
+    """List jobs
 
-     Creates an authenticated URL to open up the notebook instance in your browser
+     Retrieves ingest jobs for a sheet
 
     Args:
         project_id (str):
-        notebook_instance_id (str):
+        sheet_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -132,12 +137,12 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OpenNotebookInstanceResponse]
+        Response[list[SheetJob]]
     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        notebook_instance_id=notebook_instance_id,
+        sheet_id=sheet_id,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
@@ -147,17 +152,17 @@ async def asyncio_detailed(
 
 async def asyncio(
     project_id: str,
-    notebook_instance_id: str,
+    sheet_id: str,
     *,
     client: Client,
-) -> OpenNotebookInstanceResponse | None:
-    """Generate notebook instance URL
+) -> list[SheetJob] | None:
+    """List jobs
 
-     Creates an authenticated URL to open up the notebook instance in your browser
+     Retrieves ingest jobs for a sheet
 
     Args:
         project_id (str):
-        notebook_instance_id (str):
+        sheet_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -165,14 +170,14 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OpenNotebookInstanceResponse
+        list[SheetJob]
     """
 
     try:
         return (
             await asyncio_detailed(
                 project_id=project_id,
-                notebook_instance_id=notebook_instance_id,
+                sheet_id=sheet_id,
                 client=client,
             )
         ).parsed

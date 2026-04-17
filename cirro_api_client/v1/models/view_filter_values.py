@@ -6,54 +6,28 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.artifact_type import ArtifactType
-
-T = TypeVar("T", bound="Artifact")
+T = TypeVar("T", bound="ViewFilterValues")
 
 
 @_attrs_define
-class Artifact:
-    """A secondary file or resource associated with a dataset
+class ViewFilterValues:
+    """ """
 
-    Attributes:
-        type_ (ArtifactType):
-        path (str): A secondary file or resource associated with a dataset
-    """
-
-    type_: ArtifactType
-    path: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        type_ = self.type_.value
-
-        path = self.path
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "type": type_,
-                "path": path,
-            }
-        )
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        type_ = ArtifactType(d.pop("type"))
+        view_filter_values = cls()
 
-        path = d.pop("path")
-
-        artifact = cls(
-            type_=type_,
-            path=path,
-        )
-
-        artifact.additional_properties = d
-        return artifact
+        view_filter_values.additional_properties = d
+        return view_filter_values
 
     @property
     def additional_keys(self) -> list[str]:

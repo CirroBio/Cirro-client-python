@@ -6,70 +6,54 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..types import UNSET, Unset
+from ..models.column_data_type import ColumnDataType
 
-T = TypeVar("T", bound="DatasetViz")
+T = TypeVar("T", bound="QueryColumn")
 
 
 @_attrs_define
-class DatasetViz:
-    """
+class QueryColumn:
+    """A column in a sheet query result.
+
     Attributes:
-        path (str | Unset): Path to viz configuration, if applicable
-        name (str | Unset): Name of viz
-        desc (str | Unset): Description of viz
-        type_ (str | Unset): Type of viz Example: vitescce.
+        name (str): Column name.
+        data_type (ColumnDataType):
     """
 
-    path: str | Unset = UNSET
-    name: str | Unset = UNSET
-    desc: str | Unset = UNSET
-    type_: str | Unset = UNSET
+    name: str
+    data_type: ColumnDataType
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        path = self.path
-
         name = self.name
 
-        desc = self.desc
-
-        type_ = self.type_
+        data_type = self.data_type.value
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if path is not UNSET:
-            field_dict["path"] = path
-        if name is not UNSET:
-            field_dict["name"] = name
-        if desc is not UNSET:
-            field_dict["desc"] = desc
-        if type_ is not UNSET:
-            field_dict["type"] = type_
+        field_dict.update(
+            {
+                "name": name,
+                "dataType": data_type,
+            }
+        )
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        path = d.pop("path", UNSET)
+        name = d.pop("name")
 
-        name = d.pop("name", UNSET)
+        data_type = ColumnDataType(d.pop("dataType"))
 
-        desc = d.pop("desc", UNSET)
-
-        type_ = d.pop("type", UNSET)
-
-        dataset_viz = cls(
-            path=path,
+        query_column = cls(
             name=name,
-            desc=desc,
-            type_=type_,
+            data_type=data_type,
         )
 
-        dataset_viz.additional_properties = d
-        return dataset_viz
+        query_column.additional_properties = d
+        return query_column
 
     @property
     def additional_keys(self) -> list[str]:

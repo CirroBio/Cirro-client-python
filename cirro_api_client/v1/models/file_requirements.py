@@ -6,6 +6,8 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..types import UNSET, Unset
+
 if TYPE_CHECKING:
     from ..models.allowed_data_type import AllowedDataType
 
@@ -20,11 +22,13 @@ class FileRequirements:
         files (list[str]):
         error_msg (str):
         allowed_data_types (list[AllowedDataType]):
+        has_error (bool | Unset):
     """
 
     files: list[str]
     error_msg: str
     allowed_data_types: list[AllowedDataType]
+    has_error: bool | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -37,6 +41,8 @@ class FileRequirements:
             allowed_data_types_item = allowed_data_types_item_data.to_dict()
             allowed_data_types.append(allowed_data_types_item)
 
+        has_error = self.has_error
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -46,6 +52,8 @@ class FileRequirements:
                 "allowedDataTypes": allowed_data_types,
             }
         )
+        if has_error is not UNSET:
+            field_dict["hasError"] = has_error
 
         return field_dict
 
@@ -65,10 +73,13 @@ class FileRequirements:
 
             allowed_data_types.append(allowed_data_types_item)
 
+        has_error = d.pop("hasError", UNSET)
+
         file_requirements = cls(
             files=files,
             error_msg=error_msg,
             allowed_data_types=allowed_data_types,
+            has_error=has_error,
         )
 
         file_requirements.additional_properties = d

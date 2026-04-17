@@ -10,6 +10,7 @@ from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.form_schema_form import FormSchemaForm
+    from ..models.form_schema_metadata_requirements import FormSchemaMetadataRequirements
     from ..models.form_schema_ui import FormSchemaUi
 
 
@@ -22,10 +23,12 @@ class FormSchema:
     Attributes:
         form (FormSchemaForm | Unset): JSONSchema representation of the parameters
         ui (FormSchemaUi | Unset): Describes how the form should be rendered, see rjsf
+        metadata_requirements (FormSchemaMetadataRequirements | Unset): JSONSchema for validating sample metadata
     """
 
     form: FormSchemaForm | Unset = UNSET
     ui: FormSchemaUi | Unset = UNSET
+    metadata_requirements: FormSchemaMetadataRequirements | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -37,6 +40,10 @@ class FormSchema:
         if not isinstance(self.ui, Unset):
             ui = self.ui.to_dict()
 
+        metadata_requirements: dict[str, Any] | Unset = UNSET
+        if not isinstance(self.metadata_requirements, Unset):
+            metadata_requirements = self.metadata_requirements.to_dict()
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -44,12 +51,15 @@ class FormSchema:
             field_dict["form"] = form
         if ui is not UNSET:
             field_dict["ui"] = ui
+        if metadata_requirements is not UNSET:
+            field_dict["metadataRequirements"] = metadata_requirements
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.form_schema_form import FormSchemaForm
+        from ..models.form_schema_metadata_requirements import FormSchemaMetadataRequirements
         from ..models.form_schema_ui import FormSchemaUi
 
         d = dict(src_dict)
@@ -67,9 +77,17 @@ class FormSchema:
         else:
             ui = FormSchemaUi.from_dict(_ui)
 
+        _metadata_requirements = d.pop("metadataRequirements", UNSET)
+        metadata_requirements: FormSchemaMetadataRequirements | Unset
+        if isinstance(_metadata_requirements, Unset):
+            metadata_requirements = UNSET
+        else:
+            metadata_requirements = FormSchemaMetadataRequirements.from_dict(_metadata_requirements)
+
         form_schema = cls(
             form=form,
             ui=ui,
+            metadata_requirements=metadata_requirements,
         )
 
         form_schema.additional_properties = d

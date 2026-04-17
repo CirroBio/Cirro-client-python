@@ -1,15 +1,11 @@
 from enum import Enum
 
 
-class ListEventsEntityType(str, Enum):
-    BILLINGACCOUNT = "BillingAccount"
-    DATASET = "Dataset"
-    PROCESS = "Process"
-    PROJECT = "Project"
-    SAMPLE = "Sample"
-    USER = "User"
-    USERPROJECTASSIGNMENT = "UserProjectAssignment"
-    WORKSPACE = "Workspace"
+class SheetJobType(str, Enum):
+    CREATE_TABLE = "CREATE_TABLE"
+    DROP_TABLE = "DROP_TABLE"
+    INGEST = "INGEST"
+    MATERIALIZE_VIEW = "MATERIALIZE_VIEW"
     UNKNOWN = "UNKNOWN"
     """ This is a fallback value for when the value is not known, do not use this value when making requests """
 

@@ -29,8 +29,6 @@ class ProjectSettings:
         vpc_id (None | str | Unset): VPC that the compute environment will use Example: vpc-00000000000000000.
         batch_subnets (list[str] | None | Unset): List of subnets that the pipeline compute environment will use
             Example: ['subnet-00000000000000000'].
-        sagemaker_subnets (list[str] | None | Unset): List of subnets that the sagemaker instances will use Example:
-            ['subnet-00000000000000000'].
         workspace_subnets (list[str] | None | Unset): List of subnets that workspace instances will use Example:
             ['subnet-00000000000000000'].
         max_spot_vcpu (int | Unset): vCPU service quota limit for standard spot instances (pipelines) Default: 0.
@@ -42,12 +40,20 @@ class ProjectSettings:
         max_workspaces_gpuvcpu (int | Unset): vCPU service quota limit for GPU-enabled instances (workspaces) Default:
             0.
         max_workspaces_per_user (int | Unset): Maximum number of workspaces per user (workspaces) Default: 0.
+        enable_advanced_gpu_config (bool | None | Unset): Enables advanced GPU configuration (multi-GPU and GPU model
+            selection) for workspaces Default: False.
+        enable_custom_workspace_roles (bool | None | Unset): Enables custom IAM task roles for workspaces (BYOA projects
+            only) Default: False.
+        max_shared_filesystems (int | Unset): Maximum number of shared filesystems for this project Default: 0.
         is_discoverable (bool | None | Unset): Enables the project to be discoverable by other users Default: False.
         is_shareable (bool | None | Unset): Enables the project to be shared with other projects Default: False.
+        is_ai_enabled (bool | None | Unset): Allows users of this project to interact with AI services Default: False.
         has_pipelines_enabled (bool | None | Unset): (Read-only) Whether this project has pipelines enabled Default:
             False.
         has_workspaces_enabled (bool | None | Unset): (Read-only) Whether this project has workspaces enabled Default:
             False.
+        has_shared_filesystems_enabled (bool | None | Unset): (Read-only) Whether this project has shared filesystems
+            enabled Default: False.
     """
 
     budget_amount: int
@@ -60,7 +66,6 @@ class ProjectSettings:
     temporary_storage_lifetime_days: int | Unset = 14
     vpc_id: None | str | Unset = UNSET
     batch_subnets: list[str] | None | Unset = UNSET
-    sagemaker_subnets: list[str] | None | Unset = UNSET
     workspace_subnets: list[str] | None | Unset = UNSET
     max_spot_vcpu: int | Unset = 0
     max_fpgavcpu: int | Unset = 0
@@ -70,10 +75,15 @@ class ProjectSettings:
     max_workspaces_vcpu: int | Unset = 0
     max_workspaces_gpuvcpu: int | Unset = 0
     max_workspaces_per_user: int | Unset = 0
+    enable_advanced_gpu_config: bool | None | Unset = False
+    enable_custom_workspace_roles: bool | None | Unset = False
+    max_shared_filesystems: int | Unset = 0
     is_discoverable: bool | None | Unset = False
     is_shareable: bool | None | Unset = False
+    is_ai_enabled: bool | None | Unset = False
     has_pipelines_enabled: bool | None | Unset = False
     has_workspaces_enabled: bool | None | Unset = False
+    has_shared_filesystems_enabled: bool | None | Unset = False
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -114,15 +124,6 @@ class ProjectSettings:
         else:
             batch_subnets = self.batch_subnets
 
-        sagemaker_subnets: list[str] | None | Unset
-        if isinstance(self.sagemaker_subnets, Unset):
-            sagemaker_subnets = UNSET
-        elif isinstance(self.sagemaker_subnets, list):
-            sagemaker_subnets = self.sagemaker_subnets
-
-        else:
-            sagemaker_subnets = self.sagemaker_subnets
-
         workspace_subnets: list[str] | None | Unset
         if isinstance(self.workspace_subnets, Unset):
             workspace_subnets = UNSET
@@ -152,6 +153,20 @@ class ProjectSettings:
 
         max_workspaces_per_user = self.max_workspaces_per_user
 
+        enable_advanced_gpu_config: bool | None | Unset
+        if isinstance(self.enable_advanced_gpu_config, Unset):
+            enable_advanced_gpu_config = UNSET
+        else:
+            enable_advanced_gpu_config = self.enable_advanced_gpu_config
+
+        enable_custom_workspace_roles: bool | None | Unset
+        if isinstance(self.enable_custom_workspace_roles, Unset):
+            enable_custom_workspace_roles = UNSET
+        else:
+            enable_custom_workspace_roles = self.enable_custom_workspace_roles
+
+        max_shared_filesystems = self.max_shared_filesystems
+
         is_discoverable: bool | None | Unset
         if isinstance(self.is_discoverable, Unset):
             is_discoverable = UNSET
@@ -164,6 +179,12 @@ class ProjectSettings:
         else:
             is_shareable = self.is_shareable
 
+        is_ai_enabled: bool | None | Unset
+        if isinstance(self.is_ai_enabled, Unset):
+            is_ai_enabled = UNSET
+        else:
+            is_ai_enabled = self.is_ai_enabled
+
         has_pipelines_enabled: bool | None | Unset
         if isinstance(self.has_pipelines_enabled, Unset):
             has_pipelines_enabled = UNSET
@@ -175,6 +196,12 @@ class ProjectSettings:
             has_workspaces_enabled = UNSET
         else:
             has_workspaces_enabled = self.has_workspaces_enabled
+
+        has_shared_filesystems_enabled: bool | None | Unset
+        if isinstance(self.has_shared_filesystems_enabled, Unset):
+            has_shared_filesystems_enabled = UNSET
+        else:
+            has_shared_filesystems_enabled = self.has_shared_filesystems_enabled
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -200,8 +227,6 @@ class ProjectSettings:
             field_dict["vpcId"] = vpc_id
         if batch_subnets is not UNSET:
             field_dict["batchSubnets"] = batch_subnets
-        if sagemaker_subnets is not UNSET:
-            field_dict["sagemakerSubnets"] = sagemaker_subnets
         if workspace_subnets is not UNSET:
             field_dict["workspaceSubnets"] = workspace_subnets
         if max_spot_vcpu is not UNSET:
@@ -220,14 +245,24 @@ class ProjectSettings:
             field_dict["maxWorkspacesGPUVCPU"] = max_workspaces_gpuvcpu
         if max_workspaces_per_user is not UNSET:
             field_dict["maxWorkspacesPerUser"] = max_workspaces_per_user
+        if enable_advanced_gpu_config is not UNSET:
+            field_dict["enableAdvancedGpuConfig"] = enable_advanced_gpu_config
+        if enable_custom_workspace_roles is not UNSET:
+            field_dict["enableCustomWorkspaceRoles"] = enable_custom_workspace_roles
+        if max_shared_filesystems is not UNSET:
+            field_dict["maxSharedFilesystems"] = max_shared_filesystems
         if is_discoverable is not UNSET:
             field_dict["isDiscoverable"] = is_discoverable
         if is_shareable is not UNSET:
             field_dict["isShareable"] = is_shareable
+        if is_ai_enabled is not UNSET:
+            field_dict["isAiEnabled"] = is_ai_enabled
         if has_pipelines_enabled is not UNSET:
             field_dict["hasPipelinesEnabled"] = has_pipelines_enabled
         if has_workspaces_enabled is not UNSET:
             field_dict["hasWorkspacesEnabled"] = has_workspaces_enabled
+        if has_shared_filesystems_enabled is not UNSET:
+            field_dict["hasSharedFilesystemsEnabled"] = has_shared_filesystems_enabled
 
         return field_dict
 
@@ -283,23 +318,6 @@ class ProjectSettings:
 
         batch_subnets = _parse_batch_subnets(d.pop("batchSubnets", UNSET))
 
-        def _parse_sagemaker_subnets(data: object) -> list[str] | None | Unset:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            try:
-                if not isinstance(data, list):
-                    raise TypeError()
-                sagemaker_subnets_type_0 = cast(list[str], data)
-
-                return sagemaker_subnets_type_0
-            except (TypeError, ValueError, AttributeError, KeyError):
-                pass
-            return cast(list[str] | None | Unset, data)
-
-        sagemaker_subnets = _parse_sagemaker_subnets(d.pop("sagemakerSubnets", UNSET))
-
         def _parse_workspace_subnets(data: object) -> list[str] | None | Unset:
             if data is None:
                 return data
@@ -340,6 +358,26 @@ class ProjectSettings:
 
         max_workspaces_per_user = d.pop("maxWorkspacesPerUser", UNSET)
 
+        def _parse_enable_advanced_gpu_config(data: object) -> bool | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(bool | None | Unset, data)
+
+        enable_advanced_gpu_config = _parse_enable_advanced_gpu_config(d.pop("enableAdvancedGpuConfig", UNSET))
+
+        def _parse_enable_custom_workspace_roles(data: object) -> bool | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(bool | None | Unset, data)
+
+        enable_custom_workspace_roles = _parse_enable_custom_workspace_roles(d.pop("enableCustomWorkspaceRoles", UNSET))
+
+        max_shared_filesystems = d.pop("maxSharedFilesystems", UNSET)
+
         def _parse_is_discoverable(data: object) -> bool | None | Unset:
             if data is None:
                 return data
@@ -357,6 +395,15 @@ class ProjectSettings:
             return cast(bool | None | Unset, data)
 
         is_shareable = _parse_is_shareable(d.pop("isShareable", UNSET))
+
+        def _parse_is_ai_enabled(data: object) -> bool | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(bool | None | Unset, data)
+
+        is_ai_enabled = _parse_is_ai_enabled(d.pop("isAiEnabled", UNSET))
 
         def _parse_has_pipelines_enabled(data: object) -> bool | None | Unset:
             if data is None:
@@ -376,6 +423,17 @@ class ProjectSettings:
 
         has_workspaces_enabled = _parse_has_workspaces_enabled(d.pop("hasWorkspacesEnabled", UNSET))
 
+        def _parse_has_shared_filesystems_enabled(data: object) -> bool | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(bool | None | Unset, data)
+
+        has_shared_filesystems_enabled = _parse_has_shared_filesystems_enabled(
+            d.pop("hasSharedFilesystemsEnabled", UNSET)
+        )
+
         project_settings = cls(
             budget_amount=budget_amount,
             budget_period=budget_period,
@@ -387,7 +445,6 @@ class ProjectSettings:
             temporary_storage_lifetime_days=temporary_storage_lifetime_days,
             vpc_id=vpc_id,
             batch_subnets=batch_subnets,
-            sagemaker_subnets=sagemaker_subnets,
             workspace_subnets=workspace_subnets,
             max_spot_vcpu=max_spot_vcpu,
             max_fpgavcpu=max_fpgavcpu,
@@ -397,10 +454,15 @@ class ProjectSettings:
             max_workspaces_vcpu=max_workspaces_vcpu,
             max_workspaces_gpuvcpu=max_workspaces_gpuvcpu,
             max_workspaces_per_user=max_workspaces_per_user,
+            enable_advanced_gpu_config=enable_advanced_gpu_config,
+            enable_custom_workspace_roles=enable_custom_workspace_roles,
+            max_shared_filesystems=max_shared_filesystems,
             is_discoverable=is_discoverable,
             is_shareable=is_shareable,
+            is_ai_enabled=is_ai_enabled,
             has_pipelines_enabled=has_pipelines_enabled,
             has_workspaces_enabled=has_workspaces_enabled,
+            has_shared_filesystems_enabled=has_shared_filesystems_enabled,
         )
 
         project_settings.additional_properties = d

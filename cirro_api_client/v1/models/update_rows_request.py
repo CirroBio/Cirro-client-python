@@ -1,40 +1,39 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.artifact_type import ArtifactType
+if TYPE_CHECKING:
+    from ..models.row_update import RowUpdate
 
-T = TypeVar("T", bound="Artifact")
+
+T = TypeVar("T", bound="UpdateRowsRequest")
 
 
 @_attrs_define
-class Artifact:
-    """A secondary file or resource associated with a dataset
-
+class UpdateRowsRequest:
+    """
     Attributes:
-        type_ (ArtifactType):
-        path (str): A secondary file or resource associated with a dataset
+        updates (list[RowUpdate]): List of rows to update.
     """
 
-    type_: ArtifactType
-    path: str
+    updates: list[RowUpdate]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        type_ = self.type_.value
-
-        path = self.path
+        updates = []
+        for updates_item_data in self.updates:
+            updates_item = updates_item_data.to_dict()
+            updates.append(updates_item)
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "type": type_,
-                "path": path,
+                "updates": updates,
             }
         )
 
@@ -42,18 +41,22 @@ class Artifact:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.row_update import RowUpdate
+
         d = dict(src_dict)
-        type_ = ArtifactType(d.pop("type"))
+        updates = []
+        _updates = d.pop("updates")
+        for updates_item_data in _updates:
+            updates_item = RowUpdate.from_dict(updates_item_data)
 
-        path = d.pop("path")
+            updates.append(updates_item)
 
-        artifact = cls(
-            type_=type_,
-            path=path,
+        update_rows_request = cls(
+            updates=updates,
         )
 
-        artifact.additional_properties = d
-        return artifact
+        update_rows_request.additional_properties = d
+        return update_rows_request
 
     @property
     def additional_keys(self) -> list[str]:

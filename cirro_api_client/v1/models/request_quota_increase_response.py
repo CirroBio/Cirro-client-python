@@ -1,40 +1,36 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.artifact_type import ArtifactType
+if TYPE_CHECKING:
+    from ..models.cloud_quota import CloudQuota
 
-T = TypeVar("T", bound="Artifact")
+
+T = TypeVar("T", bound="RequestQuotaIncreaseResponse")
 
 
 @_attrs_define
-class Artifact:
-    """A secondary file or resource associated with a dataset
-
+class RequestQuotaIncreaseResponse:
+    """
     Attributes:
-        type_ (ArtifactType):
-        path (str): A secondary file or resource associated with a dataset
+        quota (CloudQuota):
     """
 
-    type_: ArtifactType
-    path: str
+    quota: CloudQuota
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        type_ = self.type_.value
-
-        path = self.path
+        quota = self.quota.to_dict()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "type": type_,
-                "path": path,
+                "quota": quota,
             }
         )
 
@@ -42,18 +38,17 @@ class Artifact:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.cloud_quota import CloudQuota
+
         d = dict(src_dict)
-        type_ = ArtifactType(d.pop("type"))
+        quota = CloudQuota.from_dict(d.pop("quota"))
 
-        path = d.pop("path")
-
-        artifact = cls(
-            type_=type_,
-            path=path,
+        request_quota_increase_response = cls(
+            quota=quota,
         )
 
-        artifact.additional_properties = d
-        return artifact
+        request_quota_increase_response.additional_properties = d
+        return request_quota_increase_response
 
     @property
     def additional_keys(self) -> list[str]:

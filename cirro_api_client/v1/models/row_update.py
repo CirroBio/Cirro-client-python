@@ -1,40 +1,42 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.artifact_type import ArtifactType
+if TYPE_CHECKING:
+    from ..models.row_update_values import RowUpdateValues
 
-T = TypeVar("T", bound="Artifact")
+
+T = TypeVar("T", bound="RowUpdate")
 
 
 @_attrs_define
-class Artifact:
-    """A secondary file or resource associated with a dataset
-
+class RowUpdate:
+    """
     Attributes:
-        type_ (ArtifactType):
-        path (str): A secondary file or resource associated with a dataset
+        row_id (int): _row_id, which serves as the primary key to identify the row. Example: 42.
+        values (RowUpdateValues): Column name and new value. Only the columns included here are updated; all other
+            columns on the row are left unchanged. At least one entry is required. Example: {'icd_code': 'G65'}.
     """
 
-    type_: ArtifactType
-    path: str
+    row_id: int
+    values: RowUpdateValues
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        type_ = self.type_.value
+        row_id = self.row_id
 
-        path = self.path
+        values = self.values.to_dict()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "type": type_,
-                "path": path,
+                "rowId": row_id,
+                "values": values,
             }
         )
 
@@ -42,18 +44,20 @@ class Artifact:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.row_update_values import RowUpdateValues
+
         d = dict(src_dict)
-        type_ = ArtifactType(d.pop("type"))
+        row_id = d.pop("rowId")
 
-        path = d.pop("path")
+        values = RowUpdateValues.from_dict(d.pop("values"))
 
-        artifact = cls(
-            type_=type_,
-            path=path,
+        row_update = cls(
+            row_id=row_id,
+            values=values,
         )
 
-        artifact.additional_properties = d
-        return artifact
+        row_update.additional_properties = d
+        return row_update
 
     @property
     def additional_keys(self) -> list[str]:

@@ -2,47 +2,47 @@ from __future__ import annotations
 
 import datetime
 from collections.abc import Mapping
-from typing import Any, TypeVar, cast
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
+from ..models.sheet_creation_mode import SheetCreationMode
+from ..models.sheet_type import SheetType
 from ..models.status import Status
 
-T = TypeVar("T", bound="NotebookInstance")
+T = TypeVar("T", bound="Sheet")
 
 
 @_attrs_define
-class NotebookInstance:
+class Sheet:
     """
     Attributes:
         id (str):
         name (str):
+        description (str):
+        project_id (str):
+        sheet_type (SheetType):
+        sheet_creation_mode (SheetCreationMode):
         status (Status):
-        status_message (str):
-        instance_type (str):
-        accelerator_types (list[str]):
-        git_repositories (list[str]):
-        volume_size_gb (int):
-        is_shared_with_project (bool):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
+        total_row_count (int):
     """
 
     id: str
     name: str
+    description: str
+    project_id: str
+    sheet_type: SheetType
+    sheet_creation_mode: SheetCreationMode
     status: Status
-    status_message: str
-    instance_type: str
-    accelerator_types: list[str]
-    git_repositories: list[str]
-    volume_size_gb: int
-    is_shared_with_project: bool
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
+    total_row_count: int
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -50,19 +50,15 @@ class NotebookInstance:
 
         name = self.name
 
+        description = self.description
+
+        project_id = self.project_id
+
+        sheet_type = self.sheet_type.value
+
+        sheet_creation_mode = self.sheet_creation_mode.value
+
         status = self.status.value
-
-        status_message = self.status_message
-
-        instance_type = self.instance_type
-
-        accelerator_types = self.accelerator_types
-
-        git_repositories = self.git_repositories
-
-        volume_size_gb = self.volume_size_gb
-
-        is_shared_with_project = self.is_shared_with_project
 
         created_by = self.created_by
 
@@ -70,22 +66,23 @@ class NotebookInstance:
 
         updated_at = self.updated_at.isoformat()
 
+        total_row_count = self.total_row_count
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "id": id,
                 "name": name,
+                "description": description,
+                "projectId": project_id,
+                "sheetType": sheet_type,
+                "sheetCreationMode": sheet_creation_mode,
                 "status": status,
-                "statusMessage": status_message,
-                "instanceType": instance_type,
-                "acceleratorTypes": accelerator_types,
-                "gitRepositories": git_repositories,
-                "volumeSizeGB": volume_size_gb,
-                "isSharedWithProject": is_shared_with_project,
                 "createdBy": created_by,
                 "createdAt": created_at,
                 "updatedAt": updated_at,
+                "totalRowCount": total_row_count,
             }
         )
 
@@ -98,19 +95,15 @@ class NotebookInstance:
 
         name = d.pop("name")
 
+        description = d.pop("description")
+
+        project_id = d.pop("projectId")
+
+        sheet_type = SheetType(d.pop("sheetType"))
+
+        sheet_creation_mode = SheetCreationMode(d.pop("sheetCreationMode"))
+
         status = Status(d.pop("status"))
-
-        status_message = d.pop("statusMessage")
-
-        instance_type = d.pop("instanceType")
-
-        accelerator_types = cast(list[str], d.pop("acceleratorTypes"))
-
-        git_repositories = cast(list[str], d.pop("gitRepositories"))
-
-        volume_size_gb = d.pop("volumeSizeGB")
-
-        is_shared_with_project = d.pop("isSharedWithProject")
 
         created_by = d.pop("createdBy")
 
@@ -118,23 +111,24 @@ class NotebookInstance:
 
         updated_at = isoparse(d.pop("updatedAt"))
 
-        notebook_instance = cls(
+        total_row_count = d.pop("totalRowCount")
+
+        sheet = cls(
             id=id,
             name=name,
+            description=description,
+            project_id=project_id,
+            sheet_type=sheet_type,
+            sheet_creation_mode=sheet_creation_mode,
             status=status,
-            status_message=status_message,
-            instance_type=instance_type,
-            accelerator_types=accelerator_types,
-            git_repositories=git_repositories,
-            volume_size_gb=volume_size_gb,
-            is_shared_with_project=is_shared_with_project,
             created_by=created_by,
             created_at=created_at,
             updated_at=updated_at,
+            total_row_count=total_row_count,
         )
 
-        notebook_instance.additional_properties = d
-        return notebook_instance
+        sheet.additional_properties = d
+        return sheet
 
     @property
     def additional_keys(self) -> list[str]:

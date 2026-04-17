@@ -19,6 +19,10 @@ class FeatureFlags:
         workspaces_enabled (bool):
         drive_enabled (bool):
         app_registrations_enabled (bool):
+        sheets_enabled (bool):
+        ai_enabled (bool):
+        shared_filesystems_enabled (bool):
+        custom_workspace_roles_enabled (bool):
     """
 
     sftp_enabled: bool
@@ -27,6 +31,10 @@ class FeatureFlags:
     workspaces_enabled: bool
     drive_enabled: bool
     app_registrations_enabled: bool
+    sheets_enabled: bool
+    ai_enabled: bool
+    shared_filesystems_enabled: bool
+    custom_workspace_roles_enabled: bool
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -42,6 +50,14 @@ class FeatureFlags:
 
         app_registrations_enabled = self.app_registrations_enabled
 
+        sheets_enabled = self.sheets_enabled
+
+        ai_enabled = self.ai_enabled
+
+        shared_filesystems_enabled = self.shared_filesystems_enabled
+
+        custom_workspace_roles_enabled = self.custom_workspace_roles_enabled
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -52,6 +68,10 @@ class FeatureFlags:
                 "workspacesEnabled": workspaces_enabled,
                 "driveEnabled": drive_enabled,
                 "appRegistrationsEnabled": app_registrations_enabled,
+                "sheetsEnabled": sheets_enabled,
+                "aiEnabled": ai_enabled,
+                "sharedFilesystemsEnabled": shared_filesystems_enabled,
+                "customWorkspaceRolesEnabled": custom_workspace_roles_enabled,
             }
         )
 
@@ -72,6 +92,14 @@ class FeatureFlags:
 
         app_registrations_enabled = d.pop("appRegistrationsEnabled")
 
+        sheets_enabled = d.pop("sheetsEnabled")
+
+        ai_enabled = d.pop("aiEnabled")
+
+        shared_filesystems_enabled = d.pop("sharedFilesystemsEnabled")
+
+        custom_workspace_roles_enabled = d.pop("customWorkspaceRolesEnabled")
+
         feature_flags = cls(
             sftp_enabled=sftp_enabled,
             governance_enabled=governance_enabled,
@@ -79,6 +107,10 @@ class FeatureFlags:
             workspaces_enabled=workspaces_enabled,
             drive_enabled=drive_enabled,
             app_registrations_enabled=app_registrations_enabled,
+            sheets_enabled=sheets_enabled,
+            ai_enabled=ai_enabled,
+            shared_filesystems_enabled=shared_filesystems_enabled,
+            custom_workspace_roles_enabled=custom_workspace_roles_enabled,
         )
 
         feature_flags.additional_properties = d

@@ -6,54 +6,56 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.artifact_type import ArtifactType
+from ..models.file_type import FileType
+from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Artifact")
+T = TypeVar("T", bound="FileDef")
 
 
 @_attrs_define
-class Artifact:
-    """A secondary file or resource associated with a dataset
+class FileDef:
+    """If provided, an ingest job is triggered immediately after table creation (TABLE only)
 
     Attributes:
-        type_ (ArtifactType):
-        path (str): A secondary file or resource associated with a dataset
+        file_type (FileType):
+        storage_uri (str | Unset): Full S3 URI to the source file.
     """
 
-    type_: ArtifactType
-    path: str
+    file_type: FileType
+    storage_uri: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        type_ = self.type_.value
+        file_type = self.file_type.value
 
-        path = self.path
+        storage_uri = self.storage_uri
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "type": type_,
-                "path": path,
+                "fileType": file_type,
             }
         )
+        if storage_uri is not UNSET:
+            field_dict["storageUri"] = storage_uri
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        type_ = ArtifactType(d.pop("type"))
+        file_type = FileType(d.pop("fileType"))
 
-        path = d.pop("path")
+        storage_uri = d.pop("storageUri", UNSET)
 
-        artifact = cls(
-            type_=type_,
-            path=path,
+        file_def = cls(
+            file_type=file_type,
+            storage_uri=storage_uri,
         )
 
-        artifact.additional_properties = d
-        return artifact
+        file_def.additional_properties = d
+        return file_def
 
     @property
     def additional_keys(self) -> list[str]:

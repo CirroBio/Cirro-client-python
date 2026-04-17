@@ -6,12 +6,12 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="DatasetVizConfig")
+T = TypeVar("T", bound="SheetQueryResponseRowsItem")
 
 
 @_attrs_define
-class DatasetVizConfig:
-    """Config or path to config used to render viz"""
+class SheetQueryResponseRowsItem:
+    """ """
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -24,10 +24,10 @@ class DatasetVizConfig:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        dataset_viz_config = cls()
+        sheet_query_response_rows_item = cls()
 
-        dataset_viz_config.additional_properties = d
-        return dataset_viz_config
+        sheet_query_response_rows_item.additional_properties = d
+        return sheet_query_response_rows_item
 
     @property
     def additional_keys(self) -> list[str]:

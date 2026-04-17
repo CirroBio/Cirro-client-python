@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import datetime
 from collections.abc import Mapping
-from typing import Any, TypeVar, cast
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -10,6 +10,10 @@ from dateutil.parser import isoparse
 
 from ..models.executor import Executor
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.tag import Tag
+
 
 T = TypeVar("T", bound="Process")
 
@@ -32,6 +36,7 @@ class Process:
         allow_multiple_sources (bool): Whether the pipeline is allowed to have multiple dataset sources
         uses_sample_sheet (bool): Whether the pipeline uses the Cirro-provided sample sheet
         is_archived (bool): Whether the process is marked as archived
+        tags (list[Tag]):
         category (str | Unset): Category of the process Example: Microbial Analysis.
         pipeline_type (str | Unset): Type of pipeline Example: nf-core.
         documentation_url (str | Unset): Link to process documentation Example:
@@ -54,6 +59,7 @@ class Process:
     allow_multiple_sources: bool
     uses_sample_sheet: bool
     is_archived: bool
+    tags: list[Tag]
     category: str | Unset = UNSET
     pipeline_type: str | Unset = UNSET
     documentation_url: str | Unset = UNSET
@@ -87,6 +93,11 @@ class Process:
         uses_sample_sheet = self.uses_sample_sheet
 
         is_archived = self.is_archived
+
+        tags = []
+        for tags_item_data in self.tags:
+            tags_item = tags_item_data.to_dict()
+            tags.append(tags_item)
 
         category = self.category
 
@@ -126,6 +137,7 @@ class Process:
                 "allowMultipleSources": allow_multiple_sources,
                 "usesSampleSheet": uses_sample_sheet,
                 "isArchived": is_archived,
+                "tags": tags,
             }
         )
         if category is not UNSET:
@@ -147,6 +159,8 @@ class Process:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.tag import Tag
+
         d = dict(src_dict)
         id = d.pop("id")
 
@@ -171,6 +185,13 @@ class Process:
         uses_sample_sheet = d.pop("usesSampleSheet")
 
         is_archived = d.pop("isArchived")
+
+        tags = []
+        _tags = d.pop("tags")
+        for tags_item_data in _tags:
+            tags_item = Tag.from_dict(tags_item_data)
+
+            tags.append(tags_item)
 
         category = d.pop("category", UNSET)
 
@@ -216,6 +237,7 @@ class Process:
             allow_multiple_sources=allow_multiple_sources,
             uses_sample_sheet=uses_sample_sheet,
             is_archived=is_archived,
+            tags=tags,
             category=category,
             pipeline_type=pipeline_type,
             documentation_url=documentation_url,

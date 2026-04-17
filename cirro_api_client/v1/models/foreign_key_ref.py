@@ -6,35 +6,32 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.artifact_type import ArtifactType
-
-T = TypeVar("T", bound="Artifact")
+T = TypeVar("T", bound="ForeignKeyRef")
 
 
 @_attrs_define
-class Artifact:
-    """A secondary file or resource associated with a dataset
-
+class ForeignKeyRef:
+    """
     Attributes:
-        type_ (ArtifactType):
-        path (str): A secondary file or resource associated with a dataset
+        sheet_id (str):
+        column_name (str):
     """
 
-    type_: ArtifactType
-    path: str
+    sheet_id: str
+    column_name: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        type_ = self.type_.value
+        sheet_id = self.sheet_id
 
-        path = self.path
+        column_name = self.column_name
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "type": type_,
-                "path": path,
+                "sheetId": sheet_id,
+                "columnName": column_name,
             }
         )
 
@@ -43,17 +40,17 @@ class Artifact:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        type_ = ArtifactType(d.pop("type"))
+        sheet_id = d.pop("sheetId")
 
-        path = d.pop("path")
+        column_name = d.pop("columnName")
 
-        artifact = cls(
-            type_=type_,
-            path=path,
+        foreign_key_ref = cls(
+            sheet_id=sheet_id,
+            column_name=column_name,
         )
 
-        artifact.additional_properties = d
-        return artifact
+        foreign_key_ref.additional_properties = d
+        return foreign_key_ref
 
     @property
     def additional_keys(self) -> list[str]:

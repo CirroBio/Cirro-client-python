@@ -18,11 +18,13 @@ class ProjectFileAccessRequest:
     Attributes:
         access_type (ProjectAccessType):
         dataset_id (None | str | Unset):
+        sheet_id (None | str | Unset):
         token_lifetime_hours (int | None | Unset):
     """
 
     access_type: ProjectAccessType
     dataset_id: None | str | Unset = UNSET
+    sheet_id: None | str | Unset = UNSET
     token_lifetime_hours: int | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -34,6 +36,12 @@ class ProjectFileAccessRequest:
             dataset_id = UNSET
         else:
             dataset_id = self.dataset_id
+
+        sheet_id: None | str | Unset
+        if isinstance(self.sheet_id, Unset):
+            sheet_id = UNSET
+        else:
+            sheet_id = self.sheet_id
 
         token_lifetime_hours: int | None | Unset
         if isinstance(self.token_lifetime_hours, Unset):
@@ -50,6 +58,8 @@ class ProjectFileAccessRequest:
         )
         if dataset_id is not UNSET:
             field_dict["datasetId"] = dataset_id
+        if sheet_id is not UNSET:
+            field_dict["sheetId"] = sheet_id
         if token_lifetime_hours is not UNSET:
             field_dict["tokenLifetimeHours"] = token_lifetime_hours
 
@@ -69,6 +79,15 @@ class ProjectFileAccessRequest:
 
         dataset_id = _parse_dataset_id(d.pop("datasetId", UNSET))
 
+        def _parse_sheet_id(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        sheet_id = _parse_sheet_id(d.pop("sheetId", UNSET))
+
         def _parse_token_lifetime_hours(data: object) -> int | None | Unset:
             if data is None:
                 return data
@@ -81,6 +100,7 @@ class ProjectFileAccessRequest:
         project_file_access_request = cls(
             access_type=access_type,
             dataset_id=dataset_id,
+            sheet_id=sheet_id,
             token_lifetime_hours=token_lifetime_hours,
         )
 

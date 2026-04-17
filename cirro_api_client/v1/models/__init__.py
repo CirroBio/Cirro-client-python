@@ -34,6 +34,9 @@ from .calculate_pipeline_cost_request import CalculatePipelineCostRequest
 from .classification_input import ClassificationInput
 from .cloud_account import CloudAccount
 from .cloud_account_type import CloudAccountType
+from .cloud_quota import CloudQuota
+from .column_data_type import ColumnDataType
+from .column_def import ColumnDef
 from .column_definition import ColumnDefinition
 from .compute_environment_configuration import ComputeEnvironmentConfiguration
 from .compute_environment_configuration_input import ComputeEnvironmentConfigurationInput
@@ -42,10 +45,10 @@ from .compute_environment_configuration_properties import ComputeEnvironmentConf
 from .contact import Contact
 from .contact_input import ContactInput
 from .cost_response import CostResponse
-from .create_notebook_instance_request import CreateNotebookInstanceRequest
 from .create_project_access_request import CreateProjectAccessRequest
 from .create_reference_request import CreateReferenceRequest
 from .create_response import CreateResponse
+from .create_sheet_request import CreateSheetRequest
 from .custom_pipeline_settings import CustomPipelineSettings
 from .custom_process_input import CustomProcessInput
 from .customer_type import CustomerType
@@ -66,7 +69,6 @@ from .dataset_detail_info import DatasetDetailInfo
 from .dataset_detail_params import DatasetDetailParams
 from .dataset_detail_source_sample_files_map import DatasetDetailSourceSampleFilesMap
 from .dataset_viz import DatasetViz
-from .dataset_viz_config import DatasetVizConfig
 from .discussion import Discussion
 from .discussion_input import DiscussionInput
 from .discussion_type import DiscussionType
@@ -76,14 +78,19 @@ from .environment_type import EnvironmentType
 from .error_message import ErrorMessage
 from .executor import Executor
 from .feature_flags import FeatureFlags
+from .file_def import FileDef
 from .file_entry import FileEntry
 from .file_entry_metadata import FileEntryMetadata
 from .file_mapping_rule import FileMappingRule
 from .file_name_match import FileNameMatch
 from .file_name_pattern import FileNamePattern
 from .file_requirements import FileRequirements
+from .file_type import FileType
+from .filter_operator import FilterOperator
+from .foreign_key_ref import ForeignKeyRef
 from .form_schema import FormSchema
 from .form_schema_form import FormSchemaForm
+from .form_schema_metadata_requirements import FormSchemaMetadataRequirements
 from .form_schema_ui import FormSchemaUi
 from .fulfillment_response import FulfillmentResponse
 from .generate_sftp_credentials_request import GenerateSftpCredentialsRequest
@@ -108,8 +115,11 @@ from .import_data_request import ImportDataRequest
 from .import_data_request_download_method import ImportDataRequestDownloadMethod
 from .invite_user_request import InviteUserRequest
 from .invite_user_response import InviteUserResponse
+from .join_condition import JoinCondition
+from .join_type import JoinType
 from .list_events_entity_type import ListEventsEntityType
 from .log_entry import LogEntry
+from .logical_operator import LogicalOperator
 from .login_provider import LoginProvider
 from .message import Message
 from .message_input import MessageInput
@@ -120,9 +130,6 @@ from .mounted_dataset import MountedDataset
 from .move_dataset_input import MoveDatasetInput
 from .move_dataset_response import MoveDatasetResponse
 from .named_item import NamedItem
-from .notebook_instance import NotebookInstance
-from .notebook_instance_status_response import NotebookInstanceStatusResponse
-from .open_notebook_instance_response import OpenNotebookInstanceResponse
 from .paginated_response_app_registration_dto import PaginatedResponseAppRegistrationDto
 from .paginated_response_dataset_list_dto import PaginatedResponseDatasetListDto
 from .paginated_response_discussion import PaginatedResponseDiscussion
@@ -152,14 +159,20 @@ from .project_requirement import ProjectRequirement
 from .project_role import ProjectRole
 from .project_settings import ProjectSettings
 from .project_user import ProjectUser
+from .query_column import QueryColumn
 from .reference import Reference
 from .reference_type import ReferenceType
 from .reference_type_validation_item import ReferenceTypeValidationItem
 from .repository_type import RepositoryType
+from .request_quota_increase_command import RequestQuotaIncreaseCommand
+from .request_quota_increase_response import RequestQuotaIncreaseResponse
 from .request_status import RequestStatus
 from .requirement_fulfillment_input import RequirementFulfillmentInput
 from .requirement_input import RequirementInput
 from .resources_info import ResourcesInfo
+from .row_update import RowUpdate
+from .row_update_values import RowUpdateValues
+from .row_update_values_additional_property import RowUpdateValuesAdditionalProperty
 from .run_analysis_request import RunAnalysisRequest
 from .run_analysis_request_params import RunAnalysisRequestParams
 from .run_analysis_request_source_sample_files_map import RunAnalysisRequestSourceSampleFilesMap
@@ -175,8 +188,19 @@ from .share import Share
 from .share_detail import ShareDetail
 from .share_input import ShareInput
 from .share_type import ShareType
+from .shared_filesystem import SharedFilesystem
+from .shared_filesystem_input import SharedFilesystemInput
 from .sharing_type import SharingType
+from .sheet import Sheet
+from .sheet_creation_mode import SheetCreationMode
+from .sheet_detail import SheetDetail
+from .sheet_job import SheetJob
+from .sheet_job_type import SheetJobType
+from .sheet_query_response import SheetQueryResponse
+from .sheet_query_response_rows_item import SheetQueryResponseRowsItem
+from .sheet_type import SheetType
 from .sort_order import SortOrder
+from .sql_sort_order import SqlSortOrder
 from .status import Status
 from .stop_execution_response import StopExecutionResponse
 from .sync_status import SyncStatus
@@ -186,7 +210,10 @@ from .tag import Tag
 from .task import Task
 from .task_cost import TaskCost
 from .tenant_info import TenantInfo
+from .trigger_ingest_request import TriggerIngestRequest
 from .update_dataset_request import UpdateDatasetRequest
+from .update_rows_request import UpdateRowsRequest
+from .update_sheet_request import UpdateSheetRequest
 from .update_user_request import UpdateUserRequest
 from .upload_dataset_create_response import UploadDatasetCreateResponse
 from .upload_dataset_request import UploadDatasetRequest
@@ -197,6 +224,11 @@ from .user_settings import UserSettings
 from .validate_file_name_patterns_request import ValidateFileNamePatternsRequest
 from .validate_file_requirements_request import ValidateFileRequirementsRequest
 from .version_specification import VersionSpecification
+from .view_filter import ViewFilter
+from .view_filter_values import ViewFilterValues
+from .view_join import ViewJoin
+from .view_query_request import ViewQueryRequest
+from .view_sheet_ref import ViewSheetRef
 from .workspace import Workspace
 from .workspace_compute_config import WorkspaceComputeConfig
 from .workspace_compute_config_environment_variables import WorkspaceComputeConfigEnvironmentVariables
@@ -240,6 +272,9 @@ __all__ = (
     "ClassificationInput",
     "CloudAccount",
     "CloudAccountType",
+    "CloudQuota",
+    "ColumnDataType",
+    "ColumnDef",
     "ColumnDefinition",
     "ComputeEnvironmentConfiguration",
     "ComputeEnvironmentConfigurationInput",
@@ -248,10 +283,10 @@ __all__ = (
     "Contact",
     "ContactInput",
     "CostResponse",
-    "CreateNotebookInstanceRequest",
     "CreateProjectAccessRequest",
     "CreateReferenceRequest",
     "CreateResponse",
+    "CreateSheetRequest",
     "CustomerType",
     "CustomPipelineSettings",
     "CustomProcessInput",
@@ -272,7 +307,6 @@ __all__ = (
     "DatasetDetailParams",
     "DatasetDetailSourceSampleFilesMap",
     "DatasetViz",
-    "DatasetVizConfig",
     "Discussion",
     "DiscussionInput",
     "DiscussionType",
@@ -282,14 +316,19 @@ __all__ = (
     "ErrorMessage",
     "Executor",
     "FeatureFlags",
+    "FileDef",
     "FileEntry",
     "FileEntryMetadata",
     "FileMappingRule",
     "FileNameMatch",
     "FileNamePattern",
     "FileRequirements",
+    "FileType",
+    "FilterOperator",
+    "ForeignKeyRef",
     "FormSchema",
     "FormSchemaForm",
+    "FormSchemaMetadataRequirements",
     "FormSchemaUi",
     "FulfillmentResponse",
     "GenerateSftpCredentialsRequest",
@@ -314,8 +353,11 @@ __all__ = (
     "ImportDataRequestDownloadMethod",
     "InviteUserRequest",
     "InviteUserResponse",
+    "JoinCondition",
+    "JoinType",
     "ListEventsEntityType",
     "LogEntry",
+    "LogicalOperator",
     "LoginProvider",
     "Message",
     "MessageInput",
@@ -326,9 +368,6 @@ __all__ = (
     "MoveDatasetInput",
     "MoveDatasetResponse",
     "NamedItem",
-    "NotebookInstance",
-    "NotebookInstanceStatusResponse",
-    "OpenNotebookInstanceResponse",
     "PaginatedResponseAppRegistrationDto",
     "PaginatedResponseDatasetListDto",
     "PaginatedResponseDiscussion",
@@ -358,14 +397,20 @@ __all__ = (
     "ProjectRole",
     "ProjectSettings",
     "ProjectUser",
+    "QueryColumn",
     "Reference",
     "ReferenceType",
     "ReferenceTypeValidationItem",
     "RepositoryType",
+    "RequestQuotaIncreaseCommand",
+    "RequestQuotaIncreaseResponse",
     "RequestStatus",
     "RequirementFulfillmentInput",
     "RequirementInput",
     "ResourcesInfo",
+    "RowUpdate",
+    "RowUpdateValues",
+    "RowUpdateValuesAdditionalProperty",
     "RunAnalysisRequest",
     "RunAnalysisRequestParams",
     "RunAnalysisRequestSourceSampleFilesMap",
@@ -379,10 +424,21 @@ __all__ = (
     "SftpCredentials",
     "Share",
     "ShareDetail",
+    "SharedFilesystem",
+    "SharedFilesystemInput",
     "ShareInput",
     "ShareType",
     "SharingType",
+    "Sheet",
+    "SheetCreationMode",
+    "SheetDetail",
+    "SheetJob",
+    "SheetJobType",
+    "SheetQueryResponse",
+    "SheetQueryResponseRowsItem",
+    "SheetType",
     "SortOrder",
+    "SqlSortOrder",
     "Status",
     "StopExecutionResponse",
     "SyncStatus",
@@ -392,7 +448,10 @@ __all__ = (
     "Task",
     "TaskCost",
     "TenantInfo",
+    "TriggerIngestRequest",
     "UpdateDatasetRequest",
+    "UpdateRowsRequest",
+    "UpdateSheetRequest",
     "UpdateUserRequest",
     "UploadDatasetCreateResponse",
     "UploadDatasetRequest",
@@ -403,6 +462,11 @@ __all__ = (
     "ValidateFileNamePatternsRequest",
     "ValidateFileRequirementsRequest",
     "VersionSpecification",
+    "ViewFilter",
+    "ViewFilterValues",
+    "ViewJoin",
+    "ViewQueryRequest",
+    "ViewSheetRef",
     "Workspace",
     "WorkspaceComputeConfig",
     "WorkspaceComputeConfigEnvironmentVariables",

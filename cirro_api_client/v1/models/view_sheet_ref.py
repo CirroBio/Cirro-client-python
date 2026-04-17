@@ -6,35 +6,32 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.artifact_type import ArtifactType
-
-T = TypeVar("T", bound="Artifact")
+T = TypeVar("T", bound="ViewSheetRef")
 
 
 @_attrs_define
-class Artifact:
-    """A secondary file or resource associated with a dataset
-
+class ViewSheetRef:
+    """
     Attributes:
-        type_ (ArtifactType):
-        path (str): A secondary file or resource associated with a dataset
+        sheet_id (str):
+        alias (str):
     """
 
-    type_: ArtifactType
-    path: str
+    sheet_id: str
+    alias: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        type_ = self.type_.value
+        sheet_id = self.sheet_id
 
-        path = self.path
+        alias = self.alias
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "type": type_,
-                "path": path,
+                "sheetId": sheet_id,
+                "alias": alias,
             }
         )
 
@@ -43,17 +40,17 @@ class Artifact:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        type_ = ArtifactType(d.pop("type"))
+        sheet_id = d.pop("sheetId")
 
-        path = d.pop("path")
+        alias = d.pop("alias")
 
-        artifact = cls(
-            type_=type_,
-            path=path,
+        view_sheet_ref = cls(
+            sheet_id=sheet_id,
+            alias=alias,
         )
 
-        artifact.additional_properties = d
-        return artifact
+        view_sheet_ref.additional_properties = d
+        return view_sheet_ref
 
     @property
     def additional_keys(self) -> list[str]:

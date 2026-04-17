@@ -6,32 +6,32 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="NotebookInstanceStatusResponse")
+T = TypeVar("T", bound="JoinCondition")
 
 
 @_attrs_define
-class NotebookInstanceStatusResponse:
+class JoinCondition:
     """
     Attributes:
-        status (str):
-        status_message (str):
+        left_column (str): Qualified column reference in alias.column format Example: s1.patient_id.
+        right_column (str): Qualified column reference in alias.column format Example: s2.patient_id.
     """
 
-    status: str
-    status_message: str
+    left_column: str
+    right_column: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        status = self.status
+        left_column = self.left_column
 
-        status_message = self.status_message
+        right_column = self.right_column
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "status": status,
-                "statusMessage": status_message,
+                "leftColumn": left_column,
+                "rightColumn": right_column,
             }
         )
 
@@ -40,17 +40,17 @@ class NotebookInstanceStatusResponse:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        status = d.pop("status")
+        left_column = d.pop("leftColumn")
 
-        status_message = d.pop("statusMessage")
+        right_column = d.pop("rightColumn")
 
-        notebook_instance_status_response = cls(
-            status=status,
-            status_message=status_message,
+        join_condition = cls(
+            left_column=left_column,
+            right_column=right_column,
         )
 
-        notebook_instance_status_response.additional_properties = d
-        return notebook_instance_status_response
+        join_condition.additional_properties = d
+        return join_condition
 
     @property
     def additional_keys(self) -> list[str]:

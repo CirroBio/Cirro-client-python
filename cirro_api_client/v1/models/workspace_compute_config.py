@@ -31,6 +31,10 @@ class WorkspaceComputeConfig:
             injected into the container at runtime. Keys must be non-blank. Example: {'ENV_MODE': 'production', 'LOG_LEVEL':
             'debug'}.
         local_port (int | Unset): User-facing web server port (http). Example: 8080.
+        custom_task_role_arn (None | str | Unset): Custom IAM task role for the workspace ECS task. Provide either a
+            role name (e.g., 'Cirro-CustomWorkspaceTaskRole-{projectShortCode}-{name}') or a full ARN (e.g.,
+            'arn:aws:iam::{accountId}:role/Cirro-CustomWorkspaceTaskRole-{projectShortCode}-{name}'). Must belong to the
+            project's AWS account.
     """
 
     container_image_uri: str
@@ -41,6 +45,7 @@ class WorkspaceComputeConfig:
     gpu_model: None | str | Unset = UNSET
     environment_variables: None | Unset | WorkspaceComputeConfigEnvironmentVariables = UNSET
     local_port: int | Unset = UNSET
+    custom_task_role_arn: None | str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -72,6 +77,12 @@ class WorkspaceComputeConfig:
 
         local_port = self.local_port
 
+        custom_task_role_arn: None | str | Unset
+        if isinstance(self.custom_task_role_arn, Unset):
+            custom_task_role_arn = UNSET
+        else:
+            custom_task_role_arn = self.custom_task_role_arn
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -93,6 +104,8 @@ class WorkspaceComputeConfig:
             field_dict["environmentVariables"] = environment_variables
         if local_port is not UNSET:
             field_dict["localPort"] = local_port
+        if custom_task_role_arn is not UNSET:
+            field_dict["customTaskRoleArn"] = custom_task_role_arn
 
         return field_dict
 
@@ -139,6 +152,15 @@ class WorkspaceComputeConfig:
 
         local_port = d.pop("localPort", UNSET)
 
+        def _parse_custom_task_role_arn(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        custom_task_role_arn = _parse_custom_task_role_arn(d.pop("customTaskRoleArn", UNSET))
+
         workspace_compute_config = cls(
             container_image_uri=container_image_uri,
             cpu=cpu,
@@ -148,6 +170,7 @@ class WorkspaceComputeConfig:
             gpu_model=gpu_model,
             environment_variables=environment_variables,
             local_port=local_port,
+            custom_task_role_arn=custom_task_role_arn,
         )
 
         workspace_compute_config.additional_properties = d

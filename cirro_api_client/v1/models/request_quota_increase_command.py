@@ -6,35 +6,37 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.artifact_type import ArtifactType
-
-T = TypeVar("T", bound="Artifact")
+T = TypeVar("T", bound="RequestQuotaIncreaseCommand")
 
 
 @_attrs_define
-class Artifact:
-    """A secondary file or resource associated with a dataset
-
+class RequestQuotaIncreaseCommand:
+    """
     Attributes:
-        type_ (ArtifactType):
-        path (str): A secondary file or resource associated with a dataset
+        service_code (str):
+        quota_code (str):
+        value (float):
     """
 
-    type_: ArtifactType
-    path: str
+    service_code: str
+    quota_code: str
+    value: float
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        type_ = self.type_.value
+        service_code = self.service_code
 
-        path = self.path
+        quota_code = self.quota_code
+
+        value = self.value
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "type": type_,
-                "path": path,
+                "serviceCode": service_code,
+                "quotaCode": quota_code,
+                "value": value,
             }
         )
 
@@ -43,17 +45,20 @@ class Artifact:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        type_ = ArtifactType(d.pop("type"))
+        service_code = d.pop("serviceCode")
 
-        path = d.pop("path")
+        quota_code = d.pop("quotaCode")
 
-        artifact = cls(
-            type_=type_,
-            path=path,
+        value = d.pop("value")
+
+        request_quota_increase_command = cls(
+            service_code=service_code,
+            quota_code=quota_code,
+            value=value,
         )
 
-        artifact.additional_properties = d
-        return artifact
+        request_quota_increase_command.additional_properties = d
+        return request_quota_increase_command
 
     @property
     def additional_keys(self) -> list[str]:

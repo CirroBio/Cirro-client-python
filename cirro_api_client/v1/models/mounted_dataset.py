@@ -19,11 +19,13 @@ class MountedDataset:
         name (str): Folder name that appears in the workspace
         dataset_id (None | str | Unset): ID of the dataset to mount
         custom_uri (None | str | Unset): Full S3 URI to mounted data (if mounting custom path)
+        shared_filesystem_id (None | str | Unset): ID of a shared filesystem to mount (read-write)
     """
 
     name: str
     dataset_id: None | str | Unset = UNSET
     custom_uri: None | str | Unset = UNSET
+    shared_filesystem_id: None | str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -41,6 +43,12 @@ class MountedDataset:
         else:
             custom_uri = self.custom_uri
 
+        shared_filesystem_id: None | str | Unset
+        if isinstance(self.shared_filesystem_id, Unset):
+            shared_filesystem_id = UNSET
+        else:
+            shared_filesystem_id = self.shared_filesystem_id
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -52,6 +60,8 @@ class MountedDataset:
             field_dict["datasetId"] = dataset_id
         if custom_uri is not UNSET:
             field_dict["customUri"] = custom_uri
+        if shared_filesystem_id is not UNSET:
+            field_dict["sharedFilesystemId"] = shared_filesystem_id
 
         return field_dict
 
@@ -78,10 +88,20 @@ class MountedDataset:
 
         custom_uri = _parse_custom_uri(d.pop("customUri", UNSET))
 
+        def _parse_shared_filesystem_id(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        shared_filesystem_id = _parse_shared_filesystem_id(d.pop("sharedFilesystemId", UNSET))
+
         mounted_dataset = cls(
             name=name,
             dataset_id=dataset_id,
             custom_uri=custom_uri,
+            shared_filesystem_id=shared_filesystem_id,
         )
 
         mounted_dataset.additional_properties = d

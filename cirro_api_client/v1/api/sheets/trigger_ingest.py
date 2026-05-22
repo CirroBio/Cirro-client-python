@@ -6,8 +6,7 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.create_response import CreateResponse
-from ...models.trigger_ingest_request import TriggerIngestRequest
+from ...models.sheet_ingest_request import SheetIngestRequest
 from ...types import Response
 
 
@@ -15,7 +14,7 @@ def _get_kwargs(
     project_id: str,
     sheet_id: str,
     *,
-    body: TriggerIngestRequest,
+    body: SheetIngestRequest,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
 
@@ -35,16 +34,14 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> CreateResponse | None:
-    if response.status_code == 201:
-        response_201 = CreateResponse.from_dict(response.json())
-
-        return response_201
+def _parse_response(*, client: Client, response: httpx.Response) -> Any | None:
+    if response.status_code == 202:
+        return None
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[CreateResponse]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[Any]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -58,8 +55,8 @@ def sync_detailed(
     sheet_id: str,
     *,
     client: Client,
-    body: TriggerIngestRequest,
-) -> Response[CreateResponse]:
+    body: SheetIngestRequest,
+) -> Response[Any]:
     """Trigger ingest
 
      Triggers an async file ingest into the sheet
@@ -67,7 +64,7 @@ def sync_detailed(
     Args:
         project_id (str):
         sheet_id (str):
-        body (TriggerIngestRequest):
+        body (SheetIngestRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -75,7 +72,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[CreateResponse]
+        Response[Any]
     """
 
     kwargs = _get_kwargs(
@@ -92,49 +89,13 @@ def sync_detailed(
     return _build_response(client=client, response=response)
 
 
-def sync(
-    project_id: str,
-    sheet_id: str,
-    *,
-    client: Client,
-    body: TriggerIngestRequest,
-) -> CreateResponse | None:
-    """Trigger ingest
-
-     Triggers an async file ingest into the sheet
-
-    Args:
-        project_id (str):
-        sheet_id (str):
-        body (TriggerIngestRequest):
-        client (Client): instance of the API client
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        CreateResponse
-    """
-
-    try:
-        return sync_detailed(
-            project_id=project_id,
-            sheet_id=sheet_id,
-            client=client,
-            body=body,
-        ).parsed
-    except errors.NotFoundException:
-        return None
-
-
 async def asyncio_detailed(
     project_id: str,
     sheet_id: str,
     *,
     client: Client,
-    body: TriggerIngestRequest,
-) -> Response[CreateResponse]:
+    body: SheetIngestRequest,
+) -> Response[Any]:
     """Trigger ingest
 
      Triggers an async file ingest into the sheet
@@ -142,7 +103,7 @@ async def asyncio_detailed(
     Args:
         project_id (str):
         sheet_id (str):
-        body (TriggerIngestRequest):
+        body (SheetIngestRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -150,7 +111,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[CreateResponse]
+        Response[Any]
     """
 
     kwargs = _get_kwargs(
@@ -162,41 +123,3 @@ async def asyncio_detailed(
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
 
     return _build_response(client=client, response=response)
-
-
-async def asyncio(
-    project_id: str,
-    sheet_id: str,
-    *,
-    client: Client,
-    body: TriggerIngestRequest,
-) -> CreateResponse | None:
-    """Trigger ingest
-
-     Triggers an async file ingest into the sheet
-
-    Args:
-        project_id (str):
-        sheet_id (str):
-        body (TriggerIngestRequest):
-        client (Client): instance of the API client
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        CreateResponse
-    """
-
-    try:
-        return (
-            await asyncio_detailed(
-                project_id=project_id,
-                sheet_id=sheet_id,
-                client=client,
-                body=body,
-            )
-        ).parsed
-    except errors.NotFoundException:
-        return None

@@ -16,11 +16,17 @@ T = TypeVar("T", bound="SheetQueryResponse")
 
 @_attrs_define
 class SheetQueryResponse:
-    """
-    Attributes:
-        columns (list[QueryColumn]):
-        rows (list[list[SheetQueryResponseRowsItem]]):
-        total_row_count (int):
+    """Paginated query result from a sheet.
+
+
+    The first column is always `_row_id`, an Iceberg v3 metadata column that
+    uniquely identifies each row. Clients should use this value when calling the
+    update endpoint (`PUT /projects/{projectId}/sheets/{sheetId}/data`).
+
+        Attributes:
+            columns (list[QueryColumn]): column definitions, starting with `_row_id`
+            rows (list[list[SheetQueryResponseRowsItem]]): row data, each list aligned with `columns`
+            total_row_count (int): number of total rows in the result set
     """
 
     columns: list[QueryColumn]

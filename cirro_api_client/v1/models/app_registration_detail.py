@@ -9,6 +9,7 @@ from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..models.app_client_type import AppClientType
+from ..models.app_publisher_type import AppPublisherType
 from ..models.app_type import AppType
 from ..models.permission import Permission
 from ..models.principal_type import PrincipalType
@@ -29,6 +30,10 @@ class AppRegistrationDetail:
         client_id (str):
         name (str):
         description (str):
+        logo_url (str):
+        app_url (str):
+        publisher (str):
+        publisher_type (AppPublisherType):
         principal_type (PrincipalType):
         type_ (AppType):
         client_type (AppClientType):
@@ -36,6 +41,8 @@ class AppRegistrationDetail:
         global_permissions (list[Permission]):
         is_archived (bool):
         requires_admin_consent (bool):
+        discovery_enabled (bool):
+        created_from_template (bool):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
         created_by (str):
@@ -44,6 +51,7 @@ class AppRegistrationDetail:
         secret_expires_at (datetime.datetime | None | Unset):
         secret_generated_at (datetime.datetime | None | Unset):
         secret_generated_by (None | str | Unset):
+        template_id (None | str | Unset):
         approved_at (datetime.datetime | None | Unset):
         approved_by (None | str | Unset):
     """
@@ -52,6 +60,10 @@ class AppRegistrationDetail:
     client_id: str
     name: str
     description: str
+    logo_url: str
+    app_url: str
+    publisher: str
+    publisher_type: AppPublisherType
     principal_type: PrincipalType
     type_: AppType
     client_type: AppClientType
@@ -59,6 +71,8 @@ class AppRegistrationDetail:
     global_permissions: list[Permission]
     is_archived: bool
     requires_admin_consent: bool
+    discovery_enabled: bool
+    created_from_template: bool
     created_at: datetime.datetime
     updated_at: datetime.datetime
     created_by: str
@@ -67,6 +81,7 @@ class AppRegistrationDetail:
     secret_expires_at: datetime.datetime | None | Unset = UNSET
     secret_generated_at: datetime.datetime | None | Unset = UNSET
     secret_generated_by: None | str | Unset = UNSET
+    template_id: None | str | Unset = UNSET
     approved_at: datetime.datetime | None | Unset = UNSET
     approved_by: None | str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -79,6 +94,14 @@ class AppRegistrationDetail:
         name = self.name
 
         description = self.description
+
+        logo_url = self.logo_url
+
+        app_url = self.app_url
+
+        publisher = self.publisher
+
+        publisher_type = self.publisher_type.value
 
         principal_type = self.principal_type.value
 
@@ -99,6 +122,10 @@ class AppRegistrationDetail:
         is_archived = self.is_archived
 
         requires_admin_consent = self.requires_admin_consent
+
+        discovery_enabled = self.discovery_enabled
+
+        created_from_template = self.created_from_template
 
         created_at = self.created_at.isoformat()
 
@@ -146,6 +173,12 @@ class AppRegistrationDetail:
         else:
             secret_generated_by = self.secret_generated_by
 
+        template_id: None | str | Unset
+        if isinstance(self.template_id, Unset):
+            template_id = UNSET
+        else:
+            template_id = self.template_id
+
         approved_at: None | str | Unset
         if isinstance(self.approved_at, Unset):
             approved_at = UNSET
@@ -168,6 +201,10 @@ class AppRegistrationDetail:
                 "clientId": client_id,
                 "name": name,
                 "description": description,
+                "logoUrl": logo_url,
+                "appUrl": app_url,
+                "publisher": publisher,
+                "publisherType": publisher_type,
                 "principalType": principal_type,
                 "type": type_,
                 "clientType": client_type,
@@ -175,6 +212,8 @@ class AppRegistrationDetail:
                 "globalPermissions": global_permissions,
                 "isArchived": is_archived,
                 "requiresAdminConsent": requires_admin_consent,
+                "discoveryEnabled": discovery_enabled,
+                "createdFromTemplate": created_from_template,
                 "createdAt": created_at,
                 "updatedAt": updated_at,
                 "createdBy": created_by,
@@ -190,6 +229,8 @@ class AppRegistrationDetail:
             field_dict["secretGeneratedAt"] = secret_generated_at
         if secret_generated_by is not UNSET:
             field_dict["secretGeneratedBy"] = secret_generated_by
+        if template_id is not UNSET:
+            field_dict["templateId"] = template_id
         if approved_at is not UNSET:
             field_dict["approvedAt"] = approved_at
         if approved_by is not UNSET:
@@ -209,6 +250,14 @@ class AppRegistrationDetail:
         name = d.pop("name")
 
         description = d.pop("description")
+
+        logo_url = d.pop("logoUrl")
+
+        app_url = d.pop("appUrl")
+
+        publisher = d.pop("publisher")
+
+        publisher_type = AppPublisherType(d.pop("publisherType"))
 
         principal_type = PrincipalType(d.pop("principalType"))
 
@@ -233,6 +282,10 @@ class AppRegistrationDetail:
         is_archived = d.pop("isArchived")
 
         requires_admin_consent = d.pop("requiresAdminConsent")
+
+        discovery_enabled = d.pop("discoveryEnabled")
+
+        created_from_template = d.pop("createdFromTemplate")
 
         created_at = isoparse(d.pop("createdAt"))
 
@@ -317,6 +370,15 @@ class AppRegistrationDetail:
 
         secret_generated_by = _parse_secret_generated_by(d.pop("secretGeneratedBy", UNSET))
 
+        def _parse_template_id(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        template_id = _parse_template_id(d.pop("templateId", UNSET))
+
         def _parse_approved_at(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
@@ -348,6 +410,10 @@ class AppRegistrationDetail:
             client_id=client_id,
             name=name,
             description=description,
+            logo_url=logo_url,
+            app_url=app_url,
+            publisher=publisher,
+            publisher_type=publisher_type,
             principal_type=principal_type,
             type_=type_,
             client_type=client_type,
@@ -355,6 +421,8 @@ class AppRegistrationDetail:
             global_permissions=global_permissions,
             is_archived=is_archived,
             requires_admin_consent=requires_admin_consent,
+            discovery_enabled=discovery_enabled,
+            created_from_template=created_from_template,
             created_at=created_at,
             updated_at=updated_at,
             created_by=created_by,
@@ -363,6 +431,7 @@ class AppRegistrationDetail:
             secret_expires_at=secret_expires_at,
             secret_generated_at=secret_generated_at,
             secret_generated_by=secret_generated_by,
+            template_id=template_id,
             approved_at=approved_at,
             approved_by=approved_by,
         )

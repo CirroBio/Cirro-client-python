@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import datetime
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -11,6 +11,10 @@ from dateutil.parser import isoparse
 from ..models.sheet_creation_mode import SheetCreationMode
 from ..models.sheet_type import SheetType
 from ..models.status import Status
+
+if TYPE_CHECKING:
+    from ..models.tag import Tag
+
 
 T = TypeVar("T", bound="Sheet")
 
@@ -21,6 +25,8 @@ class Sheet:
     Attributes:
         id (str):
         name (str):
+        namespace_name (str):
+        table_name (str):
         description (str):
         project_id (str):
         sheet_type (SheetType):
@@ -30,10 +36,13 @@ class Sheet:
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
         total_row_count (int):
+        tags (list[Tag]):
     """
 
     id: str
     name: str
+    namespace_name: str
+    table_name: str
     description: str
     project_id: str
     sheet_type: SheetType
@@ -43,12 +52,17 @@ class Sheet:
     created_at: datetime.datetime
     updated_at: datetime.datetime
     total_row_count: int
+    tags: list[Tag]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         id = self.id
 
         name = self.name
+
+        namespace_name = self.namespace_name
+
+        table_name = self.table_name
 
         description = self.description
 
@@ -68,12 +82,19 @@ class Sheet:
 
         total_row_count = self.total_row_count
 
+        tags = []
+        for tags_item_data in self.tags:
+            tags_item = tags_item_data.to_dict()
+            tags.append(tags_item)
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "id": id,
                 "name": name,
+                "namespaceName": namespace_name,
+                "tableName": table_name,
                 "description": description,
                 "projectId": project_id,
                 "sheetType": sheet_type,
@@ -83,6 +104,7 @@ class Sheet:
                 "createdAt": created_at,
                 "updatedAt": updated_at,
                 "totalRowCount": total_row_count,
+                "tags": tags,
             }
         )
 
@@ -90,10 +112,16 @@ class Sheet:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.tag import Tag
+
         d = dict(src_dict)
         id = d.pop("id")
 
         name = d.pop("name")
+
+        namespace_name = d.pop("namespaceName")
+
+        table_name = d.pop("tableName")
 
         description = d.pop("description")
 
@@ -113,9 +141,18 @@ class Sheet:
 
         total_row_count = d.pop("totalRowCount")
 
+        tags = []
+        _tags = d.pop("tags")
+        for tags_item_data in _tags:
+            tags_item = Tag.from_dict(tags_item_data)
+
+            tags.append(tags_item)
+
         sheet = cls(
             id=id,
             name=name,
+            namespace_name=namespace_name,
+            table_name=table_name,
             description=description,
             project_id=project_id,
             sheet_type=sheet_type,
@@ -125,6 +162,7 @@ class Sheet:
             created_at=created_at,
             updated_at=updated_at,
             total_row_count=total_row_count,
+            tags=tags,
         )
 
         sheet.additional_properties = d

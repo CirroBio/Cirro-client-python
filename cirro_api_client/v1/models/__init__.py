@@ -13,10 +13,12 @@ from .agent_status import AgentStatus
 from .agent_tags import AgentTags
 from .allowed_data_type import AllowedDataType
 from .app_client_type import AppClientType
+from .app_publisher_type import AppPublisherType
 from .app_registration import AppRegistration
 from .app_registration_detail import AppRegistrationDetail
 from .app_registration_input import AppRegistrationInput
 from .app_registration_secret_response import AppRegistrationSecretResponse
+from .app_registration_template import AppRegistrationTemplate
 from .app_type import AppType
 from .approve_project_access_request import ApproveProjectAccessRequest
 from .artifact import Artifact
@@ -48,7 +50,6 @@ from .cost_response import CostResponse
 from .create_project_access_request import CreateProjectAccessRequest
 from .create_reference_request import CreateReferenceRequest
 from .create_response import CreateResponse
-from .create_sheet_request import CreateSheetRequest
 from .custom_pipeline_settings import CustomPipelineSettings
 from .custom_process_input import CustomProcessInput
 from .customer_type import CustomerType
@@ -69,6 +70,8 @@ from .dataset_detail_info import DatasetDetailInfo
 from .dataset_detail_params import DatasetDetailParams
 from .dataset_detail_source_sample_files_map import DatasetDetailSourceSampleFilesMap
 from .dataset_viz import DatasetViz
+from .dataset_viz_config import DatasetVizConfig
+from .delete_rows_request import DeleteRowsRequest
 from .discussion import Discussion
 from .discussion_input import DiscussionInput
 from .discussion_type import DiscussionType
@@ -86,6 +89,7 @@ from .file_name_match import FileNameMatch
 from .file_name_pattern import FileNamePattern
 from .file_requirements import FileRequirements
 from .file_type import FileType
+from .filter_ import Filter
 from .filter_operator import FilterOperator
 from .foreign_key_ref import ForeignKeyRef
 from .form_schema import FormSchema
@@ -96,6 +100,7 @@ from .fulfillment_response import FulfillmentResponse
 from .generate_sftp_credentials_request import GenerateSftpCredentialsRequest
 from .get_execution_logs_response import GetExecutionLogsResponse
 from .get_project_summary_response_200 import GetProjectSummaryResponse200
+from .get_task_files_response import GetTaskFilesResponse
 from .governance_access_type import GovernanceAccessType
 from .governance_classification import GovernanceClassification
 from .governance_contact import GovernanceContact
@@ -113,6 +118,7 @@ from .governance_type import GovernanceType
 from .group_cost import GroupCost
 from .import_data_request import ImportDataRequest
 from .import_data_request_download_method import ImportDataRequestDownloadMethod
+from .insert_rows_request import InsertRowsRequest
 from .invite_user_request import InviteUserRequest
 from .invite_user_response import InviteUserResponse
 from .join_condition import JoinCondition
@@ -160,6 +166,7 @@ from .project_role import ProjectRole
 from .project_settings import ProjectSettings
 from .project_user import ProjectUser
 from .query_column import QueryColumn
+from .raw_view_query_request import RawViewQueryRequest
 from .reference import Reference
 from .reference_type import ReferenceType
 from .reference_type_validation_item import ReferenceTypeValidationItem
@@ -170,6 +177,9 @@ from .request_status import RequestStatus
 from .requirement_fulfillment_input import RequirementFulfillmentInput
 from .requirement_input import RequirementInput
 from .resources_info import ResourcesInfo
+from .row_insert import RowInsert
+from .row_insert_values import RowInsertValues
+from .row_insert_values_additional_property import RowInsertValuesAdditionalProperty
 from .row_update import RowUpdate
 from .row_update_values import RowUpdateValues
 from .row_update_values_additional_property import RowUpdateValuesAdditionalProperty
@@ -181,6 +191,7 @@ from .sample_metadata import SampleMetadata
 from .sample_request import SampleRequest
 from .sample_request_metadata import SampleRequestMetadata
 from .sample_sheets import SampleSheets
+from .semantic_column_type import SemanticColumnType
 from .service_connection import ServiceConnection
 from .set_user_project_role_request import SetUserProjectRoleRequest
 from .sftp_credentials import SftpCredentials
@@ -193,27 +204,35 @@ from .shared_filesystem_input import SharedFilesystemInput
 from .sharing_type import SharingType
 from .sheet import Sheet
 from .sheet_creation_mode import SheetCreationMode
+from .sheet_data_request import SheetDataRequest
+from .sheet_data_update_response import SheetDataUpdateResponse
 from .sheet_detail import SheetDetail
+from .sheet_ingest_request import SheetIngestRequest
 from .sheet_job import SheetJob
 from .sheet_job_type import SheetJobType
+from .sheet_query_request import SheetQueryRequest
 from .sheet_query_response import SheetQueryResponse
 from .sheet_query_response_rows_item import SheetQueryResponseRowsItem
+from .sheet_sort import SheetSort
 from .sheet_type import SheetType
+from .sheet_update_response import SheetUpdateResponse
 from .sort_order import SortOrder
+from .source_column import SourceColumn
 from .sql_sort_order import SqlSortOrder
 from .status import Status
 from .stop_execution_response import StopExecutionResponse
+from .structured_view_query_request import StructuredViewQueryRequest
 from .sync_status import SyncStatus
 from .system_info_response import SystemInfoResponse
 from .table import Table
+from .table_sheet_input import TableSheetInput
 from .tag import Tag
 from .task import Task
 from .task_cost import TaskCost
+from .task_log_source import TaskLogSource
 from .tenant_info import TenantInfo
-from .trigger_ingest_request import TriggerIngestRequest
 from .update_dataset_request import UpdateDatasetRequest
 from .update_rows_request import UpdateRowsRequest
-from .update_sheet_request import UpdateSheetRequest
 from .update_user_request import UpdateUserRequest
 from .upload_dataset_create_response import UploadDatasetCreateResponse
 from .upload_dataset_request import UploadDatasetRequest
@@ -224,10 +243,8 @@ from .user_settings import UserSettings
 from .validate_file_name_patterns_request import ValidateFileNamePatternsRequest
 from .validate_file_requirements_request import ValidateFileRequirementsRequest
 from .version_specification import VersionSpecification
-from .view_filter import ViewFilter
-from .view_filter_values import ViewFilterValues
 from .view_join import ViewJoin
-from .view_query_request import ViewQueryRequest
+from .view_sheet_input import ViewSheetInput
 from .view_sheet_ref import ViewSheetRef
 from .workspace import Workspace
 from .workspace_compute_config import WorkspaceComputeConfig
@@ -251,10 +268,12 @@ __all__ = (
     "AgentTags",
     "AllowedDataType",
     "AppClientType",
+    "AppPublisherType",
     "AppRegistration",
     "AppRegistrationDetail",
     "AppRegistrationInput",
     "AppRegistrationSecretResponse",
+    "AppRegistrationTemplate",
     "ApproveProjectAccessRequest",
     "AppType",
     "Artifact",
@@ -286,7 +305,6 @@ __all__ = (
     "CreateProjectAccessRequest",
     "CreateReferenceRequest",
     "CreateResponse",
-    "CreateSheetRequest",
     "CustomerType",
     "CustomPipelineSettings",
     "CustomProcessInput",
@@ -307,6 +325,8 @@ __all__ = (
     "DatasetDetailParams",
     "DatasetDetailSourceSampleFilesMap",
     "DatasetViz",
+    "DatasetVizConfig",
+    "DeleteRowsRequest",
     "Discussion",
     "DiscussionInput",
     "DiscussionType",
@@ -324,6 +344,7 @@ __all__ = (
     "FileNamePattern",
     "FileRequirements",
     "FileType",
+    "Filter",
     "FilterOperator",
     "ForeignKeyRef",
     "FormSchema",
@@ -334,6 +355,7 @@ __all__ = (
     "GenerateSftpCredentialsRequest",
     "GetExecutionLogsResponse",
     "GetProjectSummaryResponse200",
+    "GetTaskFilesResponse",
     "GovernanceAccessType",
     "GovernanceClassification",
     "GovernanceContact",
@@ -351,6 +373,7 @@ __all__ = (
     "GroupCost",
     "ImportDataRequest",
     "ImportDataRequestDownloadMethod",
+    "InsertRowsRequest",
     "InviteUserRequest",
     "InviteUserResponse",
     "JoinCondition",
@@ -398,6 +421,7 @@ __all__ = (
     "ProjectSettings",
     "ProjectUser",
     "QueryColumn",
+    "RawViewQueryRequest",
     "Reference",
     "ReferenceType",
     "ReferenceTypeValidationItem",
@@ -408,6 +432,9 @@ __all__ = (
     "RequirementFulfillmentInput",
     "RequirementInput",
     "ResourcesInfo",
+    "RowInsert",
+    "RowInsertValues",
+    "RowInsertValuesAdditionalProperty",
     "RowUpdate",
     "RowUpdateValues",
     "RowUpdateValuesAdditionalProperty",
@@ -419,6 +446,7 @@ __all__ = (
     "SampleRequest",
     "SampleRequestMetadata",
     "SampleSheets",
+    "SemanticColumnType",
     "ServiceConnection",
     "SetUserProjectRoleRequest",
     "SftpCredentials",
@@ -431,27 +459,35 @@ __all__ = (
     "SharingType",
     "Sheet",
     "SheetCreationMode",
+    "SheetDataRequest",
+    "SheetDataUpdateResponse",
     "SheetDetail",
+    "SheetIngestRequest",
     "SheetJob",
     "SheetJobType",
+    "SheetQueryRequest",
     "SheetQueryResponse",
     "SheetQueryResponseRowsItem",
+    "SheetSort",
     "SheetType",
+    "SheetUpdateResponse",
     "SortOrder",
+    "SourceColumn",
     "SqlSortOrder",
     "Status",
     "StopExecutionResponse",
+    "StructuredViewQueryRequest",
     "SyncStatus",
     "SystemInfoResponse",
     "Table",
+    "TableSheetInput",
     "Tag",
     "Task",
     "TaskCost",
+    "TaskLogSource",
     "TenantInfo",
-    "TriggerIngestRequest",
     "UpdateDatasetRequest",
     "UpdateRowsRequest",
-    "UpdateSheetRequest",
     "UpdateUserRequest",
     "UploadDatasetCreateResponse",
     "UploadDatasetRequest",
@@ -462,10 +498,8 @@ __all__ = (
     "ValidateFileNamePatternsRequest",
     "ValidateFileRequirementsRequest",
     "VersionSpecification",
-    "ViewFilter",
-    "ViewFilterValues",
     "ViewJoin",
-    "ViewQueryRequest",
+    "ViewSheetInput",
     "ViewSheetRef",
     "Workspace",
     "WorkspaceComputeConfig",

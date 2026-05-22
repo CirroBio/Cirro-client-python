@@ -1,39 +1,37 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.file_type import FileType
+if TYPE_CHECKING:
+    from ..models.row_insert_values import RowInsertValues
 
-T = TypeVar("T", bound="FileDef")
+
+T = TypeVar("T", bound="RowInsert")
 
 
 @_attrs_define
-class FileDef:
+class RowInsert:
     """
     Attributes:
-        file_type (FileType):
-        storage_uri (str): Full S3 URI to the source file.
+        values (RowInsertValues): Column name and value. Any missing columns will have a null value (will error if
+            column is required). Example: {'icd_code': 'G65'}.
     """
 
-    file_type: FileType
-    storage_uri: str
+    values: RowInsertValues
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        file_type = self.file_type.value
-
-        storage_uri = self.storage_uri
+        values = self.values.to_dict()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "fileType": file_type,
-                "storageUri": storage_uri,
+                "values": values,
             }
         )
 
@@ -41,18 +39,17 @@ class FileDef:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.row_insert_values import RowInsertValues
+
         d = dict(src_dict)
-        file_type = FileType(d.pop("fileType"))
+        values = RowInsertValues.from_dict(d.pop("values"))
 
-        storage_uri = d.pop("storageUri")
-
-        file_def = cls(
-            file_type=file_type,
-            storage_uri=storage_uri,
+        row_insert = cls(
+            values=values,
         )
 
-        file_def.additional_properties = d
-        return file_def
+        row_insert.additional_properties = d
+        return row_insert
 
     @property
     def additional_keys(self) -> list[str]:

@@ -1,39 +1,32 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.file_type import FileType
-
-T = TypeVar("T", bound="FileDef")
+T = TypeVar("T", bound="DeleteRowsRequest")
 
 
 @_attrs_define
-class FileDef:
+class DeleteRowsRequest:
     """
     Attributes:
-        file_type (FileType):
-        storage_uri (str): Full S3 URI to the source file.
+        row_ids (list[int]): Set of _row_id(s) to delete. Must be non-empty and <= 10000
     """
 
-    file_type: FileType
-    storage_uri: str
+    row_ids: list[int]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        file_type = self.file_type.value
-
-        storage_uri = self.storage_uri
+        row_ids = self.row_ids
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "fileType": file_type,
-                "storageUri": storage_uri,
+                "rowIds": row_ids,
             }
         )
 
@@ -42,17 +35,14 @@ class FileDef:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        file_type = FileType(d.pop("fileType"))
+        row_ids = cast(list[int], d.pop("rowIds"))
 
-        storage_uri = d.pop("storageUri")
-
-        file_def = cls(
-            file_type=file_type,
-            storage_uri=storage_uri,
+        delete_rows_request = cls(
+            row_ids=row_ids,
         )
 
-        file_def.additional_properties = d
-        return file_def
+        delete_rows_request.additional_properties = d
+        return delete_rows_request
 
     @property
     def additional_keys(self) -> list[str]:

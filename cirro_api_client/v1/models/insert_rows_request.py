@@ -1,39 +1,39 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.file_type import FileType
+if TYPE_CHECKING:
+    from ..models.row_insert import RowInsert
 
-T = TypeVar("T", bound="FileDef")
+
+T = TypeVar("T", bound="InsertRowsRequest")
 
 
 @_attrs_define
-class FileDef:
+class InsertRowsRequest:
     """
     Attributes:
-        file_type (FileType):
-        storage_uri (str): Full S3 URI to the source file.
+        inserts (list[RowInsert]): List of rows to update.
     """
 
-    file_type: FileType
-    storage_uri: str
+    inserts: list[RowInsert]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        file_type = self.file_type.value
-
-        storage_uri = self.storage_uri
+        inserts = []
+        for inserts_item_data in self.inserts:
+            inserts_item = inserts_item_data.to_dict()
+            inserts.append(inserts_item)
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "fileType": file_type,
-                "storageUri": storage_uri,
+                "inserts": inserts,
             }
         )
 
@@ -41,18 +41,22 @@ class FileDef:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.row_insert import RowInsert
+
         d = dict(src_dict)
-        file_type = FileType(d.pop("fileType"))
+        inserts = []
+        _inserts = d.pop("inserts")
+        for inserts_item_data in _inserts:
+            inserts_item = RowInsert.from_dict(inserts_item_data)
 
-        storage_uri = d.pop("storageUri")
+            inserts.append(inserts_item)
 
-        file_def = cls(
-            file_type=file_type,
-            storage_uri=storage_uri,
+        insert_rows_request = cls(
+            inserts=inserts,
         )
 
-        file_def.additional_properties = d
-        return file_def
+        insert_rows_request.additional_properties = d
+        return insert_rows_request
 
     @property
     def additional_keys(self) -> list[str]:

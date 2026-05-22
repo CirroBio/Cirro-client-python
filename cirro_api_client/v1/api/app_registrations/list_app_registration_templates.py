@@ -1,36 +1,29 @@
 from http import HTTPStatus
 from typing import Any
-from urllib.parse import quote
 
 import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.sheet_job import SheetJob
+from ...models.app_registration_template import AppRegistrationTemplate
 from ...types import Response
 
 
-def _get_kwargs(
-    project_id: str,
-    sheet_id: str,
-) -> dict[str, Any]:
+def _get_kwargs() -> dict[str, Any]:
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": "/projects/{project_id}/sheets/{sheet_id}/jobs".format(
-            project_id=quote(str(project_id), safe=""),
-            sheet_id=quote(str(sheet_id), safe=""),
-        ),
+        "url": "/app-registration-templates",
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> list[SheetJob] | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> list[AppRegistrationTemplate] | None:
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
         for response_200_item_data in _response_200:
-            response_200_item = SheetJob.from_dict(response_200_item_data)
+            response_200_item = AppRegistrationTemplate.from_dict(response_200_item_data)
 
             response_200.append(response_200_item)
 
@@ -39,7 +32,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> list[SheetJo
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[list[SheetJob]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[list[AppRegistrationTemplate]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -49,32 +42,22 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[lis
 
 
 def sync_detailed(
-    project_id: str,
-    sheet_id: str,
     *,
     client: Client,
-) -> Response[list[SheetJob]]:
-    """List jobs
+) -> Response[list[AppRegistrationTemplate]]:
+    """List app registration templates
 
-     Retrieves jobs for a sheet
-
-    Args:
-        project_id (str):
-        sheet_id (str):
-        client (Client): instance of the API client
+     Lists pre-defined application templates to register.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[list[SheetJob]]
+        Response[list[AppRegistrationTemplate]]
     """
 
-    kwargs = _get_kwargs(
-        project_id=project_id,
-        sheet_id=sheet_id,
-    )
+    kwargs = _get_kwargs()
 
     response = client.get_httpx_client().request(
         auth=client.get_auth(),
@@ -85,32 +68,23 @@ def sync_detailed(
 
 
 def sync(
-    project_id: str,
-    sheet_id: str,
     *,
     client: Client,
-) -> list[SheetJob] | None:
-    """List jobs
+) -> list[AppRegistrationTemplate] | None:
+    """List app registration templates
 
-     Retrieves jobs for a sheet
-
-    Args:
-        project_id (str):
-        sheet_id (str):
-        client (Client): instance of the API client
+     Lists pre-defined application templates to register.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        list[SheetJob]
+        list[AppRegistrationTemplate]
     """
 
     try:
         return sync_detailed(
-            project_id=project_id,
-            sheet_id=sheet_id,
             client=client,
         ).parsed
     except errors.NotFoundException:
@@ -118,32 +92,22 @@ def sync(
 
 
 async def asyncio_detailed(
-    project_id: str,
-    sheet_id: str,
     *,
     client: Client,
-) -> Response[list[SheetJob]]:
-    """List jobs
+) -> Response[list[AppRegistrationTemplate]]:
+    """List app registration templates
 
-     Retrieves jobs for a sheet
-
-    Args:
-        project_id (str):
-        sheet_id (str):
-        client (Client): instance of the API client
+     Lists pre-defined application templates to register.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[list[SheetJob]]
+        Response[list[AppRegistrationTemplate]]
     """
 
-    kwargs = _get_kwargs(
-        project_id=project_id,
-        sheet_id=sheet_id,
-    )
+    kwargs = _get_kwargs()
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
 
@@ -151,33 +115,24 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    project_id: str,
-    sheet_id: str,
     *,
     client: Client,
-) -> list[SheetJob] | None:
-    """List jobs
+) -> list[AppRegistrationTemplate] | None:
+    """List app registration templates
 
-     Retrieves jobs for a sheet
-
-    Args:
-        project_id (str):
-        sheet_id (str):
-        client (Client): instance of the API client
+     Lists pre-defined application templates to register.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        list[SheetJob]
+        list[AppRegistrationTemplate]
     """
 
     try:
         return (
             await asyncio_detailed(
-                project_id=project_id,
-                sheet_id=sheet_id,
                 client=client,
             )
         ).parsed

@@ -25,6 +25,8 @@ class Task:
         started_at (datetime.datetime | None | Unset):
         stopped_at (datetime.datetime | None | Unset):
         container_image (None | str | Unset):
+        work_dir (None | str | Unset):
+        exit_code (int | None | Unset):
         command_line (None | str | Unset):
         log_location (None | str | Unset):
     """
@@ -37,6 +39,8 @@ class Task:
     started_at: datetime.datetime | None | Unset = UNSET
     stopped_at: datetime.datetime | None | Unset = UNSET
     container_image: None | str | Unset = UNSET
+    work_dir: None | str | Unset = UNSET
+    exit_code: int | None | Unset = UNSET
     command_line: None | str | Unset = UNSET
     log_location: None | str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -88,6 +92,18 @@ class Task:
         else:
             container_image = self.container_image
 
+        work_dir: None | str | Unset
+        if isinstance(self.work_dir, Unset):
+            work_dir = UNSET
+        else:
+            work_dir = self.work_dir
+
+        exit_code: int | None | Unset
+        if isinstance(self.exit_code, Unset):
+            exit_code = UNSET
+        else:
+            exit_code = self.exit_code
+
         command_line: None | str | Unset
         if isinstance(self.command_line, Unset):
             command_line = UNSET
@@ -120,6 +136,10 @@ class Task:
             field_dict["stoppedAt"] = stopped_at
         if container_image is not UNSET:
             field_dict["containerImage"] = container_image
+        if work_dir is not UNSET:
+            field_dict["workDir"] = work_dir
+        if exit_code is not UNSET:
+            field_dict["exitCode"] = exit_code
         if command_line is not UNSET:
             field_dict["commandLine"] = command_line
         if log_location is not UNSET:
@@ -212,6 +232,24 @@ class Task:
 
         container_image = _parse_container_image(d.pop("containerImage", UNSET))
 
+        def _parse_work_dir(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        work_dir = _parse_work_dir(d.pop("workDir", UNSET))
+
+        def _parse_exit_code(data: object) -> int | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(int | None | Unset, data)
+
+        exit_code = _parse_exit_code(d.pop("exitCode", UNSET))
+
         def _parse_command_line(data: object) -> None | str | Unset:
             if data is None:
                 return data
@@ -239,6 +277,8 @@ class Task:
             started_at=started_at,
             stopped_at=stopped_at,
             container_image=container_image,
+            work_dir=work_dir,
+            exit_code=exit_code,
             command_line=command_line,
             log_location=log_location,
         )

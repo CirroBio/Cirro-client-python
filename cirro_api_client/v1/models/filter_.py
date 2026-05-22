@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar, cast
+from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -10,32 +10,30 @@ from ..models.filter_operator import FilterOperator
 from ..models.logical_operator import LogicalOperator
 from ..types import UNSET, Unset
 
-if TYPE_CHECKING:
-    from ..models.view_filter_values import ViewFilterValues
-
-
-T = TypeVar("T", bound="ViewFilter")
+T = TypeVar("T", bound="Filter")
 
 
 @_attrs_define
-class ViewFilter:
+class Filter:
     """A filter node: either a group (with logicalOperator and conditions) or a leaf condition (with column, operator, and
     values)
 
         Attributes:
             logical_operator (LogicalOperator | None | Unset): Set for group nodes to combine child conditions
-            conditions (list[ViewFilter] | None | Unset): Child filter nodes (for group nodes)
-            column (None | str | Unset): Qualified column reference in alias.column format (for leaf nodes) Example: s1.age.
+            conditions (list[Filter] | None | Unset): Child filter nodes (for group nodes)
+            column (None | str | Unset): Column reference (for leaf nodes). For view filters, must be in alias.column format
+                (e.g., 's1.age'). For sheet data filters, must be a bare column name (e.g., 'age'). Example: age.
             operator (FilterOperator | None | Unset): Comparison operator (for leaf nodes)
-            values (list[ViewFilterValues] | None | Unset): Values for the filter. Single-element list for comparison
-                operators (EQUALS, GREATER_THAN, etc.), multi-element for IN/NOT_IN. Null or empty for IS_NULL/IS_NOT_NULL.
+            values (list[bool | float | int | str] | None | Unset): Values for the filter. Single-element list for
+                comparison operators (EQUALS, GREATER_THAN, etc.), multi-element for IN/NOT_IN. Null or empty for
+                IS_NULL/IS_NOT_NULL.
     """
 
     logical_operator: LogicalOperator | None | Unset = UNSET
-    conditions: list[ViewFilter] | None | Unset = UNSET
+    conditions: list[Filter] | None | Unset = UNSET
     column: None | str | Unset = UNSET
     operator: FilterOperator | None | Unset = UNSET
-    values: list[ViewFilterValues] | None | Unset = UNSET
+    values: list[bool | float | int | str] | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -73,13 +71,14 @@ class ViewFilter:
         else:
             operator = self.operator
 
-        values: list[dict[str, Any]] | None | Unset
+        values: list[bool | float | int | str] | None | Unset
         if isinstance(self.values, Unset):
             values = UNSET
         elif isinstance(self.values, list):
             values = []
             for values_type_0_item_data in self.values:
-                values_type_0_item = values_type_0_item_data.to_dict()
+                values_type_0_item: bool | float | int | str
+                values_type_0_item = values_type_0_item_data
                 values.append(values_type_0_item)
 
         else:
@@ -103,8 +102,6 @@ class ViewFilter:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.view_filter_values import ViewFilterValues
-
         d = dict(src_dict)
 
         def _parse_logical_operator(data: object) -> LogicalOperator | None | Unset:
@@ -124,7 +121,7 @@ class ViewFilter:
 
         logical_operator = _parse_logical_operator(d.pop("logicalOperator", UNSET))
 
-        def _parse_conditions(data: object) -> list[ViewFilter] | None | Unset:
+        def _parse_conditions(data: object) -> list[Filter] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -135,14 +132,14 @@ class ViewFilter:
                 conditions_type_0 = []
                 _conditions_type_0 = data
                 for conditions_type_0_item_data in _conditions_type_0:
-                    conditions_type_0_item = ViewFilter.from_dict(conditions_type_0_item_data)
+                    conditions_type_0_item = Filter.from_dict(conditions_type_0_item_data)
 
                     conditions_type_0.append(conditions_type_0_item)
 
                 return conditions_type_0
             except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(list[ViewFilter] | None | Unset, data)
+            return cast(list[Filter] | None | Unset, data)
 
         conditions = _parse_conditions(d.pop("conditions", UNSET))
 
@@ -172,7 +169,7 @@ class ViewFilter:
 
         operator = _parse_operator(d.pop("operator", UNSET))
 
-        def _parse_values(data: object) -> list[ViewFilterValues] | None | Unset:
+        def _parse_values(data: object) -> list[bool | float | int | str] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -183,18 +180,22 @@ class ViewFilter:
                 values_type_0 = []
                 _values_type_0 = data
                 for values_type_0_item_data in _values_type_0:
-                    values_type_0_item = ViewFilterValues.from_dict(values_type_0_item_data)
+
+                    def _parse_values_type_0_item(data: object) -> bool | float | int | str:
+                        return cast(bool | float | int | str, data)
+
+                    values_type_0_item = _parse_values_type_0_item(values_type_0_item_data)
 
                     values_type_0.append(values_type_0_item)
 
                 return values_type_0
             except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(list[ViewFilterValues] | None | Unset, data)
+            return cast(list[bool | float | int | str] | None | Unset, data)
 
         values = _parse_values(d.pop("values", UNSET))
 
-        view_filter = cls(
+        filter_ = cls(
             logical_operator=logical_operator,
             conditions=conditions,
             column=column,
@@ -202,8 +203,8 @@ class ViewFilter:
             values=values,
         )
 
-        view_filter.additional_properties = d
-        return view_filter
+        filter_.additional_properties = d
+        return filter_
 
     @property
     def additional_keys(self) -> list[str]:

@@ -14,7 +14,7 @@ def _get_kwargs(
     sheet_id: str,
 ) -> dict[str, Any]:
     _kwargs: dict[str, Any] = {
-        "method": "post",
+        "method": "put",
         "url": "/projects/{project_id}/sheets/{sheet_id}:refresh".format(
             project_id=quote(str(project_id), safe=""),
             sheet_id=quote(str(sheet_id), safe=""),

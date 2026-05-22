@@ -9,33 +9,36 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.view_filter import ViewFilter
+    from ..models.filter_ import Filter
     from ..models.view_join import ViewJoin
     from ..models.view_sheet_ref import ViewSheetRef
 
 
-T = TypeVar("T", bound="ViewQueryRequest")
+T = TypeVar("T", bound="StructuredViewQueryRequest")
 
 
 @_attrs_define
-class ViewQueryRequest:
+class StructuredViewQueryRequest:
     """Request for a view joining one or more sheets with optional column selection and filtering
 
     Attributes:
-        sheets (list[ViewSheetRef]): Sheets to include in the view
+        sheets (list[ViewSheetRef]): Sheets to include in the view. The first entry (sheets[0]) is the primary sheet —
+            it becomes the FROM clause of the generated SQL. Subsequent entries are brought in via joins.
         joins (list[ViewJoin] | None | Unset): Join definitions between sheets
         columns (list[str] | None | Unset): Columns to select in alias.column format. If null, selects all columns.
-        filter_ (None | Unset | ViewFilter): Filter conditions to apply
+        filter_ (Filter | None | Unset): Filter conditions to apply
+        view_type (str | Unset):
     """
 
     sheets: list[ViewSheetRef]
     joins: list[ViewJoin] | None | Unset = UNSET
     columns: list[str] | None | Unset = UNSET
-    filter_: None | Unset | ViewFilter = UNSET
+    filter_: Filter | None | Unset = UNSET
+    view_type: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.view_filter import ViewFilter
+        from ..models.filter_ import Filter
 
         sheets = []
         for sheets_item_data in self.sheets:
@@ -66,10 +69,12 @@ class ViewQueryRequest:
         filter_: dict[str, Any] | None | Unset
         if isinstance(self.filter_, Unset):
             filter_ = UNSET
-        elif isinstance(self.filter_, ViewFilter):
+        elif isinstance(self.filter_, Filter):
             filter_ = self.filter_.to_dict()
         else:
             filter_ = self.filter_
+
+        view_type = self.view_type
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -84,12 +89,14 @@ class ViewQueryRequest:
             field_dict["columns"] = columns
         if filter_ is not UNSET:
             field_dict["filter"] = filter_
+        if view_type is not UNSET:
+            field_dict["viewType"] = view_type
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.view_filter import ViewFilter
+        from ..models.filter_ import Filter
         from ..models.view_join import ViewJoin
         from ..models.view_sheet_ref import ViewSheetRef
 
@@ -140,7 +147,7 @@ class ViewQueryRequest:
 
         columns = _parse_columns(d.pop("columns", UNSET))
 
-        def _parse_filter_(data: object) -> None | Unset | ViewFilter:
+        def _parse_filter_(data: object) -> Filter | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -148,24 +155,27 @@ class ViewQueryRequest:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                filter_type_1 = ViewFilter.from_dict(data)
+                filter_type_1 = Filter.from_dict(data)
 
                 return filter_type_1
             except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(None | Unset | ViewFilter, data)
+            return cast(Filter | None | Unset, data)
 
         filter_ = _parse_filter_(d.pop("filter", UNSET))
 
-        view_query_request = cls(
+        view_type = d.pop("viewType", UNSET)
+
+        structured_view_query_request = cls(
             sheets=sheets,
             joins=joins,
             columns=columns,
             filter_=filter_,
+            view_type=view_type,
         )
 
-        view_query_request.additional_properties = d
-        return view_query_request
+        structured_view_query_request.additional_properties = d
+        return structured_view_query_request
 
     @property
     def additional_keys(self) -> list[str]:

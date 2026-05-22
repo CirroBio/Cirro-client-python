@@ -11,6 +11,7 @@ from ..types import UNSET, Unset
 if TYPE_CHECKING:
     from ..models.run_analysis_request_params import RunAnalysisRequestParams
     from ..models.run_analysis_request_source_sample_files_map import RunAnalysisRequestSourceSampleFilesMap
+    from ..models.tag import Tag
 
 
 T = TypeVar("T", bound="RunAnalysisRequest")
@@ -35,6 +36,7 @@ class RunAnalysisRequest:
             dataset specified here, it will re-use the output to minimize duplicate work
         compute_environment_id (None | str | Unset): The compute environment where to run the workflow, if not
             specified, it will run in AWS
+        tags (list[Tag] | None | Unset): List of tags to apply to the dataset
     """
 
     name: str
@@ -47,6 +49,7 @@ class RunAnalysisRequest:
     source_sample_files_map: None | RunAnalysisRequestSourceSampleFilesMap | Unset = UNSET
     resume_dataset_id: None | str | Unset = UNSET
     compute_environment_id: None | str | Unset = UNSET
+    tags: list[Tag] | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -97,6 +100,18 @@ class RunAnalysisRequest:
         else:
             compute_environment_id = self.compute_environment_id
 
+        tags: list[dict[str, Any]] | None | Unset
+        if isinstance(self.tags, Unset):
+            tags = UNSET
+        elif isinstance(self.tags, list):
+            tags = []
+            for tags_type_0_item_data in self.tags:
+                tags_type_0_item = tags_type_0_item_data.to_dict()
+                tags.append(tags_type_0_item)
+
+        else:
+            tags = self.tags
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -118,6 +133,8 @@ class RunAnalysisRequest:
             field_dict["resumeDatasetId"] = resume_dataset_id
         if compute_environment_id is not UNSET:
             field_dict["computeEnvironmentId"] = compute_environment_id
+        if tags is not UNSET:
+            field_dict["tags"] = tags
 
         return field_dict
 
@@ -125,6 +142,7 @@ class RunAnalysisRequest:
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.run_analysis_request_params import RunAnalysisRequestParams
         from ..models.run_analysis_request_source_sample_files_map import RunAnalysisRequestSourceSampleFilesMap
+        from ..models.tag import Tag
 
         d = dict(src_dict)
         name = d.pop("name")
@@ -198,6 +216,28 @@ class RunAnalysisRequest:
 
         compute_environment_id = _parse_compute_environment_id(d.pop("computeEnvironmentId", UNSET))
 
+        def _parse_tags(data: object) -> list[Tag] | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, list):
+                    raise TypeError()
+                tags_type_0 = []
+                _tags_type_0 = data
+                for tags_type_0_item_data in _tags_type_0:
+                    tags_type_0_item = Tag.from_dict(tags_type_0_item_data)
+
+                    tags_type_0.append(tags_type_0_item)
+
+                return tags_type_0
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(list[Tag] | None | Unset, data)
+
+        tags = _parse_tags(d.pop("tags", UNSET))
+
         run_analysis_request = cls(
             name=name,
             process_id=process_id,
@@ -209,6 +249,7 @@ class RunAnalysisRequest:
             source_sample_files_map=source_sample_files_map,
             resume_dataset_id=resume_dataset_id,
             compute_environment_id=compute_environment_id,
+            tags=tags,
         )
 
         run_analysis_request.additional_properties = d

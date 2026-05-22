@@ -9,6 +9,7 @@ from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..models.status import Status
+from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.tag import Tag
@@ -21,22 +22,21 @@ T = TypeVar("T", bound="Dataset")
 class Dataset:
     """
     Attributes:
-        id (str):
-        name (str):
-        description (str):
-        project_id (str):
-        process_id (str):
-        source_dataset_ids (list[str]):
+        id (str): Dataset ID
+        name (str): Dataset name
+        project_id (str): Project ID
+        process_id (str): Process ID
+        source_dataset_ids (list[str]): Source dataset IDs
         status (Status):
-        tags (list[Tag]):
-        created_by (str):
-        created_at (datetime.datetime):
-        updated_at (datetime.datetime):
+        tags (list[Tag]): Tags
+        created_by (str): User who created the dataset
+        created_at (datetime.datetime): Timestamp when the dataset was created
+        updated_at (datetime.datetime): Timestamp when the dataset was last updated
+        description (str | Unset): Dataset description
     """
 
     id: str
     name: str
-    description: str
     project_id: str
     process_id: str
     source_dataset_ids: list[str]
@@ -45,14 +45,13 @@ class Dataset:
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
+    description: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         id = self.id
 
         name = self.name
-
-        description = self.description
 
         project_id = self.project_id
 
@@ -73,13 +72,14 @@ class Dataset:
 
         updated_at = self.updated_at.isoformat()
 
+        description = self.description
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "id": id,
                 "name": name,
-                "description": description,
                 "projectId": project_id,
                 "processId": process_id,
                 "sourceDatasetIds": source_dataset_ids,
@@ -90,6 +90,8 @@ class Dataset:
                 "updatedAt": updated_at,
             }
         )
+        if description is not UNSET:
+            field_dict["description"] = description
 
         return field_dict
 
@@ -101,8 +103,6 @@ class Dataset:
         id = d.pop("id")
 
         name = d.pop("name")
-
-        description = d.pop("description")
 
         project_id = d.pop("projectId")
 
@@ -125,10 +125,11 @@ class Dataset:
 
         updated_at = isoparse(d.pop("updatedAt"))
 
+        description = d.pop("description", UNSET)
+
         dataset = cls(
             id=id,
             name=name,
-            description=description,
             project_id=project_id,
             process_id=process_id,
             source_dataset_ids=source_dataset_ids,
@@ -137,6 +138,7 @@ class Dataset:
             created_by=created_by,
             created_at=created_at,
             updated_at=updated_at,
+            description=description,
         )
 
         dataset.additional_properties = d

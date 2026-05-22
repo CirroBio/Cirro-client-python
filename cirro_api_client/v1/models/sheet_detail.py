@@ -15,7 +15,9 @@ from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.column_def import ColumnDef
-    from ..models.view_query_request import ViewQueryRequest
+    from ..models.raw_view_query_request import RawViewQueryRequest
+    from ..models.structured_view_query_request import StructuredViewQueryRequest
+    from ..models.tag import Tag
 
 
 T = TypeVar("T", bound="SheetDetail")
@@ -38,11 +40,17 @@ class SheetDetail:
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
         total_row_count (int):
+        tags (list[Tag]):
         sheet_creation_mode (None | SheetCreationMode | Unset): How the table was initialized. Null for VIEW sheets.
         columns (list[ColumnDef] | None | Unset): Column definitions for the table schema. Null for VIEW sheets.
-        view_definition (None | Unset | ViewQueryRequest): View definition for VIEW sheets. Null for TABLE sheets.
+        view_definition (None | RawViewQueryRequest | StructuredViewQueryRequest | Unset): View definition for VIEW
+            sheets. Null for TABLE sheets.
         last_refreshed_at (datetime.datetime | None | Unset): When the view was last materialized. Null for TABLE
             sheets.
+        staging_upload_path (str | Unset): S3 upload path for files to be ingested into this sheet.
+        schema_version_id (int | Unset): Current table schema version (starts at 0). Used for optimistic concurrency
+            control. New tables can omit this, but updates should include this to prevent overwriting due to stale table
+            schema metadata.
     """
 
     id: str
@@ -58,14 +66,18 @@ class SheetDetail:
     created_at: datetime.datetime
     updated_at: datetime.datetime
     total_row_count: int
+    tags: list[Tag]
     sheet_creation_mode: None | SheetCreationMode | Unset = UNSET
     columns: list[ColumnDef] | None | Unset = UNSET
-    view_definition: None | Unset | ViewQueryRequest = UNSET
+    view_definition: None | RawViewQueryRequest | StructuredViewQueryRequest | Unset = UNSET
     last_refreshed_at: datetime.datetime | None | Unset = UNSET
+    staging_upload_path: str | Unset = UNSET
+    schema_version_id: int | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.view_query_request import ViewQueryRequest
+        from ..models.raw_view_query_request import RawViewQueryRequest
+        from ..models.structured_view_query_request import StructuredViewQueryRequest
 
         id = self.id
 
@@ -93,6 +105,11 @@ class SheetDetail:
 
         total_row_count = self.total_row_count
 
+        tags = []
+        for tags_item_data in self.tags:
+            tags_item = tags_item_data.to_dict()
+            tags.append(tags_item)
+
         sheet_creation_mode: None | str | Unset
         if isinstance(self.sheet_creation_mode, Unset):
             sheet_creation_mode = UNSET
@@ -116,7 +133,9 @@ class SheetDetail:
         view_definition: dict[str, Any] | None | Unset
         if isinstance(self.view_definition, Unset):
             view_definition = UNSET
-        elif isinstance(self.view_definition, ViewQueryRequest):
+        elif isinstance(self.view_definition, RawViewQueryRequest):
+            view_definition = self.view_definition.to_dict()
+        elif isinstance(self.view_definition, StructuredViewQueryRequest):
             view_definition = self.view_definition.to_dict()
         else:
             view_definition = self.view_definition
@@ -128,6 +147,10 @@ class SheetDetail:
             last_refreshed_at = self.last_refreshed_at.isoformat()
         else:
             last_refreshed_at = self.last_refreshed_at
+
+        staging_upload_path = self.staging_upload_path
+
+        schema_version_id = self.schema_version_id
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -146,6 +169,7 @@ class SheetDetail:
                 "createdAt": created_at,
                 "updatedAt": updated_at,
                 "totalRowCount": total_row_count,
+                "tags": tags,
             }
         )
         if sheet_creation_mode is not UNSET:
@@ -156,13 +180,19 @@ class SheetDetail:
             field_dict["viewDefinition"] = view_definition
         if last_refreshed_at is not UNSET:
             field_dict["lastRefreshedAt"] = last_refreshed_at
+        if staging_upload_path is not UNSET:
+            field_dict["stagingUploadPath"] = staging_upload_path
+        if schema_version_id is not UNSET:
+            field_dict["schemaVersionId"] = schema_version_id
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.column_def import ColumnDef
-        from ..models.view_query_request import ViewQueryRequest
+        from ..models.raw_view_query_request import RawViewQueryRequest
+        from ..models.structured_view_query_request import StructuredViewQueryRequest
+        from ..models.tag import Tag
 
         d = dict(src_dict)
         id = d.pop("id")
@@ -190,6 +220,13 @@ class SheetDetail:
         updated_at = isoparse(d.pop("updatedAt"))
 
         total_row_count = d.pop("totalRowCount")
+
+        tags = []
+        _tags = d.pop("tags")
+        for tags_item_data in _tags:
+            tags_item = Tag.from_dict(tags_item_data)
+
+            tags.append(tags_item)
 
         def _parse_sheet_creation_mode(data: object) -> None | SheetCreationMode | Unset:
             if data is None:
@@ -230,7 +267,7 @@ class SheetDetail:
 
         columns = _parse_columns(d.pop("columns", UNSET))
 
-        def _parse_view_definition(data: object) -> None | Unset | ViewQueryRequest:
+        def _parse_view_definition(data: object) -> None | RawViewQueryRequest | StructuredViewQueryRequest | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -238,12 +275,20 @@ class SheetDetail:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                view_definition_type_1 = ViewQueryRequest.from_dict(data)
+                componentsschemas_view_query_request_type_0 = RawViewQueryRequest.from_dict(data)
 
-                return view_definition_type_1
+                return componentsschemas_view_query_request_type_0
             except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(None | Unset | ViewQueryRequest, data)
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                componentsschemas_view_query_request_type_1 = StructuredViewQueryRequest.from_dict(data)
+
+                return componentsschemas_view_query_request_type_1
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(None | RawViewQueryRequest | StructuredViewQueryRequest | Unset, data)
 
         view_definition = _parse_view_definition(d.pop("viewDefinition", UNSET))
 
@@ -264,6 +309,10 @@ class SheetDetail:
 
         last_refreshed_at = _parse_last_refreshed_at(d.pop("lastRefreshedAt", UNSET))
 
+        staging_upload_path = d.pop("stagingUploadPath", UNSET)
+
+        schema_version_id = d.pop("schemaVersionId", UNSET)
+
         sheet_detail = cls(
             id=id,
             name=name,
@@ -278,10 +327,13 @@ class SheetDetail:
             created_at=created_at,
             updated_at=updated_at,
             total_row_count=total_row_count,
+            tags=tags,
             sheet_creation_mode=sheet_creation_mode,
             columns=columns,
             view_definition=view_definition,
             last_refreshed_at=last_refreshed_at,
+            staging_upload_path=staging_upload_path,
+            schema_version_id=schema_version_id,
         )
 
         sheet_detail.additional_properties = d

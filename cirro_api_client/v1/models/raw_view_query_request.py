@@ -6,53 +6,54 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.file_type import FileType
+from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="FileDef")
+T = TypeVar("T", bound="RawViewQueryRequest")
 
 
 @_attrs_define
-class FileDef:
+class RawViewQueryRequest:
     """
     Attributes:
-        file_type (FileType):
-        storage_uri (str): Full S3 URI to the source file.
+        query (str):
+        view_type (str | Unset):
     """
 
-    file_type: FileType
-    storage_uri: str
+    query: str
+    view_type: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        file_type = self.file_type.value
+        query = self.query
 
-        storage_uri = self.storage_uri
+        view_type = self.view_type
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "fileType": file_type,
-                "storageUri": storage_uri,
+                "query": query,
             }
         )
+        if view_type is not UNSET:
+            field_dict["viewType"] = view_type
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        file_type = FileType(d.pop("fileType"))
+        query = d.pop("query")
 
-        storage_uri = d.pop("storageUri")
+        view_type = d.pop("viewType", UNSET)
 
-        file_def = cls(
-            file_type=file_type,
-            storage_uri=storage_uri,
+        raw_view_query_request = cls(
+            query=query,
+            view_type=view_type,
         )
 
-        file_def.additional_properties = d
-        return file_def
+        raw_view_query_request.additional_properties = d
+        return raw_view_query_request
 
     @property
     def additional_keys(self) -> list[str]:

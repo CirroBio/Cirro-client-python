@@ -6,11 +6,11 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="ViewFilterValues")
+T = TypeVar("T", bound="DatasetVizConfig")
 
 
 @_attrs_define
-class ViewFilterValues:
+class DatasetVizConfig:
     """ """
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -24,10 +24,10 @@ class ViewFilterValues:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        view_filter_values = cls()
+        dataset_viz_config = cls()
 
-        view_filter_values.additional_properties = d
-        return view_filter_values
+        dataset_viz_config.additional_properties = d
+        return dataset_viz_config
 
     @property
     def additional_keys(self) -> list[str]:

@@ -6,19 +6,28 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...types import Response
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     project_id: str,
     workspace_id: str,
+    *,
+    force: bool | Unset = False,
 ) -> dict[str, Any]:
+    params: dict[str, Any] = {}
+
+    params["force"] = force
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+
     _kwargs: dict[str, Any] = {
         "method": "delete",
         "url": "/projects/{project_id}/workspaces/{workspace_id}".format(
             project_id=quote(str(project_id), safe=""),
             workspace_id=quote(str(workspace_id), safe=""),
         ),
+        "params": params,
     }
 
     return _kwargs
@@ -45,14 +54,17 @@ def sync_detailed(
     workspace_id: str,
     *,
     client: Client,
+    force: bool | Unset = False,
 ) -> Response[Any]:
     """Delete workspace
 
-     Deletes a workspace within a project
+     Deletes a workspace within a project. Pass force=true (global admin only) to skip the FAILED-on-
+    cleanup-error guard and end the workspace in DELETED regardless of partial cleanup failures.
 
     Args:
         project_id (str):
         workspace_id (str):
+        force (bool | Unset):  Default: False.
         client (Client): instance of the API client
 
     Raises:
@@ -66,6 +78,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         project_id=project_id,
         workspace_id=workspace_id,
+        force=force,
     )
 
     response = client.get_httpx_client().request(
@@ -81,14 +94,17 @@ async def asyncio_detailed(
     workspace_id: str,
     *,
     client: Client,
+    force: bool | Unset = False,
 ) -> Response[Any]:
     """Delete workspace
 
-     Deletes a workspace within a project
+     Deletes a workspace within a project. Pass force=true (global admin only) to skip the FAILED-on-
+    cleanup-error guard and end the workspace in DELETED regardless of partial cleanup failures.
 
     Args:
         project_id (str):
         workspace_id (str):
+        force (bool | Unset):  Default: False.
         client (Client): instance of the API client
 
     Raises:
@@ -102,6 +118,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         project_id=project_id,
         workspace_id=workspace_id,
+        force=force,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)

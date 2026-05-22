@@ -27,6 +27,9 @@ class Task:
         container_image (None | str | Unset):
         command_line (None | str | Unset):
         log_location (None | str | Unset):
+        work_dir (None | str | Unset): S3 URI of the task's work directory
+        exit_code (int | None | Unset): Process exit code
+        hash (None | str | Unset): Short hash prefix used by Nextflow, e.g. ``99/b42c07``
     """
 
     name: str
@@ -39,6 +42,9 @@ class Task:
     container_image: None | str | Unset = UNSET
     command_line: None | str | Unset = UNSET
     log_location: None | str | Unset = UNSET
+    work_dir: None | str | Unset = UNSET
+    exit_code: int | None | Unset = UNSET
+    hash: None | str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -100,6 +106,24 @@ class Task:
         else:
             log_location = self.log_location
 
+        work_dir: None | str | Unset
+        if isinstance(self.work_dir, Unset):
+            work_dir = UNSET
+        else:
+            work_dir = self.work_dir
+
+        exit_code: int | None | Unset
+        if isinstance(self.exit_code, Unset):
+            exit_code = UNSET
+        else:
+            exit_code = self.exit_code
+
+        hash_: None | str | Unset
+        if isinstance(self.hash, Unset):
+            hash_ = UNSET
+        else:
+            hash_ = self.hash
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -124,6 +148,12 @@ class Task:
             field_dict["commandLine"] = command_line
         if log_location is not UNSET:
             field_dict["logLocation"] = log_location
+        if work_dir is not UNSET:
+            field_dict["workDir"] = work_dir
+        if exit_code is not UNSET:
+            field_dict["exitCode"] = exit_code
+        if hash_ is not UNSET:
+            field_dict["hash"] = hash_
 
         return field_dict
 
@@ -230,6 +260,33 @@ class Task:
 
         log_location = _parse_log_location(d.pop("logLocation", UNSET))
 
+        def _parse_work_dir(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        work_dir = _parse_work_dir(d.pop("workDir", UNSET))
+
+        def _parse_exit_code(data: object) -> int | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return int(data)
+
+        exit_code = _parse_exit_code(d.pop("exitCode", UNSET))
+
+        def _parse_hash(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        hash_ = _parse_hash(d.pop("hash", UNSET))
+
         task = cls(
             name=name,
             status=status,
@@ -241,6 +298,9 @@ class Task:
             container_image=container_image,
             command_line=command_line,
             log_location=log_location,
+            work_dir=work_dir,
+            exit_code=exit_code,
+            hash=hash_,
         )
 
         task.additional_properties = d

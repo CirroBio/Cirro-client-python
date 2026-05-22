@@ -209,6 +209,8 @@ from .table import Table
 from .tag import Tag
 from .task import Task
 from .task_cost import TaskCost
+from .task_file import TaskFile
+from .task_files_response import TaskFilesResponse
 from .tenant_info import TenantInfo
 from .trigger_ingest_request import TriggerIngestRequest
 from .update_dataset_request import UpdateDatasetRequest
@@ -447,6 +449,8 @@ __all__ = (
     "Tag",
     "Task",
     "TaskCost",
+    "TaskFile",
+    "TaskFilesResponse",
     "TenantInfo",
     "TriggerIngestRequest",
     "UpdateDatasetRequest",

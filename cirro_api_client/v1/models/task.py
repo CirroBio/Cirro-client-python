@@ -274,7 +274,7 @@ class Task:
                 return data
             if isinstance(data, Unset):
                 return data
-            return int(data)
+            return int(data)  # type: ignore[call-overload]
 
         exit_code = _parse_exit_code(d.pop("exitCode", UNSET))
 

@@ -70,7 +70,6 @@ from .dataset_detail_info import DatasetDetailInfo
 from .dataset_detail_params import DatasetDetailParams
 from .dataset_detail_source_sample_files_map import DatasetDetailSourceSampleFilesMap
 from .dataset_viz import DatasetViz
-from .dataset_viz_config import DatasetVizConfig
 from .delete_rows_request import DeleteRowsRequest
 from .discussion import Discussion
 from .discussion_input import DiscussionInput
@@ -325,7 +324,6 @@ __all__ = (
     "DatasetDetailParams",
     "DatasetDetailSourceSampleFilesMap",
     "DatasetViz",
-    "DatasetVizConfig",
     "DeleteRowsRequest",
     "Discussion",
     "DiscussionInput",

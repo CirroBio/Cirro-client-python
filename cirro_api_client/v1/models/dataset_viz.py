@@ -1,16 +1,12 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.dataset_viz_config import DatasetVizConfig
-
 
 T = TypeVar("T", bound="DatasetViz")
 
@@ -19,14 +15,12 @@ T = TypeVar("T", bound="DatasetViz")
 class DatasetViz:
     """
     Attributes:
-        config (DatasetVizConfig):
         path (str | Unset): Path to viz configuration, if applicable
         name (str | Unset): Name of viz
         desc (str | Unset): Description of viz
         type_ (str | Unset): Type of viz Example: vitescce.
     """
 
-    config: DatasetVizConfig
     path: str | Unset = UNSET
     name: str | Unset = UNSET
     desc: str | Unset = UNSET
@@ -34,8 +28,6 @@ class DatasetViz:
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        config = self.config.to_dict()
-
         path = self.path
 
         name = self.name
@@ -46,11 +38,7 @@ class DatasetViz:
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "config": config,
-            }
-        )
+        field_dict.update({})
         if path is not UNSET:
             field_dict["path"] = path
         if name is not UNSET:
@@ -64,11 +52,7 @@ class DatasetViz:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.dataset_viz_config import DatasetVizConfig
-
         d = dict(src_dict)
-        config = DatasetVizConfig.from_dict(d.pop("config"))
-
         path = d.pop("path", UNSET)
 
         name = d.pop("name", UNSET)
@@ -78,7 +62,6 @@ class DatasetViz:
         type_ = d.pop("type", UNSET)
 
         dataset_viz = cls(
-            config=config,
             path=path,
             name=name,
             desc=desc,

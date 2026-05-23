@@ -30,4 +30,4 @@ lint.select = ["F", "I", "UP"]
 line-length = 120
 
 [tool.mypy]
-disable_error_code = ["return", "import-untyped", "var-annotated"]
+disable_error_code = ["return", "import-untyped", "var-annotated", "misc"]

@@ -6,34 +6,28 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.file_type import FileType
-
-T = TypeVar("T", bound="FileDef")
+T = TypeVar("T", bound="SheetDataUpdateResponse")
 
 
 @_attrs_define
-class FileDef:
-    """
+class SheetDataUpdateResponse:
+    """Data update response for inserts (coming soon), deletes, and updates.
+
     Attributes:
-        file_type (FileType):
-        storage_uri (str): Full S3 URI to the source file.
+        rows_affected (int): Number of sheet rows updated (deleted, inserted, updated).
     """
 
-    file_type: FileType
-    storage_uri: str
+    rows_affected: int
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        file_type = self.file_type.value
-
-        storage_uri = self.storage_uri
+        rows_affected = self.rows_affected
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "fileType": file_type,
-                "storageUri": storage_uri,
+                "rowsAffected": rows_affected,
             }
         )
 
@@ -42,17 +36,14 @@ class FileDef:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        file_type = FileType(d.pop("fileType"))
+        rows_affected = d.pop("rowsAffected")
 
-        storage_uri = d.pop("storageUri")
-
-        file_def = cls(
-            file_type=file_type,
-            storage_uri=storage_uri,
+        sheet_data_update_response = cls(
+            rows_affected=rows_affected,
         )
 
-        file_def.additional_properties = d
-        return file_def
+        sheet_data_update_response.additional_properties = d
+        return sheet_data_update_response
 
     @property
     def additional_keys(self) -> list[str]:

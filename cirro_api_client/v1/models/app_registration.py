@@ -9,6 +9,7 @@ from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..models.app_client_type import AppClientType
+from ..models.app_publisher_type import AppPublisherType
 from ..models.app_type import AppType
 from ..models.principal_type import PrincipalType
 from ..types import UNSET, Unset
@@ -24,11 +25,17 @@ class AppRegistration:
         client_id (str):
         name (str):
         description (str):
+        logo_url (str):
+        app_url (str):
+        publisher (str):
+        publisher_type (AppPublisherType):
         principal_type (PrincipalType):
         type_ (AppType):
         client_type (AppClientType):
         is_archived (bool):
         requires_admin_consent (bool):
+        discovery_enabled (bool):
+        created_from_template (bool):
         updated_at (datetime.datetime):
         created_at (datetime.datetime):
         created_by (str):
@@ -39,11 +46,17 @@ class AppRegistration:
     client_id: str
     name: str
     description: str
+    logo_url: str
+    app_url: str
+    publisher: str
+    publisher_type: AppPublisherType
     principal_type: PrincipalType
     type_: AppType
     client_type: AppClientType
     is_archived: bool
     requires_admin_consent: bool
+    discovery_enabled: bool
+    created_from_template: bool
     updated_at: datetime.datetime
     created_at: datetime.datetime
     created_by: str
@@ -59,6 +72,14 @@ class AppRegistration:
 
         description = self.description
 
+        logo_url = self.logo_url
+
+        app_url = self.app_url
+
+        publisher = self.publisher
+
+        publisher_type = self.publisher_type.value
+
         principal_type = self.principal_type.value
 
         type_ = self.type_.value
@@ -68,6 +89,10 @@ class AppRegistration:
         is_archived = self.is_archived
 
         requires_admin_consent = self.requires_admin_consent
+
+        discovery_enabled = self.discovery_enabled
+
+        created_from_template = self.created_from_template
 
         updated_at = self.updated_at.isoformat()
 
@@ -91,11 +116,17 @@ class AppRegistration:
                 "clientId": client_id,
                 "name": name,
                 "description": description,
+                "logoUrl": logo_url,
+                "appUrl": app_url,
+                "publisher": publisher,
+                "publisherType": publisher_type,
                 "principalType": principal_type,
                 "type": type_,
                 "clientType": client_type,
                 "isArchived": is_archived,
                 "requiresAdminConsent": requires_admin_consent,
+                "discoveryEnabled": discovery_enabled,
+                "createdFromTemplate": created_from_template,
                 "updatedAt": updated_at,
                 "createdAt": created_at,
                 "createdBy": created_by,
@@ -117,6 +148,14 @@ class AppRegistration:
 
         description = d.pop("description")
 
+        logo_url = d.pop("logoUrl")
+
+        app_url = d.pop("appUrl")
+
+        publisher = d.pop("publisher")
+
+        publisher_type = AppPublisherType(d.pop("publisherType"))
+
         principal_type = PrincipalType(d.pop("principalType"))
 
         type_ = AppType(d.pop("type"))
@@ -126,6 +165,10 @@ class AppRegistration:
         is_archived = d.pop("isArchived")
 
         requires_admin_consent = d.pop("requiresAdminConsent")
+
+        discovery_enabled = d.pop("discoveryEnabled")
+
+        created_from_template = d.pop("createdFromTemplate")
 
         updated_at = isoparse(d.pop("updatedAt"))
 
@@ -155,11 +198,17 @@ class AppRegistration:
             client_id=client_id,
             name=name,
             description=description,
+            logo_url=logo_url,
+            app_url=app_url,
+            publisher=publisher,
+            publisher_type=publisher_type,
             principal_type=principal_type,
             type_=type_,
             client_type=client_type,
             is_archived=is_archived,
             requires_admin_consent=requires_admin_consent,
+            discovery_enabled=discovery_enabled,
+            created_from_template=created_from_template,
             updated_at=updated_at,
             created_at=created_at,
             created_by=created_by,

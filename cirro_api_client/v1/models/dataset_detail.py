@@ -26,26 +26,26 @@ T = TypeVar("T", bound="DatasetDetail")
 class DatasetDetail:
     """
     Attributes:
-        id (str):
-        name (str):
-        description (str):
+        id (str): Dataset ID
+        name (str): Dataset name
         s3 (str):
-        process_id (str):
-        project_id (str):
-        source_dataset_ids (list[str]):
+        process_id (str): Process ID
+        project_id (str): Project ID
+        source_dataset_ids (list[str]): Source dataset IDs
         source_datasets (list[NamedItem]):
         source_sample_ids (list[str]):
         source_sample_files_map (DatasetDetailSourceSampleFilesMap): Keys are sampleIds, and the lists are file paths to
             include.
         status (Status):
         status_message (str):
-        tags (list[Tag]):
+        tags (list[Tag]): Tags
         params (DatasetDetailParams):
         info (DatasetDetailInfo):
         is_view_restricted (bool):
-        created_by (str):
-        created_at (datetime.datetime):
-        updated_at (datetime.datetime):
+        created_by (str): User who created the dataset
+        created_at (datetime.datetime): Timestamp when the dataset was created
+        updated_at (datetime.datetime): Timestamp when the dataset was last updated
+        description (str | Unset): Dataset description
         originating_project_id (str | Unset): The originating project ID might be different if the dataset was shared
             from another project.
         share (NamedItem | None | Unset):
@@ -55,7 +55,6 @@ class DatasetDetail:
 
     id: str
     name: str
-    description: str
     s3: str
     process_id: str
     project_id: str
@@ -72,6 +71,7 @@ class DatasetDetail:
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
+    description: str | Unset = UNSET
     originating_project_id: str | Unset = UNSET
     share: NamedItem | None | Unset = UNSET
     total_size_bytes: int | None | Unset = UNSET
@@ -84,8 +84,6 @@ class DatasetDetail:
         id = self.id
 
         name = self.name
-
-        description = self.description
 
         s3 = self.s3
 
@@ -125,6 +123,8 @@ class DatasetDetail:
 
         updated_at = self.updated_at.isoformat()
 
+        description = self.description
+
         originating_project_id = self.originating_project_id
 
         share: dict[str, Any] | None | Unset
@@ -153,7 +153,6 @@ class DatasetDetail:
             {
                 "id": id,
                 "name": name,
-                "description": description,
                 "s3": s3,
                 "processId": process_id,
                 "projectId": project_id,
@@ -172,6 +171,8 @@ class DatasetDetail:
                 "updatedAt": updated_at,
             }
         )
+        if description is not UNSET:
+            field_dict["description"] = description
         if originating_project_id is not UNSET:
             field_dict["originatingProjectId"] = originating_project_id
         if share is not UNSET:
@@ -195,8 +196,6 @@ class DatasetDetail:
         id = d.pop("id")
 
         name = d.pop("name")
-
-        description = d.pop("description")
 
         s3 = d.pop("s3")
 
@@ -240,6 +239,8 @@ class DatasetDetail:
 
         updated_at = isoparse(d.pop("updatedAt"))
 
+        description = d.pop("description", UNSET)
+
         originating_project_id = d.pop("originatingProjectId", UNSET)
 
         def _parse_share(data: object) -> NamedItem | None | Unset:
@@ -280,7 +281,6 @@ class DatasetDetail:
         dataset_detail = cls(
             id=id,
             name=name,
-            description=description,
             s3=s3,
             process_id=process_id,
             project_id=project_id,
@@ -297,6 +297,7 @@ class DatasetDetail:
             created_by=created_by,
             created_at=created_at,
             updated_at=updated_at,
+            description=description,
             originating_project_id=originating_project_id,
             share=share,
             total_size_bytes=total_size_bytes,

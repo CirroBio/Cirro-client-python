@@ -6,54 +6,37 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.get_execution_logs_response import GetExecutionLogsResponse
-from ...models.task_log_source import TaskLogSource
-from ...types import UNSET, Response, Unset
+from ...models.get_task_files_response import GetTaskFilesResponse
+from ...types import Response
 
 
 def _get_kwargs(
     project_id: str,
     dataset_id: str,
     task_id: str,
-    *,
-    force_live: bool | Unset = False,
-    source: TaskLogSource | Unset = UNSET,
 ) -> dict[str, Any]:
-    params: dict[str, Any] = {}
-
-    params["forceLive"] = force_live
-
-    json_source: str | Unset = UNSET
-    if not isinstance(source, Unset):
-        json_source = source.value
-
-    params["source"] = json_source
-
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
-
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": "/projects/{project_id}/execution/{dataset_id}/tasks/{task_id}/logs".format(
+        "url": "/projects/{project_id}/execution/{dataset_id}/tasks/{task_id}/files".format(
             project_id=quote(str(project_id), safe=""),
             dataset_id=quote(str(dataset_id), safe=""),
             task_id=quote(str(task_id), safe=""),
         ),
-        "params": params,
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> GetExecutionLogsResponse | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> GetTaskFilesResponse | None:
     if response.status_code == 200:
-        response_200 = GetExecutionLogsResponse.from_dict(response.json())
+        response_200 = GetTaskFilesResponse.from_dict(response.json())
 
         return response_200
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[GetExecutionLogsResponse]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[GetTaskFilesResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -68,19 +51,15 @@ def sync_detailed(
     task_id: str,
     *,
     client: Client,
-    force_live: bool | Unset = False,
-    source: TaskLogSource | Unset = UNSET,
-) -> Response[GetExecutionLogsResponse]:
-    """Get task logs
+) -> Response[GetTaskFilesResponse]:
+    """Get task files
 
-     Gets the log output from an individual task
+     Gets the input and output files for an individual Nextflow task
 
     Args:
         project_id (str):
         dataset_id (str):
         task_id (str):
-        force_live (bool | Unset):  Default: False.
-        source (TaskLogSource | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -88,15 +67,13 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[GetExecutionLogsResponse]
+        Response[GetTaskFilesResponse]
     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
         dataset_id=dataset_id,
         task_id=task_id,
-        force_live=force_live,
-        source=source,
     )
 
     response = client.get_httpx_client().request(
@@ -113,19 +90,15 @@ def sync(
     task_id: str,
     *,
     client: Client,
-    force_live: bool | Unset = False,
-    source: TaskLogSource | Unset = UNSET,
-) -> GetExecutionLogsResponse | None:
-    """Get task logs
+) -> GetTaskFilesResponse | None:
+    """Get task files
 
-     Gets the log output from an individual task
+     Gets the input and output files for an individual Nextflow task
 
     Args:
         project_id (str):
         dataset_id (str):
         task_id (str):
-        force_live (bool | Unset):  Default: False.
-        source (TaskLogSource | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -133,7 +106,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        GetExecutionLogsResponse
+        GetTaskFilesResponse
     """
 
     try:
@@ -142,8 +115,6 @@ def sync(
             dataset_id=dataset_id,
             task_id=task_id,
             client=client,
-            force_live=force_live,
-            source=source,
         ).parsed
     except errors.NotFoundException:
         return None
@@ -155,19 +126,15 @@ async def asyncio_detailed(
     task_id: str,
     *,
     client: Client,
-    force_live: bool | Unset = False,
-    source: TaskLogSource | Unset = UNSET,
-) -> Response[GetExecutionLogsResponse]:
-    """Get task logs
+) -> Response[GetTaskFilesResponse]:
+    """Get task files
 
-     Gets the log output from an individual task
+     Gets the input and output files for an individual Nextflow task
 
     Args:
         project_id (str):
         dataset_id (str):
         task_id (str):
-        force_live (bool | Unset):  Default: False.
-        source (TaskLogSource | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -175,15 +142,13 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[GetExecutionLogsResponse]
+        Response[GetTaskFilesResponse]
     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
         dataset_id=dataset_id,
         task_id=task_id,
-        force_live=force_live,
-        source=source,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
@@ -197,19 +162,15 @@ async def asyncio(
     task_id: str,
     *,
     client: Client,
-    force_live: bool | Unset = False,
-    source: TaskLogSource | Unset = UNSET,
-) -> GetExecutionLogsResponse | None:
-    """Get task logs
+) -> GetTaskFilesResponse | None:
+    """Get task files
 
-     Gets the log output from an individual task
+     Gets the input and output files for an individual Nextflow task
 
     Args:
         project_id (str):
         dataset_id (str):
         task_id (str):
-        force_live (bool | Unset):  Default: False.
-        source (TaskLogSource | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -217,7 +178,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        GetExecutionLogsResponse
+        GetTaskFilesResponse
     """
 
     try:
@@ -227,8 +188,6 @@ async def asyncio(
                 dataset_id=dataset_id,
                 task_id=task_id,
                 client=client,
-                force_live=force_live,
-                source=source,
             )
         ).parsed
     except errors.NotFoundException:

@@ -19,10 +19,12 @@ class FeatureFlags:
         workspaces_enabled (bool):
         drive_enabled (bool):
         app_registrations_enabled (bool):
+        machine_auth_enabled (bool):
         sheets_enabled (bool):
         ai_enabled (bool):
         shared_filesystems_enabled (bool):
         custom_workspace_roles_enabled (bool):
+        orcid_integration_enabled (bool):
     """
 
     sftp_enabled: bool
@@ -31,10 +33,12 @@ class FeatureFlags:
     workspaces_enabled: bool
     drive_enabled: bool
     app_registrations_enabled: bool
+    machine_auth_enabled: bool
     sheets_enabled: bool
     ai_enabled: bool
     shared_filesystems_enabled: bool
     custom_workspace_roles_enabled: bool
+    orcid_integration_enabled: bool
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -50,6 +54,8 @@ class FeatureFlags:
 
         app_registrations_enabled = self.app_registrations_enabled
 
+        machine_auth_enabled = self.machine_auth_enabled
+
         sheets_enabled = self.sheets_enabled
 
         ai_enabled = self.ai_enabled
@@ -57,6 +63,8 @@ class FeatureFlags:
         shared_filesystems_enabled = self.shared_filesystems_enabled
 
         custom_workspace_roles_enabled = self.custom_workspace_roles_enabled
+
+        orcid_integration_enabled = self.orcid_integration_enabled
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -68,10 +76,12 @@ class FeatureFlags:
                 "workspacesEnabled": workspaces_enabled,
                 "driveEnabled": drive_enabled,
                 "appRegistrationsEnabled": app_registrations_enabled,
+                "machineAuthEnabled": machine_auth_enabled,
                 "sheetsEnabled": sheets_enabled,
                 "aiEnabled": ai_enabled,
                 "sharedFilesystemsEnabled": shared_filesystems_enabled,
                 "customWorkspaceRolesEnabled": custom_workspace_roles_enabled,
+                "orcidIntegrationEnabled": orcid_integration_enabled,
             }
         )
 
@@ -92,6 +102,8 @@ class FeatureFlags:
 
         app_registrations_enabled = d.pop("appRegistrationsEnabled")
 
+        machine_auth_enabled = d.pop("machineAuthEnabled")
+
         sheets_enabled = d.pop("sheetsEnabled")
 
         ai_enabled = d.pop("aiEnabled")
@@ -100,6 +112,8 @@ class FeatureFlags:
 
         custom_workspace_roles_enabled = d.pop("customWorkspaceRolesEnabled")
 
+        orcid_integration_enabled = d.pop("orcidIntegrationEnabled")
+
         feature_flags = cls(
             sftp_enabled=sftp_enabled,
             governance_enabled=governance_enabled,
@@ -107,10 +121,12 @@ class FeatureFlags:
             workspaces_enabled=workspaces_enabled,
             drive_enabled=drive_enabled,
             app_registrations_enabled=app_registrations_enabled,
+            machine_auth_enabled=machine_auth_enabled,
             sheets_enabled=sheets_enabled,
             ai_enabled=ai_enabled,
             shared_filesystems_enabled=shared_filesystems_enabled,
             custom_workspace_roles_enabled=custom_workspace_roles_enabled,
+            orcid_integration_enabled=orcid_integration_enabled,
         )
 
         feature_flags.additional_properties = d

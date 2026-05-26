@@ -19,19 +19,15 @@ T = TypeVar("T", bound="ViewJoin")
 class ViewJoin:
     """
     Attributes:
-        sheet_alias (str): Alias of the sheet to join
         join_type (JoinType):
         conditions (list[JoinCondition]):
     """
 
-    sheet_alias: str
     join_type: JoinType
     conditions: list[JoinCondition]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        sheet_alias = self.sheet_alias
-
         join_type = self.join_type.value
 
         conditions = []
@@ -43,7 +39,6 @@ class ViewJoin:
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "sheetAlias": sheet_alias,
                 "joinType": join_type,
                 "conditions": conditions,
             }
@@ -56,8 +51,6 @@ class ViewJoin:
         from ..models.join_condition import JoinCondition
 
         d = dict(src_dict)
-        sheet_alias = d.pop("sheetAlias")
-
         join_type = JoinType(d.pop("joinType"))
 
         conditions = []
@@ -68,7 +61,6 @@ class ViewJoin:
             conditions.append(conditions_item)
 
         view_join = cls(
-            sheet_alias=sheet_alias,
             join_type=join_type,
             conditions=conditions,
         )

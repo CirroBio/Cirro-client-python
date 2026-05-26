@@ -9,6 +9,7 @@ class EntityType(str, Enum):
     REFERENCE = "REFERENCE"
     SAMPLE = "SAMPLE"
     SHARE = "SHARE"
+    SHEET = "SHEET"
     TAG = "TAG"
     UNKNOWN = "UNKNOWN"
     USER = "USER"

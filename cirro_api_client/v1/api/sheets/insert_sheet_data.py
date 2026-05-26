@@ -6,41 +6,28 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.sheet_update_response import SheetUpdateResponse
-from ...models.table_sheet_input import TableSheetInput
-from ...models.view_sheet_input import ViewSheetInput
-from ...types import UNSET, Response, Unset
+from ...models.insert_rows_request import InsertRowsRequest
+from ...models.sheet_data_update_response import SheetDataUpdateResponse
+from ...types import Response
 
 
 def _get_kwargs(
     project_id: str,
     sheet_id: str,
     *,
-    body: TableSheetInput | ViewSheetInput,
-    dry_run: bool | Unset = False,
+    body: InsertRowsRequest,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
 
-    params: dict[str, Any] = {}
-
-    params["dryRun"] = dry_run
-
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
-
     _kwargs: dict[str, Any] = {
-        "method": "put",
-        "url": "/projects/{project_id}/sheets/{sheet_id}".format(
+        "method": "post",
+        "url": "/projects/{project_id}/sheets/{sheet_id}/data".format(
             project_id=quote(str(project_id), safe=""),
             sheet_id=quote(str(sheet_id), safe=""),
         ),
-        "params": params,
     }
 
-    _kwargs["json"]: dict[str, Any]
-    if isinstance(body, TableSheetInput):
-        _kwargs["json"] = body.to_dict()
-    else:
-        _kwargs["json"] = body.to_dict()
+    _kwargs["json"] = body.to_dict()
 
     headers["Content-Type"] = "application/json"
 
@@ -48,16 +35,16 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> SheetUpdateResponse | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> SheetDataUpdateResponse | None:
     if response.status_code == 200:
-        response_200 = SheetUpdateResponse.from_dict(response.json())
+        response_200 = SheetDataUpdateResponse.from_dict(response.json())
 
         return response_200
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[SheetUpdateResponse]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[SheetDataUpdateResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -71,20 +58,16 @@ def sync_detailed(
     sheet_id: str,
     *,
     client: Client,
-    body: TableSheetInput | ViewSheetInput,
-    dry_run: bool | Unset = False,
-) -> Response[SheetUpdateResponse]:
-    """Update sheet
+    body: InsertRowsRequest,
+) -> Response[SheetDataUpdateResponse]:
+    """Insert sheet rows
 
-     Idempotent update: send the full target state. Server validates immutable fields match and applies
-    the diff of mutable fields (rename, columns, view definition). For TABLE dryRun, returns the ALTER
-    statements that would run.
+     Returns number of rows inserted.
 
     Args:
         project_id (str):
         sheet_id (str):
-        dry_run (bool | Unset):  Default: False.
-        body (TableSheetInput | ViewSheetInput):
+        body (InsertRowsRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -92,14 +75,13 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[SheetUpdateResponse]
+        Response[SheetDataUpdateResponse]
     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
         sheet_id=sheet_id,
         body=body,
-        dry_run=dry_run,
     )
 
     response = client.get_httpx_client().request(
@@ -115,20 +97,16 @@ def sync(
     sheet_id: str,
     *,
     client: Client,
-    body: TableSheetInput | ViewSheetInput,
-    dry_run: bool | Unset = False,
-) -> SheetUpdateResponse | None:
-    """Update sheet
+    body: InsertRowsRequest,
+) -> SheetDataUpdateResponse | None:
+    """Insert sheet rows
 
-     Idempotent update: send the full target state. Server validates immutable fields match and applies
-    the diff of mutable fields (rename, columns, view definition). For TABLE dryRun, returns the ALTER
-    statements that would run.
+     Returns number of rows inserted.
 
     Args:
         project_id (str):
         sheet_id (str):
-        dry_run (bool | Unset):  Default: False.
-        body (TableSheetInput | ViewSheetInput):
+        body (InsertRowsRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -136,7 +114,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        SheetUpdateResponse
+        SheetDataUpdateResponse
     """
 
     try:
@@ -145,7 +123,6 @@ def sync(
             sheet_id=sheet_id,
             client=client,
             body=body,
-            dry_run=dry_run,
         ).parsed
     except errors.NotFoundException:
         return None
@@ -156,20 +133,16 @@ async def asyncio_detailed(
     sheet_id: str,
     *,
     client: Client,
-    body: TableSheetInput | ViewSheetInput,
-    dry_run: bool | Unset = False,
-) -> Response[SheetUpdateResponse]:
-    """Update sheet
+    body: InsertRowsRequest,
+) -> Response[SheetDataUpdateResponse]:
+    """Insert sheet rows
 
-     Idempotent update: send the full target state. Server validates immutable fields match and applies
-    the diff of mutable fields (rename, columns, view definition). For TABLE dryRun, returns the ALTER
-    statements that would run.
+     Returns number of rows inserted.
 
     Args:
         project_id (str):
         sheet_id (str):
-        dry_run (bool | Unset):  Default: False.
-        body (TableSheetInput | ViewSheetInput):
+        body (InsertRowsRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -177,14 +150,13 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[SheetUpdateResponse]
+        Response[SheetDataUpdateResponse]
     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
         sheet_id=sheet_id,
         body=body,
-        dry_run=dry_run,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
@@ -197,20 +169,16 @@ async def asyncio(
     sheet_id: str,
     *,
     client: Client,
-    body: TableSheetInput | ViewSheetInput,
-    dry_run: bool | Unset = False,
-) -> SheetUpdateResponse | None:
-    """Update sheet
+    body: InsertRowsRequest,
+) -> SheetDataUpdateResponse | None:
+    """Insert sheet rows
 
-     Idempotent update: send the full target state. Server validates immutable fields match and applies
-    the diff of mutable fields (rename, columns, view definition). For TABLE dryRun, returns the ALTER
-    statements that would run.
+     Returns number of rows inserted.
 
     Args:
         project_id (str):
         sheet_id (str):
-        dry_run (bool | Unset):  Default: False.
-        body (TableSheetInput | ViewSheetInput):
+        body (InsertRowsRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -218,7 +186,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        SheetUpdateResponse
+        SheetDataUpdateResponse
     """
 
     try:
@@ -228,7 +196,6 @@ async def asyncio(
                 sheet_id=sheet_id,
                 client=client,
                 body=body,
-                dry_run=dry_run,
             )
         ).parsed
     except errors.NotFoundException:

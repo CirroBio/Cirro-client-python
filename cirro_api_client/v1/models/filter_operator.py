@@ -13,6 +13,7 @@ class FilterOperator(str, Enum):
     LIKE = "LIKE"
     NOT_EQUALS = "NOT_EQUALS"
     NOT_IN = "NOT_IN"
+    NOT_LIKE = "NOT_LIKE"
     UNKNOWN = "UNKNOWN"
     """ This is a fallback value for when the value is not known, do not use this value when making requests """
 

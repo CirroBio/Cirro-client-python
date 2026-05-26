@@ -24,15 +24,16 @@ class UserDetail:
     Attributes:
         username (str):
         name (str):
-        phone (str):
         email (str):
         organization (str):
-        job_title (str):
-        department (str):
-        invited_by (str):
         project_assignments (list[UserProjectAssignment]):
         global_roles (list[str]):
         settings (UserSettings): Additional settings for the user
+        phone (None | str | Unset):
+        orcid_id (None | str | Unset):
+        job_title (None | str | Unset):
+        department (None | str | Unset):
+        invited_by (None | str | Unset):
         sign_up_time (datetime.datetime | None | Unset):
         last_signed_in (datetime.datetime | None | Unset):
         groups (list[str] | None | Unset): Replaced by globalRoles.
@@ -40,15 +41,16 @@ class UserDetail:
 
     username: str
     name: str
-    phone: str
     email: str
     organization: str
-    job_title: str
-    department: str
-    invited_by: str
     project_assignments: list[UserProjectAssignment]
     global_roles: list[str]
     settings: UserSettings
+    phone: None | str | Unset = UNSET
+    orcid_id: None | str | Unset = UNSET
+    job_title: None | str | Unset = UNSET
+    department: None | str | Unset = UNSET
+    invited_by: None | str | Unset = UNSET
     sign_up_time: datetime.datetime | None | Unset = UNSET
     last_signed_in: datetime.datetime | None | Unset = UNSET
     groups: list[str] | None | Unset = UNSET
@@ -59,17 +61,9 @@ class UserDetail:
 
         name = self.name
 
-        phone = self.phone
-
         email = self.email
 
         organization = self.organization
-
-        job_title = self.job_title
-
-        department = self.department
-
-        invited_by = self.invited_by
 
         project_assignments = []
         for project_assignments_item_data in self.project_assignments:
@@ -79,6 +73,36 @@ class UserDetail:
         global_roles = self.global_roles
 
         settings = self.settings.to_dict()
+
+        phone: None | str | Unset
+        if isinstance(self.phone, Unset):
+            phone = UNSET
+        else:
+            phone = self.phone
+
+        orcid_id: None | str | Unset
+        if isinstance(self.orcid_id, Unset):
+            orcid_id = UNSET
+        else:
+            orcid_id = self.orcid_id
+
+        job_title: None | str | Unset
+        if isinstance(self.job_title, Unset):
+            job_title = UNSET
+        else:
+            job_title = self.job_title
+
+        department: None | str | Unset
+        if isinstance(self.department, Unset):
+            department = UNSET
+        else:
+            department = self.department
+
+        invited_by: None | str | Unset
+        if isinstance(self.invited_by, Unset):
+            invited_by = UNSET
+        else:
+            invited_by = self.invited_by
 
         sign_up_time: None | str | Unset
         if isinstance(self.sign_up_time, Unset):
@@ -111,17 +135,23 @@ class UserDetail:
             {
                 "username": username,
                 "name": name,
-                "phone": phone,
                 "email": email,
                 "organization": organization,
-                "jobTitle": job_title,
-                "department": department,
-                "invitedBy": invited_by,
                 "projectAssignments": project_assignments,
                 "globalRoles": global_roles,
                 "settings": settings,
             }
         )
+        if phone is not UNSET:
+            field_dict["phone"] = phone
+        if orcid_id is not UNSET:
+            field_dict["orcidId"] = orcid_id
+        if job_title is not UNSET:
+            field_dict["jobTitle"] = job_title
+        if department is not UNSET:
+            field_dict["department"] = department
+        if invited_by is not UNSET:
+            field_dict["invitedBy"] = invited_by
         if sign_up_time is not UNSET:
             field_dict["signUpTime"] = sign_up_time
         if last_signed_in is not UNSET:
@@ -141,17 +171,9 @@ class UserDetail:
 
         name = d.pop("name")
 
-        phone = d.pop("phone")
-
         email = d.pop("email")
 
         organization = d.pop("organization")
-
-        job_title = d.pop("jobTitle")
-
-        department = d.pop("department")
-
-        invited_by = d.pop("invitedBy")
 
         project_assignments = []
         _project_assignments = d.pop("projectAssignments")
@@ -163,6 +185,51 @@ class UserDetail:
         global_roles = cast(list[str], d.pop("globalRoles"))
 
         settings = UserSettings.from_dict(d.pop("settings"))
+
+        def _parse_phone(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        phone = _parse_phone(d.pop("phone", UNSET))
+
+        def _parse_orcid_id(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        orcid_id = _parse_orcid_id(d.pop("orcidId", UNSET))
+
+        def _parse_job_title(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        job_title = _parse_job_title(d.pop("jobTitle", UNSET))
+
+        def _parse_department(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        department = _parse_department(d.pop("department", UNSET))
+
+        def _parse_invited_by(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        invited_by = _parse_invited_by(d.pop("invitedBy", UNSET))
 
         def _parse_sign_up_time(data: object) -> datetime.datetime | None | Unset:
             if data is None:
@@ -218,15 +285,16 @@ class UserDetail:
         user_detail = cls(
             username=username,
             name=name,
-            phone=phone,
             email=email,
             organization=organization,
-            job_title=job_title,
-            department=department,
-            invited_by=invited_by,
             project_assignments=project_assignments,
             global_roles=global_roles,
             settings=settings,
+            phone=phone,
+            orcid_id=orcid_id,
+            job_title=job_title,
+            department=department,
+            invited_by=invited_by,
             sign_up_time=sign_up_time,
             last_signed_in=last_signed_in,
             groups=groups,

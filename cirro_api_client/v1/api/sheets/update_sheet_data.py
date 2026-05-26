@@ -6,6 +6,7 @@ import httpx
 
 from ... import errors
 from ...client import Client
+from ...models.sheet_data_update_response import SheetDataUpdateResponse
 from ...models.update_rows_request import UpdateRowsRequest
 from ...types import Response
 
@@ -19,7 +20,7 @@ def _get_kwargs(
     headers: dict[str, Any] = {}
 
     _kwargs: dict[str, Any] = {
-        "method": "put",
+        "method": "patch",
         "url": "/projects/{project_id}/sheets/{sheet_id}/data".format(
             project_id=quote(str(project_id), safe=""),
             sheet_id=quote(str(sheet_id), safe=""),
@@ -34,14 +35,16 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Any | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> SheetDataUpdateResponse | None:
     if response.status_code == 200:
-        return None
+        response_200 = SheetDataUpdateResponse.from_dict(response.json())
+
+        return response_200
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[Any]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[SheetDataUpdateResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -56,11 +59,11 @@ def sync_detailed(
     *,
     client: Client,
     body: UpdateRowsRequest,
-) -> Response[Any]:
+) -> Response[SheetDataUpdateResponse]:
     """Update sheet rows
 
-     Updates specific rows in a TABLE sheet by _row_id. This is a partial update: only the columns
-    included in each entry are modified, all other columns are left unchanged.
+     Returns number of rows updated. Updates specific rows in a TABLE sheet by _row_id. This is a partial
+    update: only the columns included in each entry are modified, all other columns are left unchanged.
 
     Args:
         project_id (str):
@@ -73,7 +76,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Response[SheetDataUpdateResponse]
     """
 
     kwargs = _get_kwargs(
@@ -90,17 +93,17 @@ def sync_detailed(
     return _build_response(client=client, response=response)
 
 
-async def asyncio_detailed(
+def sync(
     project_id: str,
     sheet_id: str,
     *,
     client: Client,
     body: UpdateRowsRequest,
-) -> Response[Any]:
+) -> SheetDataUpdateResponse | None:
     """Update sheet rows
 
-     Updates specific rows in a TABLE sheet by _row_id. This is a partial update: only the columns
-    included in each entry are modified, all other columns are left unchanged.
+     Returns number of rows updated. Updates specific rows in a TABLE sheet by _row_id. This is a partial
+    update: only the columns included in each entry are modified, all other columns are left unchanged.
 
     Args:
         project_id (str):
@@ -113,7 +116,44 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        SheetDataUpdateResponse
+    """
+
+    try:
+        return sync_detailed(
+            project_id=project_id,
+            sheet_id=sheet_id,
+            client=client,
+            body=body,
+        ).parsed
+    except errors.NotFoundException:
+        return None
+
+
+async def asyncio_detailed(
+    project_id: str,
+    sheet_id: str,
+    *,
+    client: Client,
+    body: UpdateRowsRequest,
+) -> Response[SheetDataUpdateResponse]:
+    """Update sheet rows
+
+     Returns number of rows updated. Updates specific rows in a TABLE sheet by _row_id. This is a partial
+    update: only the columns included in each entry are modified, all other columns are left unchanged.
+
+    Args:
+        project_id (str):
+        sheet_id (str):
+        body (UpdateRowsRequest):
+        client (Client): instance of the API client
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[SheetDataUpdateResponse]
     """
 
     kwargs = _get_kwargs(
@@ -125,3 +165,42 @@ async def asyncio_detailed(
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
 
     return _build_response(client=client, response=response)
+
+
+async def asyncio(
+    project_id: str,
+    sheet_id: str,
+    *,
+    client: Client,
+    body: UpdateRowsRequest,
+) -> SheetDataUpdateResponse | None:
+    """Update sheet rows
+
+     Returns number of rows updated. Updates specific rows in a TABLE sheet by _row_id. This is a partial
+    update: only the columns included in each entry are modified, all other columns are left unchanged.
+
+    Args:
+        project_id (str):
+        sheet_id (str):
+        body (UpdateRowsRequest):
+        client (Client): instance of the API client
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        SheetDataUpdateResponse
+    """
+
+    try:
+        return (
+            await asyncio_detailed(
+                project_id=project_id,
+                sheet_id=sheet_id,
+                client=client,
+                body=body,
+            )
+        ).parsed
+    except errors.NotFoundException:
+        return None

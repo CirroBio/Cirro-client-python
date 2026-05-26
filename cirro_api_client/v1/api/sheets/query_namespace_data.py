@@ -6,31 +6,26 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.create_response import CreateResponse
-from ...models.table_sheet_input import TableSheetInput
-from ...models.view_sheet_input import ViewSheetInput
+from ...models.sheet_query_request import SheetQueryRequest
+from ...models.sheet_query_response import SheetQueryResponse
 from ...types import Response
 
 
 def _get_kwargs(
     project_id: str,
     *,
-    body: TableSheetInput | ViewSheetInput,
+    body: SheetQueryRequest,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
 
     _kwargs: dict[str, Any] = {
         "method": "post",
-        "url": "/projects/{project_id}/sheets".format(
+        "url": "/projects/{project_id}/sheets/raw-query".format(
             project_id=quote(str(project_id), safe=""),
         ),
     }
 
-    _kwargs["json"]: dict[str, Any]
-    if isinstance(body, TableSheetInput):
-        _kwargs["json"] = body.to_dict()
-    else:
-        _kwargs["json"] = body.to_dict()
+    _kwargs["json"] = body.to_dict()
 
     headers["Content-Type"] = "application/json"
 
@@ -38,16 +33,16 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> CreateResponse | None:
-    if response.status_code == 201:
-        response_201 = CreateResponse.from_dict(response.json())
+def _parse_response(*, client: Client, response: httpx.Response) -> SheetQueryResponse | None:
+    if response.status_code == 200:
+        response_200 = SheetQueryResponse.from_dict(response.json())
 
-        return response_201
+        return response_200
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[CreateResponse]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[SheetQueryResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -60,15 +55,15 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-    body: TableSheetInput | ViewSheetInput,
-) -> Response[CreateResponse]:
-    """Create sheet
+    body: SheetQueryRequest,
+) -> Response[SheetQueryResponse]:
+    """Run raw SQL against the project's sheets.
 
-     Creates a sheet (table or view)
+     Returns executed SQL results.
 
     Args:
         project_id (str):
-        body (TableSheetInput | ViewSheetInput):
+        body (SheetQueryRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -76,7 +71,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[CreateResponse]
+        Response[SheetQueryResponse]
     """
 
     kwargs = _get_kwargs(
@@ -96,15 +91,15 @@ def sync(
     project_id: str,
     *,
     client: Client,
-    body: TableSheetInput | ViewSheetInput,
-) -> CreateResponse | None:
-    """Create sheet
+    body: SheetQueryRequest,
+) -> SheetQueryResponse | None:
+    """Run raw SQL against the project's sheets.
 
-     Creates a sheet (table or view)
+     Returns executed SQL results.
 
     Args:
         project_id (str):
-        body (TableSheetInput | ViewSheetInput):
+        body (SheetQueryRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -112,7 +107,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        CreateResponse
+        SheetQueryResponse
     """
 
     try:
@@ -129,15 +124,15 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-    body: TableSheetInput | ViewSheetInput,
-) -> Response[CreateResponse]:
-    """Create sheet
+    body: SheetQueryRequest,
+) -> Response[SheetQueryResponse]:
+    """Run raw SQL against the project's sheets.
 
-     Creates a sheet (table or view)
+     Returns executed SQL results.
 
     Args:
         project_id (str):
-        body (TableSheetInput | ViewSheetInput):
+        body (SheetQueryRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -145,7 +140,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[CreateResponse]
+        Response[SheetQueryResponse]
     """
 
     kwargs = _get_kwargs(
@@ -162,15 +157,15 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-    body: TableSheetInput | ViewSheetInput,
-) -> CreateResponse | None:
-    """Create sheet
+    body: SheetQueryRequest,
+) -> SheetQueryResponse | None:
+    """Run raw SQL against the project's sheets.
 
-     Creates a sheet (table or view)
+     Returns executed SQL results.
 
     Args:
         project_id (str):
-        body (TableSheetInput | ViewSheetInput):
+        body (SheetQueryRequest):
         client (Client): instance of the API client
 
     Raises:
@@ -178,7 +173,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        CreateResponse
+        SheetQueryResponse
     """
 
     try:

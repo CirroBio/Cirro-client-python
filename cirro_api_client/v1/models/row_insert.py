@@ -1,33 +1,55 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="ViewFilterValues")
+if TYPE_CHECKING:
+    from ..models.row_insert_values import RowInsertValues
+
+
+T = TypeVar("T", bound="RowInsert")
 
 
 @_attrs_define
-class ViewFilterValues:
-    """ """
+class RowInsert:
+    """
+    Attributes:
+        values (RowInsertValues): Column name and value. Any missing columns will have a null value (will error if
+            column is required). Example: {'icd_code': 'G65'}.
+    """
 
+    values: RowInsertValues
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        values = self.values.to_dict()
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
+        field_dict.update(
+            {
+                "values": values,
+            }
+        )
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        d = dict(src_dict)
-        view_filter_values = cls()
+        from ..models.row_insert_values import RowInsertValues
 
-        view_filter_values.additional_properties = d
-        return view_filter_values
+        d = dict(src_dict)
+        values = RowInsertValues.from_dict(d.pop("values"))
+
+        row_insert = cls(
+            values=values,
+        )
+
+        row_insert.additional_properties = d
+        return row_insert
 
     @property
     def additional_keys(self) -> list[str]:

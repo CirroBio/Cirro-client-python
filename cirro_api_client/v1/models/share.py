@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..models.share_type import ShareType
 
@@ -28,6 +27,7 @@ class Share:
         share_type (ShareType):
         conditions (list[DatasetCondition]):
         classification_ids (list[str]):
+        is_view_restricted (bool):
         keywords (list[str]):
         created_by (str):
         created_at (datetime.datetime):
@@ -41,6 +41,7 @@ class Share:
     share_type: ShareType
     conditions: list[DatasetCondition]
     classification_ids: list[str]
+    is_view_restricted: bool
     keywords: list[str]
     created_by: str
     created_at: datetime.datetime
@@ -65,6 +66,8 @@ class Share:
 
         classification_ids = self.classification_ids
 
+        is_view_restricted = self.is_view_restricted
+
         keywords = self.keywords
 
         created_by = self.created_by
@@ -84,6 +87,7 @@ class Share:
                 "shareType": share_type,
                 "conditions": conditions,
                 "classificationIds": classification_ids,
+                "isViewRestricted": is_view_restricted,
                 "keywords": keywords,
                 "createdBy": created_by,
                 "createdAt": created_at,
@@ -117,13 +121,15 @@ class Share:
 
         classification_ids = cast(list[str], d.pop("classificationIds"))
 
+        is_view_restricted = d.pop("isViewRestricted")
+
         keywords = cast(list[str], d.pop("keywords"))
 
         created_by = d.pop("createdBy")
 
-        created_at = isoparse(d.pop("createdAt"))
+        created_at = datetime.datetime.fromisoformat(d.pop("createdAt"))
 
-        updated_at = isoparse(d.pop("updatedAt"))
+        updated_at = datetime.datetime.fromisoformat(d.pop("updatedAt"))
 
         share = cls(
             id=id,
@@ -133,6 +139,7 @@ class Share:
             share_type=share_type,
             conditions=conditions,
             classification_ids=classification_ids,
+            is_view_restricted=is_view_restricted,
             keywords=keywords,
             created_by=created_by,
             created_at=created_at,

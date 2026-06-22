@@ -13,6 +13,7 @@ T = TypeVar("T", bound="FeatureFlags")
 class FeatureFlags:
     """
     Attributes:
+        zip_service_enabled (bool):
         sftp_enabled (bool):
         governance_enabled (bool):
         project_requests_enabled (bool):
@@ -25,8 +26,10 @@ class FeatureFlags:
         shared_filesystems_enabled (bool):
         custom_workspace_roles_enabled (bool):
         orcid_integration_enabled (bool):
+        cirro_stored_pipeline_config_enabled (bool):
     """
 
+    zip_service_enabled: bool
     sftp_enabled: bool
     governance_enabled: bool
     project_requests_enabled: bool
@@ -39,9 +42,12 @@ class FeatureFlags:
     shared_filesystems_enabled: bool
     custom_workspace_roles_enabled: bool
     orcid_integration_enabled: bool
+    cirro_stored_pipeline_config_enabled: bool
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        zip_service_enabled = self.zip_service_enabled
+
         sftp_enabled = self.sftp_enabled
 
         governance_enabled = self.governance_enabled
@@ -66,10 +72,13 @@ class FeatureFlags:
 
         orcid_integration_enabled = self.orcid_integration_enabled
 
+        cirro_stored_pipeline_config_enabled = self.cirro_stored_pipeline_config_enabled
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
+                "zipServiceEnabled": zip_service_enabled,
                 "sftpEnabled": sftp_enabled,
                 "governanceEnabled": governance_enabled,
                 "projectRequestsEnabled": project_requests_enabled,
@@ -82,6 +91,7 @@ class FeatureFlags:
                 "sharedFilesystemsEnabled": shared_filesystems_enabled,
                 "customWorkspaceRolesEnabled": custom_workspace_roles_enabled,
                 "orcidIntegrationEnabled": orcid_integration_enabled,
+                "cirroStoredPipelineConfigEnabled": cirro_stored_pipeline_config_enabled,
             }
         )
 
@@ -90,6 +100,8 @@ class FeatureFlags:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
+        zip_service_enabled = d.pop("zipServiceEnabled")
+
         sftp_enabled = d.pop("sftpEnabled")
 
         governance_enabled = d.pop("governanceEnabled")
@@ -114,7 +126,10 @@ class FeatureFlags:
 
         orcid_integration_enabled = d.pop("orcidIntegrationEnabled")
 
+        cirro_stored_pipeline_config_enabled = d.pop("cirroStoredPipelineConfigEnabled")
+
         feature_flags = cls(
+            zip_service_enabled=zip_service_enabled,
             sftp_enabled=sftp_enabled,
             governance_enabled=governance_enabled,
             project_requests_enabled=project_requests_enabled,
@@ -127,6 +142,7 @@ class FeatureFlags:
             shared_filesystems_enabled=shared_filesystems_enabled,
             custom_workspace_roles_enabled=custom_workspace_roles_enabled,
             orcid_integration_enabled=orcid_integration_enabled,
+            cirro_stored_pipeline_config_enabled=cirro_stored_pipeline_config_enabled,
         )
 
         feature_flags.additional_properties = d

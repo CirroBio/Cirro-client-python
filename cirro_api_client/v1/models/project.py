@@ -22,7 +22,8 @@ class Project:
         id (str):
         name (str):
         description (str):
-        status (Status):
+        status (Status): Current state of the usage. RUNNING means access is active; DELETED means the access point has
+            been revoked.
         tags (list[Tag]):
         organization (str):
         classification_ids (list[str]):

@@ -12,6 +12,7 @@ from ...types import Response
 def _get_kwargs(
     project_id: str,
 ) -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "put",
         "url": "/projects/{project_id}:re-deploy".format(

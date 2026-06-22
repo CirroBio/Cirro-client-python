@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..models.sheet_creation_mode import SheetCreationMode
 from ..models.sheet_type import SheetType
@@ -31,7 +30,8 @@ class Sheet:
         project_id (str):
         sheet_type (SheetType):
         sheet_creation_mode (SheetCreationMode):
-        status (Status):
+        status (Status): Current state of the usage. RUNNING means access is active; DELETED means the access point has
+            been revoked.
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
@@ -135,9 +135,9 @@ class Sheet:
 
         created_by = d.pop("createdBy")
 
-        created_at = isoparse(d.pop("createdAt"))
+        created_at = datetime.datetime.fromisoformat(d.pop("createdAt"))
 
-        updated_at = isoparse(d.pop("updatedAt"))
+        updated_at = datetime.datetime.fromisoformat(d.pop("updatedAt"))
 
         total_row_count = d.pop("totalRowCount")
 

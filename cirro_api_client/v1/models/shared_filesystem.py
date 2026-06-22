@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..models.status import Status
 from ..types import UNSET, Unset
@@ -26,7 +25,8 @@ class SharedFilesystem:
         name (str):
         description (str):
         project_id (str):
-        status (Status):
+        status (Status): Current state of the usage. RUNNING means access is active; DELETED means the access point has
+            been revoked.
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
@@ -140,9 +140,9 @@ class SharedFilesystem:
 
         created_by = d.pop("createdBy")
 
-        created_at = isoparse(d.pop("createdAt"))
+        created_at = datetime.datetime.fromisoformat(d.pop("createdAt"))
 
-        updated_at = isoparse(d.pop("updatedAt"))
+        updated_at = datetime.datetime.fromisoformat(d.pop("updatedAt"))
 
         def _parse_status_message(data: object) -> None | str | Unset:
             if data is None:

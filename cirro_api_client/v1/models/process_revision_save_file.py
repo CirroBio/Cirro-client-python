@@ -6,28 +6,53 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="DashboardRequestInfo")
+from ..models.process_resource import ProcessResource
+
+T = TypeVar("T", bound="ProcessRevisionSaveFile")
 
 
 @_attrs_define
-class DashboardRequestInfo:
-    """ """
+class ProcessRevisionSaveFile:
+    """
+    Attributes:
+        type_ (ProcessResource): Resource type for this saved file. Example: FORM.
+        content (str): UTF-8 file content stored byte-for-byte. Maximum 1 MiB per file.
+    """
 
+    type_: ProcessResource
+    content: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        type_ = self.type_.value
+
+        content = self.content
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
+        field_dict.update(
+            {
+                "type": type_,
+                "content": content,
+            }
+        )
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        dashboard_request_info = cls()
+        type_ = ProcessResource(d.pop("type"))
 
-        dashboard_request_info.additional_properties = d
-        return dashboard_request_info
+        content = d.pop("content")
+
+        process_revision_save_file = cls(
+            type_=type_,
+            content=content,
+        )
+
+        process_revision_save_file.additional_properties = d
+        return process_revision_save_file
 
     @property
     def additional_keys(self) -> list[str]:

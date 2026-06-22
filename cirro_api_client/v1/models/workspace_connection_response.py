@@ -6,7 +6,6 @@ from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 T = TypeVar("T", bound="WorkspaceConnectionResponse")
 
@@ -49,7 +48,7 @@ class WorkspaceConnectionResponse:
         d = dict(src_dict)
         connection_url = d.pop("connectionUrl")
 
-        expires_at = isoparse(d.pop("expiresAt"))
+        expires_at = datetime.datetime.fromisoformat(d.pop("expiresAt"))
 
         message = d.pop("message")
 

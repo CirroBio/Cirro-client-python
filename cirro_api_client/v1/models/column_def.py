@@ -22,7 +22,7 @@ class ColumnDef:
     """
     Attributes:
         name (str):
-        data_type (ColumnDataType): Column data type.
+        data_type (ColumnDataType): Data type for the column.
         id (None | str | Unset):
         display_name (None | str | Unset): Name displayed on UI.
         hidden (bool | Unset): Whether the column is hidden on the UI. Default: False.

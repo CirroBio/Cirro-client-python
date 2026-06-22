@@ -20,6 +20,7 @@ def _get_kwargs(
     order_by: None | str | Unset = UNSET,
     order: SqlSortOrder | Unset = UNSET,
 ) -> dict[str, Any]:
+
     params: dict[str, Any] = {}
 
     params["limit"] = limit

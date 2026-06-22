@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
 
@@ -239,7 +238,7 @@ class UserDetail:
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                sign_up_time_type_0 = isoparse(data)
+                sign_up_time_type_0 = datetime.datetime.fromisoformat(data)
 
                 return sign_up_time_type_0
             except (TypeError, ValueError, AttributeError, KeyError):
@@ -256,7 +255,7 @@ class UserDetail:
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                last_signed_in_type_0 = isoparse(data)
+                last_signed_in_type_0 = datetime.datetime.fromisoformat(data)
 
                 return last_signed_in_type_0
             except (TypeError, ValueError, AttributeError, KeyError):

@@ -17,7 +17,7 @@ class QueryColumn:
 
     Attributes:
         name (str): Column name.
-        data_type (ColumnDataType): Column data type.
+        data_type (ColumnDataType): Data type for the column.
     """
 
     name: str

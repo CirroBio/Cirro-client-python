@@ -19,6 +19,7 @@ def _get_kwargs(
     thread_id: None | str | Unset = UNSET,
     order: None | SortOrder | Unset = UNSET,
 ) -> dict[str, Any]:
+
     params: dict[str, Any] = {}
 
     json_next_token: None | str | Unset

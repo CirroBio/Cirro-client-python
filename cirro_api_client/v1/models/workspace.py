@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..models.sharing_type import SharingType
 from ..models.status import Status
@@ -29,7 +28,8 @@ class Workspace:
         name (str):
         description (str):
         project_id (str):
-        status (Status):
+        status (Status): Current state of the usage. RUNNING means access is active; DELETED means the access point has
+            been revoked.
         status_message (str):
         environment_id (str):
         mounted_datasets (list[MountedDataset]):
@@ -192,9 +192,9 @@ class Workspace:
 
         created_by = d.pop("createdBy")
 
-        created_at = isoparse(d.pop("createdAt"))
+        created_at = datetime.datetime.fromisoformat(d.pop("createdAt"))
 
-        updated_at = isoparse(d.pop("updatedAt"))
+        updated_at = datetime.datetime.fromisoformat(d.pop("updatedAt"))
 
         def _parse_auto_stop_timeout(data: object) -> int | None | Unset:
             if data is None:
@@ -235,7 +235,7 @@ class Workspace:
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                started_at_type_0 = isoparse(data)
+                started_at_type_0 = datetime.datetime.fromisoformat(data)
 
                 return started_at_type_0
             except (TypeError, ValueError, AttributeError, KeyError):
@@ -252,7 +252,7 @@ class Workspace:
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                auto_stop_time_type_0 = isoparse(data)
+                auto_stop_time_type_0 = datetime.datetime.fromisoformat(data)
 
                 return auto_stop_time_type_0
             except (TypeError, ValueError, AttributeError, KeyError):

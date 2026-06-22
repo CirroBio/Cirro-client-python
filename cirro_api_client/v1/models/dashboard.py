@@ -6,13 +6,13 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.dashboard_dashboard_data import DashboardDashboardData
-    from ..models.dashboard_info import DashboardInfo
+    from ..models.dashboard_criteria import DashboardCriteria
+    from ..models.dashboard_dashboard_data_type_0 import DashboardDashboardDataType0
+    from ..models.tag import Tag
 
 
 T = TypeVar("T", bound="Dashboard")
@@ -25,33 +25,41 @@ class Dashboard:
         id (str):
         name (str):
         description (str):
-        process_ids (list[str]):
+        tags (list[Tag]):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
-        dashboard_data (DashboardDashboardData | Unset):
-        info (DashboardInfo | Unset):
+        criteria (DashboardCriteria | Unset):
+        dashboard_data (DashboardDashboardDataType0 | None | Unset): Dashboard definition (not provided in list
+            responses)
+        schema_version (int | Unset): Schema version of dashboardData
     """
 
     id: str
     name: str
     description: str
-    process_ids: list[str]
+    tags: list[Tag]
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    dashboard_data: DashboardDashboardData | Unset = UNSET
-    info: DashboardInfo | Unset = UNSET
+    criteria: DashboardCriteria | Unset = UNSET
+    dashboard_data: DashboardDashboardDataType0 | None | Unset = UNSET
+    schema_version: int | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        from ..models.dashboard_dashboard_data_type_0 import DashboardDashboardDataType0
+
         id = self.id
 
         name = self.name
 
         description = self.description
 
-        process_ids = self.process_ids
+        tags = []
+        for tags_item_data in self.tags:
+            tags_item = tags_item_data.to_dict()
+            tags.append(tags_item)
 
         created_by = self.created_by
 
@@ -59,13 +67,19 @@ class Dashboard:
 
         updated_at = self.updated_at.isoformat()
 
-        dashboard_data: dict[str, Any] | Unset = UNSET
-        if not isinstance(self.dashboard_data, Unset):
-            dashboard_data = self.dashboard_data.to_dict()
+        criteria: dict[str, Any] | Unset = UNSET
+        if not isinstance(self.criteria, Unset):
+            criteria = self.criteria.to_dict()
 
-        info: dict[str, Any] | Unset = UNSET
-        if not isinstance(self.info, Unset):
-            info = self.info.to_dict()
+        dashboard_data: dict[str, Any] | None | Unset
+        if isinstance(self.dashboard_data, Unset):
+            dashboard_data = UNSET
+        elif isinstance(self.dashboard_data, DashboardDashboardDataType0):
+            dashboard_data = self.dashboard_data.to_dict()
+        else:
+            dashboard_data = self.dashboard_data
+
+        schema_version = self.schema_version
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -74,23 +88,26 @@ class Dashboard:
                 "id": id,
                 "name": name,
                 "description": description,
-                "processIds": process_ids,
+                "tags": tags,
                 "createdBy": created_by,
                 "createdAt": created_at,
                 "updatedAt": updated_at,
             }
         )
+        if criteria is not UNSET:
+            field_dict["criteria"] = criteria
         if dashboard_data is not UNSET:
             field_dict["dashboardData"] = dashboard_data
-        if info is not UNSET:
-            field_dict["info"] = info
+        if schema_version is not UNSET:
+            field_dict["schemaVersion"] = schema_version
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.dashboard_dashboard_data import DashboardDashboardData
-        from ..models.dashboard_info import DashboardInfo
+        from ..models.dashboard_criteria import DashboardCriteria
+        from ..models.dashboard_dashboard_data_type_0 import DashboardDashboardDataType0
+        from ..models.tag import Tag
 
         d = dict(src_dict)
         id = d.pop("id")
@@ -99,38 +116,56 @@ class Dashboard:
 
         description = d.pop("description")
 
-        process_ids = cast(list[str], d.pop("processIds"))
+        tags = []
+        _tags = d.pop("tags")
+        for tags_item_data in _tags:
+            tags_item = Tag.from_dict(tags_item_data)
+
+            tags.append(tags_item)
 
         created_by = d.pop("createdBy")
 
-        created_at = isoparse(d.pop("createdAt"))
+        created_at = datetime.datetime.fromisoformat(d.pop("createdAt"))
 
-        updated_at = isoparse(d.pop("updatedAt"))
+        updated_at = datetime.datetime.fromisoformat(d.pop("updatedAt"))
 
-        _dashboard_data = d.pop("dashboardData", UNSET)
-        dashboard_data: DashboardDashboardData | Unset
-        if isinstance(_dashboard_data, Unset):
-            dashboard_data = UNSET
+        _criteria = d.pop("criteria", UNSET)
+        criteria: DashboardCriteria | Unset
+        if isinstance(_criteria, Unset):
+            criteria = UNSET
         else:
-            dashboard_data = DashboardDashboardData.from_dict(_dashboard_data)
+            criteria = DashboardCriteria.from_dict(_criteria)
 
-        _info = d.pop("info", UNSET)
-        info: DashboardInfo | Unset
-        if isinstance(_info, Unset):
-            info = UNSET
-        else:
-            info = DashboardInfo.from_dict(_info)
+        def _parse_dashboard_data(data: object) -> DashboardDashboardDataType0 | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                dashboard_data_type_0 = DashboardDashboardDataType0.from_dict(data)
+
+                return dashboard_data_type_0
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(DashboardDashboardDataType0 | None | Unset, data)
+
+        dashboard_data = _parse_dashboard_data(d.pop("dashboardData", UNSET))
+
+        schema_version = d.pop("schemaVersion", UNSET)
 
         dashboard = cls(
             id=id,
             name=name,
             description=description,
-            process_ids=process_ids,
+            tags=tags,
             created_by=created_by,
             created_at=created_at,
             updated_at=updated_at,
+            criteria=criteria,
             dashboard_data=dashboard_data,
-            info=info,
+            schema_version=schema_version,
         )
 
         dashboard.additional_properties = d

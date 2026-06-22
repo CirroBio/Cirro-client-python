@@ -6,7 +6,6 @@ from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
 
@@ -66,7 +65,7 @@ class AWSCredentials:
 
         session_token = d.pop("sessionToken")
 
-        expiration = isoparse(d.pop("expiration"))
+        expiration = datetime.datetime.fromisoformat(d.pop("expiration"))
 
         region = d.pop("region", UNSET)
 

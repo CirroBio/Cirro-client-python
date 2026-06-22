@@ -15,6 +15,7 @@ def _get_kwargs(
     *,
     number_of_days: int | Unset = 1,
 ) -> dict[str, Any]:
+
     params: dict[str, Any] = {}
 
     params["numberOfDays"] = number_of_days

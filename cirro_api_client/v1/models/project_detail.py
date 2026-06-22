@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..models.status import Status
 from ..types import UNSET, Unset
@@ -31,7 +30,8 @@ class ProjectDetail:
         billing_account_id (str):
         contacts (list[Contact]):
         organization (str):
-        status (Status):
+        status (Status): Current state of the usage. RUNNING means access is active; DELETED means the access point has
+            been revoked.
         settings (ProjectSettings):
         account (CloudAccount):
         status_message (str):
@@ -176,9 +176,9 @@ class ProjectDetail:
 
         created_by = d.pop("createdBy")
 
-        created_at = isoparse(d.pop("createdAt"))
+        created_at = datetime.datetime.fromisoformat(d.pop("createdAt"))
 
-        updated_at = isoparse(d.pop("updatedAt"))
+        updated_at = datetime.datetime.fromisoformat(d.pop("updatedAt"))
 
         def _parse_deployed_at(data: object) -> datetime.datetime | None | Unset:
             if data is None:
@@ -188,7 +188,7 @@ class ProjectDetail:
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                deployed_at_type_0 = isoparse(data)
+                deployed_at_type_0 = datetime.datetime.fromisoformat(data)
 
                 return deployed_at_type_0
             except (TypeError, ValueError, AttributeError, KeyError):

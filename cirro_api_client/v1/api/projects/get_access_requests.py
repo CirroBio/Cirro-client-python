@@ -15,6 +15,7 @@ def _get_kwargs(
     *,
     include_closed: bool | Unset = False,
 ) -> dict[str, Any]:
+
     params: dict[str, Any] = {}
 
     params["includeClosed"] = include_closed

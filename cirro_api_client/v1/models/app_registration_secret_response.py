@@ -6,7 +6,6 @@ from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 T = TypeVar("T", bound="AppRegistrationSecretResponse")
 
@@ -58,7 +57,7 @@ class AppRegistrationSecretResponse:
 
         client_secret = d.pop("clientSecret")
 
-        secret_generated_at = isoparse(d.pop("secretGeneratedAt"))
+        secret_generated_at = datetime.datetime.fromisoformat(d.pop("secretGeneratedAt"))
 
         app_registration_secret_response = cls(
             id=id,

@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..models.status import Status
 from ..types import UNSET, Unset
@@ -27,7 +26,8 @@ class Dataset:
         project_id (str): Project ID
         process_id (str): Process ID
         source_dataset_ids (list[str]): Source dataset IDs
-        status (Status):
+        status (Status): Current state of the usage. RUNNING means access is active; DELETED means the access point has
+            been revoked.
         tags (list[Tag]): Tags
         created_by (str): User who created the dataset
         created_at (datetime.datetime): Timestamp when the dataset was created
@@ -121,9 +121,9 @@ class Dataset:
 
         created_by = d.pop("createdBy")
 
-        created_at = isoparse(d.pop("createdAt"))
+        created_at = datetime.datetime.fromisoformat(d.pop("createdAt"))
 
-        updated_at = isoparse(d.pop("updatedAt"))
+        updated_at = datetime.datetime.fromisoformat(d.pop("updatedAt"))
 
         description = d.pop("description", UNSET)
 

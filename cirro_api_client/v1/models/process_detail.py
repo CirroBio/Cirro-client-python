@@ -6,8 +6,8 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
+from ..models.config_source import ConfigSource
 from ..models.executor import Executor
 from ..types import UNSET, Unset
 
@@ -40,6 +40,7 @@ class ProcessDetail:
         uses_sample_sheet (bool): Whether the pipeline uses the Cirro-provided sample sheet
         is_archived (bool): Whether the process is marked as archived
         tags (list[Tag]):
+        config_source (ConfigSource): Storage backend for the custom pipeline's configuration files
         category (str | Unset): Category of the process Example: Microbial Analysis.
         pipeline_type (str | Unset): Type of pipeline Example: nf-core.
         documentation_url (str | Unset): Link to process documentation Example:
@@ -66,6 +67,7 @@ class ProcessDetail:
     uses_sample_sheet: bool
     is_archived: bool
     tags: list[Tag]
+    config_source: ConfigSource
     category: str | Unset = UNSET
     pipeline_type: str | Unset = UNSET
     documentation_url: str | Unset = UNSET
@@ -110,6 +112,8 @@ class ProcessDetail:
         for tags_item_data in self.tags:
             tags_item = tags_item_data.to_dict()
             tags.append(tags_item)
+
+        config_source = self.config_source.value
 
         category = self.category
 
@@ -178,6 +182,7 @@ class ProcessDetail:
                 "usesSampleSheet": uses_sample_sheet,
                 "isArchived": is_archived,
                 "tags": tags,
+                "configSource": config_source,
             }
         )
         if category is not UNSET:
@@ -241,6 +246,8 @@ class ProcessDetail:
             tags_item = Tag.from_dict(tags_item_data)
 
             tags.append(tags_item)
+
+        config_source = ConfigSource(d.pop("configSource"))
 
         category = d.pop("category", UNSET)
 
@@ -320,14 +327,14 @@ class ProcessDetail:
         if isinstance(_created_at, Unset):
             created_at = UNSET
         else:
-            created_at = isoparse(_created_at)
+            created_at = datetime.datetime.fromisoformat(_created_at)
 
         _updated_at = d.pop("updatedAt", UNSET)
         updated_at: datetime.datetime | Unset
         if isinstance(_updated_at, Unset):
             updated_at = UNSET
         else:
-            updated_at = isoparse(_updated_at)
+            updated_at = datetime.datetime.fromisoformat(_updated_at)
 
         process_detail = cls(
             id=id,
@@ -343,6 +350,7 @@ class ProcessDetail:
             uses_sample_sheet=uses_sample_sheet,
             is_archived=is_archived,
             tags=tags,
+            config_source=config_source,
             category=category,
             pipeline_type=pipeline_type,
             documentation_url=documentation_url,

@@ -19,6 +19,7 @@ def _get_kwargs(
     limit: int | Unset = 5000,
     order: None | SortOrder | Unset = UNSET,
 ) -> dict[str, Any]:
+
     params: dict[str, Any] = {}
 
     json_entity_type = entity_type.value

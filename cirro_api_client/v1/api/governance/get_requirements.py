@@ -13,6 +13,7 @@ def _get_kwargs(
     *,
     project_id: str | Unset = UNSET,
 ) -> dict[str, Any]:
+
     params: dict[str, Any] = {}
 
     params["projectId"] = project_id

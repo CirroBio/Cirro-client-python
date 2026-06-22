@@ -15,6 +15,7 @@ def _get_kwargs(
     *,
     session_id: str,
 ) -> dict[str, Any]:
+
     params: dict[str, Any] = {}
 
     params["sessionId"] = session_id

@@ -6,16 +6,17 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="DashboardRequestDashboardData")
+T = TypeVar("T", bound="DashboardCriteria")
 
 
 @_attrs_define
-class DashboardRequestDashboardData:
+class DashboardCriteria:
     """ """
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
 
@@ -24,10 +25,10 @@ class DashboardRequestDashboardData:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        dashboard_request_dashboard_data = cls()
+        dashboard_criteria = cls()
 
-        dashboard_request_dashboard_data.additional_properties = d
-        return dashboard_request_dashboard_data
+        dashboard_criteria.additional_properties = d
+        return dashboard_criteria
 
     @property
     def additional_keys(self) -> list[str]:

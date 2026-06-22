@@ -11,7 +11,7 @@ T = TypeVar("T", bound="SheetDataUpdateResponse")
 
 @_attrs_define
 class SheetDataUpdateResponse:
-    """Data update response for inserts (coming soon), deletes, and updates.
+    """Data update response for inserts, deletes, and updates.
 
     Attributes:
         rows_affected (int): Number of sheet rows updated (deleted, inserted, updated).

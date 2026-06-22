@@ -13,7 +13,6 @@ def _get_kwargs(
     project_id: str,
     workspace_id: str,
 ) -> dict[str, Any]:
-
     _kwargs: dict[str, Any] = {
         "method": "post",
         "url": "/projects/{project_id}/workspaces/{workspace_id}:start".format(

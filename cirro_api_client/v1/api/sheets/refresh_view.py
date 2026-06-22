@@ -13,7 +13,6 @@ def _get_kwargs(
     project_id: str,
     sheet_id: str,
 ) -> dict[str, Any]:
-
     _kwargs: dict[str, Any] = {
         "method": "put",
         "url": "/projects/{project_id}/sheets/{sheet_id}:refresh".format(

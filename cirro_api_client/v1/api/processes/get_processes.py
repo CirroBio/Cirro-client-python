@@ -13,7 +13,6 @@ def _get_kwargs(
     *,
     include_archived: bool | Unset = False,
 ) -> dict[str, Any]:
-
     params: dict[str, Any] = {}
 
     params["includeArchived"] = include_archived

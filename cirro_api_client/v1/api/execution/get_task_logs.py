@@ -19,7 +19,6 @@ def _get_kwargs(
     force_live: bool | Unset = False,
     source: TaskLogSource | Unset = UNSET,
 ) -> dict[str, Any]:
-
     params: dict[str, Any] = {}
 
     params["forceLive"] = force_live

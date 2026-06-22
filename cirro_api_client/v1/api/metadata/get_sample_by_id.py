@@ -14,7 +14,6 @@ def _get_kwargs(
     project_id: str,
     sample_id: str,
 ) -> dict[str, Any]:
-
     _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/projects/{project_id}/samples/{sample_id}".format(

@@ -14,7 +14,6 @@ def _get_kwargs(
     project_id: str,
     filesystem_id: str,
 ) -> dict[str, Any]:
-
     _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/projects/{project_id}/shared-filesystems/{filesystem_id}".format(

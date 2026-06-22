@@ -16,7 +16,6 @@ def _get_kwargs(
     entity_type: ListEventsEntityType | Unset = UNSET,
     entity_id: str | Unset = UNSET,
 ) -> dict[str, Any]:
-
     params: dict[str, Any] = {}
 
     params["username"] = username

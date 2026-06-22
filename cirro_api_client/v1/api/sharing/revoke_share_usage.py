@@ -14,7 +14,6 @@ def _get_kwargs(
     share_id: str,
     usage_id: str,
 ) -> dict[str, Any]:
-
     _kwargs: dict[str, Any] = {
         "method": "delete",
         "url": "/projects/{project_id}/shares/{share_id}/usages/{usage_id}".format(

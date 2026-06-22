@@ -17,7 +17,6 @@ def _get_kwargs(
     process_id: str,
     type_: ProcessResource,
 ) -> dict[str, Any]:
-
     _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/processes/{process_id}/resources/{type_}".format(

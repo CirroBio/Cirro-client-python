@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..models.governance_scope import GovernanceScope
 from ..models.governance_training_verification import GovernanceTrainingVerification
@@ -209,7 +208,7 @@ class RequirementInput:
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                enactment_date_type_0 = isoparse(data)
+                enactment_date_type_0 = datetime.datetime.fromisoformat(data)
 
                 return enactment_date_type_0
             except (TypeError, ValueError, AttributeError, KeyError):

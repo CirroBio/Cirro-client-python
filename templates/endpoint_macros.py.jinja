@@ -5,7 +5,7 @@
 {% if endpoint.header_parameters or endpoint.bodies | length > 0 %}
 headers: dict[str, Any] = {}
 {% if endpoint.header_parameters %}
-    {% for parameter in endpoint.header_parameters.values() %}
+    {% for parameter in endpoint.header_parameters %}
         {% import "property_templates/" + parameter.template as param_template %}
         {% if param_template.transform_header %}
             {% set expression = param_template.transform_header(parameter.python_name) %}

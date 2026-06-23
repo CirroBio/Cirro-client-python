@@ -6,7 +6,6 @@ from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 T = TypeVar("T", bound="ResourcesInfo")
 
@@ -54,7 +53,7 @@ class ResourcesInfo:
         d = dict(src_dict)
         commit = d.pop("commit")
 
-        date = isoparse(d.pop("date"))
+        date = datetime.datetime.fromisoformat(d.pop("date"))
 
         repository = d.pop("repository")
 

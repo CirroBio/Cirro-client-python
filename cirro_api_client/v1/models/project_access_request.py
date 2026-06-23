@@ -6,7 +6,6 @@ from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..models.project_role import ProjectRole
 from ..models.request_status import RequestStatus
@@ -94,9 +93,9 @@ class ProjectAccessRequest:
 
         reviewer_username = d.pop("reviewerUsername")
 
-        created_at = isoparse(d.pop("createdAt"))
+        created_at = datetime.datetime.fromisoformat(d.pop("createdAt"))
 
-        expiry = isoparse(d.pop("expiry"))
+        expiry = datetime.datetime.fromisoformat(d.pop("expiry"))
 
         project_access_request = cls(
             id=id,

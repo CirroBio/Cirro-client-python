@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..models.sheet_creation_mode import SheetCreationMode
 from ..models.sheet_type import SheetType
@@ -215,9 +214,9 @@ class SheetDetail:
 
         created_by = d.pop("createdBy")
 
-        created_at = isoparse(d.pop("createdAt"))
+        created_at = datetime.datetime.fromisoformat(d.pop("createdAt"))
 
-        updated_at = isoparse(d.pop("updatedAt"))
+        updated_at = datetime.datetime.fromisoformat(d.pop("updatedAt"))
 
         total_row_count = d.pop("totalRowCount")
 
@@ -300,7 +299,7 @@ class SheetDetail:
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                last_refreshed_at_type_0 = isoparse(data)
+                last_refreshed_at_type_0 = datetime.datetime.fromisoformat(data)
 
                 return last_refreshed_at_type_0
             except (TypeError, ValueError, AttributeError, KeyError):

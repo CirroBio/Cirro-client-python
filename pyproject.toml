@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cirro_api_client"
-version = "1.5.0"
+version = "1.6.0"
 description = "A client library for accessing Cirro"
 authors = ["Cirro <support@cirro.bio>"]
 license = "MIT"
@@ -10,15 +10,14 @@ keywords = ["Cirro"]
 include = ["cirro_api_client/py.typed"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-httpx = ">=0.20.0,<0.29.0"
+python = "^3.11"
+httpx = ">=0.23.1,<0.29.0"
 attrs = ">=22.2.0"
-python-dateutil = "^2.8.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=7.2.1"
 ruff = ">=0.1.14"
-openapi-python-client = "0.28.0"
+openapi-python-client = "0.29.0"
 mypy = "1.19.1"
 
 [build-system]

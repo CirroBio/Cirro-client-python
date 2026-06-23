@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.config_source import ConfigSource
 from ..models.executor import Executor
 from ..types import UNSET, Unset
 
@@ -44,6 +45,7 @@ class CustomProcessInput:
         custom_settings (CustomPipelineSettings | None | Unset):
         file_mapping_rules (list[FileMappingRule] | None | Unset):
         tags (list[Tag] | None | Unset):
+        config_source (ConfigSource | None | Unset):
     """
 
     id: str
@@ -64,6 +66,7 @@ class CustomProcessInput:
     custom_settings: CustomPipelineSettings | None | Unset = UNSET
     file_mapping_rules: list[FileMappingRule] | None | Unset = UNSET
     tags: list[Tag] | None | Unset = UNSET
+    config_source: ConfigSource | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -150,6 +153,14 @@ class CustomProcessInput:
         else:
             tags = self.tags
 
+        config_source: None | str | Unset
+        if isinstance(self.config_source, Unset):
+            config_source = UNSET
+        elif isinstance(self.config_source, ConfigSource):
+            config_source = self.config_source.value
+        else:
+            config_source = self.config_source
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -185,6 +196,8 @@ class CustomProcessInput:
             field_dict["fileMappingRules"] = file_mapping_rules
         if tags is not UNSET:
             field_dict["tags"] = tags
+        if config_source is not UNSET:
+            field_dict["configSource"] = config_source
 
         return field_dict
 
@@ -323,6 +336,23 @@ class CustomProcessInput:
 
         tags = _parse_tags(d.pop("tags", UNSET))
 
+        def _parse_config_source(data: object) -> ConfigSource | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                config_source_type_1 = ConfigSource(data)
+
+                return config_source_type_1
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(ConfigSource | None | Unset, data)
+
+        config_source = _parse_config_source(d.pop("configSource", UNSET))
+
         custom_process_input = cls(
             id=id,
             name=name,
@@ -342,6 +372,7 @@ class CustomProcessInput:
             custom_settings=custom_settings,
             file_mapping_rules=file_mapping_rules,
             tags=tags,
+            config_source=config_source,
         )
 
         custom_process_input.additional_properties = d

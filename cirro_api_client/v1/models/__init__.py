@@ -44,6 +44,7 @@ from .compute_environment_configuration import ComputeEnvironmentConfiguration
 from .compute_environment_configuration_input import ComputeEnvironmentConfigurationInput
 from .compute_environment_configuration_input_properties import ComputeEnvironmentConfigurationInputProperties
 from .compute_environment_configuration_properties import ComputeEnvironmentConfigurationProperties
+from .config_source import ConfigSource
 from .contact import Contact
 from .contact_input import ContactInput
 from .cost_response import CostResponse
@@ -54,11 +55,11 @@ from .custom_pipeline_settings import CustomPipelineSettings
 from .custom_process_input import CustomProcessInput
 from .customer_type import CustomerType
 from .dashboard import Dashboard
-from .dashboard_dashboard_data import DashboardDashboardData
-from .dashboard_info import DashboardInfo
-from .dashboard_request import DashboardRequest
-from .dashboard_request_dashboard_data import DashboardRequestDashboardData
-from .dashboard_request_info import DashboardRequestInfo
+from .dashboard_criteria import DashboardCriteria
+from .dashboard_data import DashboardData
+from .dashboard_input import DashboardInput
+from .dashboard_input_criteria import DashboardInputCriteria
+from .dashboard_input_dashboard_data import DashboardInputDashboardData
 from .data_file import DataFile
 from .data_file_metadata import DataFileMetadata
 from .dataset import Dataset
@@ -139,7 +140,9 @@ from .paginated_response_app_registration_dto import PaginatedResponseAppRegistr
 from .paginated_response_dataset_list_dto import PaginatedResponseDatasetListDto
 from .paginated_response_discussion import PaginatedResponseDiscussion
 from .paginated_response_message import PaginatedResponseMessage
+from .paginated_response_process_revision_dto import PaginatedResponseProcessRevisionDto
 from .paginated_response_sample_dto import PaginatedResponseSampleDto
+from .paginated_response_share_usage import PaginatedResponseShareUsage
 from .paginated_response_user_dto import PaginatedResponseUserDto
 from .permission import Permission
 from .pipeline_code import PipelineCode
@@ -150,6 +153,13 @@ from .principal_type import PrincipalType
 from .process import Process
 from .process_detail import ProcessDetail
 from .process_documentation import ProcessDocumentation
+from .process_resource import ProcessResource
+from .process_resource_content import ProcessResourceContent
+from .process_revision import ProcessRevision
+from .process_revision_files import ProcessRevisionFiles
+from .process_revision_save_file import ProcessRevisionSaveFile
+from .process_revision_save_request import ProcessRevisionSaveRequest
+from .process_revision_save_response import ProcessRevisionSaveResponse
 from .project import Project
 from .project_access_request import ProjectAccessRequest
 from .project_access_type import ProjectAccessType
@@ -190,6 +200,7 @@ from .sample_metadata import SampleMetadata
 from .sample_request import SampleRequest
 from .sample_request_metadata import SampleRequestMetadata
 from .sample_sheets import SampleSheets
+from .saved_process_revision import SavedProcessRevision
 from .semantic_column_type import SemanticColumnType
 from .service_connection import ServiceConnection
 from .set_user_project_role_request import SetUserProjectRoleRequest
@@ -198,6 +209,7 @@ from .share import Share
 from .share_detail import ShareDetail
 from .share_input import ShareInput
 from .share_type import ShareType
+from .share_usage import ShareUsage
 from .shared_filesystem import SharedFilesystem
 from .shared_filesystem_input import SharedFilesystemInput
 from .sharing_type import SharingType
@@ -298,6 +310,7 @@ __all__ = (
     "ComputeEnvironmentConfigurationInput",
     "ComputeEnvironmentConfigurationInputProperties",
     "ComputeEnvironmentConfigurationProperties",
+    "ConfigSource",
     "Contact",
     "ContactInput",
     "CostResponse",
@@ -308,11 +321,11 @@ __all__ = (
     "CustomPipelineSettings",
     "CustomProcessInput",
     "Dashboard",
-    "DashboardDashboardData",
-    "DashboardInfo",
-    "DashboardRequest",
-    "DashboardRequestDashboardData",
-    "DashboardRequestInfo",
+    "DashboardCriteria",
+    "DashboardData",
+    "DashboardInput",
+    "DashboardInputCriteria",
+    "DashboardInputDashboardData",
     "DataFile",
     "DataFileMetadata",
     "Dataset",
@@ -393,7 +406,9 @@ __all__ = (
     "PaginatedResponseDatasetListDto",
     "PaginatedResponseDiscussion",
     "PaginatedResponseMessage",
+    "PaginatedResponseProcessRevisionDto",
     "PaginatedResponseSampleDto",
+    "PaginatedResponseShareUsage",
     "PaginatedResponseUserDto",
     "Permission",
     "PipelineCode",
@@ -404,6 +419,13 @@ __all__ = (
     "Process",
     "ProcessDetail",
     "ProcessDocumentation",
+    "ProcessResource",
+    "ProcessResourceContent",
+    "ProcessRevision",
+    "ProcessRevisionFiles",
+    "ProcessRevisionSaveFile",
+    "ProcessRevisionSaveRequest",
+    "ProcessRevisionSaveResponse",
     "Project",
     "ProjectAccessRequest",
     "ProjectAccessType",
@@ -444,6 +466,7 @@ __all__ = (
     "SampleRequest",
     "SampleRequestMetadata",
     "SampleSheets",
+    "SavedProcessRevision",
     "SemanticColumnType",
     "ServiceConnection",
     "SetUserProjectRoleRequest",
@@ -454,6 +477,7 @@ __all__ = (
     "SharedFilesystemInput",
     "ShareInput",
     "ShareType",
+    "ShareUsage",
     "SharingType",
     "Sheet",
     "SheetCreationMode",

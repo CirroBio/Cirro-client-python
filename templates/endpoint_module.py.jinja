@@ -21,12 +21,18 @@ from ... import errors
 def _get_kwargs(
     {{ arguments(endpoint, include_client=False) | indent(4) }}
 ) -> dict[str, Any]:
+{% if endpoint.header_parameters or endpoint.bodies | length > 0 %}
     {{ header_params(endpoint) | indent(4) }}
 
+{% endif %}
+{% if endpoint.cookie_parameters %}
     {{ cookie_params(endpoint) | indent(4) }}
 
+{% endif %}
+{% if endpoint.query_parameters %}
     {{ query_params(endpoint) | indent(4) }}
 
+{% endif %}
     _kwargs: dict[str, Any] = {
         "method": "{{ endpoint.method }}",
         {% if endpoint.path_parameters %}

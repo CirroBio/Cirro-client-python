@@ -1,0 +1,196 @@
+from http import HTTPStatus
+from typing import Any
+from urllib.parse import quote
+
+import httpx
+
+from ... import errors
+from ...client import Client
+from ...models.error_message import ErrorMessage
+from ...models.portal_error_response import PortalErrorResponse
+from ...models.process_revision import ProcessRevision
+from ...types import Response
+
+
+def _get_kwargs(
+    process_id: str,
+    revision_num: int,
+) -> dict[str, Any]:
+    _kwargs: dict[str, Any] = {
+        "method": "get",
+        "url": "/processes/{process_id}/revisions/{revision_num}".format(
+            process_id=quote(str(process_id), safe=""),
+            revision_num=quote(str(revision_num), safe=""),
+        ),
+    }
+
+    return _kwargs
+
+
+def _parse_response(
+    *, client: Client, response: httpx.Response
+) -> ErrorMessage | PortalErrorResponse | ProcessRevision | None:
+    if response.status_code == 200:
+        response_200 = ProcessRevision.from_dict(response.json())
+
+        return response_200
+
+    if response.status_code == 400:
+        response_400 = PortalErrorResponse.from_dict(response.json())
+
+        return response_400
+
+    if response.status_code == 401:
+        response_401 = ErrorMessage.from_dict(response.json())
+
+        return response_401
+
+    errors.handle_error_response(response, client.raise_on_unexpected_status)
+
+
+def _build_response(
+    *, client: Client, response: httpx.Response
+) -> Response[ErrorMessage | PortalErrorResponse | ProcessRevision]:
+    return Response(
+        status_code=HTTPStatus(response.status_code),
+        content=response.content,
+        headers=response.headers,
+        parsed=_parse_response(client=client, response=response),
+    )
+
+
+def sync_detailed(
+    process_id: str,
+    revision_num: int,
+    *,
+    client: Client,
+) -> Response[ErrorMessage | PortalErrorResponse | ProcessRevision]:
+    """Fetch a single configuration revision entry
+
+     Returns the full revision entry (files map + provenance) for the named revision number.
+
+    Args:
+        process_id (str):
+        revision_num (int):
+        client (Client): instance of the API client
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ErrorMessage | PortalErrorResponse | ProcessRevision]
+    """
+
+    kwargs = _get_kwargs(
+        process_id=process_id,
+        revision_num=revision_num,
+    )
+
+    response = client.get_httpx_client().request(
+        auth=client.get_auth(),
+        **kwargs,
+    )
+
+    return _build_response(client=client, response=response)
+
+
+def sync(
+    process_id: str,
+    revision_num: int,
+    *,
+    client: Client,
+) -> ErrorMessage | PortalErrorResponse | ProcessRevision | None:
+    """Fetch a single configuration revision entry
+
+     Returns the full revision entry (files map + provenance) for the named revision number.
+
+    Args:
+        process_id (str):
+        revision_num (int):
+        client (Client): instance of the API client
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ErrorMessage | PortalErrorResponse | ProcessRevision
+    """
+
+    try:
+        return sync_detailed(
+            process_id=process_id,
+            revision_num=revision_num,
+            client=client,
+        ).parsed
+    except errors.NotFoundException:
+        return None
+
+
+async def asyncio_detailed(
+    process_id: str,
+    revision_num: int,
+    *,
+    client: Client,
+) -> Response[ErrorMessage | PortalErrorResponse | ProcessRevision]:
+    """Fetch a single configuration revision entry
+
+     Returns the full revision entry (files map + provenance) for the named revision number.
+
+    Args:
+        process_id (str):
+        revision_num (int):
+        client (Client): instance of the API client
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ErrorMessage | PortalErrorResponse | ProcessRevision]
+    """
+
+    kwargs = _get_kwargs(
+        process_id=process_id,
+        revision_num=revision_num,
+    )
+
+    response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
+
+    return _build_response(client=client, response=response)
+
+
+async def asyncio(
+    process_id: str,
+    revision_num: int,
+    *,
+    client: Client,
+) -> ErrorMessage | PortalErrorResponse | ProcessRevision | None:
+    """Fetch a single configuration revision entry
+
+     Returns the full revision entry (files map + provenance) for the named revision number.
+
+    Args:
+        process_id (str):
+        revision_num (int):
+        client (Client): instance of the API client
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ErrorMessage | PortalErrorResponse | ProcessRevision
+    """
+
+    try:
+        return (
+            await asyncio_detailed(
+                process_id=process_id,
+                revision_num=revision_num,
+                client=client,
+            )
+        ).parsed
+    except errors.NotFoundException:
+        return None

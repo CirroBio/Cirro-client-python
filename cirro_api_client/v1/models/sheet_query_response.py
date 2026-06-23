@@ -17,11 +17,8 @@ T = TypeVar("T", bound="SheetQueryResponse")
 @_attrs_define
 class SheetQueryResponse:
     """Paginated query result from a sheet.
-
-
-    The first column is always `_row_id`, an Iceberg v3 metadata column that
-    uniquely identifies each row. Clients should use this value when calling the
-    update endpoint (`PUT /projects/{projectId}/sheets/{sheetId}/data`).
+    The first column is always `_row_id` which uniquely identifies each row.
+    Clients should use this value when calling the update endpoint (`PUT /projects/{projectId}/sheets/{sheetId}/data`)
 
         Attributes:
             columns (list[QueryColumn]): column definitions, starting with `_row_id`

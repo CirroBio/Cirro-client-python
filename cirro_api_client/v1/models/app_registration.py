@@ -6,7 +6,6 @@ from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..models.app_client_type import AppClientType
 from ..models.app_publisher_type import AppPublisherType
@@ -170,9 +169,9 @@ class AppRegistration:
 
         created_from_template = d.pop("createdFromTemplate")
 
-        updated_at = isoparse(d.pop("updatedAt"))
+        updated_at = datetime.datetime.fromisoformat(d.pop("updatedAt"))
 
-        created_at = isoparse(d.pop("createdAt"))
+        created_at = datetime.datetime.fromisoformat(d.pop("createdAt"))
 
         created_by = d.pop("createdBy")
 
@@ -184,7 +183,7 @@ class AppRegistration:
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                secret_expires_at_type_0 = isoparse(data)
+                secret_expires_at_type_0 = datetime.datetime.fromisoformat(data)
 
                 return secret_expires_at_type_0
             except (TypeError, ValueError, AttributeError, KeyError):

@@ -7,14 +7,14 @@ import httpx
 from ... import errors
 from ...client import Client
 from ...models.create_response import CreateResponse
-from ...models.dashboard_request import DashboardRequest
+from ...models.dashboard_input import DashboardInput
 from ...types import Response
 
 
 def _get_kwargs(
     project_id: str,
     *,
-    body: DashboardRequest,
+    body: DashboardInput,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
 
@@ -55,7 +55,7 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-    body: DashboardRequest,
+    body: DashboardInput,
 ) -> Response[CreateResponse]:
     """Create dashboard
 
@@ -63,7 +63,7 @@ def sync_detailed(
 
     Args:
         project_id (str):
-        body (DashboardRequest):
+        body (DashboardInput):
         client (Client): instance of the API client
 
     Raises:
@@ -91,7 +91,7 @@ def sync(
     project_id: str,
     *,
     client: Client,
-    body: DashboardRequest,
+    body: DashboardInput,
 ) -> CreateResponse | None:
     """Create dashboard
 
@@ -99,7 +99,7 @@ def sync(
 
     Args:
         project_id (str):
-        body (DashboardRequest):
+        body (DashboardInput):
         client (Client): instance of the API client
 
     Raises:
@@ -124,7 +124,7 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-    body: DashboardRequest,
+    body: DashboardInput,
 ) -> Response[CreateResponse]:
     """Create dashboard
 
@@ -132,7 +132,7 @@ async def asyncio_detailed(
 
     Args:
         project_id (str):
-        body (DashboardRequest):
+        body (DashboardInput):
         client (Client): instance of the API client
 
     Raises:
@@ -157,7 +157,7 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-    body: DashboardRequest,
+    body: DashboardInput,
 ) -> CreateResponse | None:
     """Create dashboard
 
@@ -165,7 +165,7 @@ async def asyncio(
 
     Args:
         project_id (str):
-        body (DashboardRequest):
+        body (DashboardInput):
         client (Client): instance of the API client
 
     Raises:

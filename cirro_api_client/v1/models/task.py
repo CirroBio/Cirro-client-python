@@ -6,7 +6,6 @@ from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
 
@@ -180,7 +179,7 @@ class Task:
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                requested_at_type_0 = isoparse(data)
+                requested_at_type_0 = datetime.datetime.fromisoformat(data)
 
                 return requested_at_type_0
             except (TypeError, ValueError, AttributeError, KeyError):
@@ -197,7 +196,7 @@ class Task:
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                started_at_type_0 = isoparse(data)
+                started_at_type_0 = datetime.datetime.fromisoformat(data)
 
                 return started_at_type_0
             except (TypeError, ValueError, AttributeError, KeyError):
@@ -214,7 +213,7 @@ class Task:
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                stopped_at_type_0 = isoparse(data)
+                stopped_at_type_0 = datetime.datetime.fromisoformat(data)
 
                 return stopped_at_type_0
             except (TypeError, ValueError, AttributeError, KeyError):

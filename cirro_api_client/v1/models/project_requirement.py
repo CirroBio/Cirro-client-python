@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..models.governance_expiry_type import GovernanceExpiryType
 from ..models.governance_scope import GovernanceScope
@@ -318,7 +317,7 @@ class ProjectRequirement:
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                enactment_date_type_0 = isoparse(data)
+                enactment_date_type_0 = datetime.datetime.fromisoformat(data)
 
                 return enactment_date_type_0
             except (TypeError, ValueError, AttributeError, KeyError):
@@ -353,7 +352,7 @@ class ProjectRequirement:
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                expiration_date_type_0 = isoparse(data)
+                expiration_date_type_0 = datetime.datetime.fromisoformat(data)
 
                 return expiration_date_type_0
             except (TypeError, ValueError, AttributeError, KeyError):
@@ -452,7 +451,7 @@ class ProjectRequirement:
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                fulfillment_date_type_0 = isoparse(data)
+                fulfillment_date_type_0 = datetime.datetime.fromisoformat(data)
 
                 return fulfillment_date_type_0
             except (TypeError, ValueError, AttributeError, KeyError):

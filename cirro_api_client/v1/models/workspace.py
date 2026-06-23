@@ -28,8 +28,7 @@ class Workspace:
         name (str):
         description (str):
         project_id (str):
-        status (Status): Current state of the usage. RUNNING means access is active; DELETED means the access point has
-            been revoked.
+        status (Status):
         status_message (str):
         environment_id (str):
         mounted_datasets (list[MountedDataset]):

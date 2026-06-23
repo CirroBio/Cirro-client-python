@@ -35,8 +35,7 @@ class DatasetDetail:
         source_sample_ids (list[str]):
         source_sample_files_map (DatasetDetailSourceSampleFilesMap): Keys are sampleIds, and the lists are file paths to
             include.
-        status (Status): Current state of the usage. RUNNING means access is active; DELETED means the access point has
-            been revoked.
+        status (Status):
         status_message (str):
         tags (list[Tag]): Tags
         params (DatasetDetailParams):

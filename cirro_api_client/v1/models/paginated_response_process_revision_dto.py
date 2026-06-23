@@ -7,7 +7,7 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 if TYPE_CHECKING:
-    from ..models.process_revision_dto import ProcessRevisionDto
+    from ..models.process_revision import ProcessRevision
 
 
 T = TypeVar("T", bound="PaginatedResponseProcessRevisionDto")
@@ -17,11 +17,11 @@ T = TypeVar("T", bound="PaginatedResponseProcessRevisionDto")
 class PaginatedResponseProcessRevisionDto:
     """
     Attributes:
-        data (list[ProcessRevisionDto]):
+        data (list[ProcessRevision]):
         next_token (str):
     """
 
-    data: list[ProcessRevisionDto]
+    data: list[ProcessRevision]
     next_token: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -46,13 +46,13 @@ class PaginatedResponseProcessRevisionDto:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.process_revision_dto import ProcessRevisionDto
+        from ..models.process_revision import ProcessRevision
 
         d = dict(src_dict)
         data = []
         _data = d.pop("data")
         for data_item_data in _data:
-            data_item = ProcessRevisionDto.from_dict(data_item_data)
+            data_item = ProcessRevision.from_dict(data_item_data)
 
             data.append(data_item)
 

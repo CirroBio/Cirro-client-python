@@ -24,11 +24,10 @@ class ShareUsage:
     Attributes:
         id (str):
         consuming_item (Entity):
+        status (Status):
         updated_at (datetime.datetime):
         consuming_project_id (str | Unset): ID of the project the consuming item belongs to.
         originating_dataset_id (str | Unset): ID of the dataset in the originating project that was shared.
-        status (Status | Unset): Current state of the usage. RUNNING means access is active; DELETED means the access
-            point has been revoked.
         access_point_arn (str | Unset): ARN of the shared AWS S3 access point. One access point covers all usages from
             the same consuming item to the same originating project.
         created_at (datetime.datetime | Unset): When access was first granted.
@@ -36,10 +35,10 @@ class ShareUsage:
 
     id: str
     consuming_item: Entity
+    status: Status
     updated_at: datetime.datetime
     consuming_project_id: str | Unset = UNSET
     originating_dataset_id: str | Unset = UNSET
-    status: Status | Unset = UNSET
     access_point_arn: str | Unset = UNSET
     created_at: datetime.datetime | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -49,15 +48,13 @@ class ShareUsage:
 
         consuming_item = self.consuming_item.to_dict()
 
+        status = self.status.value
+
         updated_at = self.updated_at.isoformat()
 
         consuming_project_id = self.consuming_project_id
 
         originating_dataset_id = self.originating_dataset_id
-
-        status: str | Unset = UNSET
-        if not isinstance(self.status, Unset):
-            status = self.status.value
 
         access_point_arn = self.access_point_arn
 
@@ -71,6 +68,7 @@ class ShareUsage:
             {
                 "id": id,
                 "consumingItem": consuming_item,
+                "status": status,
                 "updatedAt": updated_at,
             }
         )
@@ -78,8 +76,6 @@ class ShareUsage:
             field_dict["consumingProjectId"] = consuming_project_id
         if originating_dataset_id is not UNSET:
             field_dict["originatingDatasetId"] = originating_dataset_id
-        if status is not UNSET:
-            field_dict["status"] = status
         if access_point_arn is not UNSET:
             field_dict["accessPointArn"] = access_point_arn
         if created_at is not UNSET:
@@ -96,18 +92,13 @@ class ShareUsage:
 
         consuming_item = Entity.from_dict(d.pop("consumingItem"))
 
+        status = Status(d.pop("status"))
+
         updated_at = datetime.datetime.fromisoformat(d.pop("updatedAt"))
 
         consuming_project_id = d.pop("consumingProjectId", UNSET)
 
         originating_dataset_id = d.pop("originatingDatasetId", UNSET)
-
-        _status = d.pop("status", UNSET)
-        status: Status | Unset
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = Status(_status)
 
         access_point_arn = d.pop("accessPointArn", UNSET)
 
@@ -121,10 +112,10 @@ class ShareUsage:
         share_usage = cls(
             id=id,
             consuming_item=consuming_item,
+            status=status,
             updated_at=updated_at,
             consuming_project_id=consuming_project_id,
             originating_dataset_id=originating_dataset_id,
-            status=status,
             access_point_arn=access_point_arn,
             created_at=created_at,
         )

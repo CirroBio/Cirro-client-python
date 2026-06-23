@@ -30,8 +30,7 @@ class Sheet:
         project_id (str):
         sheet_type (SheetType):
         sheet_creation_mode (SheetCreationMode):
-        status (Status): Current state of the usage. RUNNING means access is active; DELETED means the access point has
-            been revoked.
+        status (Status):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):

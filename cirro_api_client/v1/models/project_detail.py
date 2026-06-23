@@ -30,8 +30,7 @@ class ProjectDetail:
         billing_account_id (str):
         contacts (list[Contact]):
         organization (str):
-        status (Status): Current state of the usage. RUNNING means access is active; DELETED means the access point has
-            been revoked.
+        status (Status):
         settings (ProjectSettings):
         account (CloudAccount):
         status_message (str):

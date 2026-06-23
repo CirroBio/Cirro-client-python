@@ -21,8 +21,7 @@ class SheetJob:
         id (str):
         sheet_id (str):
         job_type (SheetJobType):
-        status (Status): Current state of the usage. RUNNING means access is active; DELETED means the access point has
-            been revoked.
+        status (Status):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
         started_at (datetime.datetime | None | Unset):

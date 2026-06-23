@@ -10,14 +10,14 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.process_revision_dto_files import ProcessRevisionDtoFiles
+    from ..models.process_revision_files import ProcessRevisionFiles
 
 
-T = TypeVar("T", bound="ProcessRevisionDto")
+T = TypeVar("T", bound="ProcessRevision")
 
 
 @_attrs_define
-class ProcessRevisionDto:
+class ProcessRevision:
     """
     Attributes:
         revision_number (int):
@@ -25,7 +25,7 @@ class ProcessRevisionDto:
         saved_at (datetime.datetime):
         saved_resource_types (list[str]):
         deleted_resource_types (list[str]):
-        files (ProcessRevisionDtoFiles):
+        files (ProcessRevisionFiles):
         commit_message (None | str | Unset):
     """
 
@@ -34,7 +34,7 @@ class ProcessRevisionDto:
     saved_at: datetime.datetime
     saved_resource_types: list[str]
     deleted_resource_types: list[str]
-    files: ProcessRevisionDtoFiles
+    files: ProcessRevisionFiles
     commit_message: None | str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -76,7 +76,7 @@ class ProcessRevisionDto:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.process_revision_dto_files import ProcessRevisionDtoFiles
+        from ..models.process_revision_files import ProcessRevisionFiles
 
         d = dict(src_dict)
         revision_number = d.pop("revisionNumber")
@@ -89,7 +89,7 @@ class ProcessRevisionDto:
 
         deleted_resource_types = cast(list[str], d.pop("deletedResourceTypes"))
 
-        files = ProcessRevisionDtoFiles.from_dict(d.pop("files"))
+        files = ProcessRevisionFiles.from_dict(d.pop("files"))
 
         def _parse_commit_message(data: object) -> None | str | Unset:
             if data is None:
@@ -100,7 +100,7 @@ class ProcessRevisionDto:
 
         commit_message = _parse_commit_message(d.pop("commitMessage", UNSET))
 
-        process_revision_dto = cls(
+        process_revision = cls(
             revision_number=revision_number,
             saved_by=saved_by,
             saved_at=saved_at,
@@ -110,8 +110,8 @@ class ProcessRevisionDto:
             commit_message=commit_message,
         )
 
-        process_revision_dto.additional_properties = d
-        return process_revision_dto
+        process_revision.additional_properties = d
+        return process_revision
 
     @property
     def additional_keys(self) -> list[str]:

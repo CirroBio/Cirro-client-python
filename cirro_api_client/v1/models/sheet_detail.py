@@ -33,8 +33,7 @@ class SheetDetail:
         namespace_name (str):
         table_name (str):
         sheet_type (SheetType):
-        status (Status): Current state of the usage. RUNNING means access is active; DELETED means the access point has
-            been revoked.
+        status (Status):
         audit_read_access (bool):
         created_by (str):
         created_at (datetime.datetime):

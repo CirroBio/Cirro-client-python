@@ -9,7 +9,7 @@ from ...client import Client
 from ...models.error_message import ErrorMessage
 from ...models.portal_error_response import PortalErrorResponse
 from ...models.process_resource import ProcessResource
-from ...models.process_resource_content_dto import ProcessResourceContentDto
+from ...models.process_resource_content import ProcessResourceContent
 from ...types import Response
 
 
@@ -30,9 +30,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Client, response: httpx.Response
-) -> ErrorMessage | PortalErrorResponse | ProcessResourceContentDto | None:
+) -> ErrorMessage | PortalErrorResponse | ProcessResourceContent | None:
     if response.status_code == 200:
-        response_200 = ProcessResourceContentDto.from_dict(response.json())
+        response_200 = ProcessResourceContent.from_dict(response.json())
 
         return response_200
 
@@ -51,7 +51,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Client, response: httpx.Response
-) -> Response[ErrorMessage | PortalErrorResponse | ProcessResourceContentDto]:
+) -> Response[ErrorMessage | PortalErrorResponse | ProcessResourceContent]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -65,7 +65,7 @@ def sync_detailed(
     type_: ProcessResource,
     *,
     client: Client,
-) -> Response[ErrorMessage | PortalErrorResponse | ProcessResourceContentDto]:
+) -> Response[ErrorMessage | PortalErrorResponse | ProcessResourceContent]:
     """Fetch the stored content of one pipeline configuration resource at the latest revision
 
      Returns the resource content wrapped in a JSON envelope carrying the source revision number and the
@@ -81,7 +81,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ErrorMessage | PortalErrorResponse | ProcessResourceContentDto]
+        Response[ErrorMessage | PortalErrorResponse | ProcessResourceContent]
     """
 
     kwargs = _get_kwargs(
@@ -102,7 +102,7 @@ def sync(
     type_: ProcessResource,
     *,
     client: Client,
-) -> ErrorMessage | PortalErrorResponse | ProcessResourceContentDto | None:
+) -> ErrorMessage | PortalErrorResponse | ProcessResourceContent | None:
     """Fetch the stored content of one pipeline configuration resource at the latest revision
 
      Returns the resource content wrapped in a JSON envelope carrying the source revision number and the
@@ -118,7 +118,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ErrorMessage | PortalErrorResponse | ProcessResourceContentDto
+        ErrorMessage | PortalErrorResponse | ProcessResourceContent
     """
 
     try:
@@ -136,7 +136,7 @@ async def asyncio_detailed(
     type_: ProcessResource,
     *,
     client: Client,
-) -> Response[ErrorMessage | PortalErrorResponse | ProcessResourceContentDto]:
+) -> Response[ErrorMessage | PortalErrorResponse | ProcessResourceContent]:
     """Fetch the stored content of one pipeline configuration resource at the latest revision
 
      Returns the resource content wrapped in a JSON envelope carrying the source revision number and the
@@ -152,7 +152,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ErrorMessage | PortalErrorResponse | ProcessResourceContentDto]
+        Response[ErrorMessage | PortalErrorResponse | ProcessResourceContent]
     """
 
     kwargs = _get_kwargs(
@@ -170,7 +170,7 @@ async def asyncio(
     type_: ProcessResource,
     *,
     client: Client,
-) -> ErrorMessage | PortalErrorResponse | ProcessResourceContentDto | None:
+) -> ErrorMessage | PortalErrorResponse | ProcessResourceContent | None:
     """Fetch the stored content of one pipeline configuration resource at the latest revision
 
      Returns the resource content wrapped in a JSON envelope carrying the source revision number and the
@@ -186,7 +186,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ErrorMessage | PortalErrorResponse | ProcessResourceContentDto
+        ErrorMessage | PortalErrorResponse | ProcessResourceContent
     """
 
     try:

@@ -9,11 +9,11 @@ from attrs import field as _attrs_field
 from ..models.process_resource import ProcessResource
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="ProcessResourceContentDto")
+T = TypeVar("T", bound="ProcessResourceContent")
 
 
 @_attrs_define
-class ProcessResourceContentDto:
+class ProcessResourceContent:
     """Stored content for a single pipeline configuration resource at the current revision.
 
     Attributes:
@@ -73,15 +73,15 @@ class ProcessResourceContentDto:
 
         content = d.pop("content", UNSET)
 
-        process_resource_content_dto = cls(
+        process_resource_content = cls(
             type_=type_,
             revision_number=revision_number,
             digest=digest,
             content=content,
         )
 
-        process_resource_content_dto.additional_properties = d
-        return process_resource_content_dto
+        process_resource_content.additional_properties = d
+        return process_resource_content
 
     @property
     def additional_keys(self) -> list[str]:

@@ -33,3 +33,5 @@ class_overrides:
     class_name: ViewFilterValues
   SheetQueryResponseRowsItemItem:
     class_name: SheetQueryResponseRowsItem
+  DashboardDashboardDataType0:
+    class_name: DashboardData

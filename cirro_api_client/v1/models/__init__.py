@@ -56,7 +56,7 @@ from .custom_process_input import CustomProcessInput
 from .customer_type import CustomerType
 from .dashboard import Dashboard
 from .dashboard_criteria import DashboardCriteria
-from .dashboard_dashboard_data_type_0 import DashboardDashboardDataType0
+from .dashboard_data import DashboardData
 from .dashboard_input import DashboardInput
 from .dashboard_input_criteria import DashboardInputCriteria
 from .dashboard_input_dashboard_data import DashboardInputDashboardData
@@ -154,9 +154,9 @@ from .process import Process
 from .process_detail import ProcessDetail
 from .process_documentation import ProcessDocumentation
 from .process_resource import ProcessResource
-from .process_resource_content_dto import ProcessResourceContentDto
-from .process_revision_dto import ProcessRevisionDto
-from .process_revision_dto_files import ProcessRevisionDtoFiles
+from .process_resource_content import ProcessResourceContent
+from .process_revision import ProcessRevision
+from .process_revision_files import ProcessRevisionFiles
 from .process_revision_save_file import ProcessRevisionSaveFile
 from .process_revision_save_request import ProcessRevisionSaveRequest
 from .process_revision_save_response import ProcessRevisionSaveResponse
@@ -322,7 +322,7 @@ __all__ = (
     "CustomProcessInput",
     "Dashboard",
     "DashboardCriteria",
-    "DashboardDashboardDataType0",
+    "DashboardData",
     "DashboardInput",
     "DashboardInputCriteria",
     "DashboardInputDashboardData",
@@ -420,9 +420,9 @@ __all__ = (
     "ProcessDetail",
     "ProcessDocumentation",
     "ProcessResource",
-    "ProcessResourceContentDto",
-    "ProcessRevisionDto",
-    "ProcessRevisionDtoFiles",
+    "ProcessResourceContent",
+    "ProcessRevision",
+    "ProcessRevisionFiles",
     "ProcessRevisionSaveFile",
     "ProcessRevisionSaveRequest",
     "ProcessRevisionSaveResponse",

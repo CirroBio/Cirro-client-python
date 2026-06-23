@@ -8,7 +8,7 @@ from ... import errors
 from ...client import Client
 from ...models.error_message import ErrorMessage
 from ...models.portal_error_response import PortalErrorResponse
-from ...models.process_revision_dto import ProcessRevisionDto
+from ...models.process_revision import ProcessRevision
 from ...types import Response
 
 
@@ -27,9 +27,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Client, response: httpx.Response
-) -> ErrorMessage | PortalErrorResponse | ProcessRevisionDto | None:
+) -> ErrorMessage | PortalErrorResponse | ProcessRevision | None:
     if response.status_code == 200:
-        response_200 = ProcessRevisionDto.from_dict(response.json())
+        response_200 = ProcessRevision.from_dict(response.json())
 
         return response_200
 
@@ -48,7 +48,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Client, response: httpx.Response
-) -> Response[ErrorMessage | PortalErrorResponse | ProcessRevisionDto]:
+) -> Response[ErrorMessage | PortalErrorResponse | ProcessRevision]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -61,7 +61,7 @@ def sync_detailed(
     process_id: str,
     *,
     client: Client,
-) -> Response[ErrorMessage | PortalErrorResponse | ProcessRevisionDto]:
+) -> Response[ErrorMessage | PortalErrorResponse | ProcessRevision]:
     """Fetch the latest configuration revision for a process
 
      Returns the highest-numbered revision entry for the given process. Returns 404 for processes without
@@ -76,7 +76,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ErrorMessage | PortalErrorResponse | ProcessRevisionDto]
+        Response[ErrorMessage | PortalErrorResponse | ProcessRevision]
     """
 
     kwargs = _get_kwargs(
@@ -95,7 +95,7 @@ def sync(
     process_id: str,
     *,
     client: Client,
-) -> ErrorMessage | PortalErrorResponse | ProcessRevisionDto | None:
+) -> ErrorMessage | PortalErrorResponse | ProcessRevision | None:
     """Fetch the latest configuration revision for a process
 
      Returns the highest-numbered revision entry for the given process. Returns 404 for processes without
@@ -110,7 +110,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ErrorMessage | PortalErrorResponse | ProcessRevisionDto
+        ErrorMessage | PortalErrorResponse | ProcessRevision
     """
 
     try:
@@ -126,7 +126,7 @@ async def asyncio_detailed(
     process_id: str,
     *,
     client: Client,
-) -> Response[ErrorMessage | PortalErrorResponse | ProcessRevisionDto]:
+) -> Response[ErrorMessage | PortalErrorResponse | ProcessRevision]:
     """Fetch the latest configuration revision for a process
 
      Returns the highest-numbered revision entry for the given process. Returns 404 for processes without
@@ -141,7 +141,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ErrorMessage | PortalErrorResponse | ProcessRevisionDto]
+        Response[ErrorMessage | PortalErrorResponse | ProcessRevision]
     """
 
     kwargs = _get_kwargs(
@@ -157,7 +157,7 @@ async def asyncio(
     process_id: str,
     *,
     client: Client,
-) -> ErrorMessage | PortalErrorResponse | ProcessRevisionDto | None:
+) -> ErrorMessage | PortalErrorResponse | ProcessRevision | None:
     """Fetch the latest configuration revision for a process
 
      Returns the highest-numbered revision entry for the given process. Returns 404 for processes without
@@ -172,7 +172,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ErrorMessage | PortalErrorResponse | ProcessRevisionDto
+        ErrorMessage | PortalErrorResponse | ProcessRevision
     """
 
     try:

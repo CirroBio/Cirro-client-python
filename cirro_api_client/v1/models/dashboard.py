@@ -11,7 +11,7 @@ from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.dashboard_criteria import DashboardCriteria
-    from ..models.dashboard_dashboard_data_type_0 import DashboardDashboardDataType0
+    from ..models.dashboard_data import DashboardData
     from ..models.tag import Tag
 
 
@@ -30,8 +30,7 @@ class Dashboard:
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
         criteria (DashboardCriteria | Unset):
-        dashboard_data (DashboardDashboardDataType0 | None | Unset): Dashboard definition (not provided in list
-            responses)
+        dashboard_data (DashboardData | None | Unset): Dashboard definition (not provided in list responses)
         schema_version (int | Unset): Schema version of dashboardData
     """
 
@@ -43,12 +42,12 @@ class Dashboard:
     created_at: datetime.datetime
     updated_at: datetime.datetime
     criteria: DashboardCriteria | Unset = UNSET
-    dashboard_data: DashboardDashboardDataType0 | None | Unset = UNSET
+    dashboard_data: DashboardData | None | Unset = UNSET
     schema_version: int | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        from ..models.dashboard_dashboard_data_type_0 import DashboardDashboardDataType0
+        from ..models.dashboard_data import DashboardData
 
         id = self.id
 
@@ -74,7 +73,7 @@ class Dashboard:
         dashboard_data: dict[str, Any] | None | Unset
         if isinstance(self.dashboard_data, Unset):
             dashboard_data = UNSET
-        elif isinstance(self.dashboard_data, DashboardDashboardDataType0):
+        elif isinstance(self.dashboard_data, DashboardData):
             dashboard_data = self.dashboard_data.to_dict()
         else:
             dashboard_data = self.dashboard_data
@@ -106,7 +105,7 @@ class Dashboard:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.dashboard_criteria import DashboardCriteria
-        from ..models.dashboard_dashboard_data_type_0 import DashboardDashboardDataType0
+        from ..models.dashboard_data import DashboardData
         from ..models.tag import Tag
 
         d = dict(src_dict)
@@ -136,7 +135,7 @@ class Dashboard:
         else:
             criteria = DashboardCriteria.from_dict(_criteria)
 
-        def _parse_dashboard_data(data: object) -> DashboardDashboardDataType0 | None | Unset:
+        def _parse_dashboard_data(data: object) -> DashboardData | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -144,12 +143,12 @@ class Dashboard:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                dashboard_data_type_0 = DashboardDashboardDataType0.from_dict(data)
+                dashboard_data_type_0 = DashboardData.from_dict(data)
 
                 return dashboard_data_type_0
             except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(DashboardDashboardDataType0 | None | Unset, data)
+            return cast(DashboardData | None | Unset, data)
 
         dashboard_data = _parse_dashboard_data(d.pop("dashboardData", UNSET))
 

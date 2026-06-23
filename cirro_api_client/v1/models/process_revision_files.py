@@ -6,11 +6,11 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="ProcessRevisionDtoFiles")
+T = TypeVar("T", bound="ProcessRevisionFiles")
 
 
 @_attrs_define
-class ProcessRevisionDtoFiles:
+class ProcessRevisionFiles:
     """ """
 
     additional_properties: dict[str, str] = _attrs_field(init=False, factory=dict)
@@ -25,10 +25,10 @@ class ProcessRevisionDtoFiles:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        process_revision_dto_files = cls()
+        process_revision_files = cls()
 
-        process_revision_dto_files.additional_properties = d
-        return process_revision_dto_files
+        process_revision_files.additional_properties = d
+        return process_revision_files
 
     @property
     def additional_keys(self) -> list[str]:

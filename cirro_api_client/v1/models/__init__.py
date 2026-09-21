@@ -188,10 +188,8 @@ from .requirement_input import RequirementInput
 from .resources_info import ResourcesInfo
 from .row_insert import RowInsert
 from .row_insert_values import RowInsertValues
-from .row_insert_values_additional_property import RowInsertValuesAdditionalProperty
 from .row_update import RowUpdate
 from .row_update_values import RowUpdateValues
-from .row_update_values_additional_property import RowUpdateValuesAdditionalProperty
 from .run_analysis_request import RunAnalysisRequest
 from .run_analysis_request_params import RunAnalysisRequestParams
 from .run_analysis_request_source_sample_files_map import RunAnalysisRequestSourceSampleFilesMap
@@ -223,7 +221,6 @@ from .sheet_job import SheetJob
 from .sheet_job_type import SheetJobType
 from .sheet_query_request import SheetQueryRequest
 from .sheet_query_response import SheetQueryResponse
-from .sheet_query_response_rows_item import SheetQueryResponseRowsItem
 from .sheet_sort import SheetSort
 from .sheet_type import SheetType
 from .sheet_update_response import SheetUpdateResponse
@@ -454,10 +451,8 @@ __all__ = (
     "ResourcesInfo",
     "RowInsert",
     "RowInsertValues",
-    "RowInsertValuesAdditionalProperty",
     "RowUpdate",
     "RowUpdateValues",
-    "RowUpdateValuesAdditionalProperty",
     "RunAnalysisRequest",
     "RunAnalysisRequestParams",
     "RunAnalysisRequestSourceSampleFilesMap",
@@ -489,7 +484,6 @@ __all__ = (
     "SheetJobType",
     "SheetQueryRequest",
     "SheetQueryResponse",
-    "SheetQueryResponseRowsItem",
     "SheetSort",
     "SheetType",
     "SheetUpdateResponse",

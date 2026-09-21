@@ -1,14 +1,13 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 if TYPE_CHECKING:
     from ..models.query_column import QueryColumn
-    from ..models.sheet_query_response_rows_item import SheetQueryResponseRowsItem
 
 
 T = TypeVar("T", bound="SheetQueryResponse")
@@ -22,12 +21,12 @@ class SheetQueryResponse:
 
         Attributes:
             columns (list[QueryColumn]): column definitions, starting with `_row_id`
-            rows (list[list[SheetQueryResponseRowsItem]]): row data, each list aligned with `columns`
+            rows (list[list[Any]]): row data, each list aligned with `columns`
             total_row_count (int): number of total rows in the result set
     """
 
     columns: list[QueryColumn]
-    rows: list[list[SheetQueryResponseRowsItem]]
+    rows: list[list[Any]]
     total_row_count: int
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -39,10 +38,7 @@ class SheetQueryResponse:
 
         rows = []
         for rows_item_data in self.rows:
-            rows_item = []
-            for rows_item_item_data in rows_item_data:
-                rows_item_item = rows_item_item_data.to_dict()
-                rows_item.append(rows_item_item)
+            rows_item = rows_item_data
 
             rows.append(rows_item)
 
@@ -63,7 +59,6 @@ class SheetQueryResponse:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.query_column import QueryColumn
-        from ..models.sheet_query_response_rows_item import SheetQueryResponseRowsItem
 
         d = dict(src_dict)
         columns = []
@@ -76,12 +71,7 @@ class SheetQueryResponse:
         rows = []
         _rows = d.pop("rows")
         for rows_item_data in _rows:
-            rows_item = []
-            _rows_item = rows_item_data
-            for rows_item_item_data in _rows_item:
-                rows_item_item = SheetQueryResponseRowsItem.from_dict(rows_item_item_data)
-
-                rows_item.append(rows_item_item)
+            rows_item = cast(list[Any], rows_item_data)
 
             rows.append(rows_item)
 

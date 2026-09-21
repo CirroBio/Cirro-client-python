@@ -55,3 +55,42 @@ class TestClient(unittest.TestCase):
         self.assertIsNotNone(response)
         self.assertEqual(len(response.data), 1)
         self.assertIsInstance(response.data[0], User)
+
+
+class TestSheetModels(unittest.TestCase):
+    """Sheet cell values are free-form JSON scalars, not nested objects (issue #29)."""
+
+    def test_query_response_parses_scalar_rows(self):
+        from cirro_api_client.v1.models import SheetQueryResponse
+
+        response = SheetQueryResponse.from_dict(
+            {
+                "columns": [
+                    {"name": "_row_id", "dataType": "LONG"},
+                    {"name": "icd_code", "dataType": "STRING"},
+                    {"name": "n", "dataType": "INTEGER"},
+                ],
+                "rows": [[42, "G65", 3], [43, None, 0.5]],
+                "totalRowCount": 2,
+            }
+        )
+
+        self.assertEqual(response.rows, [[42, "G65", 3], [43, None, 0.5]])
+        self.assertEqual(response.to_dict()["rows"], [[42, "G65", 3], [43, None, 0.5]])
+
+    def test_row_insert_serializes_scalar_values(self):
+        from cirro_api_client.v1.models import RowInsert, RowInsertValues
+
+        values = RowInsertValues()
+        values["icd_code"] = "G65"
+        values["n"] = 3
+
+        self.assertEqual(RowInsert(values=values).to_dict(), {"values": {"icd_code": "G65", "n": 3}})
+
+    def test_row_update_serializes_scalar_values(self):
+        from cirro_api_client.v1.models import RowUpdate, RowUpdateValues
+
+        values = RowUpdateValues()
+        values["icd_code"] = "G65"
+
+        self.assertEqual(RowUpdate(row_id=42, values=values).to_dict(), {"rowId": 42, "values": {"icd_code": "G65"}})

@@ -38,15 +38,19 @@ class SheetDetail:
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
-        total_row_count (int):
         tags (list[Tag]):
-        sheet_creation_mode (None | SheetCreationMode | Unset): How the table was initialized. Null for VIEW sheets.
-        columns (list[ColumnDef] | None | Unset): Column definitions for the table schema. Null for VIEW sheets.
+        sheet_creation_mode (None | SheetCreationMode | Unset): How the sheet was initialized. SYSTEM for Cirro-managed
+            sheets, including system views; null for user-created VIEW sheets.
+        columns (list[ColumnDef] | None | Unset): Column definitions for the sheet's schema. For VIEW sheets, a snapshot
+            derived from the view definition.
         view_definition (None | RawViewQueryRequest | StructuredViewQueryRequest | Unset): View definition for VIEW
             sheets. Null for TABLE sheets.
+        virtual (bool | Unset): True only for virtual (non-materialized) VIEW sheets.
         last_refreshed_at (datetime.datetime | None | Unset): When the view was last materialized. Null for TABLE
             sheets.
         staging_upload_path (str | Unset): S3 upload path for files to be ingested into this sheet.
+        total_row_count (int | None | Unset): Stored row count, maintained on writes. Null for virtual views, whose rows
+            are only counted at query time.
         schema_version_id (int | Unset): Current table schema version (starts at 0). Used for optimistic concurrency
             control. New tables can omit this, but updates should include this to prevent overwriting due to stale table
             schema metadata.
@@ -64,13 +68,14 @@ class SheetDetail:
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    total_row_count: int
     tags: list[Tag]
     sheet_creation_mode: None | SheetCreationMode | Unset = UNSET
     columns: list[ColumnDef] | None | Unset = UNSET
     view_definition: None | RawViewQueryRequest | StructuredViewQueryRequest | Unset = UNSET
+    virtual: bool | Unset = UNSET
     last_refreshed_at: datetime.datetime | None | Unset = UNSET
     staging_upload_path: str | Unset = UNSET
+    total_row_count: int | None | Unset = UNSET
     schema_version_id: int | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -101,8 +106,6 @@ class SheetDetail:
         created_at = self.created_at.isoformat()
 
         updated_at = self.updated_at.isoformat()
-
-        total_row_count = self.total_row_count
 
         tags = []
         for tags_item_data in self.tags:
@@ -139,6 +142,8 @@ class SheetDetail:
         else:
             view_definition = self.view_definition
 
+        virtual = self.virtual
+
         last_refreshed_at: None | str | Unset
         if isinstance(self.last_refreshed_at, Unset):
             last_refreshed_at = UNSET
@@ -148,6 +153,12 @@ class SheetDetail:
             last_refreshed_at = self.last_refreshed_at
 
         staging_upload_path = self.staging_upload_path
+
+        total_row_count: int | None | Unset
+        if isinstance(self.total_row_count, Unset):
+            total_row_count = UNSET
+        else:
+            total_row_count = self.total_row_count
 
         schema_version_id = self.schema_version_id
 
@@ -167,7 +178,6 @@ class SheetDetail:
                 "createdBy": created_by,
                 "createdAt": created_at,
                 "updatedAt": updated_at,
-                "totalRowCount": total_row_count,
                 "tags": tags,
             }
         )
@@ -177,10 +187,14 @@ class SheetDetail:
             field_dict["columns"] = columns
         if view_definition is not UNSET:
             field_dict["viewDefinition"] = view_definition
+        if virtual is not UNSET:
+            field_dict["virtual"] = virtual
         if last_refreshed_at is not UNSET:
             field_dict["lastRefreshedAt"] = last_refreshed_at
         if staging_upload_path is not UNSET:
             field_dict["stagingUploadPath"] = staging_upload_path
+        if total_row_count is not UNSET:
+            field_dict["totalRowCount"] = total_row_count
         if schema_version_id is not UNSET:
             field_dict["schemaVersionId"] = schema_version_id
 
@@ -217,8 +231,6 @@ class SheetDetail:
         created_at = datetime.datetime.fromisoformat(d.pop("createdAt"))
 
         updated_at = datetime.datetime.fromisoformat(d.pop("updatedAt"))
-
-        total_row_count = d.pop("totalRowCount")
 
         tags = []
         _tags = d.pop("tags")
@@ -291,6 +303,8 @@ class SheetDetail:
 
         view_definition = _parse_view_definition(d.pop("viewDefinition", UNSET))
 
+        virtual = d.pop("virtual", UNSET)
+
         def _parse_last_refreshed_at(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
@@ -310,6 +324,15 @@ class SheetDetail:
 
         staging_upload_path = d.pop("stagingUploadPath", UNSET)
 
+        def _parse_total_row_count(data: object) -> int | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(int | None | Unset, data)
+
+        total_row_count = _parse_total_row_count(d.pop("totalRowCount", UNSET))
+
         schema_version_id = d.pop("schemaVersionId", UNSET)
 
         sheet_detail = cls(
@@ -325,13 +348,14 @@ class SheetDetail:
             created_by=created_by,
             created_at=created_at,
             updated_at=updated_at,
-            total_row_count=total_row_count,
             tags=tags,
             sheet_creation_mode=sheet_creation_mode,
             columns=columns,
             view_definition=view_definition,
+            virtual=virtual,
             last_refreshed_at=last_refreshed_at,
             staging_upload_path=staging_upload_path,
+            total_row_count=total_row_count,
             schema_version_id=schema_version_id,
         )
 

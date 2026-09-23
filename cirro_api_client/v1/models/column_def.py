@@ -28,10 +28,12 @@ class ColumnDef:
         hidden (bool | Unset): Whether the column is hidden on the UI. Default: False.
         semantic_type (None | SemanticColumnType | Unset): The semantic type of the column. Default:
             SemanticColumnType.STANDARD.
-        allowed_values (list[str] | None | Unset): The allowed values for the column, only used for ENUM* types.
+        allowed_values (list[str] | None | Unset): The allowed values for an ENUM_SINGLE column.
         description (None | str | Unset):
         foreign_key (ForeignKeyRef | None | Unset):
         required (bool | Unset): Whether the column is required to be non-null. Default: False.
+        unique (bool | Unset): Whether values in this column must be unique across the sheet (NULLs exempt). Set when
+            the column is created; enforced at write time by the application. Default: False.
     """
 
     name: str
@@ -44,6 +46,7 @@ class ColumnDef:
     description: None | str | Unset = UNSET
     foreign_key: ForeignKeyRef | None | Unset = UNSET
     required: bool | Unset = False
+    unique: bool | Unset = False
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -100,6 +103,8 @@ class ColumnDef:
 
         required = self.required
 
+        unique = self.unique
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -124,6 +129,8 @@ class ColumnDef:
             field_dict["foreignKey"] = foreign_key
         if required is not UNSET:
             field_dict["required"] = required
+        if unique is not UNSET:
+            field_dict["unique"] = unique
 
         return field_dict
 
@@ -218,6 +225,8 @@ class ColumnDef:
 
         required = d.pop("required", UNSET)
 
+        unique = d.pop("unique", UNSET)
+
         column_def = cls(
             name=name,
             data_type=data_type,
@@ -229,6 +238,7 @@ class ColumnDef:
             description=description,
             foreign_key=foreign_key,
             required=required,
+            unique=unique,
         )
 
         column_def.additional_properties = d

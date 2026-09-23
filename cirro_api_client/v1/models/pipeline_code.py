@@ -21,7 +21,8 @@ class PipelineCode:
         version (str): Branch, tag, or commit hash of the pipeline code Example: main.
         repository_type (RepositoryType): Type of repository
         entry_point (str): Main script for running the pipeline Example: main.nf.
-        executor_version (None | str | Unset): Version of the executor Example: 24.10.5.
+        executor_version (None | str | Unset): Nextflow version used to run the pipeline. For pipelines with HealthOmics
+            support, it must be one of the supported versions Example: 26.04.0.
     """
 
     repository_path: str

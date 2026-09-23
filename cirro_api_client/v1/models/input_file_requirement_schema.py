@@ -6,12 +6,12 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="RowInsertValuesAdditionalProperty")
+T = TypeVar("T", bound="InputFileRequirementSchema")
 
 
 @_attrs_define
-class RowInsertValuesAdditionalProperty:
-    """ """
+class InputFileRequirementSchema:
+    """JSONSchema representation of the input file contents"""
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -25,10 +25,10 @@ class RowInsertValuesAdditionalProperty:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        row_insert_values_additional_property = cls()
+        input_file_requirement_schema = cls()
 
-        row_insert_values_additional_property.additional_properties = d
-        return row_insert_values_additional_property
+        input_file_requirement_schema.additional_properties = d
+        return input_file_requirement_schema
 
     @property
     def additional_keys(self) -> list[str]:

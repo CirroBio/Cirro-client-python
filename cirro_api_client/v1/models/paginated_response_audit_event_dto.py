@@ -7,34 +7,38 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 if TYPE_CHECKING:
-    from ..models.row_insert_values import RowInsertValues
+    from ..models.audit_event import AuditEvent
 
 
-T = TypeVar("T", bound="RowInsert")
+T = TypeVar("T", bound="PaginatedResponseAuditEventDto")
 
 
 @_attrs_define
-class RowInsert:
+class PaginatedResponseAuditEventDto:
     """
     Attributes:
-        values (RowInsertValues): Column name and value. Any missing columns will have a null value (will error if
-            column is required). Cirro-typed columns hold Cirro URIs of the form
-            cirro:<tenantId>:<projectId>:data:<datasetId>/<path> (scope segments may be empty; path relative to the
-            dataset's data directory). CIRRO_DATASET cells reference the dataset itself and have no path. Example:
-            {'icd_code': 'G65', 'sample_file': 'cirro::1a1a...:data:d4f1.../results/sample1.fastq.gz'}.
+        data (list[AuditEvent]):
+        next_token (str):
     """
 
-    values: RowInsertValues
+    data: list[AuditEvent]
+    next_token: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        values = self.values.to_dict()
+        data = []
+        for data_item_data in self.data:
+            data_item = data_item_data.to_dict()
+            data.append(data_item)
+
+        next_token = self.next_token
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "values": values,
+                "data": data,
+                "nextToken": next_token,
             }
         )
 
@@ -42,17 +46,25 @@ class RowInsert:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.row_insert_values import RowInsertValues
+        from ..models.audit_event import AuditEvent
 
         d = dict(src_dict)
-        values = RowInsertValues.from_dict(d.pop("values"))
+        data = []
+        _data = d.pop("data")
+        for data_item_data in _data:
+            data_item = AuditEvent.from_dict(data_item_data)
 
-        row_insert = cls(
-            values=values,
+            data.append(data_item)
+
+        next_token = d.pop("nextToken")
+
+        paginated_response_audit_event_dto = cls(
+            data=data,
+            next_token=next_token,
         )
 
-        row_insert.additional_properties = d
-        return row_insert
+        paginated_response_audit_event_dto.additional_properties = d
+        return paginated_response_audit_event_dto
 
     @property
     def additional_keys(self) -> list[str]:

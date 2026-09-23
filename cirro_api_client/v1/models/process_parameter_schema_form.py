@@ -6,12 +6,12 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="RowUpdateValuesAdditionalProperty")
+T = TypeVar("T", bound="ProcessParameterSchemaForm")
 
 
 @_attrs_define
-class RowUpdateValuesAdditionalProperty:
-    """ """
+class ProcessParameterSchemaForm:
+    """JSONSchema representation of the form rendered for the end-user when executing a pipeline"""
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -25,10 +25,10 @@ class RowUpdateValuesAdditionalProperty:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        row_update_values_additional_property = cls()
+        process_parameter_schema_form = cls()
 
-        row_update_values_additional_property.additional_properties = d
-        return row_update_values_additional_property
+        process_parameter_schema_form.additional_properties = d
+        return process_parameter_schema_form
 
     @property
     def additional_keys(self) -> list[str]:

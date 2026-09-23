@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import datetime
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -10,8 +10,10 @@ from attrs import field as _attrs_field
 from ..models.sheet_creation_mode import SheetCreationMode
 from ..models.sheet_type import SheetType
 from ..models.status import Status
+from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
+    from ..models.column_relationship import ColumnRelationship
     from ..models.tag import Tag
 
 
@@ -30,12 +32,15 @@ class Sheet:
         project_id (str):
         sheet_type (SheetType):
         sheet_creation_mode (SheetCreationMode):
+        virtual (bool):
         status (Status):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
-        total_row_count (int):
         tags (list[Tag]):
+        column_relationships (list[ColumnRelationship]):
+        total_row_count (int | None | Unset): Stored row count, maintained on writes. Null for virtual views, whose rows
+            are only counted at query time.
     """
 
     id: str
@@ -46,12 +51,14 @@ class Sheet:
     project_id: str
     sheet_type: SheetType
     sheet_creation_mode: SheetCreationMode
+    virtual: bool
     status: Status
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    total_row_count: int
     tags: list[Tag]
+    column_relationships: list[ColumnRelationship]
+    total_row_count: int | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -71,6 +78,8 @@ class Sheet:
 
         sheet_creation_mode = self.sheet_creation_mode.value
 
+        virtual = self.virtual
+
         status = self.status.value
 
         created_by = self.created_by
@@ -79,12 +88,21 @@ class Sheet:
 
         updated_at = self.updated_at.isoformat()
 
-        total_row_count = self.total_row_count
-
         tags = []
         for tags_item_data in self.tags:
             tags_item = tags_item_data.to_dict()
             tags.append(tags_item)
+
+        column_relationships = []
+        for column_relationships_item_data in self.column_relationships:
+            column_relationships_item = column_relationships_item_data.to_dict()
+            column_relationships.append(column_relationships_item)
+
+        total_row_count: int | None | Unset
+        if isinstance(self.total_row_count, Unset):
+            total_row_count = UNSET
+        else:
+            total_row_count = self.total_row_count
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -98,19 +116,23 @@ class Sheet:
                 "projectId": project_id,
                 "sheetType": sheet_type,
                 "sheetCreationMode": sheet_creation_mode,
+                "virtual": virtual,
                 "status": status,
                 "createdBy": created_by,
                 "createdAt": created_at,
                 "updatedAt": updated_at,
-                "totalRowCount": total_row_count,
                 "tags": tags,
+                "columnRelationships": column_relationships,
             }
         )
+        if total_row_count is not UNSET:
+            field_dict["totalRowCount"] = total_row_count
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.column_relationship import ColumnRelationship
         from ..models.tag import Tag
 
         d = dict(src_dict)
@@ -130,6 +152,8 @@ class Sheet:
 
         sheet_creation_mode = SheetCreationMode(d.pop("sheetCreationMode"))
 
+        virtual = d.pop("virtual")
+
         status = Status(d.pop("status"))
 
         created_by = d.pop("createdBy")
@@ -138,14 +162,28 @@ class Sheet:
 
         updated_at = datetime.datetime.fromisoformat(d.pop("updatedAt"))
 
-        total_row_count = d.pop("totalRowCount")
-
         tags = []
         _tags = d.pop("tags")
         for tags_item_data in _tags:
             tags_item = Tag.from_dict(tags_item_data)
 
             tags.append(tags_item)
+
+        column_relationships = []
+        _column_relationships = d.pop("columnRelationships")
+        for column_relationships_item_data in _column_relationships:
+            column_relationships_item = ColumnRelationship.from_dict(column_relationships_item_data)
+
+            column_relationships.append(column_relationships_item)
+
+        def _parse_total_row_count(data: object) -> int | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(int | None | Unset, data)
+
+        total_row_count = _parse_total_row_count(d.pop("totalRowCount", UNSET))
 
         sheet = cls(
             id=id,
@@ -156,12 +194,14 @@ class Sheet:
             project_id=project_id,
             sheet_type=sheet_type,
             sheet_creation_mode=sheet_creation_mode,
+            virtual=virtual,
             status=status,
             created_by=created_by,
             created_at=created_at,
             updated_at=updated_at,
-            total_row_count=total_row_count,
             tags=tags,
+            column_relationships=column_relationships,
+            total_row_count=total_row_count,
         )
 
         sheet.additional_properties = d

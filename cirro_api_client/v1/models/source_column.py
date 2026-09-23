@@ -18,11 +18,15 @@ class SourceColumn:
         sheet_column (str):
         file_column (None | str | Unset): File column header name. Use this OR index, not both.
         index (int | None | Unset): 0-based file column position. Use this OR fileColumn, not both.
+        dataset_id (None | str | Unset): Dataset the mapping references. Only allowed on Cirro-typed target columns: on
+            CIRRO_FILE/CIRRO_FOLDER, source values are bare paths within that dataset; on CIRRO_DATASET, omit
+            fileColumn/index and every row gets that dataset's URI. When omitted, source values must be full Cirro URIs.
     """
 
     sheet_column: str
     file_column: None | str | Unset = UNSET
     index: int | None | Unset = UNSET
+    dataset_id: None | str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -40,6 +44,12 @@ class SourceColumn:
         else:
             index = self.index
 
+        dataset_id: None | str | Unset
+        if isinstance(self.dataset_id, Unset):
+            dataset_id = UNSET
+        else:
+            dataset_id = self.dataset_id
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -51,6 +61,8 @@ class SourceColumn:
             field_dict["fileColumn"] = file_column
         if index is not UNSET:
             field_dict["index"] = index
+        if dataset_id is not UNSET:
+            field_dict["datasetId"] = dataset_id
 
         return field_dict
 
@@ -77,10 +89,20 @@ class SourceColumn:
 
         index = _parse_index(d.pop("index", UNSET))
 
+        def _parse_dataset_id(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        dataset_id = _parse_dataset_id(d.pop("datasetId", UNSET))
+
         source_column = cls(
             sheet_column=sheet_column,
             file_column=file_column,
             index=index,
+            dataset_id=dataset_id,
         )
 
         source_column.additional_properties = d

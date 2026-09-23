@@ -45,6 +45,7 @@ class TestClient(unittest.TestCase):
                         "department": "test-dept",
                         "jobTitle": "test-title",
                         "globalRoles": [],
+                        "status": "ACTIVE",
                     }
                 ],
                 "nextToken": None,

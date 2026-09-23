@@ -32,6 +32,8 @@ class AuditEvent:
             {'.settings.retentionPolicyDays': '1 -> 2'}.
         username (str | Unset): The username of the user who performed the action Example: admin@cirro.bio.
         ip_address (str | Unset): The IP address of the user who performed the action Example: 0.0.0.0.
+        user_agent (str | Unset): The user agent of the user who performed the action
+        app_id (str | Unset): The ID of the Cirro app that performed the action (if applicable)
         created_at (datetime.datetime | Unset): The date and time the event was created
     """
 
@@ -44,6 +46,8 @@ class AuditEvent:
     changes: AuditEventChanges | None | Unset = UNSET
     username: str | Unset = UNSET
     ip_address: str | Unset = UNSET
+    user_agent: str | Unset = UNSET
+    app_id: str | Unset = UNSET
     created_at: datetime.datetime | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -81,6 +85,10 @@ class AuditEvent:
 
         ip_address = self.ip_address
 
+        user_agent = self.user_agent
+
+        app_id = self.app_id
+
         created_at: str | Unset = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
@@ -106,6 +114,10 @@ class AuditEvent:
             field_dict["username"] = username
         if ip_address is not UNSET:
             field_dict["ipAddress"] = ip_address
+        if user_agent is not UNSET:
+            field_dict["userAgent"] = user_agent
+        if app_id is not UNSET:
+            field_dict["appId"] = app_id
         if created_at is not UNSET:
             field_dict["createdAt"] = created_at
 
@@ -165,6 +177,10 @@ class AuditEvent:
 
         ip_address = d.pop("ipAddress", UNSET)
 
+        user_agent = d.pop("userAgent", UNSET)
+
+        app_id = d.pop("appId", UNSET)
+
         _created_at = d.pop("createdAt", UNSET)
         created_at: datetime.datetime | Unset
         if isinstance(_created_at, Unset):
@@ -182,6 +198,8 @@ class AuditEvent:
             changes=changes,
             username=username,
             ip_address=ip_address,
+            user_agent=user_agent,
+            app_id=app_id,
             created_at=created_at,
         )
 

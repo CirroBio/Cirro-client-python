@@ -21,7 +21,8 @@ class SheetDataRequest:
     """Paginated sheet data query with optional sort and filter
 
     Attributes:
-        limit (int | None | Unset): Maximum rows to return Default: 1000.
+        limit (int | None | Unset): Maximum rows to return. Responses also have a size limit: with wide rows a large
+            page can fail with a 502 — lower the limit if so. Default: 1000.
         page (int | None | Unset): Page to return Default: 1.
         sort (None | SheetSort | Unset): Sort by column and direction.
         filter_ (Filter | None | Unset): Filter tree.

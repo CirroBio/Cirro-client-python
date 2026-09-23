@@ -40,6 +40,7 @@ from .cloud_quota import CloudQuota
 from .column_data_type import ColumnDataType
 from .column_def import ColumnDef
 from .column_definition import ColumnDefinition
+from .column_relationship import ColumnRelationship
 from .compute_environment_configuration import ComputeEnvironmentConfiguration
 from .compute_environment_configuration_input import ComputeEnvironmentConfigurationInput
 from .compute_environment_configuration_input_properties import ComputeEnvironmentConfigurationInputProperties
@@ -47,7 +48,9 @@ from .compute_environment_configuration_properties import ComputeEnvironmentConf
 from .config_source import ConfigSource
 from .contact import Contact
 from .contact_input import ContactInput
+from .cost_component import CostComponent
 from .cost_response import CostResponse
+from .cost_source import CostSource
 from .create_project_access_request import CreateProjectAccessRequest
 from .create_reference_request import CreateReferenceRequest
 from .create_response import CreateResponse
@@ -70,6 +73,7 @@ from .dataset_detail import DatasetDetail
 from .dataset_detail_info import DatasetDetailInfo
 from .dataset_detail_params import DatasetDetailParams
 from .dataset_detail_source_sample_files_map import DatasetDetailSourceSampleFilesMap
+from .dataset_source import DatasetSource
 from .dataset_viz import DatasetViz
 from .delete_rows_request import DeleteRowsRequest
 from .discussion import Discussion
@@ -79,11 +83,13 @@ from .entity import Entity
 from .entity_type import EntityType
 from .environment_type import EnvironmentType
 from .error_message import ErrorMessage
+from .execution_mode import ExecutionMode
 from .executor import Executor
 from .feature_flags import FeatureFlags
 from .file_def import FileDef
 from .file_entry import FileEntry
 from .file_entry_metadata import FileEntryMetadata
+from .file_format import FileFormat
 from .file_mapping_rule import FileMappingRule
 from .file_name_match import FileNameMatch
 from .file_name_pattern import FileNamePattern
@@ -94,7 +100,6 @@ from .filter_operator import FilterOperator
 from .foreign_key_ref import ForeignKeyRef
 from .form_schema import FormSchema
 from .form_schema_form import FormSchemaForm
-from .form_schema_metadata_requirements import FormSchemaMetadataRequirements
 from .form_schema_ui import FormSchemaUi
 from .fulfillment_response import FulfillmentResponse
 from .generate_sftp_credentials_request import GenerateSftpCredentialsRequest
@@ -118,6 +123,10 @@ from .governance_type import GovernanceType
 from .group_cost import GroupCost
 from .import_data_request import ImportDataRequest
 from .import_data_request_download_method import ImportDataRequestDownloadMethod
+from .ingest_conflict_mode import IngestConflictMode
+from .input_file_requirement import InputFileRequirement
+from .input_file_requirement_examples import InputFileRequirementExamples
+from .input_file_requirement_schema import InputFileRequirementSchema
 from .insert_rows_request import InsertRowsRequest
 from .invite_user_request import InviteUserRequest
 from .invite_user_response import InviteUserResponse
@@ -137,6 +146,7 @@ from .move_dataset_input import MoveDatasetInput
 from .move_dataset_response import MoveDatasetResponse
 from .named_item import NamedItem
 from .paginated_response_app_registration_dto import PaginatedResponseAppRegistrationDto
+from .paginated_response_audit_event_dto import PaginatedResponseAuditEventDto
 from .paginated_response_dataset_list_dto import PaginatedResponseDatasetListDto
 from .paginated_response_discussion import PaginatedResponseDiscussion
 from .paginated_response_message import PaginatedResponseMessage
@@ -153,6 +163,10 @@ from .principal_type import PrincipalType
 from .process import Process
 from .process_detail import ProcessDetail
 from .process_documentation import ProcessDocumentation
+from .process_parameter_schema import ProcessParameterSchema
+from .process_parameter_schema_form import ProcessParameterSchemaForm
+from .process_parameter_schema_input_file_requirements import ProcessParameterSchemaInputFileRequirements
+from .process_parameter_schema_ui import ProcessParameterSchemaUi
 from .process_resource import ProcessResource
 from .process_resource_content import ProcessResourceContent
 from .process_revision import ProcessRevision
@@ -165,7 +179,9 @@ from .project_access_request import ProjectAccessRequest
 from .project_access_type import ProjectAccessType
 from .project_create_options import ProjectCreateOptions
 from .project_detail import ProjectDetail
+from .project_file import ProjectFile
 from .project_file_access_request import ProjectFileAccessRequest
+from .project_file_query_response import ProjectFileQueryResponse
 from .project_input import ProjectInput
 from .project_metrics import ProjectMetrics
 from .project_permission_set import ProjectPermissionSet
@@ -185,16 +201,14 @@ from .request_quota_increase_response import RequestQuotaIncreaseResponse
 from .request_status import RequestStatus
 from .requirement_fulfillment_input import RequirementFulfillmentInput
 from .requirement_input import RequirementInput
-from .resources_info import ResourcesInfo
 from .row_insert import RowInsert
 from .row_insert_values import RowInsertValues
-from .row_insert_values_additional_property import RowInsertValuesAdditionalProperty
 from .row_update import RowUpdate
 from .row_update_values import RowUpdateValues
-from .row_update_values_additional_property import RowUpdateValuesAdditionalProperty
 from .run_analysis_request import RunAnalysisRequest
 from .run_analysis_request_params import RunAnalysisRequestParams
 from .run_analysis_request_source_sample_files_map import RunAnalysisRequestSourceSampleFilesMap
+from .run_analysis_request_structured_file_inputs import RunAnalysisRequestStructuredFileInputs
 from .sample import Sample
 from .sample_metadata import SampleMetadata
 from .sample_request import SampleRequest
@@ -232,6 +246,8 @@ from .source_column import SourceColumn
 from .sql_sort_order import SqlSortOrder
 from .status import Status
 from .stop_execution_response import StopExecutionResponse
+from .structured_file_input import StructuredFileInput
+from .structured_file_input_data_item import StructuredFileInputDataItem
 from .structured_view_query_request import StructuredViewQueryRequest
 from .sync_status import SyncStatus
 from .system_info_response import SystemInfoResponse
@@ -242,6 +258,7 @@ from .task import Task
 from .task_cost import TaskCost
 from .task_log_source import TaskLogSource
 from .tenant_info import TenantInfo
+from .tenant_metrics import TenantMetrics
 from .update_dataset_request import UpdateDatasetRequest
 from .update_rows_request import UpdateRowsRequest
 from .update_user_request import UpdateUserRequest
@@ -251,8 +268,10 @@ from .user import User
 from .user_detail import UserDetail
 from .user_project_assignment import UserProjectAssignment
 from .user_settings import UserSettings
+from .user_status import UserStatus
 from .validate_file_name_patterns_request import ValidateFileNamePatternsRequest
 from .validate_file_requirements_request import ValidateFileRequirementsRequest
+from .version_info import VersionInfo
 from .version_specification import VersionSpecification
 from .view_join import ViewJoin
 from .view_sheet_input import ViewSheetInput
@@ -306,6 +325,7 @@ __all__ = (
     "ColumnDataType",
     "ColumnDef",
     "ColumnDefinition",
+    "ColumnRelationship",
     "ComputeEnvironmentConfiguration",
     "ComputeEnvironmentConfigurationInput",
     "ComputeEnvironmentConfigurationInputProperties",
@@ -313,7 +333,9 @@ __all__ = (
     "ConfigSource",
     "Contact",
     "ContactInput",
+    "CostComponent",
     "CostResponse",
+    "CostSource",
     "CreateProjectAccessRequest",
     "CreateReferenceRequest",
     "CreateResponse",
@@ -336,6 +358,7 @@ __all__ = (
     "DatasetDetailInfo",
     "DatasetDetailParams",
     "DatasetDetailSourceSampleFilesMap",
+    "DatasetSource",
     "DatasetViz",
     "DeleteRowsRequest",
     "Discussion",
@@ -345,11 +368,13 @@ __all__ = (
     "EntityType",
     "EnvironmentType",
     "ErrorMessage",
+    "ExecutionMode",
     "Executor",
     "FeatureFlags",
     "FileDef",
     "FileEntry",
     "FileEntryMetadata",
+    "FileFormat",
     "FileMappingRule",
     "FileNameMatch",
     "FileNamePattern",
@@ -360,7 +385,6 @@ __all__ = (
     "ForeignKeyRef",
     "FormSchema",
     "FormSchemaForm",
-    "FormSchemaMetadataRequirements",
     "FormSchemaUi",
     "FulfillmentResponse",
     "GenerateSftpCredentialsRequest",
@@ -384,6 +408,10 @@ __all__ = (
     "GroupCost",
     "ImportDataRequest",
     "ImportDataRequestDownloadMethod",
+    "IngestConflictMode",
+    "InputFileRequirement",
+    "InputFileRequirementExamples",
+    "InputFileRequirementSchema",
     "InsertRowsRequest",
     "InviteUserRequest",
     "InviteUserResponse",
@@ -403,6 +431,7 @@ __all__ = (
     "MoveDatasetResponse",
     "NamedItem",
     "PaginatedResponseAppRegistrationDto",
+    "PaginatedResponseAuditEventDto",
     "PaginatedResponseDatasetListDto",
     "PaginatedResponseDiscussion",
     "PaginatedResponseMessage",
@@ -419,6 +448,10 @@ __all__ = (
     "Process",
     "ProcessDetail",
     "ProcessDocumentation",
+    "ProcessParameterSchema",
+    "ProcessParameterSchemaForm",
+    "ProcessParameterSchemaInputFileRequirements",
+    "ProcessParameterSchemaUi",
     "ProcessResource",
     "ProcessResourceContent",
     "ProcessRevision",
@@ -431,7 +464,9 @@ __all__ = (
     "ProjectAccessType",
     "ProjectCreateOptions",
     "ProjectDetail",
+    "ProjectFile",
     "ProjectFileAccessRequest",
+    "ProjectFileQueryResponse",
     "ProjectInput",
     "ProjectMetrics",
     "ProjectPermissionSet",
@@ -451,16 +486,14 @@ __all__ = (
     "RequestStatus",
     "RequirementFulfillmentInput",
     "RequirementInput",
-    "ResourcesInfo",
     "RowInsert",
     "RowInsertValues",
-    "RowInsertValuesAdditionalProperty",
     "RowUpdate",
     "RowUpdateValues",
-    "RowUpdateValuesAdditionalProperty",
     "RunAnalysisRequest",
     "RunAnalysisRequestParams",
     "RunAnalysisRequestSourceSampleFilesMap",
+    "RunAnalysisRequestStructuredFileInputs",
     "Sample",
     "SampleMetadata",
     "SampleRequest",
@@ -498,6 +531,8 @@ __all__ = (
     "SqlSortOrder",
     "Status",
     "StopExecutionResponse",
+    "StructuredFileInput",
+    "StructuredFileInputDataItem",
     "StructuredViewQueryRequest",
     "SyncStatus",
     "SystemInfoResponse",
@@ -508,6 +543,7 @@ __all__ = (
     "TaskCost",
     "TaskLogSource",
     "TenantInfo",
+    "TenantMetrics",
     "UpdateDatasetRequest",
     "UpdateRowsRequest",
     "UpdateUserRequest",
@@ -517,8 +553,10 @@ __all__ = (
     "UserDetail",
     "UserProjectAssignment",
     "UserSettings",
+    "UserStatus",
     "ValidateFileNamePatternsRequest",
     "ValidateFileRequirementsRequest",
+    "VersionInfo",
     "VersionSpecification",
     "ViewJoin",
     "ViewSheetInput",

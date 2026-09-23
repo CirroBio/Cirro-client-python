@@ -19,7 +19,10 @@ class RowUpdate:
     Attributes:
         row_id (int): _row_id, which serves as the primary key to identify the row. Example: 42.
         values (RowUpdateValues): Column name and new value. Only the columns included here are updated; all other
-            columns on the row are left unchanged. At least one entry is required. Example: {'icd_code': 'G65'}.
+            columns on the row are left unchanged. At least one entry is required. Cirro-typed columns hold Cirro URIs of
+            the form cirro:<tenantId>:<projectId>:data:<datasetId>/<path> (scope segments may be empty; path relative to the
+            dataset's data directory). CIRRO_DATASET cells reference the dataset itself and have no path. Example:
+            {'icd_code': 'G65', 'sample_file': 'cirro::1a1a...:data:d4f1.../results/sample1.fastq.gz'}.
     """
 
     row_id: int

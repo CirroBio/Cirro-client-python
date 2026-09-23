@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.user_status import UserStatus
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -28,6 +29,7 @@ class UserDetail:
         project_assignments (list[UserProjectAssignment]):
         global_roles (list[str]):
         settings (UserSettings): Additional settings for the user
+        status (UserStatus):
         phone (None | str | Unset):
         orcid_id (None | str | Unset):
         job_title (None | str | Unset):
@@ -45,6 +47,7 @@ class UserDetail:
     project_assignments: list[UserProjectAssignment]
     global_roles: list[str]
     settings: UserSettings
+    status: UserStatus
     phone: None | str | Unset = UNSET
     orcid_id: None | str | Unset = UNSET
     job_title: None | str | Unset = UNSET
@@ -72,6 +75,8 @@ class UserDetail:
         global_roles = self.global_roles
 
         settings = self.settings.to_dict()
+
+        status = self.status.value
 
         phone: None | str | Unset
         if isinstance(self.phone, Unset):
@@ -139,6 +144,7 @@ class UserDetail:
                 "projectAssignments": project_assignments,
                 "globalRoles": global_roles,
                 "settings": settings,
+                "status": status,
             }
         )
         if phone is not UNSET:
@@ -184,6 +190,8 @@ class UserDetail:
         global_roles = cast(list[str], d.pop("globalRoles"))
 
         settings = UserSettings.from_dict(d.pop("settings"))
+
+        status = UserStatus(d.pop("status"))
 
         def _parse_phone(data: object) -> None | str | Unset:
             if data is None:
@@ -289,6 +297,7 @@ class UserDetail:
             project_assignments=project_assignments,
             global_roles=global_roles,
             settings=settings,
+            status=status,
             phone=phone,
             orcid_id=orcid_id,
             job_title=job_title,

@@ -40,6 +40,7 @@ class ProjectDetail:
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
         deployed_at (datetime.datetime | None | Unset):
+        deployed_version (None | str | Unset):
     """
 
     id: str
@@ -58,6 +59,7 @@ class ProjectDetail:
     created_at: datetime.datetime
     updated_at: datetime.datetime
     deployed_at: datetime.datetime | None | Unset = UNSET
+    deployed_version: None | str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -105,6 +107,12 @@ class ProjectDetail:
         else:
             deployed_at = self.deployed_at
 
+        deployed_version: None | str | Unset
+        if isinstance(self.deployed_version, Unset):
+            deployed_version = UNSET
+        else:
+            deployed_version = self.deployed_version
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -128,6 +136,8 @@ class ProjectDetail:
         )
         if deployed_at is not UNSET:
             field_dict["deployedAt"] = deployed_at
+        if deployed_version is not UNSET:
+            field_dict["deployedVersion"] = deployed_version
 
         return field_dict
 
@@ -196,6 +206,15 @@ class ProjectDetail:
 
         deployed_at = _parse_deployed_at(d.pop("deployedAt", UNSET))
 
+        def _parse_deployed_version(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        deployed_version = _parse_deployed_version(d.pop("deployedVersion", UNSET))
+
         project_detail = cls(
             id=id,
             name=name,
@@ -213,6 +232,7 @@ class ProjectDetail:
             created_at=created_at,
             updated_at=updated_at,
             deployed_at=deployed_at,
+            deployed_version=deployed_version,
         )
 
         project_detail.additional_properties = d

@@ -5,8 +5,8 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.audit_event import AuditEvent
 from ...models.list_events_entity_type import ListEventsEntityType
+from ...models.paginated_response_audit_event_dto import PaginatedResponseAuditEventDto
 from ...types import UNSET, Response, Unset
 
 
@@ -15,6 +15,8 @@ def _get_kwargs(
     username: str | Unset = UNSET,
     entity_type: ListEventsEntityType | Unset = UNSET,
     entity_id: str | Unset = UNSET,
+    limit: int | Unset = 5000,
+    next_token: str | Unset = UNSET,
 ) -> dict[str, Any]:
     params: dict[str, Any] = {}
 
@@ -28,6 +30,10 @@ def _get_kwargs(
 
     params["entityId"] = entity_id
 
+    params["limit"] = limit
+
+    params["nextToken"] = next_token
+
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: dict[str, Any] = {
@@ -39,21 +45,16 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> list[AuditEvent] | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> PaginatedResponseAuditEventDto | None:
     if response.status_code == 200:
-        response_200 = []
-        _response_200 = response.json()
-        for response_200_item_data in _response_200:
-            response_200_item = AuditEvent.from_dict(response_200_item_data)
-
-            response_200.append(response_200_item)
+        response_200 = PaginatedResponseAuditEventDto.from_dict(response.json())
 
         return response_200
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[list[AuditEvent]]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[PaginatedResponseAuditEventDto]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -68,7 +69,9 @@ def sync_detailed(
     username: str | Unset = UNSET,
     entity_type: ListEventsEntityType | Unset = UNSET,
     entity_id: str | Unset = UNSET,
-) -> Response[list[AuditEvent]]:
+    limit: int | Unset = 5000,
+    next_token: str | Unset = UNSET,
+) -> Response[PaginatedResponseAuditEventDto]:
     """List audit events
 
      Gets a list of audit events
@@ -77,6 +80,8 @@ def sync_detailed(
         username (str | Unset):
         entity_type (ListEventsEntityType | Unset):
         entity_id (str | Unset):
+        limit (int | Unset):  Default: 5000.
+        next_token (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -84,13 +89,15 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[list[AuditEvent]]
+        Response[PaginatedResponseAuditEventDto]
     """
 
     kwargs = _get_kwargs(
         username=username,
         entity_type=entity_type,
         entity_id=entity_id,
+        limit=limit,
+        next_token=next_token,
     )
 
     response = client.get_httpx_client().request(
@@ -107,7 +114,9 @@ def sync(
     username: str | Unset = UNSET,
     entity_type: ListEventsEntityType | Unset = UNSET,
     entity_id: str | Unset = UNSET,
-) -> list[AuditEvent] | None:
+    limit: int | Unset = 5000,
+    next_token: str | Unset = UNSET,
+) -> PaginatedResponseAuditEventDto | None:
     """List audit events
 
      Gets a list of audit events
@@ -116,6 +125,8 @@ def sync(
         username (str | Unset):
         entity_type (ListEventsEntityType | Unset):
         entity_id (str | Unset):
+        limit (int | Unset):  Default: 5000.
+        next_token (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -123,7 +134,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        list[AuditEvent]
+        PaginatedResponseAuditEventDto
     """
 
     try:
@@ -132,6 +143,8 @@ def sync(
             username=username,
             entity_type=entity_type,
             entity_id=entity_id,
+            limit=limit,
+            next_token=next_token,
         ).parsed
     except errors.NotFoundException:
         return None
@@ -143,7 +156,9 @@ async def asyncio_detailed(
     username: str | Unset = UNSET,
     entity_type: ListEventsEntityType | Unset = UNSET,
     entity_id: str | Unset = UNSET,
-) -> Response[list[AuditEvent]]:
+    limit: int | Unset = 5000,
+    next_token: str | Unset = UNSET,
+) -> Response[PaginatedResponseAuditEventDto]:
     """List audit events
 
      Gets a list of audit events
@@ -152,6 +167,8 @@ async def asyncio_detailed(
         username (str | Unset):
         entity_type (ListEventsEntityType | Unset):
         entity_id (str | Unset):
+        limit (int | Unset):  Default: 5000.
+        next_token (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -159,13 +176,15 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[list[AuditEvent]]
+        Response[PaginatedResponseAuditEventDto]
     """
 
     kwargs = _get_kwargs(
         username=username,
         entity_type=entity_type,
         entity_id=entity_id,
+        limit=limit,
+        next_token=next_token,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
@@ -179,7 +198,9 @@ async def asyncio(
     username: str | Unset = UNSET,
     entity_type: ListEventsEntityType | Unset = UNSET,
     entity_id: str | Unset = UNSET,
-) -> list[AuditEvent] | None:
+    limit: int | Unset = 5000,
+    next_token: str | Unset = UNSET,
+) -> PaginatedResponseAuditEventDto | None:
     """List audit events
 
      Gets a list of audit events
@@ -188,6 +209,8 @@ async def asyncio(
         username (str | Unset):
         entity_type (ListEventsEntityType | Unset):
         entity_id (str | Unset):
+        limit (int | Unset):  Default: 5000.
+        next_token (str | Unset):
         client (Client): instance of the API client
 
     Raises:
@@ -195,7 +218,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        list[AuditEvent]
+        PaginatedResponseAuditEventDto
     """
 
     try:
@@ -205,6 +228,8 @@ async def asyncio(
                 username=username,
                 entity_type=entity_type,
                 entity_id=entity_id,
+                limit=limit,
+                next_token=next_token,
             )
         ).parsed
     except errors.NotFoundException:

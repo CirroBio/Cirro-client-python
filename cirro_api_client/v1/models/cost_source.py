@@ -1,12 +1,9 @@
 from enum import Enum
 
 
-class SheetCreationMode(str, Enum):
-    FILE = "FILE"
-    SCRATCH = "SCRATCH"
-    STANDARD = "STANDARD"
-    SYSTEM = "SYSTEM"
-    TEMPLATE = "TEMPLATE"
+class CostSource(str, Enum):
+    BATCH_MODEL = "BATCH_MODEL"
+    OMICS_MANIFEST = "OMICS_MANIFEST"
     UNKNOWN = "UNKNOWN"
     """ This is a fallback value for when the value is not known, do not use this value when making requests """
 

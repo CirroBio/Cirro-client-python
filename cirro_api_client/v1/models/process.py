@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.execution_mode import ExecutionMode
 from ..models.executor import Executor
 from ..types import UNSET, Unset
 
@@ -34,6 +35,7 @@ class Process:
         is_tenant_wide (bool): Whether the process is shared with the tenant
         allow_multiple_sources (bool): Whether the pipeline is allowed to have multiple dataset sources
         uses_sample_sheet (bool): Whether the pipeline uses the Cirro-provided sample sheet
+        execution_modes (list[ExecutionMode]): Execution modes the pipeline supports
         is_archived (bool): Whether the process is marked as archived
         tags (list[Tag]):
         category (str | Unset): Category of the process Example: Microbial Analysis.
@@ -42,6 +44,8 @@ class Process:
             https://docs.cirro.bio/pipelines/catalog_targeted_sequencing/#crispr-screen-analysis.
         file_requirements_message (str | Unset): Description of the files to be uploaded (optional)
         owner (None | str | Unset): Username of the pipeline creator (blank if Cirro curated)
+        maintainers (list[str] | None | Unset): Other users who maintain the pipeline. These users have access to manage
+            the pipeline (blank if Cirro curated)
         created_at (datetime.datetime | Unset): When the process was created (does not reflect the pipeline code)
         updated_at (datetime.datetime | Unset): When the process was updated (does not reflect the pipeline code)
     """
@@ -57,6 +61,7 @@ class Process:
     is_tenant_wide: bool
     allow_multiple_sources: bool
     uses_sample_sheet: bool
+    execution_modes: list[ExecutionMode]
     is_archived: bool
     tags: list[Tag]
     category: str | Unset = UNSET
@@ -64,6 +69,7 @@ class Process:
     documentation_url: str | Unset = UNSET
     file_requirements_message: str | Unset = UNSET
     owner: None | str | Unset = UNSET
+    maintainers: list[str] | None | Unset = UNSET
     created_at: datetime.datetime | Unset = UNSET
     updated_at: datetime.datetime | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -91,6 +97,11 @@ class Process:
 
         uses_sample_sheet = self.uses_sample_sheet
 
+        execution_modes = []
+        for execution_modes_item_data in self.execution_modes:
+            execution_modes_item = execution_modes_item_data.value
+            execution_modes.append(execution_modes_item)
+
         is_archived = self.is_archived
 
         tags = []
@@ -111,6 +122,15 @@ class Process:
             owner = UNSET
         else:
             owner = self.owner
+
+        maintainers: list[str] | None | Unset
+        if isinstance(self.maintainers, Unset):
+            maintainers = UNSET
+        elif isinstance(self.maintainers, list):
+            maintainers = self.maintainers
+
+        else:
+            maintainers = self.maintainers
 
         created_at: str | Unset = UNSET
         if not isinstance(self.created_at, Unset):
@@ -135,6 +155,7 @@ class Process:
                 "isTenantWide": is_tenant_wide,
                 "allowMultipleSources": allow_multiple_sources,
                 "usesSampleSheet": uses_sample_sheet,
+                "executionModes": execution_modes,
                 "isArchived": is_archived,
                 "tags": tags,
             }
@@ -149,6 +170,8 @@ class Process:
             field_dict["fileRequirementsMessage"] = file_requirements_message
         if owner is not UNSET:
             field_dict["owner"] = owner
+        if maintainers is not UNSET:
+            field_dict["maintainers"] = maintainers
         if created_at is not UNSET:
             field_dict["createdAt"] = created_at
         if updated_at is not UNSET:
@@ -183,6 +206,13 @@ class Process:
 
         uses_sample_sheet = d.pop("usesSampleSheet")
 
+        execution_modes = []
+        _execution_modes = d.pop("executionModes")
+        for execution_modes_item_data in _execution_modes:
+            execution_modes_item = ExecutionMode(execution_modes_item_data)
+
+            execution_modes.append(execution_modes_item)
+
         is_archived = d.pop("isArchived")
 
         tags = []
@@ -208,6 +238,23 @@ class Process:
             return cast(None | str | Unset, data)
 
         owner = _parse_owner(d.pop("owner", UNSET))
+
+        def _parse_maintainers(data: object) -> list[str] | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, list):
+                    raise TypeError()
+                maintainers_type_0 = cast(list[str], data)
+
+                return maintainers_type_0
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(list[str] | None | Unset, data)
+
+        maintainers = _parse_maintainers(d.pop("maintainers", UNSET))
 
         _created_at = d.pop("createdAt", UNSET)
         created_at: datetime.datetime | Unset
@@ -235,6 +282,7 @@ class Process:
             is_tenant_wide=is_tenant_wide,
             allow_multiple_sources=allow_multiple_sources,
             uses_sample_sheet=uses_sample_sheet,
+            execution_modes=execution_modes,
             is_archived=is_archived,
             tags=tags,
             category=category,
@@ -242,6 +290,7 @@ class Process:
             documentation_url=documentation_url,
             file_requirements_message=file_requirements_message,
             owner=owner,
+            maintainers=maintainers,
             created_at=created_at,
             updated_at=updated_at,
         )

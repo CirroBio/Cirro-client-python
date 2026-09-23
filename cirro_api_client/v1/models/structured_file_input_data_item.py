@@ -6,12 +6,12 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="FormSchemaMetadataRequirements")
+T = TypeVar("T", bound="StructuredFileInputDataItem")
 
 
 @_attrs_define
-class FormSchemaMetadataRequirements:
-    """JSONSchema for validating sample metadata"""
+class StructuredFileInputDataItem:
+    """Row data serialized to CSV/TSV/JSON per the input file format."""
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -25,10 +25,10 @@ class FormSchemaMetadataRequirements:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        form_schema_metadata_requirements = cls()
+        structured_file_input_data_item = cls()
 
-        form_schema_metadata_requirements.additional_properties = d
-        return form_schema_metadata_requirements
+        structured_file_input_data_item.additional_properties = d
+        return structured_file_input_data_item
 
     @property
     def additional_keys(self) -> list[str]:

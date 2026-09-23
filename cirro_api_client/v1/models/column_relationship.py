@@ -1,48 +1,43 @@
 from __future__ import annotations
 
-import datetime
 from collections.abc import Mapping
 from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="ResourcesInfo")
+T = TypeVar("T", bound="ColumnRelationship")
 
 
 @_attrs_define
-class ResourcesInfo:
-    """
+class ColumnRelationship:
+    """A foreign-key relationship from a column in this sheet to a column in another sheet.
+
     Attributes:
-        commit (str):
-        date (datetime.datetime):
-        repository (str):
-        source_version (str):
+        column_name (str): Name of the foreign-key column on this sheet.
+        target_sheet_id (str): ID of the sheet this relationship references.
+        target_column_name (str): Name of the referenced column in the target sheet.
     """
 
-    commit: str
-    date: datetime.datetime
-    repository: str
-    source_version: str
+    column_name: str
+    target_sheet_id: str
+    target_column_name: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        commit = self.commit
+        column_name = self.column_name
 
-        date = self.date.isoformat()
+        target_sheet_id = self.target_sheet_id
 
-        repository = self.repository
-
-        source_version = self.source_version
+        target_column_name = self.target_column_name
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "commit": commit,
-                "date": date,
-                "repository": repository,
-                "sourceVersion": source_version,
+                "columnName": column_name,
+                "targetSheetId": target_sheet_id,
+                "targetColumnName": target_column_name,
             }
         )
 
@@ -51,23 +46,20 @@ class ResourcesInfo:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        commit = d.pop("commit")
+        column_name = d.pop("columnName")
 
-        date = datetime.datetime.fromisoformat(d.pop("date"))
+        target_sheet_id = d.pop("targetSheetId")
 
-        repository = d.pop("repository")
+        target_column_name = d.pop("targetColumnName")
 
-        source_version = d.pop("sourceVersion")
-
-        resources_info = cls(
-            commit=commit,
-            date=date,
-            repository=repository,
-            source_version=source_version,
+        column_relationship = cls(
+            column_name=column_name,
+            target_sheet_id=target_sheet_id,
+            target_column_name=target_column_name,
         )
 
-        resources_info.additional_properties = d
-        return resources_info
+        column_relationship.additional_properties = d
+        return column_relationship
 
     @property
     def additional_keys(self) -> list[str]:

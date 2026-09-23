@@ -1,38 +1,33 @@
 from http import HTTPStatus
 from typing import Any
-from urllib.parse import quote
 
 import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.process_parameter_schema import ProcessParameterSchema
+from ...models.tenant_metrics import TenantMetrics
 from ...types import Response
 
 
-def _get_kwargs(
-    process_id: str,
-) -> dict[str, Any]:
+def _get_kwargs() -> dict[str, Any]:
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": "/processes/{process_id}/parameters".format(
-            process_id=quote(str(process_id), safe=""),
-        ),
+        "url": "/metrics-summary",
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> ProcessParameterSchema | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> TenantMetrics | None:
     if response.status_code == 200:
-        response_200 = ProcessParameterSchema.from_dict(response.json())
+        response_200 = TenantMetrics.from_dict(response.json())
 
         return response_200
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[ProcessParameterSchema]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[TenantMetrics]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -42,29 +37,22 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Pro
 
 
 def sync_detailed(
-    process_id: str,
     *,
     client: Client,
-) -> Response[ProcessParameterSchema]:
-    """Get process parameters
+) -> Response[TenantMetrics]:
+    """Get tenant metric summary
 
-     Retrieves the input parameters for a process
-
-    Args:
-        process_id (str):
-        client (Client): instance of the API client
+     Retrieves summary of tenant (item counts)
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ProcessParameterSchema]
+        Response[TenantMetrics]
     """
 
-    kwargs = _get_kwargs(
-        process_id=process_id,
-    )
+    kwargs = _get_kwargs()
 
     response = client.get_httpx_client().request(
         auth=client.get_auth(),
@@ -75,29 +63,23 @@ def sync_detailed(
 
 
 def sync(
-    process_id: str,
     *,
     client: Client,
-) -> ProcessParameterSchema | None:
-    """Get process parameters
+) -> TenantMetrics | None:
+    """Get tenant metric summary
 
-     Retrieves the input parameters for a process
-
-    Args:
-        process_id (str):
-        client (Client): instance of the API client
+     Retrieves summary of tenant (item counts)
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ProcessParameterSchema
+        TenantMetrics
     """
 
     try:
         return sync_detailed(
-            process_id=process_id,
             client=client,
         ).parsed
     except errors.NotFoundException:
@@ -105,29 +87,22 @@ def sync(
 
 
 async def asyncio_detailed(
-    process_id: str,
     *,
     client: Client,
-) -> Response[ProcessParameterSchema]:
-    """Get process parameters
+) -> Response[TenantMetrics]:
+    """Get tenant metric summary
 
-     Retrieves the input parameters for a process
-
-    Args:
-        process_id (str):
-        client (Client): instance of the API client
+     Retrieves summary of tenant (item counts)
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ProcessParameterSchema]
+        Response[TenantMetrics]
     """
 
-    kwargs = _get_kwargs(
-        process_id=process_id,
-    )
+    kwargs = _get_kwargs()
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
 
@@ -135,30 +110,24 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    process_id: str,
     *,
     client: Client,
-) -> ProcessParameterSchema | None:
-    """Get process parameters
+) -> TenantMetrics | None:
+    """Get tenant metric summary
 
-     Retrieves the input parameters for a process
-
-    Args:
-        process_id (str):
-        client (Client): instance of the API client
+     Retrieves summary of tenant (item counts)
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ProcessParameterSchema
+        TenantMetrics
     """
 
     try:
         return (
             await asyncio_detailed(
-                process_id=process_id,
                 client=client,
             )
         ).parsed

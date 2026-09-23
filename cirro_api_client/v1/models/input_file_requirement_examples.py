@@ -6,12 +6,12 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="FormSchemaUi")
+T = TypeVar("T", bound="InputFileRequirementExamples")
 
 
 @_attrs_define
-class FormSchemaUi:
-    """Describes how the form should be rendered on the UI, see rjsf"""
+class InputFileRequirementExamples:
+    """ """
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -25,10 +25,10 @@ class FormSchemaUi:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        form_schema_ui = cls()
+        input_file_requirement_examples = cls()
 
-        form_schema_ui.additional_properties = d
-        return form_schema_ui
+        input_file_requirement_examples.additional_properties = d
+        return input_file_requirement_examples
 
     @property
     def additional_keys(self) -> list[str]:

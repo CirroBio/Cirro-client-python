@@ -7,6 +7,7 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.config_source import ConfigSource
+from ..models.execution_mode import ExecutionMode
 from ..models.executor import Executor
 from ..types import UNSET, Unset
 
@@ -39,9 +40,11 @@ class CustomProcessInput:
             https://docs.cirro.bio/pipelines/catalog_targeted_sequencing/#crispr-screen-analysis.
         file_requirements_message (None | str | Unset): Description of the files to be uploaded (optional)
         pipeline_code (None | PipelineCode | Unset):
+        maintainers (list[str] | None | Unset):
         is_tenant_wide (bool | Unset): Whether the process is shared with the tenant
         allow_multiple_sources (bool | Unset): Whether the pipeline is allowed to have multiple dataset sources
         uses_sample_sheet (bool | Unset): Whether the pipeline uses the Cirro-provided sample sheet
+        execution_modes (list[ExecutionMode] | None | Unset): Execution modes the pipeline supports
         custom_settings (CustomPipelineSettings | None | Unset):
         file_mapping_rules (list[FileMappingRule] | None | Unset):
         tags (list[Tag] | None | Unset):
@@ -60,9 +63,11 @@ class CustomProcessInput:
     documentation_url: None | str | Unset = UNSET
     file_requirements_message: None | str | Unset = UNSET
     pipeline_code: None | PipelineCode | Unset = UNSET
+    maintainers: list[str] | None | Unset = UNSET
     is_tenant_wide: bool | Unset = UNSET
     allow_multiple_sources: bool | Unset = UNSET
     uses_sample_sheet: bool | Unset = UNSET
+    execution_modes: list[ExecutionMode] | None | Unset = UNSET
     custom_settings: CustomPipelineSettings | None | Unset = UNSET
     file_mapping_rules: list[FileMappingRule] | None | Unset = UNSET
     tags: list[Tag] | None | Unset = UNSET
@@ -115,11 +120,32 @@ class CustomProcessInput:
         else:
             pipeline_code = self.pipeline_code
 
+        maintainers: list[str] | None | Unset
+        if isinstance(self.maintainers, Unset):
+            maintainers = UNSET
+        elif isinstance(self.maintainers, list):
+            maintainers = self.maintainers
+
+        else:
+            maintainers = self.maintainers
+
         is_tenant_wide = self.is_tenant_wide
 
         allow_multiple_sources = self.allow_multiple_sources
 
         uses_sample_sheet = self.uses_sample_sheet
+
+        execution_modes: list[str] | None | Unset
+        if isinstance(self.execution_modes, Unset):
+            execution_modes = UNSET
+        elif isinstance(self.execution_modes, list):
+            execution_modes = []
+            for execution_modes_type_0_item_data in self.execution_modes:
+                execution_modes_type_0_item = execution_modes_type_0_item_data.value
+                execution_modes.append(execution_modes_type_0_item)
+
+        else:
+            execution_modes = self.execution_modes
 
         custom_settings: dict[str, Any] | None | Unset
         if isinstance(self.custom_settings, Unset):
@@ -184,12 +210,16 @@ class CustomProcessInput:
             field_dict["fileRequirementsMessage"] = file_requirements_message
         if pipeline_code is not UNSET:
             field_dict["pipelineCode"] = pipeline_code
+        if maintainers is not UNSET:
+            field_dict["maintainers"] = maintainers
         if is_tenant_wide is not UNSET:
             field_dict["isTenantWide"] = is_tenant_wide
         if allow_multiple_sources is not UNSET:
             field_dict["allowMultipleSources"] = allow_multiple_sources
         if uses_sample_sheet is not UNSET:
             field_dict["usesSampleSheet"] = uses_sample_sheet
+        if execution_modes is not UNSET:
+            field_dict["executionModes"] = execution_modes
         if custom_settings is not UNSET:
             field_dict["customSettings"] = custom_settings
         if file_mapping_rules is not UNSET:
@@ -269,11 +299,50 @@ class CustomProcessInput:
 
         pipeline_code = _parse_pipeline_code(d.pop("pipelineCode", UNSET))
 
+        def _parse_maintainers(data: object) -> list[str] | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, list):
+                    raise TypeError()
+                maintainers_type_0 = cast(list[str], data)
+
+                return maintainers_type_0
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(list[str] | None | Unset, data)
+
+        maintainers = _parse_maintainers(d.pop("maintainers", UNSET))
+
         is_tenant_wide = d.pop("isTenantWide", UNSET)
 
         allow_multiple_sources = d.pop("allowMultipleSources", UNSET)
 
         uses_sample_sheet = d.pop("usesSampleSheet", UNSET)
+
+        def _parse_execution_modes(data: object) -> list[ExecutionMode] | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, list):
+                    raise TypeError()
+                execution_modes_type_0 = []
+                _execution_modes_type_0 = data
+                for execution_modes_type_0_item_data in _execution_modes_type_0:
+                    execution_modes_type_0_item = ExecutionMode(execution_modes_type_0_item_data)
+
+                    execution_modes_type_0.append(execution_modes_type_0_item)
+
+                return execution_modes_type_0
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(list[ExecutionMode] | None | Unset, data)
+
+        execution_modes = _parse_execution_modes(d.pop("executionModes", UNSET))
 
         def _parse_custom_settings(data: object) -> CustomPipelineSettings | None | Unset:
             if data is None:
@@ -366,9 +435,11 @@ class CustomProcessInput:
             documentation_url=documentation_url,
             file_requirements_message=file_requirements_message,
             pipeline_code=pipeline_code,
+            maintainers=maintainers,
             is_tenant_wide=is_tenant_wide,
             allow_multiple_sources=allow_multiple_sources,
             uses_sample_sheet=uses_sample_sheet,
+            execution_modes=execution_modes,
             custom_settings=custom_settings,
             file_mapping_rules=file_mapping_rules,
             tags=tags,

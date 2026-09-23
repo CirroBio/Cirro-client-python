@@ -6,6 +6,8 @@ from typing import Any, TypeVar, cast
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.user_status import UserStatus
+
 T = TypeVar("T", bound="User")
 
 
@@ -19,6 +21,7 @@ class User:
         department (str):
         job_title (str):
         global_roles (list[str]):
+        status (UserStatus):
     """
 
     name: str
@@ -27,6 +30,7 @@ class User:
     department: str
     job_title: str
     global_roles: list[str]
+    status: UserStatus
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -42,6 +46,8 @@ class User:
 
         global_roles = self.global_roles
 
+        status = self.status.value
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -52,6 +58,7 @@ class User:
                 "department": department,
                 "jobTitle": job_title,
                 "globalRoles": global_roles,
+                "status": status,
             }
         )
 
@@ -72,6 +79,8 @@ class User:
 
         global_roles = cast(list[str], d.pop("globalRoles"))
 
+        status = UserStatus(d.pop("status"))
+
         user = cls(
             name=name,
             username=username,
@@ -79,6 +88,7 @@ class User:
             department=department,
             job_title=job_title,
             global_roles=global_roles,
+            status=status,
         )
 
         user.additional_properties = d

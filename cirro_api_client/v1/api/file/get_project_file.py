@@ -6,33 +6,35 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.process_parameter_schema import ProcessParameterSchema
+from ...models.project_file import ProjectFile
 from ...types import Response
 
 
 def _get_kwargs(
-    process_id: str,
+    project_id: str,
+    dataset_id: str,
 ) -> dict[str, Any]:
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": "/processes/{process_id}/parameters".format(
-            process_id=quote(str(process_id), safe=""),
+        "url": "/projects/{project_id}/files/{dataset_id}/path".format(
+            project_id=quote(str(project_id), safe=""),
+            dataset_id=quote(str(dataset_id), safe=""),
         ),
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> ProcessParameterSchema | None:
+def _parse_response(*, client: Client, response: httpx.Response) -> ProjectFile | None:
     if response.status_code == 200:
-        response_200 = ProcessParameterSchema.from_dict(response.json())
+        response_200 = ProjectFile.from_dict(response.json())
 
         return response_200
 
     errors.handle_error_response(response, client.raise_on_unexpected_status)
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[ProcessParameterSchema]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[ProjectFile]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -42,16 +44,18 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Pro
 
 
 def sync_detailed(
-    process_id: str,
+    project_id: str,
+    dataset_id: str,
     *,
     client: Client,
-) -> Response[ProcessParameterSchema]:
-    """Get process parameters
+) -> Response[ProjectFile]:
+    """Get a project file
 
-     Retrieves the input parameters for a process
+     Fetches details on a single file given its dataset ID and relative path.
 
     Args:
-        process_id (str):
+        project_id (str):
+        dataset_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -59,11 +63,12 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ProcessParameterSchema]
+        Response[ProjectFile]
     """
 
     kwargs = _get_kwargs(
-        process_id=process_id,
+        project_id=project_id,
+        dataset_id=dataset_id,
     )
 
     response = client.get_httpx_client().request(
@@ -75,16 +80,18 @@ def sync_detailed(
 
 
 def sync(
-    process_id: str,
+    project_id: str,
+    dataset_id: str,
     *,
     client: Client,
-) -> ProcessParameterSchema | None:
-    """Get process parameters
+) -> ProjectFile | None:
+    """Get a project file
 
-     Retrieves the input parameters for a process
+     Fetches details on a single file given its dataset ID and relative path.
 
     Args:
-        process_id (str):
+        project_id (str):
+        dataset_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -92,12 +99,13 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ProcessParameterSchema
+        ProjectFile
     """
 
     try:
         return sync_detailed(
-            process_id=process_id,
+            project_id=project_id,
+            dataset_id=dataset_id,
             client=client,
         ).parsed
     except errors.NotFoundException:
@@ -105,16 +113,18 @@ def sync(
 
 
 async def asyncio_detailed(
-    process_id: str,
+    project_id: str,
+    dataset_id: str,
     *,
     client: Client,
-) -> Response[ProcessParameterSchema]:
-    """Get process parameters
+) -> Response[ProjectFile]:
+    """Get a project file
 
-     Retrieves the input parameters for a process
+     Fetches details on a single file given its dataset ID and relative path.
 
     Args:
-        process_id (str):
+        project_id (str):
+        dataset_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -122,11 +132,12 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ProcessParameterSchema]
+        Response[ProjectFile]
     """
 
     kwargs = _get_kwargs(
-        process_id=process_id,
+        project_id=project_id,
+        dataset_id=dataset_id,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
@@ -135,16 +146,18 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    process_id: str,
+    project_id: str,
+    dataset_id: str,
     *,
     client: Client,
-) -> ProcessParameterSchema | None:
-    """Get process parameters
+) -> ProjectFile | None:
+    """Get a project file
 
-     Retrieves the input parameters for a process
+     Fetches details on a single file given its dataset ID and relative path.
 
     Args:
-        process_id (str):
+        project_id (str):
+        dataset_id (str):
         client (Client): instance of the API client
 
     Raises:
@@ -152,13 +165,14 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ProcessParameterSchema
+        ProjectFile
     """
 
     try:
         return (
             await asyncio_detailed(
-                process_id=process_id,
+                project_id=project_id,
+                dataset_id=dataset_id,
                 client=client,
             )
         ).parsed

@@ -27,6 +27,8 @@ class FeatureFlags:
         custom_workspace_roles_enabled (bool):
         orcid_integration_enabled (bool):
         cirro_stored_pipeline_config_enabled (bool):
+        omics_private_workflows_enabled (bool):
+        dashboards_enabled (bool):
     """
 
     zip_service_enabled: bool
@@ -43,6 +45,8 @@ class FeatureFlags:
     custom_workspace_roles_enabled: bool
     orcid_integration_enabled: bool
     cirro_stored_pipeline_config_enabled: bool
+    omics_private_workflows_enabled: bool
+    dashboards_enabled: bool
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -74,6 +78,10 @@ class FeatureFlags:
 
         cirro_stored_pipeline_config_enabled = self.cirro_stored_pipeline_config_enabled
 
+        omics_private_workflows_enabled = self.omics_private_workflows_enabled
+
+        dashboards_enabled = self.dashboards_enabled
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -92,6 +100,8 @@ class FeatureFlags:
                 "customWorkspaceRolesEnabled": custom_workspace_roles_enabled,
                 "orcidIntegrationEnabled": orcid_integration_enabled,
                 "cirroStoredPipelineConfigEnabled": cirro_stored_pipeline_config_enabled,
+                "omicsPrivateWorkflowsEnabled": omics_private_workflows_enabled,
+                "dashboardsEnabled": dashboards_enabled,
             }
         )
 
@@ -128,6 +138,10 @@ class FeatureFlags:
 
         cirro_stored_pipeline_config_enabled = d.pop("cirroStoredPipelineConfigEnabled")
 
+        omics_private_workflows_enabled = d.pop("omicsPrivateWorkflowsEnabled")
+
+        dashboards_enabled = d.pop("dashboardsEnabled")
+
         feature_flags = cls(
             zip_service_enabled=zip_service_enabled,
             sftp_enabled=sftp_enabled,
@@ -143,6 +157,8 @@ class FeatureFlags:
             custom_workspace_roles_enabled=custom_workspace_roles_enabled,
             orcid_integration_enabled=orcid_integration_enabled,
             cirro_stored_pipeline_config_enabled=cirro_stored_pipeline_config_enabled,
+            omics_private_workflows_enabled=omics_private_workflows_enabled,
+            dashboards_enabled=dashboards_enabled,
         )
 
         feature_flags.additional_properties = d

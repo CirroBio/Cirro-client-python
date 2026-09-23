@@ -31,6 +31,11 @@ class WorkspaceComputeConfig:
             injected into the container at runtime. Keys must be non-blank. Example: {'ENV_MODE': 'production', 'LOG_LEVEL':
             'debug'}.
         local_port (int | Unset): User-facing web server port (http). Example: 8080.
+        command (list[str] | None | Unset): Command to run in the container, overriding the image's default CMD.
+            Provided as a list of executable and arguments (exec form). When null, the image's default is used. Example:
+            ['python', 'app.py'].
+        user (None | str | Unset): Linux user the container process runs as, as a username or numeric UID (optionally
+            'user:group' or 'uid:gid'). When null, the image's default user is used. Example: 1000:1000.
         custom_task_role_arn (None | str | Unset): Custom IAM task role for the workspace ECS task. Provide either a
             role name (e.g., 'Cirro-CustomWorkspaceTaskRole-{projectShortCode}-{name}') or a full ARN (e.g.,
             'arn:aws:iam::{accountId}:role/Cirro-CustomWorkspaceTaskRole-{projectShortCode}-{name}'). Must belong to the
@@ -45,6 +50,8 @@ class WorkspaceComputeConfig:
     gpu_model: None | str | Unset = UNSET
     environment_variables: None | Unset | WorkspaceComputeConfigEnvironmentVariables = UNSET
     local_port: int | Unset = UNSET
+    command: list[str] | None | Unset = UNSET
+    user: None | str | Unset = UNSET
     custom_task_role_arn: None | str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -77,6 +84,21 @@ class WorkspaceComputeConfig:
 
         local_port = self.local_port
 
+        command: list[str] | None | Unset
+        if isinstance(self.command, Unset):
+            command = UNSET
+        elif isinstance(self.command, list):
+            command = self.command
+
+        else:
+            command = self.command
+
+        user: None | str | Unset
+        if isinstance(self.user, Unset):
+            user = UNSET
+        else:
+            user = self.user
+
         custom_task_role_arn: None | str | Unset
         if isinstance(self.custom_task_role_arn, Unset):
             custom_task_role_arn = UNSET
@@ -104,6 +126,10 @@ class WorkspaceComputeConfig:
             field_dict["environmentVariables"] = environment_variables
         if local_port is not UNSET:
             field_dict["localPort"] = local_port
+        if command is not UNSET:
+            field_dict["command"] = command
+        if user is not UNSET:
+            field_dict["user"] = user
         if custom_task_role_arn is not UNSET:
             field_dict["customTaskRoleArn"] = custom_task_role_arn
 
@@ -152,6 +178,32 @@ class WorkspaceComputeConfig:
 
         local_port = d.pop("localPort", UNSET)
 
+        def _parse_command(data: object) -> list[str] | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, list):
+                    raise TypeError()
+                command_type_0 = cast(list[str], data)
+
+                return command_type_0
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(list[str] | None | Unset, data)
+
+        command = _parse_command(d.pop("command", UNSET))
+
+        def _parse_user(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        user = _parse_user(d.pop("user", UNSET))
+
         def _parse_custom_task_role_arn(data: object) -> None | str | Unset:
             if data is None:
                 return data
@@ -170,6 +222,8 @@ class WorkspaceComputeConfig:
             gpu_model=gpu_model,
             environment_variables=environment_variables,
             local_port=local_port,
+            command=command,
+            user=user,
             custom_task_role_arn=custom_task_role_arn,
         )
 

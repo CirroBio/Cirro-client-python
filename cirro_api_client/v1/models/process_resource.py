@@ -6,7 +6,6 @@ class ProcessResource(str, Enum):
     DOCUMENTATION = "documentation"
     FORM = "form"
     INPUT = "input"
-    METADATA = "metadata"
     OUTPUT = "output"
     PREPROCESS = "preprocess"
     UNKNOWN = "UNKNOWN"

@@ -6,12 +6,12 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="SheetQueryResponseRowsItem")
+T = TypeVar("T", bound="GetTaskLineageResponseLineage")
 
 
 @_attrs_define
-class SheetQueryResponseRowsItem:
-    """ """
+class GetTaskLineageResponseLineage:
+    """Lineage specific to the executor"""
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -25,10 +25,10 @@ class SheetQueryResponseRowsItem:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        sheet_query_response_rows_item = cls()
+        get_task_lineage_response_lineage = cls()
 
-        sheet_query_response_rows_item.additional_properties = d
-        return sheet_query_response_rows_item
+        get_task_lineage_response_lineage.additional_properties = d
+        return get_task_lineage_response_lineage
 
     @property
     def additional_keys(self) -> list[str]:

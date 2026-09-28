@@ -18,6 +18,7 @@ class Task:
     Attributes:
         name (str):
         status (str):
+        hash_ (None | str | Unset): Hash of task from executor (used for caching)
         native_job_id (None | str | Unset): Job ID on the underlying execution environment (i.e. AWS Batch ID)
         status_message (None | str | Unset):
         requested_at (datetime.datetime | None | Unset):
@@ -32,6 +33,7 @@ class Task:
 
     name: str
     status: str
+    hash_: None | str | Unset = UNSET
     native_job_id: None | str | Unset = UNSET
     status_message: None | str | Unset = UNSET
     requested_at: datetime.datetime | None | Unset = UNSET
@@ -48,6 +50,12 @@ class Task:
         name = self.name
 
         status = self.status
+
+        hash_: None | str | Unset
+        if isinstance(self.hash_, Unset):
+            hash_ = UNSET
+        else:
+            hash_ = self.hash_
 
         native_job_id: None | str | Unset
         if isinstance(self.native_job_id, Unset):
@@ -123,6 +131,8 @@ class Task:
                 "status": status,
             }
         )
+        if hash_ is not UNSET:
+            field_dict["hash"] = hash_
         if native_job_id is not UNSET:
             field_dict["nativeJobId"] = native_job_id
         if status_message is not UNSET:
@@ -152,6 +162,15 @@ class Task:
         name = d.pop("name")
 
         status = d.pop("status")
+
+        def _parse_hash_(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        hash_ = _parse_hash_(d.pop("hash", UNSET))
 
         def _parse_native_job_id(data: object) -> None | str | Unset:
             if data is None:
@@ -270,6 +289,7 @@ class Task:
         task = cls(
             name=name,
             status=status,
+            hash_=hash_,
             native_job_id=native_job_id,
             status_message=status_message,
             requested_at=requested_at,

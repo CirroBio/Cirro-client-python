@@ -106,6 +106,8 @@ from .generate_sftp_credentials_request import GenerateSftpCredentialsRequest
 from .get_execution_logs_response import GetExecutionLogsResponse
 from .get_project_summary_response_200 import GetProjectSummaryResponse200
 from .get_task_files_response import GetTaskFilesResponse
+from .get_task_lineage_response import GetTaskLineageResponse
+from .get_task_lineage_response_lineage import GetTaskLineageResponseLineage
 from .governance_access_type import GovernanceAccessType
 from .governance_classification import GovernanceClassification
 from .governance_contact import GovernanceContact
@@ -237,7 +239,6 @@ from .sheet_job import SheetJob
 from .sheet_job_type import SheetJobType
 from .sheet_query_request import SheetQueryRequest
 from .sheet_query_response import SheetQueryResponse
-from .sheet_query_response_rows_item import SheetQueryResponseRowsItem
 from .sheet_sort import SheetSort
 from .sheet_type import SheetType
 from .sheet_update_response import SheetUpdateResponse
@@ -391,6 +392,8 @@ __all__ = (
     "GetExecutionLogsResponse",
     "GetProjectSummaryResponse200",
     "GetTaskFilesResponse",
+    "GetTaskLineageResponse",
+    "GetTaskLineageResponseLineage",
     "GovernanceAccessType",
     "GovernanceClassification",
     "GovernanceContact",
@@ -522,7 +525,6 @@ __all__ = (
     "SheetJobType",
     "SheetQueryRequest",
     "SheetQueryResponse",
-    "SheetQueryResponseRowsItem",
     "SheetSort",
     "SheetType",
     "SheetUpdateResponse",

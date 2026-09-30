@@ -16,7 +16,8 @@ class FileDef:
     """
     Attributes:
         file_type (FileType):
-        storage_uri (str): Full S3 URI to the source file.
+        storage_uri (str): Full S3 URI to the source file. For an ingest, it must be under the sheet's staging upload
+            path.
     """
 
     file_type: FileType

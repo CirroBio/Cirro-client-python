@@ -43,6 +43,7 @@ class RunAnalysisRequest:
         environment_type (EnvironmentType | None | Unset): The type of execution environment to run the workflow in, if
             not specified, the default for the pipeline is used
         tags (list[Tag] | None | Unset): List of tags to apply to the dataset
+        disable_cache (bool | None | Unset): Disables the task run cache Default: False.
     """
 
     name: str
@@ -58,6 +59,7 @@ class RunAnalysisRequest:
     compute_environment_id: None | str | Unset = UNSET
     environment_type: EnvironmentType | None | Unset = UNSET
     tags: list[Tag] | None | Unset = UNSET
+    disable_cache: bool | None | Unset = False
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -137,6 +139,12 @@ class RunAnalysisRequest:
         else:
             tags = self.tags
 
+        disable_cache: bool | None | Unset
+        if isinstance(self.disable_cache, Unset):
+            disable_cache = UNSET
+        else:
+            disable_cache = self.disable_cache
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -164,6 +172,8 @@ class RunAnalysisRequest:
             field_dict["environmentType"] = environment_type
         if tags is not UNSET:
             field_dict["tags"] = tags
+        if disable_cache is not UNSET:
+            field_dict["disableCache"] = disable_cache
 
         return field_dict
 
@@ -302,6 +312,15 @@ class RunAnalysisRequest:
 
         tags = _parse_tags(d.pop("tags", UNSET))
 
+        def _parse_disable_cache(data: object) -> bool | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(bool | None | Unset, data)
+
+        disable_cache = _parse_disable_cache(d.pop("disableCache", UNSET))
+
         run_analysis_request = cls(
             name=name,
             process_id=process_id,
@@ -316,6 +335,7 @@ class RunAnalysisRequest:
             compute_environment_id=compute_environment_id,
             environment_type=environment_type,
             tags=tags,
+            disable_cache=disable_cache,
         )
 
         run_analysis_request.additional_properties = d

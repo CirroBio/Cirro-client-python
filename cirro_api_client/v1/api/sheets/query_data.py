@@ -57,9 +57,10 @@ def sync_detailed(
     client: Client,
     body: SheetQueryRequest,
 ) -> Response[SheetQueryResponse]:
-    """Run raw SQL against the project's sheets.
+    """Run a raw SQL query against the project's sheets
 
-     Returns executed SQL results.
+     Runs a read-only SQL query and returns a page of its results. Unqualified table names resolve across
+    every namespace in the project.
 
     Args:
         project_id (str):
@@ -93,9 +94,10 @@ def sync(
     client: Client,
     body: SheetQueryRequest,
 ) -> SheetQueryResponse | None:
-    """Run raw SQL against the project's sheets.
+    """Run a raw SQL query against the project's sheets
 
-     Returns executed SQL results.
+     Runs a read-only SQL query and returns a page of its results. Unqualified table names resolve across
+    every namespace in the project.
 
     Args:
         project_id (str):
@@ -126,9 +128,10 @@ async def asyncio_detailed(
     client: Client,
     body: SheetQueryRequest,
 ) -> Response[SheetQueryResponse]:
-    """Run raw SQL against the project's sheets.
+    """Run a raw SQL query against the project's sheets
 
-     Returns executed SQL results.
+     Runs a read-only SQL query and returns a page of its results. Unqualified table names resolve across
+    every namespace in the project.
 
     Args:
         project_id (str):
@@ -159,9 +162,10 @@ async def asyncio(
     client: Client,
     body: SheetQueryRequest,
 ) -> SheetQueryResponse | None:
-    """Run raw SQL against the project's sheets.
+    """Run a raw SQL query against the project's sheets
 
-     Returns executed SQL results.
+     Runs a read-only SQL query and returns a page of its results. Unqualified table names resolve across
+    every namespace in the project.
 
     Args:
         project_id (str):

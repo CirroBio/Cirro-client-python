@@ -12,7 +12,7 @@ from ..types import UNSET, Unset
 if TYPE_CHECKING:
     from ..models.run_analysis_request_params import RunAnalysisRequestParams
     from ..models.run_analysis_request_source_sample_files_map import RunAnalysisRequestSourceSampleFilesMap
-    from ..models.run_analysis_request_structured_inputs_type_0 import RunAnalysisRequestStructuredInputsType0
+    from ..models.run_analysis_request_structured_file_inputs import RunAnalysisRequestStructuredFileInputs
     from ..models.tag import Tag
 
 
@@ -35,7 +35,7 @@ class RunAnalysisRequest:
             the lists are file paths to include.
         resume_dataset_id (None | str | Unset): Used for caching task execution. If the parameters are the same as the
             dataset specified here, it will re-use the output to minimize duplicate work
-        structured_inputs (None | RunAnalysisRequestStructuredInputsType0 | Unset): Structured file inputs used in the
+        structured_inputs (None | RunAnalysisRequestStructuredFileInputs | Unset): Structured file inputs used in the
             workflow (can be empty), keyed by the input name on the process `structuredInputs`
         notification_emails (list[str] | None | Unset): Emails to notify upon workflow success or failure
         compute_environment_id (None | str | Unset): The compute environment where to run the workflow, if not
@@ -54,7 +54,7 @@ class RunAnalysisRequest:
     source_sample_ids: list[str] | None | Unset = UNSET
     source_sample_files_map: None | RunAnalysisRequestSourceSampleFilesMap | Unset = UNSET
     resume_dataset_id: None | str | Unset = UNSET
-    structured_inputs: None | RunAnalysisRequestStructuredInputsType0 | Unset = UNSET
+    structured_inputs: None | RunAnalysisRequestStructuredFileInputs | Unset = UNSET
     notification_emails: list[str] | None | Unset = UNSET
     compute_environment_id: None | str | Unset = UNSET
     environment_type: EnvironmentType | None | Unset = UNSET
@@ -64,7 +64,7 @@ class RunAnalysisRequest:
 
     def to_dict(self) -> dict[str, Any]:
         from ..models.run_analysis_request_source_sample_files_map import RunAnalysisRequestSourceSampleFilesMap
-        from ..models.run_analysis_request_structured_inputs_type_0 import RunAnalysisRequestStructuredInputsType0
+        from ..models.run_analysis_request_structured_file_inputs import RunAnalysisRequestStructuredFileInputs
 
         name = self.name
 
@@ -106,7 +106,7 @@ class RunAnalysisRequest:
         structured_inputs: dict[str, Any] | None | Unset
         if isinstance(self.structured_inputs, Unset):
             structured_inputs = UNSET
-        elif isinstance(self.structured_inputs, RunAnalysisRequestStructuredInputsType0):
+        elif isinstance(self.structured_inputs, RunAnalysisRequestStructuredFileInputs):
             structured_inputs = self.structured_inputs.to_dict()
         else:
             structured_inputs = self.structured_inputs
@@ -189,7 +189,7 @@ class RunAnalysisRequest:
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.run_analysis_request_params import RunAnalysisRequestParams
         from ..models.run_analysis_request_source_sample_files_map import RunAnalysisRequestSourceSampleFilesMap
-        from ..models.run_analysis_request_structured_inputs_type_0 import RunAnalysisRequestStructuredInputsType0
+        from ..models.run_analysis_request_structured_file_inputs import RunAnalysisRequestStructuredFileInputs
         from ..models.tag import Tag
 
         d = dict(src_dict)
@@ -253,7 +253,7 @@ class RunAnalysisRequest:
 
         resume_dataset_id = _parse_resume_dataset_id(d.pop("resumeDatasetId", UNSET))
 
-        def _parse_structured_inputs(data: object) -> None | RunAnalysisRequestStructuredInputsType0 | Unset:
+        def _parse_structured_inputs(data: object) -> None | RunAnalysisRequestStructuredFileInputs | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -261,12 +261,12 @@ class RunAnalysisRequest:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                structured_inputs_type_0 = RunAnalysisRequestStructuredInputsType0.from_dict(data)
+                structured_inputs_type_0 = RunAnalysisRequestStructuredFileInputs.from_dict(data)
 
                 return structured_inputs_type_0
             except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(None | RunAnalysisRequestStructuredInputsType0 | Unset, data)
+            return cast(None | RunAnalysisRequestStructuredFileInputs | Unset, data)
 
         structured_inputs = _parse_structured_inputs(d.pop("structuredInputs", UNSET))
 

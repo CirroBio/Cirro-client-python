@@ -27,7 +27,7 @@ class_overrides:
     class_name: GovernanceRequirementProjectFileMap
   RunAnalysisRequestSourceSampleFilesMapType0:
     class_name: RunAnalysisRequestSourceSampleFilesMap
-  RunAnalysisRequestStructuredFileInputsType0:
+  RunAnalysisRequestStructuredInputsType0:
     class_name: RunAnalysisRequestStructuredFileInputs
   InputFileRequirementExamplesType0Item:
     class_name: InputFileRequirementExamples

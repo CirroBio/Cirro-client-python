@@ -208,7 +208,7 @@ from .row_update_values import RowUpdateValues
 from .run_analysis_request import RunAnalysisRequest
 from .run_analysis_request_params import RunAnalysisRequestParams
 from .run_analysis_request_source_sample_files_map import RunAnalysisRequestSourceSampleFilesMap
-from .run_analysis_request_structured_inputs_type_0 import RunAnalysisRequestStructuredInputsType0
+from .run_analysis_request_structured_file_inputs import RunAnalysisRequestStructuredFileInputs
 from .sample import Sample
 from .sample_metadata import SampleMetadata
 from .sample_request import SampleRequest
@@ -500,7 +500,7 @@ __all__ = (
     "RunAnalysisRequest",
     "RunAnalysisRequestParams",
     "RunAnalysisRequestSourceSampleFilesMap",
-    "RunAnalysisRequestStructuredInputsType0",
+    "RunAnalysisRequestStructuredFileInputs",
     "Sample",
     "SampleMetadata",
     "SampleRequest",

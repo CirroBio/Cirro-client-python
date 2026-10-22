@@ -10,11 +10,11 @@ if TYPE_CHECKING:
     from ..models.structured_input import StructuredInput
 
 
-T = TypeVar("T", bound="RunAnalysisRequestStructuredInputsType0")
+T = TypeVar("T", bound="RunAnalysisRequestStructuredFileInputs")
 
 
 @_attrs_define
-class RunAnalysisRequestStructuredInputsType0:
+class RunAnalysisRequestStructuredFileInputs:
     """Structured file inputs used in the workflow (can be empty), keyed by the input name on the process
     `structuredInputs`
 
@@ -35,7 +35,7 @@ class RunAnalysisRequestStructuredInputsType0:
         from ..models.structured_input import StructuredInput
 
         d = dict(src_dict)
-        run_analysis_request_structured_inputs_type_0 = cls()
+        run_analysis_request_structured_file_inputs = cls()
 
         additional_properties = {}
         for prop_name, prop_dict in d.items():
@@ -43,8 +43,8 @@ class RunAnalysisRequestStructuredInputsType0:
 
             additional_properties[prop_name] = additional_property
 
-        run_analysis_request_structured_inputs_type_0.additional_properties = additional_properties
-        return run_analysis_request_structured_inputs_type_0
+        run_analysis_request_structured_file_inputs.additional_properties = additional_properties
+        return run_analysis_request_structured_file_inputs
 
     @property
     def additional_keys(self) -> list[str]:

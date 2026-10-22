@@ -14,6 +14,7 @@ from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.column_relationship import ColumnRelationship
+    from ..models.entity import Entity
     from ..models.tag import Tag
 
 
@@ -39,6 +40,8 @@ class Sheet:
         updated_at (datetime.datetime):
         tags (list[Tag]):
         column_relationships (list[ColumnRelationship]):
+        mapping_targets (list[Entity]): Targets with a saved column mapping from this sheet; the mappings themselves
+            come from the mappings endpoints
         total_row_count (int | None | Unset): Stored row count, maintained on writes. Null for virtual views, whose rows
             are only counted at query time.
     """
@@ -58,6 +61,7 @@ class Sheet:
     updated_at: datetime.datetime
     tags: list[Tag]
     column_relationships: list[ColumnRelationship]
+    mapping_targets: list[Entity]
     total_row_count: int | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -98,6 +102,11 @@ class Sheet:
             column_relationships_item = column_relationships_item_data.to_dict()
             column_relationships.append(column_relationships_item)
 
+        mapping_targets = []
+        for mapping_targets_item_data in self.mapping_targets:
+            mapping_targets_item = mapping_targets_item_data.to_dict()
+            mapping_targets.append(mapping_targets_item)
+
         total_row_count: int | None | Unset
         if isinstance(self.total_row_count, Unset):
             total_row_count = UNSET
@@ -123,6 +132,7 @@ class Sheet:
                 "updatedAt": updated_at,
                 "tags": tags,
                 "columnRelationships": column_relationships,
+                "mappingTargets": mapping_targets,
             }
         )
         if total_row_count is not UNSET:
@@ -133,6 +143,7 @@ class Sheet:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.column_relationship import ColumnRelationship
+        from ..models.entity import Entity
         from ..models.tag import Tag
 
         d = dict(src_dict)
@@ -176,6 +187,13 @@ class Sheet:
 
             column_relationships.append(column_relationships_item)
 
+        mapping_targets = []
+        _mapping_targets = d.pop("mappingTargets")
+        for mapping_targets_item_data in _mapping_targets:
+            mapping_targets_item = Entity.from_dict(mapping_targets_item_data)
+
+            mapping_targets.append(mapping_targets_item)
+
         def _parse_total_row_count(data: object) -> int | None | Unset:
             if data is None:
                 return data
@@ -201,6 +219,7 @@ class Sheet:
             updated_at=updated_at,
             tags=tags,
             column_relationships=column_relationships,
+            mapping_targets=mapping_targets,
             total_row_count=total_row_count,
         )
 

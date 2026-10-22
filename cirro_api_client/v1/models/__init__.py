@@ -40,6 +40,7 @@ from .cloud_quota import CloudQuota
 from .column_data_type import ColumnDataType
 from .column_def import ColumnDef
 from .column_definition import ColumnDefinition
+from .column_mapping import ColumnMapping
 from .column_relationship import ColumnRelationship
 from .compute_environment_configuration import ComputeEnvironmentConfiguration
 from .compute_environment_configuration_input import ComputeEnvironmentConfigurationInput
@@ -126,9 +127,6 @@ from .group_cost import GroupCost
 from .import_data_request import ImportDataRequest
 from .import_data_request_download_method import ImportDataRequestDownloadMethod
 from .ingest_conflict_mode import IngestConflictMode
-from .input_file_requirement import InputFileRequirement
-from .input_file_requirement_examples import InputFileRequirementExamples
-from .input_file_requirement_schema import InputFileRequirementSchema
 from .insert_rows_request import InsertRowsRequest
 from .invite_user_request import InviteUserRequest
 from .invite_user_response import InviteUserResponse
@@ -167,7 +165,7 @@ from .process_detail import ProcessDetail
 from .process_documentation import ProcessDocumentation
 from .process_parameter_schema import ProcessParameterSchema
 from .process_parameter_schema_form import ProcessParameterSchemaForm
-from .process_parameter_schema_input_file_requirements import ProcessParameterSchemaInputFileRequirements
+from .process_parameter_schema_structured_inputs import ProcessParameterSchemaStructuredInputs
 from .process_parameter_schema_ui import ProcessParameterSchemaUi
 from .process_resource import ProcessResource
 from .process_resource_content import ProcessResourceContent
@@ -240,6 +238,7 @@ from .sheet_job_type import SheetJobType
 from .sheet_query_request import SheetQueryRequest
 from .sheet_query_response import SheetQueryResponse
 from .sheet_sort import SheetSort
+from .sheet_template import SheetTemplate
 from .sheet_type import SheetType
 from .sheet_update_response import SheetUpdateResponse
 from .sort_order import SortOrder
@@ -247,14 +246,20 @@ from .source_column import SourceColumn
 from .sql_sort_order import SqlSortOrder
 from .status import Status
 from .stop_execution_response import StopExecutionResponse
-from .structured_file_input import StructuredFileInput
-from .structured_file_input_data_item import StructuredFileInputDataItem
+from .structured_input import StructuredInput
+from .structured_input_data_item import StructuredInputDataItem
+from .structured_input_definition import StructuredInputDefinition
+from .structured_input_definition_examples import StructuredInputDefinitionExamples
+from .structured_input_definition_schema import StructuredInputDefinitionSchema
+from .structured_input_file import StructuredInputFile
 from .structured_view_query_request import StructuredViewQueryRequest
 from .sync_status import SyncStatus
 from .system_info_response import SystemInfoResponse
 from .table import Table
 from .table_sheet_input import TableSheetInput
 from .tag import Tag
+from .target_mapping import TargetMapping
+from .target_mapping_input import TargetMappingInput
 from .task import Task
 from .task_cost import TaskCost
 from .task_log_source import TaskLogSource
@@ -272,6 +277,7 @@ from .user_settings import UserSettings
 from .user_status import UserStatus
 from .validate_file_name_patterns_request import ValidateFileNamePatternsRequest
 from .validate_file_requirements_request import ValidateFileRequirementsRequest
+from .value_mapping import ValueMapping
 from .version_info import VersionInfo
 from .version_specification import VersionSpecification
 from .view_join import ViewJoin
@@ -326,6 +332,7 @@ __all__ = (
     "ColumnDataType",
     "ColumnDef",
     "ColumnDefinition",
+    "ColumnMapping",
     "ColumnRelationship",
     "ComputeEnvironmentConfiguration",
     "ComputeEnvironmentConfigurationInput",
@@ -412,9 +419,6 @@ __all__ = (
     "ImportDataRequest",
     "ImportDataRequestDownloadMethod",
     "IngestConflictMode",
-    "InputFileRequirement",
-    "InputFileRequirementExamples",
-    "InputFileRequirementSchema",
     "InsertRowsRequest",
     "InviteUserRequest",
     "InviteUserResponse",
@@ -453,7 +457,7 @@ __all__ = (
     "ProcessDocumentation",
     "ProcessParameterSchema",
     "ProcessParameterSchemaForm",
-    "ProcessParameterSchemaInputFileRequirements",
+    "ProcessParameterSchemaStructuredInputs",
     "ProcessParameterSchemaUi",
     "ProcessResource",
     "ProcessResourceContent",
@@ -526,6 +530,7 @@ __all__ = (
     "SheetQueryRequest",
     "SheetQueryResponse",
     "SheetSort",
+    "SheetTemplate",
     "SheetType",
     "SheetUpdateResponse",
     "SortOrder",
@@ -533,14 +538,20 @@ __all__ = (
     "SqlSortOrder",
     "Status",
     "StopExecutionResponse",
-    "StructuredFileInput",
-    "StructuredFileInputDataItem",
+    "StructuredInput",
+    "StructuredInputDataItem",
+    "StructuredInputDefinition",
+    "StructuredInputDefinitionExamples",
+    "StructuredInputDefinitionSchema",
+    "StructuredInputFile",
     "StructuredViewQueryRequest",
     "SyncStatus",
     "SystemInfoResponse",
     "Table",
     "TableSheetInput",
     "Tag",
+    "TargetMapping",
+    "TargetMappingInput",
     "Task",
     "TaskCost",
     "TaskLogSource",
@@ -558,6 +569,7 @@ __all__ = (
     "UserStatus",
     "ValidateFileNamePatternsRequest",
     "ValidateFileRequirementsRequest",
+    "ValueMapping",
     "VersionInfo",
     "VersionSpecification",
     "ViewJoin",

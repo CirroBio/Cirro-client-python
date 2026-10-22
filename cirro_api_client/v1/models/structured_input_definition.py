@@ -10,32 +10,33 @@ from ..models.file_format import FileFormat
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.input_file_requirement_examples import InputFileRequirementExamples
-    from ..models.input_file_requirement_schema import InputFileRequirementSchema
+    from ..models.structured_input_definition_examples import StructuredInputDefinitionExamples
+    from ..models.structured_input_definition_schema import StructuredInputDefinitionSchema
 
 
-T = TypeVar("T", bound="InputFileRequirement")
+T = TypeVar("T", bound="StructuredInputDefinition")
 
 
 @_attrs_define
-class InputFileRequirement:
+class StructuredInputDefinition:
     """Defines a structured file that a pipeline accepts as an input, and the schema used to validate it
 
     Attributes:
         file_format (FileFormat): Determines the file format used when passing the schema-validated input to the
             pipeline.
-             - CSV: comma-delimited, one row per object, header row taken from the schema's property order.
+             - CSV: comma-delimited, one row per object, header row taken from the order properties first appear in the
+            rows.
                Nested objects/arrays within a row are JSON-encoded inline as a single cell value (not recommended).
              - TSV: same as CSV, but tab-delimited.
              - JSON: the row objects are written out unmodified as a JSON array (no flattening).
-        schema (InputFileRequirementSchema): JSONSchema representation of the input file contents
-        examples (list[InputFileRequirementExamples] | None | Unset): Example rows of data conforming to the schema,
-            shown to the user as a starting point
+        schema (StructuredInputDefinitionSchema): JSONSchema representation of the input file contents
+        examples (list[StructuredInputDefinitionExamples] | None | Unset): Example rows of data conforming to the
+            schema, shown to the user as a starting point
     """
 
     file_format: FileFormat
-    schema: InputFileRequirementSchema
-    examples: list[InputFileRequirementExamples] | None | Unset = UNSET
+    schema: StructuredInputDefinitionSchema
+    examples: list[StructuredInputDefinitionExamples] | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -70,15 +71,15 @@ class InputFileRequirement:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.input_file_requirement_examples import InputFileRequirementExamples
-        from ..models.input_file_requirement_schema import InputFileRequirementSchema
+        from ..models.structured_input_definition_examples import StructuredInputDefinitionExamples
+        from ..models.structured_input_definition_schema import StructuredInputDefinitionSchema
 
         d = dict(src_dict)
         file_format = FileFormat(d.pop("fileFormat"))
 
-        schema = InputFileRequirementSchema.from_dict(d.pop("schema"))
+        schema = StructuredInputDefinitionSchema.from_dict(d.pop("schema"))
 
-        def _parse_examples(data: object) -> list[InputFileRequirementExamples] | None | Unset:
+        def _parse_examples(data: object) -> list[StructuredInputDefinitionExamples] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -89,25 +90,25 @@ class InputFileRequirement:
                 examples_type_0 = []
                 _examples_type_0 = data
                 for examples_type_0_item_data in _examples_type_0:
-                    examples_type_0_item = InputFileRequirementExamples.from_dict(examples_type_0_item_data)
+                    examples_type_0_item = StructuredInputDefinitionExamples.from_dict(examples_type_0_item_data)
 
                     examples_type_0.append(examples_type_0_item)
 
                 return examples_type_0
             except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(list[InputFileRequirementExamples] | None | Unset, data)
+            return cast(list[StructuredInputDefinitionExamples] | None | Unset, data)
 
         examples = _parse_examples(d.pop("examples", UNSET))
 
-        input_file_requirement = cls(
+        structured_input_definition = cls(
             file_format=file_format,
             schema=schema,
             examples=examples,
         )
 
-        input_file_requirement.additional_properties = d
-        return input_file_requirement
+        structured_input_definition.additional_properties = d
+        return structured_input_definition
 
     @property
     def additional_keys(self) -> list[str]:

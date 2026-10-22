@@ -44,6 +44,8 @@ class CustomProcessInput:
         is_tenant_wide (bool | Unset): Whether the process is shared with the tenant
         allow_multiple_sources (bool | Unset): Whether the pipeline is allowed to have multiple dataset sources
         uses_sample_sheet (bool | Unset): Whether the pipeline uses the Cirro-provided sample sheet
+        requires_internet (bool | Unset): Whether the pipeline requires Internet access to function (only applicable to
+            HealthOmics)
         execution_modes (list[ExecutionMode] | None | Unset): Execution modes the pipeline supports
         custom_settings (CustomPipelineSettings | None | Unset):
         file_mapping_rules (list[FileMappingRule] | None | Unset):
@@ -67,6 +69,7 @@ class CustomProcessInput:
     is_tenant_wide: bool | Unset = UNSET
     allow_multiple_sources: bool | Unset = UNSET
     uses_sample_sheet: bool | Unset = UNSET
+    requires_internet: bool | Unset = UNSET
     execution_modes: list[ExecutionMode] | None | Unset = UNSET
     custom_settings: CustomPipelineSettings | None | Unset = UNSET
     file_mapping_rules: list[FileMappingRule] | None | Unset = UNSET
@@ -134,6 +137,8 @@ class CustomProcessInput:
         allow_multiple_sources = self.allow_multiple_sources
 
         uses_sample_sheet = self.uses_sample_sheet
+
+        requires_internet = self.requires_internet
 
         execution_modes: list[str] | None | Unset
         if isinstance(self.execution_modes, Unset):
@@ -218,6 +223,8 @@ class CustomProcessInput:
             field_dict["allowMultipleSources"] = allow_multiple_sources
         if uses_sample_sheet is not UNSET:
             field_dict["usesSampleSheet"] = uses_sample_sheet
+        if requires_internet is not UNSET:
+            field_dict["requiresInternet"] = requires_internet
         if execution_modes is not UNSET:
             field_dict["executionModes"] = execution_modes
         if custom_settings is not UNSET:
@@ -321,6 +328,8 @@ class CustomProcessInput:
         allow_multiple_sources = d.pop("allowMultipleSources", UNSET)
 
         uses_sample_sheet = d.pop("usesSampleSheet", UNSET)
+
+        requires_internet = d.pop("requiresInternet", UNSET)
 
         def _parse_execution_modes(data: object) -> list[ExecutionMode] | None | Unset:
             if data is None:
@@ -439,6 +448,7 @@ class CustomProcessInput:
             is_tenant_wide=is_tenant_wide,
             allow_multiple_sources=allow_multiple_sources,
             uses_sample_sheet=uses_sample_sheet,
+            requires_internet=requires_internet,
             execution_modes=execution_modes,
             custom_settings=custom_settings,
             file_mapping_rules=file_mapping_rules,

@@ -27,7 +27,6 @@ class RunAnalysisRequest:
         process_id (str): Process ID of the workflow Example: process-nf-core-rnaseq-3_8.
         source_dataset_ids (list[str]): These datasets contain files that are inputs to this workflow.
         params (RunAnalysisRequestParams): Parameters used in workflow (can be empty)
-        notification_emails (list[str]): Emails to notify upon workflow success or failure
         description (None | str | Unset): Description of the dataset (optional)
         source_sample_ids (list[str] | None | Unset): Samples within the source datasets that will be used as inputs to
             this workflow. If not specified, all samples will be used.
@@ -36,8 +35,9 @@ class RunAnalysisRequest:
             the lists are file paths to include.
         resume_dataset_id (None | str | Unset): Used for caching task execution. If the parameters are the same as the
             dataset specified here, it will re-use the output to minimize duplicate work
-        structured_file_inputs (None | RunAnalysisRequestStructuredFileInputs | Unset): Structured file inputs used in
-            the workflow (can be empty), keyed by the input name on `inputFileRequirements`
+        structured_inputs (None | RunAnalysisRequestStructuredFileInputs | Unset): Structured file inputs used in the
+            workflow (can be empty), keyed by the input name on the process `structuredInputs`
+        notification_emails (list[str] | None | Unset): Emails to notify upon workflow success or failure
         compute_environment_id (None | str | Unset): The compute environment where to run the workflow, if not
             specified, it will run in AWS
         environment_type (EnvironmentType | None | Unset): The type of execution environment to run the workflow in, if
@@ -50,12 +50,12 @@ class RunAnalysisRequest:
     process_id: str
     source_dataset_ids: list[str]
     params: RunAnalysisRequestParams
-    notification_emails: list[str]
     description: None | str | Unset = UNSET
     source_sample_ids: list[str] | None | Unset = UNSET
     source_sample_files_map: None | RunAnalysisRequestSourceSampleFilesMap | Unset = UNSET
     resume_dataset_id: None | str | Unset = UNSET
-    structured_file_inputs: None | RunAnalysisRequestStructuredFileInputs | Unset = UNSET
+    structured_inputs: None | RunAnalysisRequestStructuredFileInputs | Unset = UNSET
+    notification_emails: list[str] | None | Unset = UNSET
     compute_environment_id: None | str | Unset = UNSET
     environment_type: EnvironmentType | None | Unset = UNSET
     tags: list[Tag] | None | Unset = UNSET
@@ -73,8 +73,6 @@ class RunAnalysisRequest:
         source_dataset_ids = self.source_dataset_ids
 
         params = self.params.to_dict()
-
-        notification_emails = self.notification_emails
 
         description: None | str | Unset
         if isinstance(self.description, Unset):
@@ -105,13 +103,22 @@ class RunAnalysisRequest:
         else:
             resume_dataset_id = self.resume_dataset_id
 
-        structured_file_inputs: dict[str, Any] | None | Unset
-        if isinstance(self.structured_file_inputs, Unset):
-            structured_file_inputs = UNSET
-        elif isinstance(self.structured_file_inputs, RunAnalysisRequestStructuredFileInputs):
-            structured_file_inputs = self.structured_file_inputs.to_dict()
+        structured_inputs: dict[str, Any] | None | Unset
+        if isinstance(self.structured_inputs, Unset):
+            structured_inputs = UNSET
+        elif isinstance(self.structured_inputs, RunAnalysisRequestStructuredFileInputs):
+            structured_inputs = self.structured_inputs.to_dict()
         else:
-            structured_file_inputs = self.structured_file_inputs
+            structured_inputs = self.structured_inputs
+
+        notification_emails: list[str] | None | Unset
+        if isinstance(self.notification_emails, Unset):
+            notification_emails = UNSET
+        elif isinstance(self.notification_emails, list):
+            notification_emails = self.notification_emails
+
+        else:
+            notification_emails = self.notification_emails
 
         compute_environment_id: None | str | Unset
         if isinstance(self.compute_environment_id, Unset):
@@ -153,7 +160,6 @@ class RunAnalysisRequest:
                 "processId": process_id,
                 "sourceDatasetIds": source_dataset_ids,
                 "params": params,
-                "notificationEmails": notification_emails,
             }
         )
         if description is not UNSET:
@@ -164,8 +170,10 @@ class RunAnalysisRequest:
             field_dict["sourceSampleFilesMap"] = source_sample_files_map
         if resume_dataset_id is not UNSET:
             field_dict["resumeDatasetId"] = resume_dataset_id
-        if structured_file_inputs is not UNSET:
-            field_dict["structuredFileInputs"] = structured_file_inputs
+        if structured_inputs is not UNSET:
+            field_dict["structuredInputs"] = structured_inputs
+        if notification_emails is not UNSET:
+            field_dict["notificationEmails"] = notification_emails
         if compute_environment_id is not UNSET:
             field_dict["computeEnvironmentId"] = compute_environment_id
         if environment_type is not UNSET:
@@ -192,8 +200,6 @@ class RunAnalysisRequest:
         source_dataset_ids = cast(list[str], d.pop("sourceDatasetIds"))
 
         params = RunAnalysisRequestParams.from_dict(d.pop("params"))
-
-        notification_emails = cast(list[str], d.pop("notificationEmails"))
 
         def _parse_description(data: object) -> None | str | Unset:
             if data is None:
@@ -247,7 +253,7 @@ class RunAnalysisRequest:
 
         resume_dataset_id = _parse_resume_dataset_id(d.pop("resumeDatasetId", UNSET))
 
-        def _parse_structured_file_inputs(data: object) -> None | RunAnalysisRequestStructuredFileInputs | Unset:
+        def _parse_structured_inputs(data: object) -> None | RunAnalysisRequestStructuredFileInputs | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -255,14 +261,31 @@ class RunAnalysisRequest:
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                structured_file_inputs_type_0 = RunAnalysisRequestStructuredFileInputs.from_dict(data)
+                structured_inputs_type_0 = RunAnalysisRequestStructuredFileInputs.from_dict(data)
 
-                return structured_file_inputs_type_0
+                return structured_inputs_type_0
             except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             return cast(None | RunAnalysisRequestStructuredFileInputs | Unset, data)
 
-        structured_file_inputs = _parse_structured_file_inputs(d.pop("structuredFileInputs", UNSET))
+        structured_inputs = _parse_structured_inputs(d.pop("structuredInputs", UNSET))
+
+        def _parse_notification_emails(data: object) -> list[str] | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, list):
+                    raise TypeError()
+                notification_emails_type_0 = cast(list[str], data)
+
+                return notification_emails_type_0
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(list[str] | None | Unset, data)
+
+        notification_emails = _parse_notification_emails(d.pop("notificationEmails", UNSET))
 
         def _parse_compute_environment_id(data: object) -> None | str | Unset:
             if data is None:
@@ -326,12 +349,12 @@ class RunAnalysisRequest:
             process_id=process_id,
             source_dataset_ids=source_dataset_ids,
             params=params,
-            notification_emails=notification_emails,
             description=description,
             source_sample_ids=source_sample_ids,
             source_sample_files_map=source_sample_files_map,
             resume_dataset_id=resume_dataset_id,
-            structured_file_inputs=structured_file_inputs,
+            structured_inputs=structured_inputs,
+            notification_emails=notification_emails,
             compute_environment_id=compute_environment_id,
             environment_type=environment_type,
             tags=tags,

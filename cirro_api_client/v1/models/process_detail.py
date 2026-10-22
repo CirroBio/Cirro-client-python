@@ -39,6 +39,8 @@ class ProcessDetail:
         is_tenant_wide (bool): Whether the process is shared with the tenant
         allow_multiple_sources (bool): Whether the pipeline is allowed to have multiple dataset sources
         uses_sample_sheet (bool): Whether the pipeline uses the Cirro-provided sample sheet
+        requires_internet (bool): Whether the pipeline requires Internet access to function (only applicable to
+            HealthOmics)
         execution_modes (list[ExecutionMode]): Execution modes the pipeline supports
         is_archived (bool): Whether the process is marked as archived
         tags (list[Tag]):
@@ -69,6 +71,7 @@ class ProcessDetail:
     is_tenant_wide: bool
     allow_multiple_sources: bool
     uses_sample_sheet: bool
+    requires_internet: bool
     execution_modes: list[ExecutionMode]
     is_archived: bool
     tags: list[Tag]
@@ -111,6 +114,8 @@ class ProcessDetail:
         allow_multiple_sources = self.allow_multiple_sources
 
         uses_sample_sheet = self.uses_sample_sheet
+
+        requires_internet = self.requires_internet
 
         execution_modes = []
         for execution_modes_item_data in self.execution_modes:
@@ -200,6 +205,7 @@ class ProcessDetail:
                 "isTenantWide": is_tenant_wide,
                 "allowMultipleSources": allow_multiple_sources,
                 "usesSampleSheet": uses_sample_sheet,
+                "requiresInternet": requires_internet,
                 "executionModes": execution_modes,
                 "isArchived": is_archived,
                 "tags": tags,
@@ -260,6 +266,8 @@ class ProcessDetail:
         allow_multiple_sources = d.pop("allowMultipleSources")
 
         uses_sample_sheet = d.pop("usesSampleSheet")
+
+        requires_internet = d.pop("requiresInternet")
 
         execution_modes = []
         _execution_modes = d.pop("executionModes")
@@ -395,6 +403,7 @@ class ProcessDetail:
             is_tenant_wide=is_tenant_wide,
             allow_multiple_sources=allow_multiple_sources,
             uses_sample_sheet=uses_sample_sheet,
+            requires_internet=requires_internet,
             execution_modes=execution_modes,
             is_archived=is_archived,
             tags=tags,

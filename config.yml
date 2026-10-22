@@ -29,8 +29,8 @@ class_overrides:
     class_name: RunAnalysisRequestSourceSampleFilesMap
   RunAnalysisRequestStructuredInputsType0:
     class_name: RunAnalysisRequestStructuredFileInputs
-  InputFileRequirementExamplesType0Item:
-    class_name: InputFileRequirementExamples
+  StructuredInputDefinitionExamplesType0Item:
+    class_name: StructuredInputDefinitionExamples
   WorkspaceComputeConfigEnvironmentVariablesType0:
     class_name: WorkspaceComputeConfigEnvironmentVariables
   ViewFilterValuesType0Item:

@@ -10,7 +10,7 @@ from ..models.file_format import FileFormat
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.structured_input_definition_examples_type_0_item import StructuredInputDefinitionExamplesType0Item
+    from ..models.structured_input_definition_examples import StructuredInputDefinitionExamples
     from ..models.structured_input_definition_schema import StructuredInputDefinitionSchema
 
 
@@ -30,13 +30,13 @@ class StructuredInputDefinition:
              - TSV: same as CSV, but tab-delimited.
              - JSON: the row objects are written out unmodified as a JSON array (no flattening).
         schema (StructuredInputDefinitionSchema): JSONSchema representation of the input file contents
-        examples (list[StructuredInputDefinitionExamplesType0Item] | None | Unset): Example rows of data conforming to
-            the schema, shown to the user as a starting point
+        examples (list[StructuredInputDefinitionExamples] | None | Unset): Example rows of data conforming to the
+            schema, shown to the user as a starting point
     """
 
     file_format: FileFormat
     schema: StructuredInputDefinitionSchema
-    examples: list[StructuredInputDefinitionExamplesType0Item] | None | Unset = UNSET
+    examples: list[StructuredInputDefinitionExamples] | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -71,7 +71,7 @@ class StructuredInputDefinition:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.structured_input_definition_examples_type_0_item import StructuredInputDefinitionExamplesType0Item
+        from ..models.structured_input_definition_examples import StructuredInputDefinitionExamples
         from ..models.structured_input_definition_schema import StructuredInputDefinitionSchema
 
         d = dict(src_dict)
@@ -79,7 +79,7 @@ class StructuredInputDefinition:
 
         schema = StructuredInputDefinitionSchema.from_dict(d.pop("schema"))
 
-        def _parse_examples(data: object) -> list[StructuredInputDefinitionExamplesType0Item] | None | Unset:
+        def _parse_examples(data: object) -> list[StructuredInputDefinitionExamples] | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -90,16 +90,14 @@ class StructuredInputDefinition:
                 examples_type_0 = []
                 _examples_type_0 = data
                 for examples_type_0_item_data in _examples_type_0:
-                    examples_type_0_item = StructuredInputDefinitionExamplesType0Item.from_dict(
-                        examples_type_0_item_data
-                    )
+                    examples_type_0_item = StructuredInputDefinitionExamples.from_dict(examples_type_0_item_data)
 
                     examples_type_0.append(examples_type_0_item)
 
                 return examples_type_0
             except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(list[StructuredInputDefinitionExamplesType0Item] | None | Unset, data)
+            return cast(list[StructuredInputDefinitionExamples] | None | Unset, data)
 
         examples = _parse_examples(d.pop("examples", UNSET))
 

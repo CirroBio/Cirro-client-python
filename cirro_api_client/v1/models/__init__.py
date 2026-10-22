@@ -249,7 +249,7 @@ from .stop_execution_response import StopExecutionResponse
 from .structured_input import StructuredInput
 from .structured_input_data_item import StructuredInputDataItem
 from .structured_input_definition import StructuredInputDefinition
-from .structured_input_definition_examples_type_0_item import StructuredInputDefinitionExamplesType0Item
+from .structured_input_definition_examples import StructuredInputDefinitionExamples
 from .structured_input_definition_schema import StructuredInputDefinitionSchema
 from .structured_input_file import StructuredInputFile
 from .structured_view_query_request import StructuredViewQueryRequest
@@ -541,7 +541,7 @@ __all__ = (
     "StructuredInput",
     "StructuredInputDataItem",
     "StructuredInputDefinition",
-    "StructuredInputDefinitionExamplesType0Item",
+    "StructuredInputDefinitionExamples",
     "StructuredInputDefinitionSchema",
     "StructuredInputFile",
     "StructuredViewQueryRequest",

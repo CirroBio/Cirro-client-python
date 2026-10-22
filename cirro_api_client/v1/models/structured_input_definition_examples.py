@@ -6,11 +6,11 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="StructuredInputDefinitionExamplesType0Item")
+T = TypeVar("T", bound="StructuredInputDefinitionExamples")
 
 
 @_attrs_define
-class StructuredInputDefinitionExamplesType0Item:
+class StructuredInputDefinitionExamples:
     """ """
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -25,10 +25,10 @@ class StructuredInputDefinitionExamplesType0Item:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        structured_input_definition_examples_type_0_item = cls()
+        structured_input_definition_examples = cls()
 
-        structured_input_definition_examples_type_0_item.additional_properties = d
-        return structured_input_definition_examples_type_0_item
+        structured_input_definition_examples.additional_properties = d
+        return structured_input_definition_examples
 
     @property
     def additional_keys(self) -> list[str]:

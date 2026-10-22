@@ -14,6 +14,7 @@ from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.column_def import ColumnDef
+    from ..models.entity import Entity
     from ..models.raw_view_query_request import RawViewQueryRequest
     from ..models.structured_view_query_request import StructuredViewQueryRequest
     from ..models.tag import Tag
@@ -34,11 +35,13 @@ class SheetDetail:
         table_name (str):
         sheet_type (SheetType):
         status (Status):
-        audit_read_access (bool):
         created_by (str):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
         tags (list[Tag]):
+        mapping_targets (list[Entity]): Targets with a saved column mapping from this sheet; the mappings themselves
+            come from the mappings endpoints
+        resource_arn (None | str | Unset): The S3 Tables ARN of the sheet's table.
         sheet_creation_mode (None | SheetCreationMode | Unset): How the sheet was initialized. SYSTEM for Cirro-managed
             sheets, including system views; null for user-created VIEW sheets.
         columns (list[ColumnDef] | None | Unset): Column definitions for the sheet's schema. For VIEW sheets, a snapshot
@@ -64,11 +67,12 @@ class SheetDetail:
     table_name: str
     sheet_type: SheetType
     status: Status
-    audit_read_access: bool
     created_by: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
     tags: list[Tag]
+    mapping_targets: list[Entity]
+    resource_arn: None | str | Unset = UNSET
     sheet_creation_mode: None | SheetCreationMode | Unset = UNSET
     columns: list[ColumnDef] | None | Unset = UNSET
     view_definition: None | RawViewQueryRequest | StructuredViewQueryRequest | Unset = UNSET
@@ -99,8 +103,6 @@ class SheetDetail:
 
         status = self.status.value
 
-        audit_read_access = self.audit_read_access
-
         created_by = self.created_by
 
         created_at = self.created_at.isoformat()
@@ -111,6 +113,17 @@ class SheetDetail:
         for tags_item_data in self.tags:
             tags_item = tags_item_data.to_dict()
             tags.append(tags_item)
+
+        mapping_targets = []
+        for mapping_targets_item_data in self.mapping_targets:
+            mapping_targets_item = mapping_targets_item_data.to_dict()
+            mapping_targets.append(mapping_targets_item)
+
+        resource_arn: None | str | Unset
+        if isinstance(self.resource_arn, Unset):
+            resource_arn = UNSET
+        else:
+            resource_arn = self.resource_arn
 
         sheet_creation_mode: None | str | Unset
         if isinstance(self.sheet_creation_mode, Unset):
@@ -174,13 +187,15 @@ class SheetDetail:
                 "tableName": table_name,
                 "sheetType": sheet_type,
                 "status": status,
-                "auditReadAccess": audit_read_access,
                 "createdBy": created_by,
                 "createdAt": created_at,
                 "updatedAt": updated_at,
                 "tags": tags,
+                "mappingTargets": mapping_targets,
             }
         )
+        if resource_arn is not UNSET:
+            field_dict["resourceArn"] = resource_arn
         if sheet_creation_mode is not UNSET:
             field_dict["sheetCreationMode"] = sheet_creation_mode
         if columns is not UNSET:
@@ -203,6 +218,7 @@ class SheetDetail:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.column_def import ColumnDef
+        from ..models.entity import Entity
         from ..models.raw_view_query_request import RawViewQueryRequest
         from ..models.structured_view_query_request import StructuredViewQueryRequest
         from ..models.tag import Tag
@@ -224,8 +240,6 @@ class SheetDetail:
 
         status = Status(d.pop("status"))
 
-        audit_read_access = d.pop("auditReadAccess")
-
         created_by = d.pop("createdBy")
 
         created_at = datetime.datetime.fromisoformat(d.pop("createdAt"))
@@ -238,6 +252,22 @@ class SheetDetail:
             tags_item = Tag.from_dict(tags_item_data)
 
             tags.append(tags_item)
+
+        mapping_targets = []
+        _mapping_targets = d.pop("mappingTargets")
+        for mapping_targets_item_data in _mapping_targets:
+            mapping_targets_item = Entity.from_dict(mapping_targets_item_data)
+
+            mapping_targets.append(mapping_targets_item)
+
+        def _parse_resource_arn(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        resource_arn = _parse_resource_arn(d.pop("resourceArn", UNSET))
 
         def _parse_sheet_creation_mode(data: object) -> None | SheetCreationMode | Unset:
             if data is None:
@@ -344,11 +374,12 @@ class SheetDetail:
             table_name=table_name,
             sheet_type=sheet_type,
             status=status,
-            audit_read_access=audit_read_access,
             created_by=created_by,
             created_at=created_at,
             updated_at=updated_at,
             tags=tags,
+            mapping_targets=mapping_targets,
+            resource_arn=resource_arn,
             sheet_creation_mode=sheet_creation_mode,
             columns=columns,
             view_definition=view_definition,

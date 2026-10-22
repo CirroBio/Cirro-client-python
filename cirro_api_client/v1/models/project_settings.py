@@ -54,6 +54,8 @@ class ProjectSettings:
             False.
         has_shared_filesystems_enabled (bool | None | Unset): (Read-only) Whether this project has shared filesystems
             enabled Default: False.
+        is_omics_available (bool | None | Unset): (Read-only) Whether this project is deployed with the resources AWS
+            HealthOmics runs need. Does not reflect the tenant's omicsPrivateWorkflowsEnabled feature flag Default: False.
     """
 
     budget_amount: int
@@ -84,6 +86,7 @@ class ProjectSettings:
     has_pipelines_enabled: bool | None | Unset = False
     has_workspaces_enabled: bool | None | Unset = False
     has_shared_filesystems_enabled: bool | None | Unset = False
+    is_omics_available: bool | None | Unset = False
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -203,6 +206,12 @@ class ProjectSettings:
         else:
             has_shared_filesystems_enabled = self.has_shared_filesystems_enabled
 
+        is_omics_available: bool | None | Unset
+        if isinstance(self.is_omics_available, Unset):
+            is_omics_available = UNSET
+        else:
+            is_omics_available = self.is_omics_available
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -263,6 +272,8 @@ class ProjectSettings:
             field_dict["hasWorkspacesEnabled"] = has_workspaces_enabled
         if has_shared_filesystems_enabled is not UNSET:
             field_dict["hasSharedFilesystemsEnabled"] = has_shared_filesystems_enabled
+        if is_omics_available is not UNSET:
+            field_dict["isOmicsAvailable"] = is_omics_available
 
         return field_dict
 
@@ -434,6 +445,15 @@ class ProjectSettings:
             d.pop("hasSharedFilesystemsEnabled", UNSET)
         )
 
+        def _parse_is_omics_available(data: object) -> bool | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(bool | None | Unset, data)
+
+        is_omics_available = _parse_is_omics_available(d.pop("isOmicsAvailable", UNSET))
+
         project_settings = cls(
             budget_amount=budget_amount,
             budget_period=budget_period,
@@ -463,6 +483,7 @@ class ProjectSettings:
             has_pipelines_enabled=has_pipelines_enabled,
             has_workspaces_enabled=has_workspaces_enabled,
             has_shared_filesystems_enabled=has_shared_filesystems_enabled,
+            is_omics_available=is_omics_available,
         )
 
         project_settings.additional_properties = d

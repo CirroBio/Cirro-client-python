@@ -7,20 +7,20 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 if TYPE_CHECKING:
-    from ..models.input_file_requirement import InputFileRequirement
+    from ..models.structured_input import StructuredInput
 
 
-T = TypeVar("T", bound="ProcessParameterSchemaInputFileRequirements")
+T = TypeVar("T", bound="RunAnalysisRequestStructuredInputsType0")
 
 
 @_attrs_define
-class ProcessParameterSchemaInputFileRequirements:
-    """Structured file inputs required by this process, keyed by requirement name (referenced elsewhere, e.g. in form, by
-    this same key)
+class RunAnalysisRequestStructuredInputsType0:
+    """Structured file inputs used in the workflow (can be empty), keyed by the input name on the process
+    `structuredInputs`
 
     """
 
-    additional_properties: dict[str, InputFileRequirement] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, StructuredInput] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
 
@@ -32,28 +32,28 @@ class ProcessParameterSchemaInputFileRequirements:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.input_file_requirement import InputFileRequirement
+        from ..models.structured_input import StructuredInput
 
         d = dict(src_dict)
-        process_parameter_schema_input_file_requirements = cls()
+        run_analysis_request_structured_inputs_type_0 = cls()
 
         additional_properties = {}
         for prop_name, prop_dict in d.items():
-            additional_property = InputFileRequirement.from_dict(prop_dict)
+            additional_property = StructuredInput.from_dict(prop_dict)
 
             additional_properties[prop_name] = additional_property
 
-        process_parameter_schema_input_file_requirements.additional_properties = additional_properties
-        return process_parameter_schema_input_file_requirements
+        run_analysis_request_structured_inputs_type_0.additional_properties = additional_properties
+        return run_analysis_request_structured_inputs_type_0
 
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
-    def __getitem__(self, key: str) -> InputFileRequirement:
+    def __getitem__(self, key: str) -> StructuredInput:
         return self.additional_properties[key]
 
-    def __setitem__(self, key: str, value: InputFileRequirement) -> None:
+    def __setitem__(self, key: str, value: StructuredInput) -> None:
         self.additional_properties[key] = value
 
     def __delitem__(self, key: str) -> None:

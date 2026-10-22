@@ -6,12 +6,12 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="InputFileRequirementExamples")
+T = TypeVar("T", bound="StructuredInputDefinitionSchema")
 
 
 @_attrs_define
-class InputFileRequirementExamples:
-    """ """
+class StructuredInputDefinitionSchema:
+    """JSONSchema representation of the input file contents"""
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -25,10 +25,10 @@ class InputFileRequirementExamples:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        input_file_requirement_examples = cls()
+        structured_input_definition_schema = cls()
 
-        input_file_requirement_examples.additional_properties = d
-        return input_file_requirement_examples
+        structured_input_definition_schema.additional_properties = d
+        return structured_input_definition_schema
 
     @property
     def additional_keys(self) -> list[str]:

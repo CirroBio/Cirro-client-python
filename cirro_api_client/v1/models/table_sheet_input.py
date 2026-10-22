@@ -30,7 +30,6 @@ class TableSheetInput:
             existing columns (matched by column id) and applies the resulting ADD/DROP/RENAME/TYPE changes as a single
             transactional ALTER sequence. Existing columns include their id; new columns omit it.
         description (None | str | Unset): Optional description of the sheet's purpose or contents
-        audit_read_access (bool | Unset): Enable audit logging for read access to this sheet Default: False.
         schema_version_id (int | None | Unset): Current table schema version (starts at 0). Used for optimistic
             concurrency control. New tables can omit this, but updates should include this to prevent overwriting due to
             stale table schema metadata.
@@ -44,7 +43,6 @@ class TableSheetInput:
     sheet_creation_mode: SheetCreationMode
     columns: list[ColumnDef]
     description: None | str | Unset = UNSET
-    audit_read_access: bool | Unset = False
     schema_version_id: int | None | Unset = UNSET
     tags: list[Tag] | Unset = UNSET
     sheet_type: str | Unset = UNSET
@@ -69,8 +67,6 @@ class TableSheetInput:
             description = UNSET
         else:
             description = self.description
-
-        audit_read_access = self.audit_read_access
 
         schema_version_id: int | None | Unset
         if isinstance(self.schema_version_id, Unset):
@@ -100,8 +96,6 @@ class TableSheetInput:
         )
         if description is not UNSET:
             field_dict["description"] = description
-        if audit_read_access is not UNSET:
-            field_dict["auditReadAccess"] = audit_read_access
         if schema_version_id is not UNSET:
             field_dict["schemaVersionId"] = schema_version_id
         if tags is not UNSET:
@@ -141,8 +135,6 @@ class TableSheetInput:
 
         description = _parse_description(d.pop("description", UNSET))
 
-        audit_read_access = d.pop("auditReadAccess", UNSET)
-
         def _parse_schema_version_id(data: object) -> int | None | Unset:
             if data is None:
                 return data
@@ -170,7 +162,6 @@ class TableSheetInput:
             sheet_creation_mode=sheet_creation_mode,
             columns=columns,
             description=description,
-            audit_read_access=audit_read_access,
             schema_version_id=schema_version_id,
             tags=tags,
             sheet_type=sheet_type,

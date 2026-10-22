@@ -12,6 +12,7 @@ if TYPE_CHECKING:
     from ..models.artifact import Artifact
     from ..models.dataset_viz import DatasetViz
     from ..models.file_entry import FileEntry
+    from ..models.structured_input_file import StructuredInputFile
     from ..models.table import Table
 
 
@@ -28,6 +29,7 @@ class DatasetAssetsManifest:
         viz (list[DatasetViz] | Unset): List of viz to render for the dataset
         tables (list[Table] | Unset): List of web optimized tables for the dataset
         artifacts (list[Artifact] | Unset): Artifacts associated with the dataset
+        structured_inputs (list[StructuredInputFile] | Unset): Structured file input parameters used
     """
 
     domain: str | Unset = UNSET
@@ -36,6 +38,7 @@ class DatasetAssetsManifest:
     viz: list[DatasetViz] | Unset = UNSET
     tables: list[Table] | Unset = UNSET
     artifacts: list[Artifact] | Unset = UNSET
+    structured_inputs: list[StructuredInputFile] | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -71,6 +74,13 @@ class DatasetAssetsManifest:
                 artifacts_item = artifacts_item_data.to_dict()
                 artifacts.append(artifacts_item)
 
+        structured_inputs: list[dict[str, Any]] | Unset = UNSET
+        if not isinstance(self.structured_inputs, Unset):
+            structured_inputs = []
+            for structured_inputs_item_data in self.structured_inputs:
+                structured_inputs_item = structured_inputs_item_data.to_dict()
+                structured_inputs.append(structured_inputs_item)
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -86,6 +96,8 @@ class DatasetAssetsManifest:
             field_dict["tables"] = tables
         if artifacts is not UNSET:
             field_dict["artifacts"] = artifacts
+        if structured_inputs is not UNSET:
+            field_dict["structuredInputs"] = structured_inputs
 
         return field_dict
 
@@ -94,6 +106,7 @@ class DatasetAssetsManifest:
         from ..models.artifact import Artifact
         from ..models.dataset_viz import DatasetViz
         from ..models.file_entry import FileEntry
+        from ..models.structured_input_file import StructuredInputFile
         from ..models.table import Table
 
         d = dict(src_dict)
@@ -137,6 +150,15 @@ class DatasetAssetsManifest:
 
                 artifacts.append(artifacts_item)
 
+        _structured_inputs = d.pop("structuredInputs", UNSET)
+        structured_inputs: list[StructuredInputFile] | Unset = UNSET
+        if _structured_inputs is not UNSET:
+            structured_inputs = []
+            for structured_inputs_item_data in _structured_inputs:
+                structured_inputs_item = StructuredInputFile.from_dict(structured_inputs_item_data)
+
+                structured_inputs.append(structured_inputs_item)
+
         dataset_assets_manifest = cls(
             domain=domain,
             files=files,
@@ -144,6 +166,7 @@ class DatasetAssetsManifest:
             viz=viz,
             tables=tables,
             artifacts=artifacts,
+            structured_inputs=structured_inputs,
         )
 
         dataset_assets_manifest.additional_properties = d

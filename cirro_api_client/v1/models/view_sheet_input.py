@@ -28,7 +28,6 @@ class ViewSheetInput:
         view_definition (RawViewQueryRequest | StructuredViewQueryRequest): View definition. viewType=STRUCTURED for
             standard builder; viewType=RAW for a SQL SELECT.
         description (None | str | Unset): Optional description of the sheet's purpose or contents
-        audit_read_access (bool | Unset): Enable audit logging for read access to this sheet Default: False.
         virtual (bool | Unset): True for a view resolved live at query time; false materializes it into a table
             (refreshed async). Immutable after create.
         tags (list[Tag] | Unset): Tags for the sheet
@@ -40,7 +39,6 @@ class ViewSheetInput:
     table_name: str
     view_definition: RawViewQueryRequest | StructuredViewQueryRequest
     description: None | str | Unset = UNSET
-    audit_read_access: bool | Unset = False
     virtual: bool | Unset = UNSET
     tags: list[Tag] | Unset = UNSET
     sheet_type: str | Unset = UNSET
@@ -67,8 +65,6 @@ class ViewSheetInput:
         else:
             description = self.description
 
-        audit_read_access = self.audit_read_access
-
         virtual = self.virtual
 
         tags: list[dict[str, Any]] | Unset = UNSET
@@ -92,8 +88,6 @@ class ViewSheetInput:
         )
         if description is not UNSET:
             field_dict["description"] = description
-        if audit_read_access is not UNSET:
-            field_dict["auditReadAccess"] = audit_read_access
         if virtual is not UNSET:
             field_dict["virtual"] = virtual
         if tags is not UNSET:
@@ -142,8 +136,6 @@ class ViewSheetInput:
 
         description = _parse_description(d.pop("description", UNSET))
 
-        audit_read_access = d.pop("auditReadAccess", UNSET)
-
         virtual = d.pop("virtual", UNSET)
 
         _tags = d.pop("tags", UNSET)
@@ -163,7 +155,6 @@ class ViewSheetInput:
             table_name=table_name,
             view_definition=view_definition,
             description=description,
-            audit_read_access=audit_read_access,
             virtual=virtual,
             tags=tags,
             sheet_type=sheet_type,

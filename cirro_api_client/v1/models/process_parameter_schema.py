@@ -10,7 +10,7 @@ from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.process_parameter_schema_form import ProcessParameterSchemaForm
-    from ..models.process_parameter_schema_input_file_requirements import ProcessParameterSchemaInputFileRequirements
+    from ..models.process_parameter_schema_structured_inputs import ProcessParameterSchemaStructuredInputs
     from ..models.process_parameter_schema_ui import ProcessParameterSchemaUi
 
 
@@ -25,13 +25,13 @@ class ProcessParameterSchema:
             executing a pipeline
         ui (ProcessParameterSchemaUi | Unset): Describes how the form should be rendered on the UI, see rjsf uiSchema
             customizations
-        input_file_requirements (ProcessParameterSchemaInputFileRequirements | Unset): Structured file inputs required
-            by this process, keyed by requirement name (referenced elsewhere, e.g. in form, by this same key)
+        structured_inputs (ProcessParameterSchemaStructuredInputs | Unset): Structured file inputs required by this
+            process, keyed by requirement name (referenced elsewhere, e.g. in form, by this same key)
     """
 
     form: ProcessParameterSchemaForm | Unset = UNSET
     ui: ProcessParameterSchemaUi | Unset = UNSET
-    input_file_requirements: ProcessParameterSchemaInputFileRequirements | Unset = UNSET
+    structured_inputs: ProcessParameterSchemaStructuredInputs | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -43,9 +43,9 @@ class ProcessParameterSchema:
         if not isinstance(self.ui, Unset):
             ui = self.ui.to_dict()
 
-        input_file_requirements: dict[str, Any] | Unset = UNSET
-        if not isinstance(self.input_file_requirements, Unset):
-            input_file_requirements = self.input_file_requirements.to_dict()
+        structured_inputs: dict[str, Any] | Unset = UNSET
+        if not isinstance(self.structured_inputs, Unset):
+            structured_inputs = self.structured_inputs.to_dict()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -54,17 +54,15 @@ class ProcessParameterSchema:
             field_dict["form"] = form
         if ui is not UNSET:
             field_dict["ui"] = ui
-        if input_file_requirements is not UNSET:
-            field_dict["inputFileRequirements"] = input_file_requirements
+        if structured_inputs is not UNSET:
+            field_dict["structuredInputs"] = structured_inputs
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.process_parameter_schema_form import ProcessParameterSchemaForm
-        from ..models.process_parameter_schema_input_file_requirements import (
-            ProcessParameterSchemaInputFileRequirements,
-        )
+        from ..models.process_parameter_schema_structured_inputs import ProcessParameterSchemaStructuredInputs
         from ..models.process_parameter_schema_ui import ProcessParameterSchemaUi
 
         d = dict(src_dict)
@@ -82,17 +80,17 @@ class ProcessParameterSchema:
         else:
             ui = ProcessParameterSchemaUi.from_dict(_ui)
 
-        _input_file_requirements = d.pop("inputFileRequirements", UNSET)
-        input_file_requirements: ProcessParameterSchemaInputFileRequirements | Unset
-        if isinstance(_input_file_requirements, Unset):
-            input_file_requirements = UNSET
+        _structured_inputs = d.pop("structuredInputs", UNSET)
+        structured_inputs: ProcessParameterSchemaStructuredInputs | Unset
+        if isinstance(_structured_inputs, Unset):
+            structured_inputs = UNSET
         else:
-            input_file_requirements = ProcessParameterSchemaInputFileRequirements.from_dict(_input_file_requirements)
+            structured_inputs = ProcessParameterSchemaStructuredInputs.from_dict(_structured_inputs)
 
         process_parameter_schema = cls(
             form=form,
             ui=ui,
-            input_file_requirements=input_file_requirements,
+            structured_inputs=structured_inputs,
         )
 
         process_parameter_schema.additional_properties = d

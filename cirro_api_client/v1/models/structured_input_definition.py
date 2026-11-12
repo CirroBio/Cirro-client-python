@@ -30,12 +30,14 @@ class StructuredInputDefinition:
              - TSV: same as CSV, but tab-delimited.
              - JSON: the row objects are written out unmodified as a JSON array (no flattening).
         schema (StructuredInputDefinitionSchema): JSONSchema representation of the input file contents
+        default_source_file (str | Unset): If defined, the default file to import from a dataset into this input
         examples (list[StructuredInputDefinitionExamples] | None | Unset): Example rows of data conforming to the
             schema, shown to the user as a starting point
     """
 
     file_format: FileFormat
     schema: StructuredInputDefinitionSchema
+    default_source_file: str | Unset = UNSET
     examples: list[StructuredInputDefinitionExamples] | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -43,6 +45,8 @@ class StructuredInputDefinition:
         file_format = self.file_format.value
 
         schema = self.schema.to_dict()
+
+        default_source_file = self.default_source_file
 
         examples: list[dict[str, Any]] | None | Unset
         if isinstance(self.examples, Unset):
@@ -64,6 +68,8 @@ class StructuredInputDefinition:
                 "schema": schema,
             }
         )
+        if default_source_file is not UNSET:
+            field_dict["defaultSourceFile"] = default_source_file
         if examples is not UNSET:
             field_dict["examples"] = examples
 
@@ -78,6 +84,8 @@ class StructuredInputDefinition:
         file_format = FileFormat(d.pop("fileFormat"))
 
         schema = StructuredInputDefinitionSchema.from_dict(d.pop("schema"))
+
+        default_source_file = d.pop("defaultSourceFile", UNSET)
 
         def _parse_examples(data: object) -> list[StructuredInputDefinitionExamples] | None | Unset:
             if data is None:
@@ -104,6 +112,7 @@ class StructuredInputDefinition:
         structured_input_definition = cls(
             file_format=file_format,
             schema=schema,
+            default_source_file=default_source_file,
             examples=examples,
         )
 

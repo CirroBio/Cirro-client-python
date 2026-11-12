@@ -32,12 +32,16 @@ class SheetIngestRequest:
             column. Default: IngestConflictMode.ERROR.
         conflict_column (None | str | Unset): Unique column OVERWRITE replaces on. Required when the sheet has several
             unique columns; inferred when it has one.
+        clear_existing (bool | Unset): Delete all existing rows before loading the file. The clear and the load succeed
+            or fail together, so a failed ingest keeps the existing rows. Cannot be combined with onConflict=OVERWRITE.
+            Default: False.
     """
 
     file_def: FileDef
     source_columns: list[SourceColumn] | None | Unset = UNSET
     on_conflict: IngestConflictMode | None | Unset = IngestConflictMode.ERROR
     conflict_column: None | str | Unset = UNSET
+    clear_existing: bool | Unset = False
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -69,6 +73,8 @@ class SheetIngestRequest:
         else:
             conflict_column = self.conflict_column
 
+        clear_existing = self.clear_existing
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -82,6 +88,8 @@ class SheetIngestRequest:
             field_dict["onConflict"] = on_conflict
         if conflict_column is not UNSET:
             field_dict["conflictColumn"] = conflict_column
+        if clear_existing is not UNSET:
+            field_dict["clearExisting"] = clear_existing
 
         return field_dict
 
@@ -141,11 +149,14 @@ class SheetIngestRequest:
 
         conflict_column = _parse_conflict_column(d.pop("conflictColumn", UNSET))
 
+        clear_existing = d.pop("clearExisting", UNSET)
+
         sheet_ingest_request = cls(
             file_def=file_def,
             source_columns=source_columns,
             on_conflict=on_conflict,
             conflict_column=conflict_column,
+            clear_existing=clear_existing,
         )
 
         sheet_ingest_request.additional_properties = d

@@ -13,25 +13,25 @@ T = TypeVar("T", bound="ValidateFileRequirementsRequest")
 class ValidateFileRequirementsRequest:
     """
     Attributes:
-        file_names (list[str]):
         sample_sheet (str):
+        file_names (list[str]):
     """
 
-    file_names: list[str]
     sample_sheet: str
+    file_names: list[str]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        file_names = self.file_names
-
         sample_sheet = self.sample_sheet
+
+        file_names = self.file_names
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "fileNames": file_names,
                 "sampleSheet": sample_sheet,
+                "fileNames": file_names,
             }
         )
 
@@ -40,13 +40,13 @@ class ValidateFileRequirementsRequest:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        file_names = cast(list[str], d.pop("fileNames"))
-
         sample_sheet = d.pop("sampleSheet")
 
+        file_names = cast(list[str], d.pop("fileNames"))
+
         validate_file_requirements_request = cls(
-            file_names=file_names,
             sample_sheet=sample_sheet,
+            file_names=file_names,
         )
 
         validate_file_requirements_request.additional_properties = d

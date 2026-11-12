@@ -11,6 +11,7 @@ from ..models.status import Status
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
+    from ..models.dataset_copy_origin import DatasetCopyOrigin
     from ..models.dataset_detail_info import DatasetDetailInfo
     from ..models.dataset_detail_params import DatasetDetailParams
     from ..models.dataset_detail_source_sample_files_map import DatasetDetailSourceSampleFilesMap
@@ -47,6 +48,7 @@ class DatasetDetail:
         description (str | Unset): Dataset description
         originating_project_id (str | Unset): The originating project ID might be different if the dataset was shared
             from another project.
+        copied_from (list[DatasetCopyOrigin] | Unset): The datasets this dataset copied its files from, if it is a copy
         share (NamedItem | None | Unset):
         total_size_bytes (int | None | Unset): Total size of dataset files (in bytes)
         file_count (int | None | Unset): Total number of dataset files
@@ -72,6 +74,7 @@ class DatasetDetail:
     updated_at: datetime.datetime
     description: str | Unset = UNSET
     originating_project_id: str | Unset = UNSET
+    copied_from: list[DatasetCopyOrigin] | Unset = UNSET
     share: NamedItem | None | Unset = UNSET
     total_size_bytes: int | None | Unset = UNSET
     file_count: int | None | Unset = UNSET
@@ -126,6 +129,13 @@ class DatasetDetail:
 
         originating_project_id = self.originating_project_id
 
+        copied_from: list[dict[str, Any]] | Unset = UNSET
+        if not isinstance(self.copied_from, Unset):
+            copied_from = []
+            for copied_from_item_data in self.copied_from:
+                copied_from_item = copied_from_item_data.to_dict()
+                copied_from.append(copied_from_item)
+
         share: dict[str, Any] | None | Unset
         if isinstance(self.share, Unset):
             share = UNSET
@@ -174,6 +184,8 @@ class DatasetDetail:
             field_dict["description"] = description
         if originating_project_id is not UNSET:
             field_dict["originatingProjectId"] = originating_project_id
+        if copied_from is not UNSET:
+            field_dict["copiedFrom"] = copied_from
         if share is not UNSET:
             field_dict["share"] = share
         if total_size_bytes is not UNSET:
@@ -185,6 +197,7 @@ class DatasetDetail:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.dataset_copy_origin import DatasetCopyOrigin
         from ..models.dataset_detail_info import DatasetDetailInfo
         from ..models.dataset_detail_params import DatasetDetailParams
         from ..models.dataset_detail_source_sample_files_map import DatasetDetailSourceSampleFilesMap
@@ -242,6 +255,15 @@ class DatasetDetail:
 
         originating_project_id = d.pop("originatingProjectId", UNSET)
 
+        _copied_from = d.pop("copiedFrom", UNSET)
+        copied_from: list[DatasetCopyOrigin] | Unset = UNSET
+        if _copied_from is not UNSET:
+            copied_from = []
+            for copied_from_item_data in _copied_from:
+                copied_from_item = DatasetCopyOrigin.from_dict(copied_from_item_data)
+
+                copied_from.append(copied_from_item)
+
         def _parse_share(data: object) -> NamedItem | None | Unset:
             if data is None:
                 return data
@@ -298,6 +320,7 @@ class DatasetDetail:
             updated_at=updated_at,
             description=description,
             originating_project_id=originating_project_id,
+            copied_from=copied_from,
             share=share,
             total_size_bytes=total_size_bytes,
             file_count=file_count,

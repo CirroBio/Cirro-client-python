@@ -21,10 +21,10 @@ T = TypeVar("T", bound="Message")
 class Message:
     """
     Attributes:
-        message_type (MessageType):
         id (str):
         message (str):
         links (list[Entity]):
+        message_type (MessageType):
         has_replies (bool):
         created_by (str):
         created_at (datetime.datetime):
@@ -32,10 +32,10 @@ class Message:
         parent_message_id (None | str | Unset):
     """
 
-    message_type: MessageType
     id: str
     message: str
     links: list[Entity]
+    message_type: MessageType
     has_replies: bool
     created_by: str
     created_at: datetime.datetime
@@ -44,8 +44,6 @@ class Message:
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        message_type = self.message_type.value
-
         id = self.id
 
         message = self.message
@@ -54,6 +52,8 @@ class Message:
         for links_item_data in self.links:
             links_item = links_item_data.to_dict()
             links.append(links_item)
+
+        message_type = self.message_type.value
 
         has_replies = self.has_replies
 
@@ -73,10 +73,10 @@ class Message:
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "messageType": message_type,
                 "id": id,
                 "message": message,
                 "links": links,
+                "messageType": message_type,
                 "hasReplies": has_replies,
                 "createdBy": created_by,
                 "createdAt": created_at,
@@ -93,8 +93,6 @@ class Message:
         from ..models.entity import Entity
 
         d = dict(src_dict)
-        message_type = MessageType(d.pop("messageType"))
-
         id = d.pop("id")
 
         message = d.pop("message")
@@ -105,6 +103,8 @@ class Message:
             links_item = Entity.from_dict(links_item_data)
 
             links.append(links_item)
+
+        message_type = MessageType(d.pop("messageType"))
 
         has_replies = d.pop("hasReplies")
 
@@ -124,10 +124,10 @@ class Message:
         parent_message_id = _parse_parent_message_id(d.pop("parentMessageId", UNSET))
 
         message = cls(
-            message_type=message_type,
             id=id,
             message=message,
             links=links,
+            message_type=message_type,
             has_replies=has_replies,
             created_by=created_by,
             created_at=created_at,

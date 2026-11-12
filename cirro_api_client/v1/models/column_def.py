@@ -26,14 +26,14 @@ class ColumnDef:
         id (None | str | Unset):
         display_name (None | str | Unset): Name displayed on UI.
         hidden (bool | Unset): Whether the column is hidden on the UI. Default: False.
-        semantic_type (None | SemanticColumnType | Unset): The semantic type of the column. Default:
-            SemanticColumnType.STANDARD.
+        semantic_type (None | SemanticColumnType | Unset):
         allowed_values (list[str] | None | Unset): The allowed values for an ENUM_SINGLE column.
         description (None | str | Unset):
         foreign_key (ForeignKeyRef | None | Unset):
         required (bool | Unset): Whether the column is required to be non-null. Default: False.
         unique (bool | Unset): Whether values in this column must be unique across the sheet (NULLs exempt). Set when
             the column is created; enforced at write time by the application. Default: False.
+        indexed (bool | Unset): Whether cross-sheet search looks at this column. TABLE sheets only. Default: False.
     """
 
     name: str
@@ -41,12 +41,13 @@ class ColumnDef:
     id: None | str | Unset = UNSET
     display_name: None | str | Unset = UNSET
     hidden: bool | Unset = False
-    semantic_type: None | SemanticColumnType | Unset = SemanticColumnType.STANDARD
+    semantic_type: None | SemanticColumnType | Unset = UNSET
     allowed_values: list[str] | None | Unset = UNSET
     description: None | str | Unset = UNSET
     foreign_key: ForeignKeyRef | None | Unset = UNSET
     required: bool | Unset = False
     unique: bool | Unset = False
+    indexed: bool | Unset = False
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -105,6 +106,8 @@ class ColumnDef:
 
         unique = self.unique
 
+        indexed = self.indexed
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -131,6 +134,8 @@ class ColumnDef:
             field_dict["required"] = required
         if unique is not UNSET:
             field_dict["unique"] = unique
+        if indexed is not UNSET:
+            field_dict["indexed"] = indexed
 
         return field_dict
 
@@ -227,6 +232,8 @@ class ColumnDef:
 
         unique = d.pop("unique", UNSET)
 
+        indexed = d.pop("indexed", UNSET)
+
         column_def = cls(
             name=name,
             data_type=data_type,
@@ -239,6 +246,7 @@ class ColumnDef:
             foreign_key=foreign_key,
             required=required,
             unique=unique,
+            indexed=indexed,
         )
 
         column_def.additional_properties = d

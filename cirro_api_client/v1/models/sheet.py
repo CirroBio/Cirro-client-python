@@ -13,6 +13,7 @@ from ..models.status import Status
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
+    from ..models.column_def_slim import ColumnDefSlim
     from ..models.column_relationship import ColumnRelationship
     from ..models.entity import Entity
     from ..models.tag import Tag
@@ -42,6 +43,8 @@ class Sheet:
         column_relationships (list[ColumnRelationship]):
         mapping_targets (list[Entity]): Targets with a saved column mapping from this sheet; the mappings themselves
             come from the mappings endpoints
+        columns (list[ColumnDefSlim] | None | Unset): Null until a view's columns are stored: while it materializes, or
+            briefly after it is created.
         total_row_count (int | None | Unset): Stored row count, maintained on writes. Null for virtual views, whose rows
             are only counted at query time.
     """
@@ -62,6 +65,7 @@ class Sheet:
     tags: list[Tag]
     column_relationships: list[ColumnRelationship]
     mapping_targets: list[Entity]
+    columns: list[ColumnDefSlim] | None | Unset = UNSET
     total_row_count: int | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -107,6 +111,18 @@ class Sheet:
             mapping_targets_item = mapping_targets_item_data.to_dict()
             mapping_targets.append(mapping_targets_item)
 
+        columns: list[dict[str, Any]] | None | Unset
+        if isinstance(self.columns, Unset):
+            columns = UNSET
+        elif isinstance(self.columns, list):
+            columns = []
+            for columns_type_0_item_data in self.columns:
+                columns_type_0_item = columns_type_0_item_data.to_dict()
+                columns.append(columns_type_0_item)
+
+        else:
+            columns = self.columns
+
         total_row_count: int | None | Unset
         if isinstance(self.total_row_count, Unset):
             total_row_count = UNSET
@@ -135,6 +151,8 @@ class Sheet:
                 "mappingTargets": mapping_targets,
             }
         )
+        if columns is not UNSET:
+            field_dict["columns"] = columns
         if total_row_count is not UNSET:
             field_dict["totalRowCount"] = total_row_count
 
@@ -142,6 +160,7 @@ class Sheet:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.column_def_slim import ColumnDefSlim
         from ..models.column_relationship import ColumnRelationship
         from ..models.entity import Entity
         from ..models.tag import Tag
@@ -194,6 +213,28 @@ class Sheet:
 
             mapping_targets.append(mapping_targets_item)
 
+        def _parse_columns(data: object) -> list[ColumnDefSlim] | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, list):
+                    raise TypeError()
+                columns_type_0 = []
+                _columns_type_0 = data
+                for columns_type_0_item_data in _columns_type_0:
+                    columns_type_0_item = ColumnDefSlim.from_dict(columns_type_0_item_data)
+
+                    columns_type_0.append(columns_type_0_item)
+
+                return columns_type_0
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(list[ColumnDefSlim] | None | Unset, data)
+
+        columns = _parse_columns(d.pop("columns", UNSET))
+
         def _parse_total_row_count(data: object) -> int | None | Unset:
             if data is None:
                 return data
@@ -220,6 +261,7 @@ class Sheet:
             tags=tags,
             column_relationships=column_relationships,
             mapping_targets=mapping_targets,
+            columns=columns,
             total_row_count=total_row_count,
         )
 

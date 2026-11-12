@@ -41,6 +41,7 @@ class ProjectDetail:
         updated_at (datetime.datetime):
         deployed_at (datetime.datetime | None | Unset):
         deployed_version (None | str | Unset):
+        role_version (None | str | Unset):
     """
 
     id: str
@@ -60,6 +61,7 @@ class ProjectDetail:
     updated_at: datetime.datetime
     deployed_at: datetime.datetime | None | Unset = UNSET
     deployed_version: None | str | Unset = UNSET
+    role_version: None | str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -113,6 +115,12 @@ class ProjectDetail:
         else:
             deployed_version = self.deployed_version
 
+        role_version: None | str | Unset
+        if isinstance(self.role_version, Unset):
+            role_version = UNSET
+        else:
+            role_version = self.role_version
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -138,6 +146,8 @@ class ProjectDetail:
             field_dict["deployedAt"] = deployed_at
         if deployed_version is not UNSET:
             field_dict["deployedVersion"] = deployed_version
+        if role_version is not UNSET:
+            field_dict["roleVersion"] = role_version
 
         return field_dict
 
@@ -215,6 +225,15 @@ class ProjectDetail:
 
         deployed_version = _parse_deployed_version(d.pop("deployedVersion", UNSET))
 
+        def _parse_role_version(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        role_version = _parse_role_version(d.pop("roleVersion", UNSET))
+
         project_detail = cls(
             id=id,
             name=name,
@@ -233,6 +252,7 @@ class ProjectDetail:
             updated_at=updated_at,
             deployed_at=deployed_at,
             deployed_version=deployed_version,
+            role_version=role_version,
         )
 
         project_detail.additional_properties = d

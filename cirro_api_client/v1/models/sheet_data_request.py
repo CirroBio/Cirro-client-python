@@ -26,12 +26,15 @@ class SheetDataRequest:
         page (int | None | Unset): Page to return Default: 1.
         sort (None | SheetSort | Unset): Sort by column and direction.
         filter_ (Filter | None | Unset): Filter tree.
+        snapshot_id (None | str | Unset): Snapshot to read, from the sheet's snapshot list. Omit it to read the current
+            data. TABLE sheets only.
     """
 
     limit: int | None | Unset = 1000
     page: int | None | Unset = 1
     sort: None | SheetSort | Unset = UNSET
     filter_: Filter | None | Unset = UNSET
+    snapshot_id: None | str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -66,6 +69,12 @@ class SheetDataRequest:
         else:
             filter_ = self.filter_
 
+        snapshot_id: None | str | Unset
+        if isinstance(self.snapshot_id, Unset):
+            snapshot_id = UNSET
+        else:
+            snapshot_id = self.snapshot_id
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -77,6 +86,8 @@ class SheetDataRequest:
             field_dict["sort"] = sort
         if filter_ is not UNSET:
             field_dict["filter"] = filter_
+        if snapshot_id is not UNSET:
+            field_dict["snapshotId"] = snapshot_id
 
         return field_dict
 
@@ -139,11 +150,21 @@ class SheetDataRequest:
 
         filter_ = _parse_filter_(d.pop("filter", UNSET))
 
+        def _parse_snapshot_id(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        snapshot_id = _parse_snapshot_id(d.pop("snapshotId", UNSET))
+
         sheet_data_request = cls(
             limit=limit,
             page=page,
             sort=sort,
             filter_=filter_,
+            snapshot_id=snapshot_id,
         )
 
         sheet_data_request.additional_properties = d

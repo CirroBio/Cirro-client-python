@@ -15,57 +15,57 @@ T = TypeVar("T", bound="DatasetViz")
 class DatasetViz:
     """
     Attributes:
-        path (str | Unset): Path to viz configuration, if applicable
         name (str | Unset): Name of viz
         desc (str | Unset): Description of viz
         type_ (str | Unset): Type of viz Example: vitescce.
+        path (str | Unset): Path to viz configuration, if applicable
     """
 
-    path: str | Unset = UNSET
     name: str | Unset = UNSET
     desc: str | Unset = UNSET
     type_: str | Unset = UNSET
+    path: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        path = self.path
-
         name = self.name
 
         desc = self.desc
 
         type_ = self.type_
 
+        path = self.path
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if path is not UNSET:
-            field_dict["path"] = path
         if name is not UNSET:
             field_dict["name"] = name
         if desc is not UNSET:
             field_dict["desc"] = desc
         if type_ is not UNSET:
             field_dict["type"] = type_
+        if path is not UNSET:
+            field_dict["path"] = path
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        path = d.pop("path", UNSET)
-
         name = d.pop("name", UNSET)
 
         desc = d.pop("desc", UNSET)
 
         type_ = d.pop("type", UNSET)
 
+        path = d.pop("path", UNSET)
+
         dataset_viz = cls(
-            path=path,
             name=name,
             desc=desc,
             type_=type_,
+            path=path,
         )
 
         dataset_viz.additional_properties = d

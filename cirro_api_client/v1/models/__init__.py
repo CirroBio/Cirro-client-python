@@ -39,6 +39,7 @@ from .cloud_account_type import CloudAccountType
 from .cloud_quota import CloudQuota
 from .column_data_type import ColumnDataType
 from .column_def import ColumnDef
+from .column_def_slim import ColumnDefSlim
 from .column_definition import ColumnDefinition
 from .column_mapping import ColumnMapping
 from .column_relationship import ColumnRelationship
@@ -49,6 +50,7 @@ from .compute_environment_configuration_properties import ComputeEnvironmentConf
 from .config_source import ConfigSource
 from .contact import Contact
 from .contact_input import ContactInput
+from .copy_dataset_request import CopyDatasetRequest
 from .cost_component import CostComponent
 from .cost_response import CostResponse
 from .cost_source import CostSource
@@ -70,6 +72,7 @@ from .dataset import Dataset
 from .dataset_assets_manifest import DatasetAssetsManifest
 from .dataset_condition import DatasetCondition
 from .dataset_condition_field import DatasetConditionField
+from .dataset_copy_origin import DatasetCopyOrigin
 from .dataset_detail import DatasetDetail
 from .dataset_detail_info import DatasetDetailInfo
 from .dataset_detail_params import DatasetDetailParams
@@ -91,6 +94,7 @@ from .file_def import FileDef
 from .file_entry import FileEntry
 from .file_entry_metadata import FileEntryMetadata
 from .file_format import FileFormat
+from .file_mapping import FileMapping
 from .file_mapping_rule import FileMappingRule
 from .file_name_match import FileNameMatch
 from .file_name_pattern import FileNamePattern
@@ -232,11 +236,19 @@ from .sheet_creation_mode import SheetCreationMode
 from .sheet_data_request import SheetDataRequest
 from .sheet_data_update_response import SheetDataUpdateResponse
 from .sheet_detail import SheetDetail
+from .sheet_diff_request import SheetDiffRequest
+from .sheet_diff_response import SheetDiffResponse
 from .sheet_ingest_request import SheetIngestRequest
 from .sheet_job import SheetJob
 from .sheet_job_type import SheetJobType
 from .sheet_query_request import SheetQueryRequest
 from .sheet_query_response import SheetQueryResponse
+from .sheet_row_change import SheetRowChange
+from .sheet_row_change_type import SheetRowChangeType
+from .sheet_search_hit import SheetSearchHit
+from .sheet_search_request import SheetSearchRequest
+from .sheet_search_response import SheetSearchResponse
+from .sheet_snapshot import SheetSnapshot
 from .sheet_sort import SheetSort
 from .sheet_template import SheetTemplate
 from .sheet_type import SheetType
@@ -332,6 +344,7 @@ __all__ = (
     "ColumnDataType",
     "ColumnDef",
     "ColumnDefinition",
+    "ColumnDefSlim",
     "ColumnMapping",
     "ColumnRelationship",
     "ComputeEnvironmentConfiguration",
@@ -341,6 +354,7 @@ __all__ = (
     "ConfigSource",
     "Contact",
     "ContactInput",
+    "CopyDatasetRequest",
     "CostComponent",
     "CostResponse",
     "CostSource",
@@ -362,6 +376,7 @@ __all__ = (
     "DatasetAssetsManifest",
     "DatasetCondition",
     "DatasetConditionField",
+    "DatasetCopyOrigin",
     "DatasetDetail",
     "DatasetDetailInfo",
     "DatasetDetailParams",
@@ -383,6 +398,7 @@ __all__ = (
     "FileEntry",
     "FileEntryMetadata",
     "FileFormat",
+    "FileMapping",
     "FileMappingRule",
     "FileNameMatch",
     "FileNamePattern",
@@ -524,11 +540,19 @@ __all__ = (
     "SheetDataRequest",
     "SheetDataUpdateResponse",
     "SheetDetail",
+    "SheetDiffRequest",
+    "SheetDiffResponse",
     "SheetIngestRequest",
     "SheetJob",
     "SheetJobType",
     "SheetQueryRequest",
     "SheetQueryResponse",
+    "SheetRowChange",
+    "SheetRowChangeType",
+    "SheetSearchHit",
+    "SheetSearchRequest",
+    "SheetSearchResponse",
+    "SheetSnapshot",
     "SheetSort",
     "SheetTemplate",
     "SheetType",

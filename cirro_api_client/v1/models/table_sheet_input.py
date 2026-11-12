@@ -33,6 +33,10 @@ class TableSheetInput:
         schema_version_id (int | None | Unset): Current table schema version (starts at 0). Used for optimistic
             concurrency control. New tables can omit this, but updates should include this to prevent overwriting due to
             stale table schema metadata.
+        min_snapshots_to_keep (int | None | Unset): Number of the table's most recent snapshots that are always kept,
+            however old. Omitting it, on create or update, sets the default. Default: 1.
+        max_snapshot_age_hours (int | None | Unset): Hours after which a snapshot can expire, once more than
+            minSnapshotsToKeep exist. Omitting it, on create or update, sets the default. Default: 1.
         tags (list[Tag] | Unset): Tags for the sheet
         sheet_type (str | Unset):
     """
@@ -44,6 +48,8 @@ class TableSheetInput:
     columns: list[ColumnDef]
     description: None | str | Unset = UNSET
     schema_version_id: int | None | Unset = UNSET
+    min_snapshots_to_keep: int | None | Unset = 1
+    max_snapshot_age_hours: int | None | Unset = 1
     tags: list[Tag] | Unset = UNSET
     sheet_type: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -74,6 +80,18 @@ class TableSheetInput:
         else:
             schema_version_id = self.schema_version_id
 
+        min_snapshots_to_keep: int | None | Unset
+        if isinstance(self.min_snapshots_to_keep, Unset):
+            min_snapshots_to_keep = UNSET
+        else:
+            min_snapshots_to_keep = self.min_snapshots_to_keep
+
+        max_snapshot_age_hours: int | None | Unset
+        if isinstance(self.max_snapshot_age_hours, Unset):
+            max_snapshot_age_hours = UNSET
+        else:
+            max_snapshot_age_hours = self.max_snapshot_age_hours
+
         tags: list[dict[str, Any]] | Unset = UNSET
         if not isinstance(self.tags, Unset):
             tags = []
@@ -98,6 +116,10 @@ class TableSheetInput:
             field_dict["description"] = description
         if schema_version_id is not UNSET:
             field_dict["schemaVersionId"] = schema_version_id
+        if min_snapshots_to_keep is not UNSET:
+            field_dict["minSnapshotsToKeep"] = min_snapshots_to_keep
+        if max_snapshot_age_hours is not UNSET:
+            field_dict["maxSnapshotAgeHours"] = max_snapshot_age_hours
         if tags is not UNSET:
             field_dict["tags"] = tags
         if sheet_type is not UNSET:
@@ -144,6 +166,24 @@ class TableSheetInput:
 
         schema_version_id = _parse_schema_version_id(d.pop("schemaVersionId", UNSET))
 
+        def _parse_min_snapshots_to_keep(data: object) -> int | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(int | None | Unset, data)
+
+        min_snapshots_to_keep = _parse_min_snapshots_to_keep(d.pop("minSnapshotsToKeep", UNSET))
+
+        def _parse_max_snapshot_age_hours(data: object) -> int | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(int | None | Unset, data)
+
+        max_snapshot_age_hours = _parse_max_snapshot_age_hours(d.pop("maxSnapshotAgeHours", UNSET))
+
         _tags = d.pop("tags", UNSET)
         tags: list[Tag] | Unset = UNSET
         if _tags is not UNSET:
@@ -163,6 +203,8 @@ class TableSheetInput:
             columns=columns,
             description=description,
             schema_version_id=schema_version_id,
+            min_snapshots_to_keep=min_snapshots_to_keep,
+            max_snapshot_age_hours=max_snapshot_age_hours,
             tags=tags,
             sheet_type=sheet_type,
         )

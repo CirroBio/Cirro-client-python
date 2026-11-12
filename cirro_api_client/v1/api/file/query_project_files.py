@@ -22,6 +22,7 @@ def _get_kwargs(
     process_id: None | str | Unset = UNSET,
     created_by: None | str | Unset = UNSET,
     path_contains: None | str | Unset = UNSET,
+    path_regex: None | str | Unset = UNSET,
     min_size: int | None | Unset = UNSET,
     max_size: int | None | Unset = UNSET,
     created_after: datetime.datetime | None | Unset = UNSET,
@@ -75,6 +76,13 @@ def _get_kwargs(
     else:
         json_path_contains = path_contains
     params["pathContains"] = json_path_contains
+
+    json_path_regex: None | str | Unset
+    if isinstance(path_regex, Unset):
+        json_path_regex = UNSET
+    else:
+        json_path_regex = path_regex
+    params["pathRegex"] = json_path_regex
 
     json_min_size: int | None | Unset
     if isinstance(min_size, Unset):
@@ -172,6 +180,7 @@ def sync_detailed(
     process_id: None | str | Unset = UNSET,
     created_by: None | str | Unset = UNSET,
     path_contains: None | str | Unset = UNSET,
+    path_regex: None | str | Unset = UNSET,
     min_size: int | None | Unset = UNSET,
     max_size: int | None | Unset = UNSET,
     created_after: datetime.datetime | None | Unset = UNSET,
@@ -192,6 +201,7 @@ def sync_detailed(
         process_id (None | str | Unset):
         created_by (None | str | Unset):
         path_contains (None | str | Unset):
+        path_regex (None | str | Unset):
         min_size (int | None | Unset):
         max_size (int | None | Unset):
         created_after (datetime.datetime | None | Unset):
@@ -217,6 +227,7 @@ def sync_detailed(
         process_id=process_id,
         created_by=created_by,
         path_contains=path_contains,
+        path_regex=path_regex,
         min_size=min_size,
         max_size=max_size,
         created_after=created_after,
@@ -244,6 +255,7 @@ def sync(
     process_id: None | str | Unset = UNSET,
     created_by: None | str | Unset = UNSET,
     path_contains: None | str | Unset = UNSET,
+    path_regex: None | str | Unset = UNSET,
     min_size: int | None | Unset = UNSET,
     max_size: int | None | Unset = UNSET,
     created_after: datetime.datetime | None | Unset = UNSET,
@@ -264,6 +276,7 @@ def sync(
         process_id (None | str | Unset):
         created_by (None | str | Unset):
         path_contains (None | str | Unset):
+        path_regex (None | str | Unset):
         min_size (int | None | Unset):
         max_size (int | None | Unset):
         created_after (datetime.datetime | None | Unset):
@@ -291,6 +304,7 @@ def sync(
             process_id=process_id,
             created_by=created_by,
             path_contains=path_contains,
+            path_regex=path_regex,
             min_size=min_size,
             max_size=max_size,
             created_after=created_after,
@@ -313,6 +327,7 @@ async def asyncio_detailed(
     process_id: None | str | Unset = UNSET,
     created_by: None | str | Unset = UNSET,
     path_contains: None | str | Unset = UNSET,
+    path_regex: None | str | Unset = UNSET,
     min_size: int | None | Unset = UNSET,
     max_size: int | None | Unset = UNSET,
     created_after: datetime.datetime | None | Unset = UNSET,
@@ -333,6 +348,7 @@ async def asyncio_detailed(
         process_id (None | str | Unset):
         created_by (None | str | Unset):
         path_contains (None | str | Unset):
+        path_regex (None | str | Unset):
         min_size (int | None | Unset):
         max_size (int | None | Unset):
         created_after (datetime.datetime | None | Unset):
@@ -358,6 +374,7 @@ async def asyncio_detailed(
         process_id=process_id,
         created_by=created_by,
         path_contains=path_contains,
+        path_regex=path_regex,
         min_size=min_size,
         max_size=max_size,
         created_after=created_after,
@@ -382,6 +399,7 @@ async def asyncio(
     process_id: None | str | Unset = UNSET,
     created_by: None | str | Unset = UNSET,
     path_contains: None | str | Unset = UNSET,
+    path_regex: None | str | Unset = UNSET,
     min_size: int | None | Unset = UNSET,
     max_size: int | None | Unset = UNSET,
     created_after: datetime.datetime | None | Unset = UNSET,
@@ -402,6 +420,7 @@ async def asyncio(
         process_id (None | str | Unset):
         created_by (None | str | Unset):
         path_contains (None | str | Unset):
+        path_regex (None | str | Unset):
         min_size (int | None | Unset):
         max_size (int | None | Unset):
         created_after (datetime.datetime | None | Unset):
@@ -430,6 +449,7 @@ async def asyncio(
                 process_id=process_id,
                 created_by=created_by,
                 path_contains=path_contains,
+                path_regex=path_regex,
                 min_size=min_size,
                 max_size=max_size,
                 created_after=created_after,

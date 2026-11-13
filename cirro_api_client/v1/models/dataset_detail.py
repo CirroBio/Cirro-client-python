@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.environment_type import EnvironmentType
 from ..models.status import Status
 from ..types import UNSET, Unset
 
@@ -49,6 +50,7 @@ class DatasetDetail:
         originating_project_id (str | Unset): The originating project ID might be different if the dataset was shared
             from another project.
         copied_from (list[DatasetCopyOrigin] | Unset): The datasets this dataset copied its files from, if it is a copy
+        compute_environment_type (EnvironmentType | None | Unset):
         share (NamedItem | None | Unset):
         total_size_bytes (int | None | Unset): Total size of dataset files (in bytes)
         file_count (int | None | Unset): Total number of dataset files
@@ -75,6 +77,7 @@ class DatasetDetail:
     description: str | Unset = UNSET
     originating_project_id: str | Unset = UNSET
     copied_from: list[DatasetCopyOrigin] | Unset = UNSET
+    compute_environment_type: EnvironmentType | None | Unset = UNSET
     share: NamedItem | None | Unset = UNSET
     total_size_bytes: int | None | Unset = UNSET
     file_count: int | None | Unset = UNSET
@@ -136,6 +139,14 @@ class DatasetDetail:
                 copied_from_item = copied_from_item_data.to_dict()
                 copied_from.append(copied_from_item)
 
+        compute_environment_type: None | str | Unset
+        if isinstance(self.compute_environment_type, Unset):
+            compute_environment_type = UNSET
+        elif isinstance(self.compute_environment_type, EnvironmentType):
+            compute_environment_type = self.compute_environment_type.value
+        else:
+            compute_environment_type = self.compute_environment_type
+
         share: dict[str, Any] | None | Unset
         if isinstance(self.share, Unset):
             share = UNSET
@@ -186,6 +197,8 @@ class DatasetDetail:
             field_dict["originatingProjectId"] = originating_project_id
         if copied_from is not UNSET:
             field_dict["copiedFrom"] = copied_from
+        if compute_environment_type is not UNSET:
+            field_dict["computeEnvironmentType"] = compute_environment_type
         if share is not UNSET:
             field_dict["share"] = share
         if total_size_bytes is not UNSET:
@@ -264,6 +277,23 @@ class DatasetDetail:
 
                 copied_from.append(copied_from_item)
 
+        def _parse_compute_environment_type(data: object) -> EnvironmentType | None | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                compute_environment_type_type_1 = EnvironmentType(data)
+
+                return compute_environment_type_type_1
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(EnvironmentType | None | Unset, data)
+
+        compute_environment_type = _parse_compute_environment_type(d.pop("computeEnvironmentType", UNSET))
+
         def _parse_share(data: object) -> NamedItem | None | Unset:
             if data is None:
                 return data
@@ -321,6 +351,7 @@ class DatasetDetail:
             description=description,
             originating_project_id=originating_project_id,
             copied_from=copied_from,
+            compute_environment_type=compute_environment_type,
             share=share,
             total_size_bytes=total_size_bytes,
             file_count=file_count,

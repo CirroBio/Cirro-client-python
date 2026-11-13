@@ -246,7 +246,6 @@ from .sheet_query_response import SheetQueryResponse
 from .sheet_row_change import SheetRowChange
 from .sheet_row_change_type import SheetRowChangeType
 from .sheet_search_hit import SheetSearchHit
-from .sheet_search_request import SheetSearchRequest
 from .sheet_search_response import SheetSearchResponse
 from .sheet_snapshot import SheetSnapshot
 from .sheet_sort import SheetSort
@@ -550,7 +549,6 @@ __all__ = (
     "SheetRowChange",
     "SheetRowChangeType",
     "SheetSearchHit",
-    "SheetSearchRequest",
     "SheetSearchResponse",
     "SheetSnapshot",
     "SheetSort",

@@ -6,30 +6,35 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.sheet_search_request import SheetSearchRequest
 from ...models.sheet_search_response import SheetSearchResponse
-from ...types import Response
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     project_id: str,
     *,
-    body: SheetSearchRequest,
+    value_contains: str,
+    limit: int | Unset = 100,
+    page: int | Unset = 1,
 ) -> dict[str, Any]:
-    headers: dict[str, Any] = {}
+    params: dict[str, Any] = {}
+
+    params["valueContains"] = value_contains
+
+    params["limit"] = limit
+
+    params["page"] = page
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: dict[str, Any] = {
-        "method": "post",
+        "method": "get",
         "url": "/projects/{project_id}/sheets/search".format(
             project_id=quote(str(project_id), safe=""),
         ),
+        "params": params,
     }
 
-    _kwargs["json"] = body.to_dict()
-
-    headers["Content-Type"] = "application/json"
-
-    _kwargs["headers"] = headers
     return _kwargs
 
 
@@ -55,7 +60,9 @@ def sync_detailed(
     project_id: str,
     *,
     client: Client,
-    body: SheetSearchRequest,
+    value_contains: str,
+    limit: int | Unset = 100,
+    page: int | Unset = 1,
 ) -> Response[SheetSearchResponse]:
     """Search the project's sheets
 
@@ -65,7 +72,9 @@ def sync_detailed(
 
     Args:
         project_id (str):
-        body (SheetSearchRequest): Search across the indexed columns of the project's TABLE sheets
+        value_contains (str):
+        limit (int | Unset):  Default: 100.
+        page (int | Unset):  Default: 1.
         client (Client): instance of the API client
 
     Raises:
@@ -78,7 +87,9 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        body=body,
+        value_contains=value_contains,
+        limit=limit,
+        page=page,
     )
 
     response = client.get_httpx_client().request(
@@ -93,7 +104,9 @@ def sync(
     project_id: str,
     *,
     client: Client,
-    body: SheetSearchRequest,
+    value_contains: str,
+    limit: int | Unset = 100,
+    page: int | Unset = 1,
 ) -> SheetSearchResponse | None:
     """Search the project's sheets
 
@@ -103,7 +116,9 @@ def sync(
 
     Args:
         project_id (str):
-        body (SheetSearchRequest): Search across the indexed columns of the project's TABLE sheets
+        value_contains (str):
+        limit (int | Unset):  Default: 100.
+        page (int | Unset):  Default: 1.
         client (Client): instance of the API client
 
     Raises:
@@ -118,7 +133,9 @@ def sync(
         return sync_detailed(
             project_id=project_id,
             client=client,
-            body=body,
+            value_contains=value_contains,
+            limit=limit,
+            page=page,
         ).parsed
     except errors.NotFoundException:
         return None
@@ -128,7 +145,9 @@ async def asyncio_detailed(
     project_id: str,
     *,
     client: Client,
-    body: SheetSearchRequest,
+    value_contains: str,
+    limit: int | Unset = 100,
+    page: int | Unset = 1,
 ) -> Response[SheetSearchResponse]:
     """Search the project's sheets
 
@@ -138,7 +157,9 @@ async def asyncio_detailed(
 
     Args:
         project_id (str):
-        body (SheetSearchRequest): Search across the indexed columns of the project's TABLE sheets
+        value_contains (str):
+        limit (int | Unset):  Default: 100.
+        page (int | Unset):  Default: 1.
         client (Client): instance of the API client
 
     Raises:
@@ -151,7 +172,9 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         project_id=project_id,
-        body=body,
+        value_contains=value_contains,
+        limit=limit,
+        page=page,
     )
 
     response = await client.get_async_httpx_client().request(auth=client.get_auth(), **kwargs)
@@ -163,7 +186,9 @@ async def asyncio(
     project_id: str,
     *,
     client: Client,
-    body: SheetSearchRequest,
+    value_contains: str,
+    limit: int | Unset = 100,
+    page: int | Unset = 1,
 ) -> SheetSearchResponse | None:
     """Search the project's sheets
 
@@ -173,7 +198,9 @@ async def asyncio(
 
     Args:
         project_id (str):
-        body (SheetSearchRequest): Search across the indexed columns of the project's TABLE sheets
+        value_contains (str):
+        limit (int | Unset):  Default: 100.
+        page (int | Unset):  Default: 1.
         client (Client): instance of the API client
 
     Raises:
@@ -189,7 +216,9 @@ async def asyncio(
             await asyncio_detailed(
                 project_id=project_id,
                 client=client,
-                body=body,
+                value_contains=value_contains,
+                limit=limit,
+                page=page,
             )
         ).parsed
     except errors.NotFoundException:

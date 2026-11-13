@@ -8,6 +8,7 @@ from attrs import field as _attrs_field
 
 from ..models.billing_method import BillingMethod
 from ..models.customer_type import CustomerType
+from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.contact import Contact
@@ -24,18 +25,18 @@ class BillingAccountRequest:
         contacts (list[Contact]):
         customer_type (CustomerType):
         billing_method (BillingMethod):
-        primary_budget_number (str):
         owner (str):
         shared_with (list[str]):
+        primary_budget_number (None | str | Unset):
     """
 
     name: str
     contacts: list[Contact]
     customer_type: CustomerType
     billing_method: BillingMethod
-    primary_budget_number: str
     owner: str
     shared_with: list[str]
+    primary_budget_number: None | str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -50,11 +51,15 @@ class BillingAccountRequest:
 
         billing_method = self.billing_method.value
 
-        primary_budget_number = self.primary_budget_number
-
         owner = self.owner
 
         shared_with = self.shared_with
+
+        primary_budget_number: None | str | Unset
+        if isinstance(self.primary_budget_number, Unset):
+            primary_budget_number = UNSET
+        else:
+            primary_budget_number = self.primary_budget_number
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -64,11 +69,12 @@ class BillingAccountRequest:
                 "contacts": contacts,
                 "customerType": customer_type,
                 "billingMethod": billing_method,
-                "primaryBudgetNumber": primary_budget_number,
                 "owner": owner,
                 "sharedWith": shared_with,
             }
         )
+        if primary_budget_number is not UNSET:
+            field_dict["primaryBudgetNumber"] = primary_budget_number
 
         return field_dict
 
@@ -90,20 +96,27 @@ class BillingAccountRequest:
 
         billing_method = BillingMethod(d.pop("billingMethod"))
 
-        primary_budget_number = d.pop("primaryBudgetNumber")
-
         owner = d.pop("owner")
 
         shared_with = cast(list[str], d.pop("sharedWith"))
+
+        def _parse_primary_budget_number(data: object) -> None | str | Unset:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(None | str | Unset, data)
+
+        primary_budget_number = _parse_primary_budget_number(d.pop("primaryBudgetNumber", UNSET))
 
         billing_account_request = cls(
             name=name,
             contacts=contacts,
             customer_type=customer_type,
             billing_method=billing_method,
-            primary_budget_number=primary_budget_number,
             owner=owner,
             shared_with=shared_with,
+            primary_budget_number=primary_budget_number,
         )
 
         billing_account_request.additional_properties = d
